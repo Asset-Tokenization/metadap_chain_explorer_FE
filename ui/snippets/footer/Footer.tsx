@@ -5,17 +5,20 @@ import React from 'react';
 import type { CustomLinksGroup } from 'types/footerLinks';
 
 import config from 'configs/app';
-import discussionsIcon from 'icons/discussions.svg';
-import donateIcon from 'icons/donate.svg';
-import editIcon from 'icons/edit.svg';
-import cannyIcon from 'icons/social/canny.svg';
-import discordIcon from 'icons/social/discord.svg';
-import gitIcon from 'icons/social/git.svg';
-import twitterIcon from 'icons/social/tweet.svg';
+// import discussionsIcon from 'icons/discussions.svg';
+// import editIcon from 'icons/edit.svg';
+// import cannyIcon from 'icons/social/canny.svg';
+// import discordIcon from 'icons/social/discord.svg';
+// import gitIcon from 'icons/social/git.svg';
+// import twitterIcon from 'icons/social/tweet.svg';
+import homeIcon from 'icons/home.svg';
+import facebookIcon from 'icons/social/facebook_filled.svg';
+import linkedinIcon from 'icons/social/linkedin_filled.svg';
+import youtubeIcon from 'icons/social/youtube.svg';
 import type { ResourceError } from 'lib/api/resources';
 import useApiQuery from 'lib/api/useApiQuery';
 import useFetch from 'lib/hooks/useFetch';
-import useIssueUrl from 'lib/hooks/useIssueUrl';
+// import useIssueUrl from 'lib/hooks/useIssueUrl';
 import NetworkAddToWallet from 'ui/shared/NetworkAddToWallet';
 
 import ColorModeToggler from '../header/ColorModeToggler';
@@ -36,49 +39,31 @@ const Footer = () => {
     },
   });
   const apiVersionUrl = getApiVersionUrl(backendVersionData?.backend_version);
-  const issueUrl = useIssueUrl(backendVersionData?.backend_version);
+  // const issueUrl = useIssueUrl(backendVersionData?.backend_version);
   const BLOCKSCOUT_LINKS = [
     {
-      icon: editIcon,
-      iconSize: '16px',
-      text: 'Submit an issue',
-      url: issueUrl,
-    },
-    {
-      icon: cannyIcon,
+      icon: homeIcon,
       iconSize: '20px',
-      text: 'Feature request',
-      url: 'https://blockscout.canny.io/feature-requests',
+      text: 'Home',
+      url: 'https://metadap.io/',
     },
     {
-      icon: gitIcon,
-      iconSize: '18px',
-      text: 'Contribute',
-      url: 'https://github.com/blockscout/blockscout',
-    },
-    {
-      icon: twitterIcon,
-      iconSize: '18px',
-      text: 'Twitter',
-      url: 'https://www.twitter.com/blockscoutcom',
-    },
-    {
-      icon: discordIcon,
-      iconSize: '18px',
-      text: 'Discord',
-      url: 'https://discord.gg/blockscout',
-    },
-    {
-      icon: discussionsIcon,
+      icon: facebookIcon,
       iconSize: '20px',
-      text: 'Discussions',
-      url: 'https://github.com/orgs/blockscout/discussions',
+      text: 'Facebook',
+      url: 'https://www.facebook.com/metadap',
     },
     {
-      icon: donateIcon,
+      icon: linkedinIcon,
       iconSize: '20px',
-      text: 'Donate',
-      url: 'https://github.com/sponsors/blockscout',
+      text: 'Linkedin',
+      url: 'https://www.linkedin.com/company/metadap/',
+    },
+    {
+      icon: youtubeIcon,
+      iconSize: '20px',
+      text: 'Youtube',
+      url: 'https://www.youtube.com/@MetaDigitalAssetPlatform',
     },
   ];
 
@@ -98,7 +83,7 @@ const Footer = () => {
 
   const { isLoading, data: linksData } = useQuery<unknown, ResourceError<unknown>, Array<CustomLinksGroup>>(
     [ 'footer-links' ],
-    async() => fetch(config.UI.footer.links || '', undefined, { resource: 'footer-links' }),
+    async() => fetch(config.UI.footer.links || ''),
     {
       enabled: Boolean(config.UI.footer.links),
       staleTime: Infinity,
@@ -120,10 +105,10 @@ const Footer = () => {
           <NetworkAddToWallet/>
         </Flex>
         <Box mt={{ base: 5, lg: '44px' }}>
-          <Link fontSize="xs" href="https://www.blockscout.com">blockscout.com</Link>
+          <Link fontSize="xs" href="https://metadap.io/">MetaDAP</Link>
         </Box>
         <Text mt={ 3 } maxW={{ base: 'unset', lg: '470px' }} fontSize="xs">
-            Blockscout is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for Ethereum Networks.
+          MetaDAP explorer is a tool for inspecting and analyzing EVM based blockchains. Blockchain explorer for Ethereum Networks.
         </Text>
         <VStack spacing={ 1 } mt={ 6 } alignItems="start">
           { apiVersionUrl && (
@@ -146,7 +131,7 @@ const Footer = () => {
         }
       >
         <Box minW="160px" w={ config.UI.footer.links ? '160px' : '100%' }>
-          { config.UI.footer.links && <Text fontWeight={ 500 } mb={ 3 }>Blockscout</Text> }
+          { config.UI.footer.links && <Text fontWeight={ 500 } mb={ 3 }>MetaDAP</Text> }
           <Grid
             gap={ 1 }
             gridTemplateColumns={ config.UI.footer.links ? '160px' : { base: 'repeat(auto-fill, 160px)', lg: 'repeat(4, 160px)' } }
