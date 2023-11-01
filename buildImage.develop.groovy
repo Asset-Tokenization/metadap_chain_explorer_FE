@@ -14,7 +14,7 @@ pipeline {
                     name: 'TRIGGER_UPDATE'
                 )
                 string(
-                    defaultValue: '1.13.2-1.0.0',
+                    defaultValue: 'v1.15.0-1.0.0',
                     description: 'The release version, use as image as version',
                     name: 'RELEASE_VERSION', 
                     trim: true
@@ -27,7 +27,7 @@ pipeline {
             }
         }
     
-        stage('Build image Dev') {
+        stage('Build image') {
             steps{
                 script{
                     echo "Build image with version ${params.RELEASE_VERSION}"
