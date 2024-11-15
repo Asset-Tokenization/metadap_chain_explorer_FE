@@ -51,7 +51,7 @@ const Footer = () => {
       icon: facebookIcon,
       iconSize: '20px',
       text: 'Facebook',
-      url: 'https://www.facebook.com/metadap',
+      url: 'https://www.facebook.com/metadap.io',
     },
     {
       icon: linkedinIcon,
