@@ -110,7 +110,7 @@ const Footer = () => {
     <Flex
       direction="column"
       borderTop="1px solid"
-      borderColor="RGBA(16, 17, 18, 0.08)"
+      borderColor="divider"
       as="footer"
       columnGap="100px">
       <Box
@@ -136,9 +136,6 @@ const Footer = () => {
         direction={{ base: 'column', lg: 'row' }}
         px={{ base: 4, lg: 9 }}
         py={{ base: 4, lg: 9 }}
-        // borderTop="1px solid"
-        // borderColor="red"
-        // as="footer"
         columnGap="100px"
       >
         <Box flexGrow="1" mb={{ base: 8, lg: 0 }}>
