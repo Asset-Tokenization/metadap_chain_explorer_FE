@@ -71,7 +71,7 @@ const AddressCoinBalanceHistory = ({ query }: Props) => {
       mt={ 8 }
       isError={ query.isError }
       items={ query.data?.items }
-      emptyText="There is no coin balance history for this address."
+      emptyText="There is no DAP Credit balance history for this address."
       content={ content }
       actionBar={ actionBar }
     />
