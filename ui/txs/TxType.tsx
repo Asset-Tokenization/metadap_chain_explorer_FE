@@ -35,7 +35,7 @@ const TxType = ({ types, isLoading }: Props) => {
       colorScheme = 'orange';
       break;
     case 'coin_transfer':
-      label = 'Coin transfer';
+      label = 'DAP Credit transfer';
       colorScheme = 'orange';
       break;
     case 'rootstock_remasc':

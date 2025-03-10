@@ -107,7 +107,7 @@ const AddressPageContent = () => {
       },
       {
         id: 'coin_balance_history',
-        title: 'Coin balance history',
+        title: 'DAP Credit balance history',
         component: <AddressCoinBalance/>,
       },
       config.chain.verificationType === 'validation' && addressTabsCountersQuery.data?.validations_count ?

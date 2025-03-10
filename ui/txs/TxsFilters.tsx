@@ -20,7 +20,7 @@ const TYPE_OPTIONS = [
   { title: 'Token transfer', id: 'token_transfer' },
   { title: 'Contract Creation', id: 'contract_creation' },
   { title: 'Contract Call', id: 'contract_call' },
-  { title: 'Coin Transfer', id: 'coin_transfer' },
+  { title: 'DAP Credit Transfer', id: 'coin_transfer' },
   { title: 'Token Creation', id: 'token_creation' },
 ];
 
