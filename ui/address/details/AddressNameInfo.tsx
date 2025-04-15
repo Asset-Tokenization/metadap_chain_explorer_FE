@@ -1,13 +1,13 @@
-import { Skeleton } from '@chakra-ui/react';
-import React from 'react';
+import { Skeleton } from "@chakra-ui/react";
+import React from "react";
 
-import type { Address } from 'types/api/address';
+import type { Address } from "types/api/address";
 
-import DetailsInfoItem from 'ui/shared/DetailsInfoItem';
-import TokenEntity from 'ui/shared/entities/token/TokenEntity';
+import DetailsInfoItem from "ui/shared/DetailsInfoItem";
+import TokenEntity from "ui/shared/entities/token/TokenEntity";
 
 interface Props {
-  data: Pick<Address, 'name' | 'token' | 'is_contract'>;
+  data: Pick<Address, "name" | "token" | "is_contract">;
   isLoading: boolean;
 }
 
@@ -15,16 +15,11 @@ const AddressNameInfo = ({ data, isLoading }: Props) => {
   if (data.token) {
     return (
       <DetailsInfoItem
-        title="Token name"
-        hint="Token name and symbol"
-        isLoading={ isLoading }
+        title="Certificate name"
+        hint="Certificate name and symbol"
+        isLoading={isLoading}
       >
-        <TokenEntity
-          token={ data.token }
-          isLoading={ isLoading }
-          noIcon
-          noCopy
-        />
+        <TokenEntity token={data.token} isLoading={isLoading} noIcon noCopy />
       </DetailsInfoItem>
     );
   }
@@ -34,11 +29,9 @@ const AddressNameInfo = ({ data, isLoading }: Props) => {
       <DetailsInfoItem
         title="Contract name"
         hint="The name found in the source code of the Contract"
-        isLoading={ isLoading }
+        isLoading={isLoading}
       >
-        <Skeleton isLoaded={ !isLoading }>
-          { data.name }
-        </Skeleton>
+        <Skeleton isLoaded={!isLoading}>{data.name}</Skeleton>
       </DetailsInfoItem>
     );
   }
@@ -48,11 +41,9 @@ const AddressNameInfo = ({ data, isLoading }: Props) => {
       <DetailsInfoItem
         title="Validator name"
         hint="The name of the validator"
-        isLoading={ isLoading }
+        isLoading={isLoading}
       >
-        <Skeleton isLoaded={ !isLoading }>
-          { data.name }
-        </Skeleton>
+        <Skeleton isLoaded={!isLoading}>{data.name}</Skeleton>
       </DetailsInfoItem>
     );
   }
