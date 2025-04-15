@@ -11,13 +11,8 @@ interface Props {
 
 const NftHtmlWithFullscreen = ({ src, isOpen, onClose }: Props) => {
   return (
-    <NftMediaFullscreenModal isOpen={ isOpen } onClose={ onClose }>
-      <chakra.iframe
-        w="90vw"
-        h="90vh"
-        src={ src }
-        sandbox="allow-scripts"
-      />
+    <NftMediaFullscreenModal isOpen={isOpen} onClose={onClose}>
+      <chakra.iframe w="90vw" h="90vh" src={src} sandbox="allow-scripts" />
     </NftMediaFullscreenModal>
   );
 };

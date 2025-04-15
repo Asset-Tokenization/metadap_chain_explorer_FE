@@ -25,75 +25,64 @@ const WithdrawalsListItem = ({ item, isLoading }: Props) => {
 
   return (
     <ListItemMobileGrid.Container>
-
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Msg nonce</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>Msg nonce</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { item.msg_nonce_version + '-' + item.msg_nonce }
+        <Skeleton isLoaded={!isLoading} display="inline-block">
+          {item.msg_nonce_version + '-' + item.msg_nonce}
         </Skeleton>
       </ListItemMobileGrid.Value>
 
-      { item.from && (
+      {item.from && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>From</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={isLoading}>From</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
-            <AddressEntity
-              address={ item.from }
-              isLoading={ isLoading }
-            />
+            <AddressEntity address={item.from} isLoading={isLoading} />
           </ListItemMobileGrid.Value>
         </>
-      ) }
+      )}
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L2 txn hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>L2 txn hash</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <TxEntity
-          isLoading={ isLoading }
-          hash={ item.l2_tx_hash }
-          fontSize="sm"
-          lineHeight={ 5 }
-        />
+        <TxEntity isLoading={isLoading} hash={item.l2_tx_hash} fontSize="sm" lineHeight={5} />
       </ListItemMobileGrid.Value>
 
-      { timeAgo && (
+      {timeAgo && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={isLoading}>Age</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
-            <Skeleton isLoaded={ !isLoading } display="inline-block">
-              { timeAgo }
+            <Skeleton isLoaded={!isLoading} display="inline-block">
+              {timeAgo}
             </Skeleton>
           </ListItemMobileGrid.Value>
         </>
-      ) }
+      )}
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Status</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>Status</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        { item.status === 'Ready for relay' ?
-          <LinkExternal href={ feature.withdrawalUrl }>{ item.status }</LinkExternal> :
-          <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.status }</Skeleton> }
+        {item.status === 'Ready for relay' ? (
+          <LinkExternal href={feature.withdrawalUrl}>{item.status}</LinkExternal>
+        ) : (
+          <Skeleton isLoaded={!isLoading} display="inline-block">
+            {item.status}
+          </Skeleton>
+        )}
       </ListItemMobileGrid.Value>
 
-      { item.l1_tx_hash && (
+      {item.l1_tx_hash && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>L1 txn hash</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={isLoading}>L1 txn hash</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
-            <TxEntityL1
-              isLoading={ isLoading }
-              hash={ item.l1_tx_hash }
-              fontSize="sm"
-              lineHeight={ 5 }
-            />
+            <TxEntityL1 isLoading={isLoading} hash={item.l1_tx_hash} fontSize="sm" lineHeight={5} />
           </ListItemMobileGrid.Value>
         </>
-      ) }
+      )}
 
-      { timeToEnd && (
+      {timeToEnd && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Time left</ListItemMobileGrid.Label>
-          <ListItemMobileGrid.Value>{ timeToEnd }</ListItemMobileGrid.Value>
+          <ListItemMobileGrid.Label isLoading={isLoading}>Time left</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Value>{timeToEnd}</ListItemMobileGrid.Value>
         </>
-      ) }
-
+      )}
     </ListItemMobileGrid.Container>
   );
 };

@@ -10,8 +10,8 @@ interface Props {
 const CodeEditorMainFileIndicator = ({ className }: Props) => {
   return (
     <Tooltip label="The main file containing verified contract">
-      <Box className={ className } >
-        <Icon as={ iconStar } boxSize={ 3 } display="block" color="green.500"/>
+      <Box className={className}>
+        <Icon as={iconStar} boxSize={3} display="block" color="green.500" />
       </Box>
     </Tooltip>
   );

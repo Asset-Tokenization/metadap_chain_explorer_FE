@@ -37,68 +37,44 @@ const Marketplace = () => {
     return null;
   }
 
-  const selectedApp = displayedApps.find(app => app.id === selectedAppId);
+  const selectedApp = displayedApps.find((app) => app.id === selectedAppId);
 
   return (
     <>
-      <Box
-        display="flex"
-        flexDirection={{ base: 'column', sm: 'row' }}
-      >
-        <MarketplaceCategoriesMenu
-          categories={ categories }
-          selectedCategoryId={ selectedCategoryId }
-          onSelect={ onCategoryChange }
-          isLoading={ isPlaceholderData }
-        />
+      <Box display="flex" flexDirection={{ base: 'column', sm: 'row' }}>
+        <MarketplaceCategoriesMenu categories={categories} selectedCategoryId={selectedCategoryId} onSelect={onCategoryChange} isLoading={isPlaceholderData} />
 
         <FilterInput
-          initialValue={ filterQuery }
-          onChange={ onSearchInputChange }
+          initialValue={filterQuery}
+          onChange={onSearchInputChange}
           marginBottom={{ base: '4', lg: '6' }}
           w="100%"
           placeholder="Find app"
-          isLoading={ isPlaceholderData }
+          isLoading={isPlaceholderData}
         />
       </Box>
 
       <MarketplaceList
-        apps={ displayedApps }
-        onAppClick={ showAppInfo }
-        favoriteApps={ favoriteApps }
-        onFavoriteClick={ onFavoriteClick }
-        isLoading={ isPlaceholderData }
+        apps={displayedApps}
+        onAppClick={showAppInfo}
+        favoriteApps={favoriteApps}
+        onFavoriteClick={onFavoriteClick}
+        isLoading={isPlaceholderData}
       />
 
-      { selectedApp && (
+      {selectedApp && (
         <MarketplaceAppModal
-          onClose={ clearSelectedAppId }
-          isFavorite={ favoriteApps.includes(selectedApp.id) }
-          onFavoriteClick={ onFavoriteClick }
-          data={ selectedApp }
+          onClose={clearSelectedAppId}
+          isFavorite={favoriteApps.includes(selectedApp.id)}
+          onFavoriteClick={onFavoriteClick}
+          data={selectedApp}
         />
-      ) }
+      )}
 
-      <Skeleton
-        isLoaded={ !isPlaceholderData }
-        marginTop={{ base: 8, sm: 16 }}
-        display="inline-block"
-      >
-        <Link
-          fontWeight="bold"
-          display="inline-flex"
-          alignItems="baseline"
-          href={ feature.submitFormUrl }
-          isExternal
-        >
-          <Icon
-            as={ PlusIcon }
-            w={ 3 }
-            h={ 3 }
-            mr={ 2 }
-          />
-
-              Submit an app
+      <Skeleton isLoaded={!isPlaceholderData} marginTop={{ base: 8, sm: 16 }} display="inline-block">
+        <Link fontWeight="bold" display="inline-flex" alignItems="baseline" href={feature.submitFormUrl} isExternal>
+          <Icon as={PlusIcon} w={3} h={3} mr={2} />
+          Submit an app
         </Link>
       </Skeleton>
     </>

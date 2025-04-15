@@ -16,46 +16,46 @@ interface Props {
 const PrevNext = ({ className, onClick, prevLabel, nextLabel, isPrevDisabled, isNextDisabled, isLoading }: Props) => {
   const handelPrevClick = React.useCallback(() => {
     onClick('prev');
-  }, [ onClick ]);
+  }, [onClick]);
 
   const handelNextClick = React.useCallback(() => {
     onClick('next');
-  }, [ onClick ]);
+  }, [onClick]);
 
   if (isLoading) {
     return (
-      <Flex columnGap="10px" className={ className }>
-        <Skeleton boxSize={ 6 } borderRadius="sm"/>
-        <Skeleton boxSize={ 6 } borderRadius="sm"/>
+      <Flex columnGap="10px" className={className}>
+        <Skeleton boxSize={6} borderRadius="sm" />
+        <Skeleton boxSize={6} borderRadius="sm" />
       </Flex>
     );
   }
 
   return (
-    <Box className={ className }>
-      <Tooltip label={ prevLabel }>
+    <Box className={className}>
+      <Tooltip label={prevLabel}>
         <IconButton
           aria-label="prev"
-          icon={ <Icon as={ eastArrow } boxSize={ 6 }/> }
-          h={ 6 }
+          icon={<Icon as={eastArrow} boxSize={6} />}
+          h={6}
           borderRadius="sm"
           variant="subtle"
           colorScheme="gray"
-          onClick={ handelPrevClick }
-          isDisabled={ isPrevDisabled }
+          onClick={handelPrevClick}
+          isDisabled={isPrevDisabled}
         />
       </Tooltip>
-      <Tooltip label={ nextLabel }>
+      <Tooltip label={nextLabel}>
         <IconButton
           aria-label="next"
-          icon={ <Icon as={ eastArrow }boxSize={ 6 } transform="rotate(180deg)"/> }
-          h={ 6 }
+          icon={<Icon as={eastArrow} boxSize={6} transform="rotate(180deg)" />}
+          h={6}
           borderRadius="sm"
           variant="subtle"
           colorScheme="gray"
           ml="10px"
-          onClick={ handelNextClick }
-          isDisabled={ isNextDisabled }
+          onClick={handelNextClick}
+          isDisabled={isNextDisabled}
         />
       </Tooltip>
     </Box>

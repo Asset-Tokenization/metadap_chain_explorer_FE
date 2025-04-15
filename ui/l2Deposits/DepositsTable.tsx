@@ -7,16 +7,16 @@ import { default as Thead } from 'ui/shared/TheadSticky';
 
 import DepositsTableItem from './DepositsTableItem';
 
- type Props = {
-   items: Array<L2DepositsItem>;
-   top: number;
-   isLoading?: boolean;
- }
+type Props = {
+  items: Array<L2DepositsItem>;
+  top: number;
+  isLoading?: boolean;
+};
 
 const DepositsTable = ({ items, top, isLoading }: Props) => {
   return (
     <Table variant="simple" size="sm" style={{ tableLayout: 'auto' }} minW="950px">
-      <Thead top={ top }>
+      <Thead top={top}>
         <Tr>
           <Th>L1 block No</Th>
           <Th>L2 txn hash</Th>
@@ -27,9 +27,9 @@ const DepositsTable = ({ items, top, isLoading }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        { items.map((item, index) => (
-          <DepositsTableItem key={ item.l2_tx_hash + (isLoading ? index : '') } item={ item } isLoading={ isLoading }/>
-        )) }
+        {items.map((item, index) => (
+          <DepositsTableItem key={item.l2_tx_hash + (isLoading ? index : '')} item={item} isLoading={isLoading} />
+        ))}
       </Tbody>
     </Table>
   );

@@ -11,29 +11,26 @@ interface Props {
 }
 
 const TxWatchListTags = ({ tx, isLoading }: Props) => {
-  const tags = [
-    ...(tx.from?.watchlist_names || []),
-    ...(tx.to?.watchlist_names || []),
-  ].filter(Boolean);
+  const tags = [...(tx.from?.watchlist_names || []), ...(tx.to?.watchlist_names || [])].filter(Boolean);
 
   if (tags.length === 0) {
     return null;
   }
 
   return (
-    <Flex columnGap={ 2 } rowGap={ 2 } flexWrap="wrap" overflow="hidden" maxW="100%">
-      { tags.map((tag) => (
+    <Flex columnGap={2} rowGap={2} flexWrap="wrap" overflow="hidden" maxW="100%">
+      {tags.map((tag) => (
         <Tag
-          key={ tag.label }
-          isLoading={ isLoading }
+          key={tag.label}
+          isLoading={isLoading}
           isTruncated
           // maxW={{ base: '115px', lg: 'initial' }}
           colorScheme="gray"
           variant="subtle"
         >
-          { tag.display_name }
+          {tag.display_name}
         </Tag>
-      )) }
+      ))}
     </Flex>
   );
 };

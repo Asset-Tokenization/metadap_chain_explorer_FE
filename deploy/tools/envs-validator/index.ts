@@ -11,15 +11,17 @@ async function run() {
   console.log();
   try {
     const appEnvs = Object.entries(process.env)
-      .filter(([ key ]) => key.startsWith('NEXT_PUBLIC_'))
-      .reduce((result, [ key, value ]) => {
-        result[key] = value || '';
-        return result;
-      }, {} as Record<string, string>);
+      .filter(([key]) => key.startsWith('NEXT_PUBLIC_'))
+      .reduce(
+        (result, [key, value]) => {
+          result[key] = value || '';
+          return result;
+        },
+        {} as Record<string, string>,
+      );
 
     await checkPlaceholdersCongruity(appEnvs);
     await validateEnvs(appEnvs);
-
   } catch (error) {
     process.exit(1);
   }
@@ -30,18 +32,11 @@ async function validateEnvs(appEnvs: Record<string, string>) {
 
   try {
     // replace ENVs with external JSON files content
-    appEnvs.NEXT_PUBLIC_FEATURED_NETWORKS = await getExternalJsonContent(
-      './public/assets/featured_networks.json',
-      appEnvs.NEXT_PUBLIC_FEATURED_NETWORKS,
-    ) || '[]';
-    appEnvs.NEXT_PUBLIC_MARKETPLACE_CONFIG_URL = await getExternalJsonContent(
-      './public/assets/marketplace_config.json',
-      appEnvs.NEXT_PUBLIC_MARKETPLACE_CONFIG_URL,
-    ) || '[]';
-    appEnvs.NEXT_PUBLIC_FOOTER_LINKS = await getExternalJsonContent(
-      './public/assets/footer_links.json',
-      appEnvs.NEXT_PUBLIC_FOOTER_LINKS,
-    ) || '[]';
+    appEnvs.NEXT_PUBLIC_FEATURED_NETWORKS =
+      (await getExternalJsonContent('./public/assets/featured_networks.json', appEnvs.NEXT_PUBLIC_FEATURED_NETWORKS)) || '[]';
+    appEnvs.NEXT_PUBLIC_MARKETPLACE_CONFIG_URL =
+      (await getExternalJsonContent('./public/assets/marketplace_config.json', appEnvs.NEXT_PUBLIC_MARKETPLACE_CONFIG_URL)) || '[]';
+    appEnvs.NEXT_PUBLIC_FOOTER_LINKS = (await getExternalJsonContent('./public/assets/footer_links.json', appEnvs.NEXT_PUBLIC_FOOTER_LINKS)) || '[]';
 
     await schema.validate(appEnvs, { stripUnknown: false, abortEarly: false });
     console.log('👍 All good!');
@@ -71,7 +66,7 @@ async function getExternalJsonContent(fileName: string, envValue: string): Promi
 
     fs.readFile(path.resolve(__dirname, fileName), 'utf8', (err, data) => {
       if (err) {
-        console.log(`🚨 Unable to read file: ${ fileName }`);
+        console.log(`🚨 Unable to read file: ${fileName}`);
         reject(err);
         return;
       }
@@ -100,7 +95,7 @@ async function checkPlaceholdersCongruity(envsMap: Record<string, string>) {
     if (inconsistencies.length > 0) {
       console.log('🚸 For the following environment variables placeholders were not generated at build-time:');
       inconsistencies.forEach((env) => {
-        console.log(`     ${ env }`);
+        console.log(`     ${env}`);
       });
       console.log(`   They are either deprecated or running the app with them may lead to unexpected behavior. 
    Please check the documentation for more details - https://github.com/blockscout/frontend/blob/main/docs/ENVS.md
@@ -125,7 +120,7 @@ function getEnvsPlaceholders(filePath: string): Promise<Array<string>> {
       }
 
       const lines = data.split('\n');
-      const variables = lines.map(line => {
+      const variables = lines.map((line) => {
         const variable = line.split('=')[0];
         return variable.trim();
       });

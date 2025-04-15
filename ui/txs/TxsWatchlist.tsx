@@ -6,11 +6,11 @@ import TxsContent from 'ui/txs/TxsContent';
 
 type Props = {
   query: QueryWithPagesResult<'txs_watchlist'>;
-}
+};
 
 const TxsWatchlist = ({ query }: Props) => {
   useRedirectForInvalidAuthToken();
-  return <TxsContent query={ query } showSocketInfo={ false }/>;
+  return <TxsContent query={query} showSocketInfo={false} />;
 };
 
 export default TxsWatchlist;

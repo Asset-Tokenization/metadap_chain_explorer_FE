@@ -37,36 +37,30 @@ const AppError = ({ error, className }: Props) => {
   const content = (() => {
     const resourceErrorPayload = getResourceErrorPayload(error);
     const messageInPayload =
-          resourceErrorPayload &&
-          typeof resourceErrorPayload === 'object' &&
-          'message' in resourceErrorPayload &&
-          typeof resourceErrorPayload.message === 'string' ?
-            resourceErrorPayload.message :
-            undefined;
+      resourceErrorPayload && typeof resourceErrorPayload === 'object' && 'message' in resourceErrorPayload && typeof resourceErrorPayload.message === 'string'
+        ? resourceErrorPayload.message
+        : undefined;
 
     const isInvalidTxHash = error?.message?.includes('Invalid tx hash');
     const isBlockConsensus = messageInPayload?.includes('Block lost consensus');
 
     if (isInvalidTxHash) {
-      return <AppErrorInvalidTxHash/>;
+      return <AppErrorInvalidTxHash />;
     }
 
     if (isBlockConsensus) {
       const hash =
-              resourceErrorPayload &&
-              typeof resourceErrorPayload === 'object' &&
-              'hash' in resourceErrorPayload &&
-              typeof resourceErrorPayload.hash === 'string' ?
-                resourceErrorPayload.hash :
-                undefined;
-      return <AppErrorBlockConsensus hash={ hash }/>;
+        resourceErrorPayload && typeof resourceErrorPayload === 'object' && 'hash' in resourceErrorPayload && typeof resourceErrorPayload.hash === 'string'
+          ? resourceErrorPayload.hash
+          : undefined;
+      return <AppErrorBlockConsensus hash={hash} />;
     }
 
     const statusCode = getErrorCauseStatusCode(error) || getErrorObjStatusCode(error);
 
     switch (statusCode) {
       case 429: {
-        return <AppErrorTooManyRequests/>;
+        return <AppErrorTooManyRequests />;
       }
 
       default: {
@@ -74,17 +68,13 @@ const AppError = ({ error, className }: Props) => {
 
         return (
           <>
-            <AppErrorIcon statusCode={ statusCode }/>
-            <AppErrorTitle title={ title }/>
-            <Text variant="secondary" mt={ 3 }>{ text }</Text>
-            <Button
-              mt={ 8 }
-              size="lg"
-              variant="outline"
-              as="a"
-              href={ route({ pathname: '/' }) }
-            >
-                Back to home
+            <AppErrorIcon statusCode={statusCode} />
+            <AppErrorTitle title={title} />
+            <Text variant="secondary" mt={3}>
+              {text}
+            </Text>
+            <Button mt={8} size="lg" variant="outline" as="a" href={route({ pathname: '/' })}>
+              Back to home
             </Button>
           </>
         );
@@ -93,8 +83,8 @@ const AppError = ({ error, className }: Props) => {
   })();
 
   return (
-    <Box className={ className } mt={{ base: '52px', lg: '104px' }} maxW="800px">
-      { content }
+    <Box className={className} mt={{ base: '52px', lg: '104px' }} maxW="800px">
+      {content}
     </Box>
   );
 };

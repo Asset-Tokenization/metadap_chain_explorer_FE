@@ -15,15 +15,15 @@ interface Props {
 const BlocksList = ({ data, isLoading, page }: Props) => {
   return (
     <Box>
-      <AnimatePresence initial={ false }>
-        { data.map((item, index) => (
+      <AnimatePresence initial={false}>
+        {data.map((item, index) => (
           <BlocksListItem
-            key={ item.height + (isLoading ? String(index) : '') }
-            data={ item }
-            isLoading={ isLoading }
-            enableTimeIncrement={ page === 1 && !isLoading }
+            key={item.height + (isLoading ? String(index) : '')}
+            data={item}
+            isLoading={isLoading}
+            enableTimeIncrement={page === 1 && !isLoading}
           />
-        )) }
+        ))}
       </AnimatePresence>
     </Box>
   );

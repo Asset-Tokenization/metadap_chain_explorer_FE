@@ -245,9 +245,7 @@ const oldUrls = [
 ];
 
 async function redirects() {
-  return [
-    ...oldUrls.map((item) => ({ ...item, permanent: false })),
-  ];
+  return [...oldUrls.map((item) => ({ ...item, permanent: false }))];
 }
 
 module.exports = redirects;

@@ -6,19 +6,16 @@ import TestApp from 'playwright/TestApp';
 
 import AddressEntity from './AddressEntity';
 
-const iconSizes = [ 'md', 'lg' ];
+const iconSizes = ['md', 'lg'];
 
 test.use({ viewport: { width: 180, height: 140 } });
 
 test.describe('icon size', () => {
   iconSizes.forEach((size) => {
-    test(size, async({ mount }) => {
+    test(size, async ({ mount }) => {
       const component = await mount(
         <TestApp>
-          <AddressEntity
-            address={ addressMock.withoutName }
-            iconSize={ size }
-          />
+          <AddressEntity address={addressMock.withoutName} iconSize={size} />
         </TestApp>,
       );
 
@@ -28,12 +25,10 @@ test.describe('icon size', () => {
 });
 
 test.describe('contract', () => {
-  test('unverified', async({ mount, page }) => {
+  test('unverified', async ({ mount, page }) => {
     const component = await mount(
       <TestApp>
-        <AddressEntity
-          address={{ ...addressMock.contract, is_verified: false }}
-        />
+        <AddressEntity address={{ ...addressMock.contract, is_verified: false }} />
       </TestApp>,
     );
 
@@ -41,12 +36,10 @@ test.describe('contract', () => {
     await expect(page).toHaveScreenshot();
   });
 
-  test('verified', async({ mount }) => {
+  test('verified', async ({ mount }) => {
     const component = await mount(
       <TestApp>
-        <AddressEntity
-          address={{ ...addressMock.contract, is_verified: true }}
-        />
+        <AddressEntity address={{ ...addressMock.contract, is_verified: true }} />
       </TestApp>,
     );
 
@@ -55,26 +48,20 @@ test.describe('contract', () => {
 });
 
 test.describe('loading', () => {
-  test('without alias', async({ mount }) => {
+  test('without alias', async ({ mount }) => {
     const component = await mount(
       <TestApp>
-        <AddressEntity
-          address={ addressMock.withoutName }
-          isLoading
-        />
+        <AddressEntity address={addressMock.withoutName} isLoading />
       </TestApp>,
     );
 
     await expect(component).toHaveScreenshot();
   });
 
-  test('with alias', async({ mount }) => {
+  test('with alias', async ({ mount }) => {
     const component = await mount(
       <TestApp>
-        <AddressEntity
-          address={ addressMock.withName }
-          isLoading
-        />
+        <AddressEntity address={addressMock.withName} isLoading />
       </TestApp>,
     );
 
@@ -82,54 +69,40 @@ test.describe('loading', () => {
   });
 });
 
-test('external link', async({ mount }) => {
+test('external link', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <AddressEntity
-        address={ addressMock.withoutName }
-        isExternal
-      />
+      <AddressEntity address={addressMock.withoutName} isExternal />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('no link', async({ mount }) => {
+test('no link', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <AddressEntity
-        address={ addressMock.withoutName }
-        noLink
-      />
+      <AddressEntity address={addressMock.withoutName} noLink />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('customization', async({ mount }) => {
+test('customization', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <AddressEntity
-        address={ addressMock.withoutName }
-        truncation="constant"
-        p={ 3 }
-        borderWidth="1px"
-        borderColor="blue.700"
-      />
+      <AddressEntity address={addressMock.withoutName} truncation="constant" p={3} borderWidth="1px" borderColor="blue.700" />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('hover', async({ page, mount }) => {
+test('hover', async ({ page, mount }) => {
   const component = await mount(
     <TestApp>
-      <AddressEntity
-        address={ addressMock.withoutName }
-      />
+      <AddressEntity address={addressMock.withoutName} />
     </TestApp>,
   );
 

@@ -26,7 +26,7 @@ const ChainIndicatorItem = ({ id, title, value, icon, isSelected, onClick, stats
 
   const handleClick = React.useCallback(() => {
     onClick(id);
-  }, [ id, onClick ]);
+  }, [id, onClick]);
 
   const valueContent = (() => {
     if (isMobile) {
@@ -36,9 +36,9 @@ const ChainIndicatorItem = ({ id, title, value, icon, isSelected, onClick, stats
     if (stats.isLoading) {
       return (
         <Skeleton
-          h={ 3 }
+          h={3}
           w="70px"
-          my={ 1.5 }
+          my={1.5}
           // ssr: isMobile = undefined, isLoading = true
           display={{ base: 'none', lg: 'block' }}
         />
@@ -46,33 +46,43 @@ const ChainIndicatorItem = ({ id, title, value, icon, isSelected, onClick, stats
     }
 
     if (stats.isError) {
-      return <Text variant="secondary" fontWeight={ 400 }>no data</Text>;
+      return (
+        <Text variant="secondary" fontWeight={400}>
+          no data
+        </Text>
+      );
     }
 
-    return <Text variant="secondary" fontWeight={ 600 }>{ value(stats.data) }</Text>;
+    return (
+      <Text variant="secondary" fontWeight={600}>
+        {value(stats.data)}
+      </Text>
+    );
   })();
 
   return (
     <Flex
       alignItems="center"
-      columnGap={ 3 }
-      p={ 4 }
+      columnGap={3}
+      p={4}
       as="li"
       borderRadius="md"
       cursor="pointer"
-      onClick={ handleClick }
-      bgColor={ isSelected ? activeBgColor : 'inherit' }
-      boxShadow={ isSelected ? 'lg' : 'none' }
-      zIndex={ isSelected ? 1 : 'initial' }
+      onClick={handleClick}
+      bgColor={isSelected ? activeBgColor : 'inherit'}
+      boxShadow={isSelected ? 'lg' : 'none'}
+      zIndex={isSelected ? 1 : 'initial'}
       _hover={{
         activeBgColor,
         zIndex: 1,
       }}
     >
-      { icon }
+      {icon}
       <Box>
-        <Text fontFamily="heading" fontWeight={ 500 }>{ title }</Text>
-        { valueContent }
+        <Text fontFamily="heading" fontWeight={500}>
+          {title}
+        </Text>
+        {valueContent}
       </Box>
     </Flex>
   );

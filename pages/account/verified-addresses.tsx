@@ -9,7 +9,7 @@ const VerifiedAddresses = dynamic(() => import('ui/pages/VerifiedAddresses'), { 
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/account/verified-addresses">
-      <VerifiedAddresses/>
+      <VerifiedAddresses />
     </PageNextJs>
   );
 };

@@ -21,11 +21,7 @@ const ProfileMenuContent = ({ data, onNavLinkClick }: Props) => {
   const primaryTextColor = useColorModeValue('blackAlpha.800', 'whiteAlpha.800');
 
   const handleSingOutClick = React.useCallback(() => {
-    mixpanel.logEvent(
-      mixpanel.EventTypes.ACCOUNT_ACCESS,
-      { Action: 'Logged out' },
-      { send_immediately: true },
-    );
+    mixpanel.logEvent(mixpanel.EventTypes.ACCOUNT_ACCESS, { Action: 'Logged out' }, { send_immediately: true });
   }, []);
 
   if (!feature.isEnabled) {
@@ -34,44 +30,26 @@ const ProfileMenuContent = ({ data, onNavLinkClick }: Props) => {
 
   return (
     <Box>
-      { (data?.name || data?.nickname) && (
-        <Text
-          fontSize="sm"
-          fontWeight={ 500 }
-          color={ primaryTextColor }
-          { ...getDefaultTransitionProps() }
-        >
-        Signed in as { data.name || data.nickname }
+      {(data?.name || data?.nickname) && (
+        <Text fontSize="sm" fontWeight={500} color={primaryTextColor} {...getDefaultTransitionProps()}>
+          Signed in as {data.name || data.nickname}
         </Text>
-      ) }
-      { data?.email && (
-        <Text
-          fontSize="sm"
-          mb={ 1 }
-          fontWeight={ 500 }
-          color="gray.500"
-          { ...getDefaultTransitionProps() }
-        >
-          { data.email }
+      )}
+      {data?.email && (
+        <Text fontSize="sm" mb={1} fontWeight={500} color="gray.500" {...getDefaultTransitionProps()}>
+          {data.email}
         </Text>
-      ) }
-      <NavLink item={ profileItem } isActive={ undefined } px="0px" isCollapsed={ false } onClick={ onNavLinkClick }/>
-      <Box as="nav" mt={ 2 } pt={ 2 } borderTopColor="divider" borderTopWidth="1px" { ...getDefaultTransitionProps() }>
+      )}
+      <NavLink item={profileItem} isActive={undefined} px="0px" isCollapsed={false} onClick={onNavLinkClick} />
+      <Box as="nav" mt={2} pt={2} borderTopColor="divider" borderTopWidth="1px" {...getDefaultTransitionProps()}>
         <VStack as="ul" spacing="0" alignItems="flex-start" overflow="hidden">
-          { accountNavItems.map((item) => (
-            <NavLink
-              key={ item.text }
-              item={ item }
-              isActive={ undefined }
-              isCollapsed={ false }
-              px="0px"
-              onClick={ onNavLinkClick }
-            />
-          )) }
+          {accountNavItems.map((item) => (
+            <NavLink key={item.text} item={item} isActive={undefined} isCollapsed={false} px="0px" onClick={onNavLinkClick} />
+          ))}
         </VStack>
       </Box>
-      <Box mt={ 2 } pt={ 3 } borderTopColor="divider" borderTopWidth="1px" { ...getDefaultTransitionProps() }>
-        <Button size="sm" width="full" variant="outline" as="a" href={ feature.logoutUrl } onClick={ handleSingOutClick }>
+      <Box mt={2} pt={3} borderTopColor="divider" borderTopWidth="1px" {...getDefaultTransitionProps()}>
+        <Button size="sm" width="full" variant="outline" as="a" href={feature.logoutUrl} onClick={handleSingOutClick}>
           Sign Out
         </Button>
       </Box>

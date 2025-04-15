@@ -8,8 +8,6 @@ export function safe(): CspDev.DirectiveDescriptor {
   }
 
   return {
-    'connect-src': [
-      '*.safe.global',
-    ],
+    'connect-src': ['*.safe.global'],
   };
 }

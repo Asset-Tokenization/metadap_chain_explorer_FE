@@ -9,8 +9,8 @@ const ComputorTxs = dynamic(() => import('ui/pages/ComputorTxs'), { ssr: false }
 
 const Page: NextPage<Props> = (props: Props) => {
   return (
-    <PageNextJs pathname="/txs/computor/[hash]" query={ props }>
-      <ComputorTxs/>
+    <PageNextJs pathname="/txs/computor/[hash]" query={props}>
+      <ComputorTxs />
     </PageNextJs>
   );
 };

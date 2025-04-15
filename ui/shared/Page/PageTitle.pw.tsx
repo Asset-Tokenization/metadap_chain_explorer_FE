@@ -8,11 +8,13 @@ import DefaultView from './specs/DefaultView';
 import LongNameAndManyTags from './specs/LongNameAndManyTags';
 import WithTextAd from './specs/WithTextAd';
 
-test.beforeEach(async({ page }) => {
-  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(textAdMock.duck),
-  }));
+test.beforeEach(async ({ page }) => {
+  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(textAdMock.duck),
+    }),
+  );
   await page.route(textAdMock.duck.ad.thumbnail, (route) => {
     return route.fulfill({
       status: 200,
@@ -27,30 +29,30 @@ test.beforeEach(async({ page }) => {
   });
 });
 
-test('default view +@mobile', async({ mount }) => {
+test('default view +@mobile', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <DefaultView/>
+      <DefaultView />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('with text ad +@mobile', async({ mount }) => {
+test('with text ad +@mobile', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <WithTextAd/>
+      <WithTextAd />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('with long name and many tags +@mobile', async({ mount }) => {
+test('with long name and many tags +@mobile', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <LongNameAndManyTags/>
+      <LongNameAndManyTags />
     </TestApp>,
   );
 

@@ -8,7 +8,7 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   showShadow?: boolean;
-}
+};
 
 const TOP_UP = 106;
 const TOP_DOWN = 0;
@@ -25,15 +25,15 @@ const ActionBar = ({ children, className, showShadow }: Props) => {
 
   return (
     <Flex
-      className={ className }
-      backgroundColor={ bgColor }
-      py={ 6 }
+      className={className}
+      backgroundColor={bgColor}
+      py={6}
       mx={{ base: -4, lg: 0 }}
       px={{ base: 4, lg: 0 }}
       justifyContent="space-between"
       width={{ base: '100vw', lg: 'unset' }}
       position="sticky"
-      top={{ base: scrollDirection === 'down' ? `${ TOP_DOWN }px` : `${ TOP_UP }px`, lg: 0 }}
+      top={{ base: scrollDirection === 'down' ? `${TOP_DOWN}px` : `${TOP_UP}px`, lg: 0 }}
       transitionProperty="top,box-shadow,background-color,color"
       transitionDuration="normal"
       zIndex={{ base: 'sticky2', lg: 'docked' }}
@@ -41,9 +41,9 @@ const ActionBar = ({ children, className, showShadow }: Props) => {
         base: isSticky ? 'md' : 'none',
         lg: isSticky && showShadow ? 'action_bar' : 'none',
       }}
-      ref={ ref }
+      ref={ref}
     >
-      { children }
+      {children}
     </Flex>
   );
 };

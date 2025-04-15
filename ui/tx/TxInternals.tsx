@@ -22,8 +22,8 @@ import TxSocketAlert from 'ui/tx/TxSocketAlert';
 import useFetchTxInfo from 'ui/tx/useFetchTxInfo';
 
 const SORT_SEQUENCE: Record<SortField, Array<Sort | undefined>> = {
-  value: [ 'value-desc', 'value-asc', undefined ],
-  'gas-limit': [ 'gas-limit-desc', 'gas-limit-asc', undefined ],
+  value: ['value-desc', 'value-asc', undefined],
+  'gas-limit': ['gas-limit-desc', 'gas-limit-asc', undefined],
 };
 
 const getNextSortValue = (getNextSortValueShared<SortField, Sort>).bind(undefined, SORT_SEQUENCE);
@@ -66,7 +66,7 @@ const TxInternals = () => {
   // filters are not implemented yet in api
   // const [ filters, setFilters ] = React.useState<Array<TxInternalsType>>([]);
   // const [ searchTerm, setSearchTerm ] = React.useState<string>('');
-  const [ sort, setSort ] = React.useState<Sort>();
+  const [sort, setSort] = React.useState<Sort>();
   const txInfo = useFetchTxInfo({ updateDelay: 5 * SECOND });
   const { data, isPlaceholderData, isError, pagination } = useQueryWithPages({
     resourceName: 'tx_internal_txs',
@@ -81,59 +81,58 @@ const TxInternals = () => {
   //   setFilters(nextValue);
   // }, []);
 
-  const handleSortToggle = React.useCallback((field: SortField) => {
-    return () => {
-      if (isPlaceholderData) {
-        return;
-      }
-      setSort(getNextSortValue(field));
-    };
-  }, [ isPlaceholderData ]);
+  const handleSortToggle = React.useCallback(
+    (field: SortField) => {
+      return () => {
+        if (isPlaceholderData) {
+          return;
+        }
+        setSort(getNextSortValue(field));
+      };
+    },
+    [isPlaceholderData],
+  );
 
   if (!txInfo.isPlaceholderData && !txInfo.isError && !txInfo.data?.status) {
-    return txInfo.socketStatus ? <TxSocketAlert status={ txInfo.socketStatus }/> : <TxPendingAlert/>;
+    return txInfo.socketStatus ? <TxSocketAlert status={txInfo.socketStatus} /> : <TxPendingAlert />;
   }
 
   const filteredData = data?.items
     .slice()
-  // .filter(({ type }) => filters.length > 0 ? filters.includes(type) : true)
-  // .filter(searchFn(searchTerm))
+    // .filter(({ type }) => filters.length > 0 ? filters.includes(type) : true)
+    // .filter(searchFn(searchTerm))
     .sort(sortFn(sort));
 
   const content = filteredData ? (
     <>
-      <Show below="lg" ssr={ false }><TxInternalsList data={ filteredData } isLoading={ isPlaceholderData }/></Show>
-      <Hide below="lg" ssr={ false }>
-        <TxInternalsTable
-          data={ filteredData }
-          sort={ sort }
-          onSortToggle={ handleSortToggle }
-          top={ pagination.isVisible ? 80 : 0 }
-          isLoading={ isPlaceholderData }
-        />
+      <Show below="lg" ssr={false}>
+        <TxInternalsList data={filteredData} isLoading={isPlaceholderData} />
+      </Show>
+      <Hide below="lg" ssr={false}>
+        <TxInternalsTable data={filteredData} sort={sort} onSortToggle={handleSortToggle} top={pagination.isVisible ? 80 : 0} isLoading={isPlaceholderData} />
       </Hide>
     </>
   ) : null;
 
   const actionBar = pagination.isVisible ? (
-    <ActionBar mt={ -6 }>
-      { /* <TxInternalsFilter onFilterChange={ handleFilterChange } defaultFilters={ filters } appliedFiltersNum={ filters.length }/> */ }
-      { /* <FilterInput onChange={ setSearchTerm } maxW="360px" ml={ 3 } size="xs" placeholder="Search by addresses, hash, method..."/> */ }
-      <Pagination ml="auto" { ...pagination }/>
+    <ActionBar mt={-6}>
+      {/* <TxInternalsFilter onFilterChange={ handleFilterChange } defaultFilters={ filters } appliedFiltersNum={ filters.length }/> */}
+      {/* <FilterInput onChange={ setSearchTerm } maxW="360px" ml={ 3 } size="xs" placeholder="Search by addresses, hash, method..."/> */}
+      <Pagination ml="auto" {...pagination} />
     </ActionBar>
   ) : null;
 
   return (
     <DataListDisplay
-      isError={ isError || txInfo.isError }
-      items={ data?.items }
+      isError={isError || txInfo.isError}
+      items={data?.items}
       emptyText="There are no internal transactions for this transaction."
       // filterProps={{
       // emptyFilteredText: `Couldn${ apos }t find any transaction that matches your query.`.
       // hasActiveFilters: Boolean(filters.length || searchTerm),
       // }}
-      content={ content }
-      actionBar={ actionBar }
+      content={content}
+      actionBar={actionBar}
     />
   );
 };

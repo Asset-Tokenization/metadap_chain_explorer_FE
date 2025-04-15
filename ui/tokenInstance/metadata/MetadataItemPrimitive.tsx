@@ -17,7 +17,6 @@ interface Props {
 }
 
 const MetadataItemPrimitive = ({ name, value, isItem = true, isFlat, level }: Props) => {
-
   const Component = isItem ? MetadataAccordionItem : Box;
 
   const content = (() => {
@@ -25,20 +24,20 @@ const MetadataItemPrimitive = ({ name, value, isItem = true, isFlat, level }: Pr
       case 'string': {
         const url = urlParser(value);
         if (url) {
-          return <LinkExternal href={ url.toString() }>{ value }</LinkExternal>;
+          return <LinkExternal href={url.toString()}>{value}</LinkExternal>;
         }
       }
       // eslint-disable-next-line no-fallthrough
       default: {
-        return <div>{ String(value) }</div>;
+        return <div>{String(value)}</div>;
       }
     }
   })();
 
   return (
-    <Component level={ level } isFlat={ isFlat }>
-      { name && <MetadataAccordionItemTitle name={ name }/> }
-      { content }
+    <Component level={level} isFlat={isFlat}>
+      {name && <MetadataAccordionItemTitle name={name} />}
+      {content}
     </Component>
   );
 };

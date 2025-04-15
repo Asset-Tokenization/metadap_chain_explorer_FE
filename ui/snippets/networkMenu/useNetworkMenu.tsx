@@ -14,20 +14,24 @@ export default function useNetworkMenu() {
 
   const apiFetch = useApiFetch();
   const { isLoading, data } = useQuery<unknown, ResourceError<unknown>, Array<FeaturedNetwork>>(
-    [ 'featured-network' ],
-    async() => apiFetch(config.UI.sidebar.featuredNetworks || '', undefined, { resource: 'featured-network' }),
+    ['featured-network'],
+    async () => apiFetch(config.UI.sidebar.featuredNetworks || '', undefined, { resource: 'featured-network' }),
     {
       enabled: Boolean(config.UI.sidebar.featuredNetworks) && isOpen,
       staleTime: Infinity,
-    });
+    },
+  );
 
-  return React.useMemo(() => ({
-    isOpen,
-    onClose,
-    onOpen,
-    onToggle,
-    isLoading,
-    data,
-    availableTabs: NETWORK_GROUPS.filter((tab) => data?.some(({ group }) => group === tab)),
-  }), [ isOpen, onClose, onOpen, onToggle, data, isLoading ]);
+  return React.useMemo(
+    () => ({
+      isOpen,
+      onClose,
+      onOpen,
+      onToggle,
+      isLoading,
+      data,
+      availableTabs: NETWORK_GROUPS.filter((tab) => data?.some(({ group }) => group === tab)),
+    }),
+    [isOpen, onClose, onOpen, onToggle, data, isLoading],
+  );
 }

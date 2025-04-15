@@ -15,35 +15,32 @@ const Hint = ({ label, className, tooltipProps, isLoading }: Props) => {
   // have to implement controlled tooltip because of the issue - https://github.com/chakra-ui/chakra-ui/issues/7107
   const { isOpen, onOpen, onToggle, onClose } = useDisclosure();
 
-  const handleClick = React.useCallback((event: React.MouseEvent) => {
-    event.stopPropagation();
-    onToggle();
-  }, [ onToggle ]);
+  const handleClick = React.useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      onToggle();
+    },
+    [onToggle],
+  );
 
   if (isLoading) {
-    return <Skeleton boxSize={ 5 } borderRadius="sm"/>;
+    return <Skeleton boxSize={5} borderRadius="sm" />;
   }
 
   return (
-    <Tooltip
-      label={ label }
-      placement="top"
-      maxW="320px"
-      isOpen={ isOpen }
-      { ...tooltipProps }
-    >
+    <Tooltip label={label} placement="top" maxW="320px" isOpen={isOpen} {...tooltipProps}>
       <IconButton
         colorScheme="none"
         aria-label="hint"
-        icon={ <InfoIcon/> }
-        boxSize={ 5 }
+        icon={<InfoIcon />}
+        boxSize={5}
         variant="simple"
         display="inline-block"
-        flexShrink={ 0 }
-        className={ className }
-        onMouseEnter={ onOpen }
-        onMouseLeave={ onClose }
-        onClick={ handleClick }
+        flexShrink={0}
+        className={className}
+        onMouseEnter={onOpen}
+        onMouseLeave={onClose}
+        onClick={handleClick}
       />
     </Tooltip>
   );

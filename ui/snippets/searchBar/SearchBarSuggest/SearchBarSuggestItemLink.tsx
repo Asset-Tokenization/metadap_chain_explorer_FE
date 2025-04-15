@@ -6,16 +6,16 @@ type Props = {
   href?: string;
   target?: string;
   children: React.ReactNode;
-}
+};
 
 const SearchBarSuggestItemLink = ({ onClick, href, target, children }: Props) => {
   return (
     <chakra.a
-      py={ 3 }
-      px={ 1 }
+      py={3}
+      px={1}
       display="flex"
       flexDir="column"
-      rowGap={ 2 }
+      rowGap={2}
       borderColor="divider"
       borderBottomWidth="1px"
       _last={{
@@ -28,11 +28,11 @@ const SearchBarSuggestItemLink = ({ onClick, href, target, children }: Props) =>
       _first={{
         mt: 2,
       }}
-      onClick={ onClick }
-      href={ href }
-      target={ target }
+      onClick={onClick}
+      href={href}
+      target={target}
     >
-      { children }
+      {children}
     </chakra.a>
   );
 };

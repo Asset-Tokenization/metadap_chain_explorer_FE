@@ -57,48 +57,58 @@ export function hasContent(data: TokenVerifiedInfo): boolean {
 }
 
 const Content = ({ data }: Props) => {
-  const docs = data.docs ? <DocsLink href={ data.docs }/> : null;
-  const support = data.support ? <SupportLink url={ data.support }/> : null;
-  const description = data.projectDescription ? <Text fontSize="sm" mt={ 3 }>{ data.projectDescription }</Text> : null;
+  const docs = data.docs ? <DocsLink href={data.docs} /> : null;
+  const support = data.support ? <SupportLink url={data.support} /> : null;
+  const description = data.projectDescription ? (
+    <Text fontSize="sm" mt={3}>
+      {data.projectDescription}
+    </Text>
+  ) : null;
 
-  const socialLinks = SOCIAL_LINKS
-    .map((link) => ({ ...link, href: data[link.field] }))
-    .filter(({ href }) => href);
+  const socialLinks = SOCIAL_LINKS.map((link) => ({ ...link, href: data[link.field] })).filter(({ href }) => href);
 
-  const priceTickersLinks = PRICE_TICKERS
-    .map((link) => ({ ...link, href: data[link.field] }))
-    .filter(({ href }) => href);
+  const priceTickersLinks = PRICE_TICKERS.map((link) => ({ ...link, href: data[link.field] })).filter(({ href }) => href);
 
   return (
-    <Flex fontSize="sm" flexDir="column" rowGap={ 5 }>
-      { (description || docs || support) && (
+    <Flex fontSize="sm" flexDir="column" rowGap={5}>
+      {(description || docs || support) && (
         <div>
-          <Text variant="secondary" fontSize="xs">Description and support info</Text>
-          { description }
-          { (docs || support) && (
-            <Flex alignItems="center" flexWrap="wrap" columnGap={ 6 } mt={ 3 }>
-              { support }
-              { docs }
+          <Text variant="secondary" fontSize="xs">
+            Description and support info
+          </Text>
+          {description}
+          {(docs || support) && (
+            <Flex alignItems="center" flexWrap="wrap" columnGap={6} mt={3}>
+              {support}
+              {docs}
             </Flex>
-          ) }
+          )}
         </div>
-      ) }
-      { socialLinks.length > 0 && (
+      )}
+      {socialLinks.length > 0 && (
         <div>
-          <Text variant="secondary" fontSize="xs">Links</Text>
-          <Grid templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} columnGap={ 4 } rowGap={ 3 } mt={ 3 }>
-            { socialLinks.map((link) => <ServiceLink key={ link.field } { ...link }/>) }
+          <Text variant="secondary" fontSize="xs">
+            Links
+          </Text>
+          <Grid templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} columnGap={4} rowGap={3} mt={3}>
+            {socialLinks.map((link) => (
+              <ServiceLink key={link.field} {...link} />
+            ))}
           </Grid>
         </div>
-      ) }
-      { priceTickersLinks.length > 0 && (
+      )}
+      {priceTickersLinks.length > 0 && (
         <div>
-          <Text variant="secondary" fontSize="xs">Crypto markets</Text>
-          <Grid templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} columnGap={ 4 } rowGap={ 3 } mt={ 3 }>
-            { priceTickersLinks.map((link) => <ServiceLink key={ link.field } { ...link }/>) }
+          <Text variant="secondary" fontSize="xs">
+            Crypto markets
+          </Text>
+          <Grid templateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} columnGap={4} rowGap={3} mt={3}>
+            {priceTickersLinks.map((link) => (
+              <ServiceLink key={link.field} {...link} />
+            ))}
           </Grid>
         </div>
-      ) }
+      )}
     </Flex>
   );
 };

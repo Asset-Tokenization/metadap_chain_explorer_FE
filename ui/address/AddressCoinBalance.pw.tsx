@@ -16,19 +16,23 @@ const hooksConfig = {
   },
 };
 
-test('base view +@dark-mode +@mobile', async({ mount, page }) => {
-  await page.route(BALANCE_HISTORY_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(balanceHistoryMock.baseResponse),
-  }));
-  await page.route(BALANCE_HISTORY_CHART_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(balanceHistoryMock.chartResponse),
-  }));
+test('base view +@dark-mode +@mobile', async ({ mount, page }) => {
+  await page.route(BALANCE_HISTORY_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(balanceHistoryMock.baseResponse),
+    }),
+  );
+  await page.route(BALANCE_HISTORY_CHART_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(balanceHistoryMock.chartResponse),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <AddressCoinBalance/>
+      <AddressCoinBalance />
     </TestApp>,
     { hooksConfig },
   );

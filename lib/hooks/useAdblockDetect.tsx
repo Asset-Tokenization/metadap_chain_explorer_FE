@@ -18,6 +18,6 @@ export default function useAdblockDetect() {
         cookies.set(cookies.NAMES.ADBLOCK_DETECTED, 'true', { expires: 1 });
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }

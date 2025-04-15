@@ -30,7 +30,7 @@ interface Props {
 
 const HashStringShortenDynamic = ({ hash, fontWeight = '400', isTooltipDisabled, tailLength = TAIL_LENGTH, as = 'span' }: Props) => {
   const elementRef = useRef<HTMLSpanElement>(null);
-  const [ displayedString, setDisplayedString ] = React.useState(hash);
+  const [displayedString, setDisplayedString] = React.useState(hash);
 
   const isFontFaceLoaded = useFontFaceObserver([
     { family: BODY_TYPEFACE, weight: String(fontWeight) as FontFace['weight'] },
@@ -56,7 +56,7 @@ const HashStringShortenDynamic = ({ hash, fontWeight = '400', isTooltipDisabled,
       let rightI = hash.length - tailLength;
 
       while (rightI - leftI > 1) {
-        const medI = ((rightI - leftI) % 2) ? leftI + (rightI - leftI + 1) / 2 : leftI + (rightI - leftI) / 2;
+        const medI = (rightI - leftI) % 2 ? leftI + (rightI - leftI + 1) / 2 : leftI + (rightI - leftI) / 2;
         const res = hash.slice(0, medI) + '...' + tail;
         shadowEl.textContent = res;
         if (getWidth(shadowEl) < parentWidth) {
@@ -71,14 +71,14 @@ const HashStringShortenDynamic = ({ hash, fontWeight = '400', isTooltipDisabled,
     }
 
     parent.removeChild(shadowEl);
-  }, [ hash, tailLength ]);
+  }, [hash, tailLength]);
 
   // we want to do recalculation when isFontFaceLoaded flag is changed
   // but we don't want to create more resize event listeners
   // that's why there are separate useEffect hooks
   useEffect(() => {
     calculateString();
-  }, [ calculateString, isFontFaceLoaded ]);
+  }, [calculateString, isFontFaceLoaded]);
 
   useEffect(() => {
     const resizeHandler = _debounce(calculateString, 100);
@@ -88,14 +88,20 @@ const HashStringShortenDynamic = ({ hash, fontWeight = '400', isTooltipDisabled,
     return function cleanup() {
       resizeObserver.unobserve(document.body);
     };
-  }, [ calculateString ]);
+  }, [calculateString]);
 
-  const content = <chakra.span ref={ elementRef } as={ as }>{ displayedString }</chakra.span>;
+  const content = (
+    <chakra.span ref={elementRef} as={as}>
+      {displayedString}
+    </chakra.span>
+  );
   const isTruncated = hash.length !== displayedString.length;
 
   if (isTruncated) {
     return (
-      <Tooltip label={ hash } isDisabled={ isTooltipDisabled } maxW={{ base: '100vw', lg: '400px' }}>{ content }</Tooltip>
+      <Tooltip label={hash} isDisabled={isTooltipDisabled} maxW={{ base: '100vw', lg: '400px' }}>
+        {content}
+      </Tooltip>
     );
   }
 

@@ -19,7 +19,7 @@ export async function getAllFileEntries(dataTransferItemList: DataTransferItemLi
     if (entry?.isFile) {
       fileEntries.push(entry as FileSystemFileEntry);
     } else if (entry?.isDirectory && 'createReader' in entry) {
-      queue.push(...await readAllDirectoryEntries(entry.createReader()));
+      queue.push(...(await readAllDirectoryEntries(entry.createReader())));
     }
   }
   return fileEntries;
@@ -44,20 +44,17 @@ async function readAllDirectoryEntries(directoryReader: DirectoryReader) {
 async function readEntriesPromise(directoryReader: DirectoryReader): Promise<Array<FileSystemFileEntry> | undefined> {
   try {
     return await new Promise((resolve, reject) => {
-      directoryReader.readEntries(
-        (fileEntry) => {
-          resolve(fileEntry as Array<FileSystemFileEntry>);
-        },
-        reject,
-      );
+      directoryReader.readEntries((fileEntry) => {
+        resolve(fileEntry as Array<FileSystemFileEntry>);
+      }, reject);
     });
   } catch (err) {}
 }
 
 export function convertFileEntryToFile(entry: FileSystemFileEntry): Promise<File> {
   return new Promise((resolve) => {
-    entry.file(async(file: File) => {
-    //   const newFile = new File([ file ], entry.fullPath, { lastModified: file.lastModified, type: file.type });
+    entry.file(async (file: File) => {
+      //   const newFile = new File([ file ], entry.fullPath, { lastModified: file.lastModified, type: file.type });
       resolve(file);
     });
   });

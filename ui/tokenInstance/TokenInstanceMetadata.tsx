@@ -9,7 +9,7 @@ import RawDataSnippet from 'ui/shared/RawDataSnippet';
 
 import MetadataAccordion from './metadata/MetadataAccordion';
 
-type Format = 'JSON' | 'Table'
+type Format = 'JSON' | 'Table';
 
 interface Props {
   data: TokenInstance['metadata'] | undefined;
@@ -17,35 +17,33 @@ interface Props {
 }
 
 const TokenInstanceMetadata = ({ data, isPlaceholderData }: Props) => {
-  const [ format, setFormat ] = React.useState<Format>('Table');
+  const [format, setFormat] = React.useState<Format>('Table');
 
   const handleSelectChange = React.useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     setFormat(event.target.value as Format);
   }, []);
 
   if (isPlaceholderData) {
-    return <ContentLoader/>;
+    return <ContentLoader />;
   }
 
   if (!data) {
     return <Box>There is no metadata for this NFT</Box>;
   }
 
-  const content = format === 'Table' ?
-    <MetadataAccordion data={ data }/> :
-    <RawDataSnippet data={ JSON.stringify(data, undefined, 4) } showCopy={ false }/>;
+  const content = format === 'Table' ? <MetadataAccordion data={data} /> : <RawDataSnippet data={JSON.stringify(data, undefined, 4)} showCopy={false} />;
 
   return (
     <Box>
-      <Flex alignItems="center" mb={ 6 }>
-        <chakra.span fontWeight={ 500 }>Metadata</chakra.span>
-        <Select size="xs" borderRadius="base" value={ format } onChange={ handleSelectChange } focusBorderColor="none" w="auto" ml={ 5 }>
+      <Flex alignItems="center" mb={6}>
+        <chakra.span fontWeight={500}>Metadata</chakra.span>
+        <Select size="xs" borderRadius="base" value={format} onChange={handleSelectChange} focusBorderColor="none" w="auto" ml={5}>
           <option value="Table">Table</option>
           <option value="JSON">JSON</option>
         </Select>
-        { format === 'JSON' && <CopyToClipboard text={ JSON.stringify(data) } ml="auto"/> }
+        {format === 'JSON' && <CopyToClipboard text={JSON.stringify(data)} ml="auto" />}
       </Flex>
-      { content }
+      {content}
     </Box>
   );
 };

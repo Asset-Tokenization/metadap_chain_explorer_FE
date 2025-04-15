@@ -25,7 +25,7 @@ const PROP_TO_TAB = {
 
 const AddressCounterItem = ({ prop, query, address, onClick, isAddressQueryLoading }: Props) => {
   if (query.isPlaceholderData || isAddressQueryLoading) {
-    return <Skeleton h={ 5 } w="80px" borderRadius="full"/>;
+    return <Skeleton h={5} w="80px" borderRadius="full" />;
   }
 
   const data = query.data?.[prop];
@@ -36,7 +36,7 @@ const AddressCounterItem = ({ prop, query, address, onClick, isAddressQueryLoadi
 
   switch (prop) {
     case 'gas_usage_count':
-      return <span>{ BigNumber(data).toFormat() }</span>;
+      return <span>{BigNumber(data).toFormat()}</span>;
     case 'transactions_count':
     case 'token_transfers_count':
     case 'validations_count': {
@@ -44,8 +44,8 @@ const AddressCounterItem = ({ prop, query, address, onClick, isAddressQueryLoadi
         return <span>0</span>;
       }
       return (
-        <LinkInternal href={ route({ pathname: '/address/[hash]', query: { hash: address, tab: PROP_TO_TAB[prop] } }) } onClick={ onClick }>
-          { Number(data).toLocaleString() }
+        <LinkInternal href={route({ pathname: '/address/[hash]', query: { hash: address, tab: PROP_TO_TAB[prop] } })} onClick={onClick}>
+          {Number(data).toLocaleString()}
         </LinkInternal>
       );
     }

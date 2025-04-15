@@ -13,7 +13,7 @@ export const BLOCK: Block = {
   gas_limit: '30000000',
   gas_target_percentage: 55.79,
   gas_used: '6631036',
-  gas_used_percentage: 22.10,
+  gas_used_percentage: 22.1,
   hash: BLOCK_HASH,
   height: 8988736,
   miner: ADDRESS_PARAMS,

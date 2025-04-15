@@ -25,6 +25,7 @@ For more information on migrating from the previous frontend, please see the [fr
 See our [Contribution guide](./docs/CONTRIBUTING.md) for pull request protocol. We expect contributors to follow our [code of conduct](./CODE_OF_CONDUCT.md) when submitting code or comments.
 
 ## Resources
+
 - [App ENVs list](./docs/ENVS.md)
 - [Contribution guide](./docs/CONTRIBUTING.md)
 - [Making a custom build](./docs/CUSTOM_BUILD.md)

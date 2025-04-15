@@ -9,11 +9,13 @@ import AddressVerificationStepSignature from './AddressVerificationStepSignature
 
 const VERIFY_ADDRESS_URL = buildApiUrl('address_verification', { chainId: '1', type: ':verify' });
 
-test('base view', async({ mount, page }) => {
-  await page.route(VERIFY_ADDRESS_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(mocks.ADDRESS_VERIFY_RESPONSE.SUCCESS),
-  }));
+test('base view', async ({ mount, page }) => {
+  await page.route(VERIFY_ADDRESS_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(mocks.ADDRESS_VERIFY_RESPONSE.SUCCESS),
+    }),
+  );
 
   const props = {
     onContinue: () => {},
@@ -24,18 +26,20 @@ test('base view', async({ mount, page }) => {
 
   await mount(
     <TestApp>
-      <AddressVerificationStepSignature { ...props }/>
+      <AddressVerificationStepSignature {...props} />
     </TestApp>,
   );
 
   await expect(page).toHaveScreenshot();
 });
 
-test('INVALID_SIGNER_ERROR view +@mobile', async({ mount, page }) => {
-  await page.route(VERIFY_ADDRESS_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(mocks.ADDRESS_VERIFY_RESPONSE.INVALID_SIGNER_ERROR),
-  }));
+test('INVALID_SIGNER_ERROR view +@mobile', async ({ mount, page }) => {
+  await page.route(VERIFY_ADDRESS_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(mocks.ADDRESS_VERIFY_RESPONSE.INVALID_SIGNER_ERROR),
+    }),
+  );
 
   const props = {
     onContinue: () => {},
@@ -46,7 +50,7 @@ test('INVALID_SIGNER_ERROR view +@mobile', async({ mount, page }) => {
 
   await mount(
     <TestApp>
-      <AddressVerificationStepSignature { ...props }/>
+      <AddressVerificationStepSignature {...props} />
     </TestApp>,
   );
 

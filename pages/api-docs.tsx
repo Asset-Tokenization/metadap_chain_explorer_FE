@@ -9,8 +9,8 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/api-docs">
-      <PageTitle title="API Documentation"/>
-      <SwaggerUI/>
+      <PageTitle title="API Documentation" />
+      <SwaggerUI />
     </PageNextJs>
   );
 };

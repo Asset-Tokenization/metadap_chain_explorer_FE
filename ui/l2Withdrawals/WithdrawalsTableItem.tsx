@@ -12,7 +12,7 @@ import LinkExternal from 'ui/shared/LinkExternal';
 
 const feature = config.features.rollup;
 
- type Props = { item: L2WithdrawalsItem; isLoading?: boolean };
+type Props = { item: L2WithdrawalsItem; isLoading?: boolean };
 
 const WithdrawalsTableItem = ({ item, isLoading }: Props) => {
   const timeAgo = item.l2_timestamp ? dayjs(item.l2_timestamp).fromNow() : 'N/A';
@@ -24,53 +24,36 @@ const WithdrawalsTableItem = ({ item, isLoading }: Props) => {
 
   return (
     <Tr>
-      <Td verticalAlign="middle" fontWeight={ 600 }>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.msg_nonce_version + '-' + item.msg_nonce }</Skeleton>
+      <Td verticalAlign="middle" fontWeight={600}>
+        <Skeleton isLoaded={!isLoading} display="inline-block">
+          {item.msg_nonce_version + '-' + item.msg_nonce}
+        </Skeleton>
       </Td>
+      <Td verticalAlign="middle">{item.from ? <AddressEntity address={item.from} isLoading={isLoading} truncation="constant" /> : 'N/A'}</Td>
       <Td verticalAlign="middle">
-        { item.from ? (
-          <AddressEntity
-            address={ item.from }
-            isLoading={ isLoading }
-            truncation="constant"
-          />
-        ) : 'N/A' }
+        <TxEntity isLoading={isLoading} hash={item.l2_tx_hash} truncation="constant" fontSize="sm" lineHeight={5} />
       </Td>
-      <Td verticalAlign="middle">
-        <TxEntity
-          isLoading={ isLoading }
-          hash={ item.l2_tx_hash }
-          truncation="constant"
-          fontSize="sm"
-          lineHeight={ 5 }
-        />
-      </Td>
-      <Td verticalAlign="middle" pr={ 12 }>
-        <Skeleton isLoaded={ !isLoading } color="text_secondary" display="inline-block">
-          <span> { timeAgo }</span>
+      <Td verticalAlign="middle" pr={12}>
+        <Skeleton isLoaded={!isLoading} color="text_secondary" display="inline-block">
+          <span> {timeAgo}</span>
         </Skeleton>
       </Td>
       <Td verticalAlign="middle">
-        { item.status === 'Ready for relay' ?
-          <LinkExternal href={ feature.withdrawalUrl }>{ item.status }</LinkExternal> :
-          <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.status }</Skeleton>
-        }
+        {item.status === 'Ready for relay' ? (
+          <LinkExternal href={feature.withdrawalUrl}>{item.status}</LinkExternal>
+        ) : (
+          <Skeleton isLoaded={!isLoading} display="inline-block">
+            {item.status}
+          </Skeleton>
+        )}
       </Td>
       <Td verticalAlign="middle">
-        { item.l1_tx_hash ? (
-          <TxEntityL1
-            isLoading={ isLoading }
-            hash={ item.l1_tx_hash }
-            truncation="constant"
-            fontSize="sm"
-            lineHeight={ 5 }
-          />
-        ) :
-          'N/A'
-        }
+        {item.l1_tx_hash ? <TxEntityL1 isLoading={isLoading} hash={item.l1_tx_hash} truncation="constant" fontSize="sm" lineHeight={5} /> : 'N/A'}
       </Td>
       <Td verticalAlign="middle">
-        <Skeleton isLoaded={ !isLoading } color="text_secondary" minW="50px" minH="20px" display="inline-block">{ timeToEnd }</Skeleton>
+        <Skeleton isLoaded={!isLoading} color="text_secondary" minW="50px" minH="20px" display="inline-block">
+          {timeToEnd}
+        </Skeleton>
       </Td>
     </Tr>
   );

@@ -61,7 +61,7 @@ export const TOP_ADDRESS: AddressesItem = {
   is_verified: null,
   name: null,
   private_tags: [],
-  public_tags: [ ],
+  public_tags: [],
   watchlist_names: [],
 };
 

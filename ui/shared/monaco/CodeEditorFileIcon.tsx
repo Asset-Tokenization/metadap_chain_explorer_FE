@@ -23,7 +23,7 @@ const CodeEditorFileIcon = ({ className, fileName }: Props) => {
     return iconFile;
   })();
 
-  return <Icon className={ className } as={ as } boxSize="16px"/>;
+  return <Icon className={className} as={as} boxSize="16px" />;
 };
 
 export default React.memo(chakra(CodeEditorFileIcon));

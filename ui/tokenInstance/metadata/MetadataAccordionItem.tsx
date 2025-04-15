@@ -11,17 +11,17 @@ interface Props {
 const MetadataAccordionItem = ({ children, className, level, isFlat }: Props) => {
   return (
     <AccordionItem
-      className={ className }
+      className={className}
       display="flex"
       alignItems="flex-start"
       flexDir={{ base: 'column', lg: 'row' }}
-      py={ 2 }
-      pl={ isFlat ? 0 : 6 }
-      columnGap={ 3 }
+      py={2}
+      pl={isFlat ? 0 : 6}
+      columnGap={3}
       borderTopWidth="1px"
       borderColor="divider"
       wordBreak="break-all"
-      rowGap={ 1 }
+      rowGap={1}
       _last={{
         borderBottomWidth: level === 0 ? '1px' : '0px',
       }}
@@ -29,7 +29,7 @@ const MetadataAccordionItem = ({ children, className, level, isFlat }: Props) =>
         borderTopWidth: level === 0 ? '1px' : '0px',
       }}
     >
-      { children }
+      {children}
     </AccordionItem>
   );
 };

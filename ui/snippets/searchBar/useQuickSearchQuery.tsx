@@ -7,7 +7,7 @@ import useDebounce from 'lib/hooks/useDebounce';
 export default function useQuickSearchQuery() {
   const router = useRouter();
 
-  const [ searchTerm, setSearchTerm ] = React.useState('');
+  const [searchTerm, setSearchTerm] = React.useState('');
 
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
   const pathname = router.pathname;
@@ -24,12 +24,15 @@ export default function useQuickSearchQuery() {
     queryOptions: { enabled: Boolean(debouncedSearchTerm) },
   });
 
-  return React.useMemo(() => ({
-    searchTerm,
-    debouncedSearchTerm,
-    handleSearchTermChange: setSearchTerm,
-    query,
-    redirectCheckQuery,
-    pathname,
-  }), [ debouncedSearchTerm, pathname, query, redirectCheckQuery, searchTerm ]);
+  return React.useMemo(
+    () => ({
+      searchTerm,
+      debouncedSearchTerm,
+      handleSearchTermChange: setSearchTerm,
+      query,
+      redirectCheckQuery,
+      pathname,
+    }),
+    [debouncedSearchTerm, pathname, query, redirectCheckQuery, searchTerm],
+  );
 }

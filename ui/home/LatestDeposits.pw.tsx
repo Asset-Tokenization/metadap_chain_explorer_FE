@@ -14,15 +14,17 @@ const test = base.extend({
   context: contextWithEnvs(configs.featureEnvs.rollup) as any,
 });
 
-test('default view +@mobile +@dark-mode', async({ mount, page }) => {
-  await page.route(buildApiUrl('homepage_deposits'), (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(depositMock.data.items),
-  }));
+test('default view +@mobile +@dark-mode', async ({ mount, page }) => {
+  await page.route(buildApiUrl('homepage_deposits'), (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(depositMock.data.items),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <LatestDeposits/>
+      <LatestDeposits />
     </TestApp>,
   );
 

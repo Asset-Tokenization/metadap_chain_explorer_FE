@@ -14,9 +14,13 @@ interface Props {
 
 const TxInternalsFilter = ({ onFilterChange, defaultFilters, appliedFiltersNum }: Props) => {
   return (
-    <PopoverFilter appliedFiltersNum={ appliedFiltersNum } contentProps={{ w: { md: '100%', lg: '438px' } }}>
-      <CheckboxGroup size="lg" onChange={ onFilterChange } defaultValue={ defaultFilters }>
-        { TX_INTERNALS_ITEMS.map(({ title, id }) => <Checkbox key={ id } value={ id }><Text fontSize="md">{ title }</Text></Checkbox>) }
+    <PopoverFilter appliedFiltersNum={appliedFiltersNum} contentProps={{ w: { md: '100%', lg: '438px' } }}>
+      <CheckboxGroup size="lg" onChange={onFilterChange} defaultValue={defaultFilters}>
+        {TX_INTERNALS_ITEMS.map(({ title, id }) => (
+          <Checkbox key={id} value={id}>
+            <Text fontSize="md">{title}</Text>
+          </Checkbox>
+        ))}
       </CheckboxGroup>
     </PopoverFilter>
   );

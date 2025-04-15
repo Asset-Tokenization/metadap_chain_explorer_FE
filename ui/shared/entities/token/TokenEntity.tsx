@@ -19,11 +19,8 @@ const Link = chakra((props: LinkProps) => {
   const defaultHref = route({ pathname: '/token/[hash]', query: { ...props.query, hash: props.token.address } });
 
   return (
-    <EntityBase.Link
-      { ...props }
-      href={ props.href ?? defaultHref }
-    >
-      { props.children }
+    <EntityBase.Link {...props} href={props.href ?? defaultHref}>
+      {props.children}
     </EntityBase.Link>
   );
 });
@@ -46,17 +43,17 @@ const Icon = (props: IconProps) => {
   };
 
   if (props.isLoading) {
-    return <Skeleton { ...styles } className={ props.className } flexShrink={ 0 }/>;
+    return <Skeleton {...styles} className={props.className} flexShrink={0} />;
   }
 
   return (
     <Image
-      { ...styles }
-      borderRadius={ props.token.type === 'ERC-20' ? 'full' : 'base' }
-      className={ props.className }
-      src={ props.token.icon_url ?? undefined }
-      alt={ `${ props.token.name || 'token' } logo` }
-      fallback={ <TokenLogoPlaceholder { ...styles }/> }
+      {...styles}
+      borderRadius={props.token.type === 'ERC-20' ? 'full' : 'base'}
+      className={props.className}
+      src={props.token.icon_url ?? undefined}
+      alt={`${props.token.name || 'token'} logo`}
+      fallback={<TokenLogoPlaceholder {...styles} />}
     />
   );
 };
@@ -67,20 +64,15 @@ const Content = chakra((props: ContentProps) => {
   const nameString = [
     !props.onlySymbol && (props.token.name ?? 'Unnamed token'),
     props.onlySymbol && (props.token.symbol ?? ''),
-    props.token.symbol && props.jointSymbol && !props.onlySymbol && `(${ props.token.symbol })`,
-  ].filter(Boolean).join(' ');
+    props.token.symbol && props.jointSymbol && !props.onlySymbol && `(${props.token.symbol})`,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <TruncatedTextTooltip label={ nameString }>
-      <Skeleton
-        isLoaded={ !props.isLoading }
-        display="inline-block"
-        whiteSpace="nowrap"
-        overflow="hidden"
-        textOverflow="ellipsis"
-        height="fit-content"
-      >
-        { nameString }
+    <TruncatedTextTooltip label={nameString}>
+      <Skeleton isLoaded={!props.isLoading} display="inline-block" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis" height="fit-content">
+        {nameString}
       </Skeleton>
     </TruncatedTextTooltip>
   );
@@ -96,24 +88,11 @@ const Symbol = (props: SymbolProps) => {
   }
 
   return (
-    <Skeleton
-      isLoaded={ !props.isLoading }
-      display="inline-flex"
-      alignItems="center"
-      maxW="20%"
-      ml={ 2 }
-      color="text_secondary"
-    >
+    <Skeleton isLoaded={!props.isLoading} display="inline-flex" alignItems="center" maxW="20%" ml={2} color="text_secondary">
       <div>(</div>
-      <TruncatedTextTooltip label={ symbol }>
-        <chakra.span
-          display="inline-block"
-          whiteSpace="nowrap"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          height="fit-content"
-        >
-          { symbol }
+      <TruncatedTextTooltip label={symbol}>
+        <chakra.span display="inline-block" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis" height="fit-content">
+          {symbol}
         </chakra.span>
       </TruncatedTextTooltip>
       <div>)</div>
@@ -124,12 +103,7 @@ const Symbol = (props: SymbolProps) => {
 type CopyProps = Omit<EntityBase.CopyBaseProps, 'text'> & Pick<EntityProps, 'token'>;
 
 const Copy = (props: CopyProps) => {
-  return (
-    <EntityBase.Copy
-      { ...props }
-      text={ props.token.address }
-    />
-  );
+  return <EntityBase.Copy {...props} text={props.token.address} />;
 };
 
 const Container = EntityBase.Container;
@@ -142,27 +116,21 @@ export interface EntityProps extends EntityBase.EntityBaseProps {
 }
 
 const TokenEntity = (props: EntityProps) => {
-  const linkProps = _omit(props, [ 'className' ]);
-  const partsProps = _omit(props, [ 'className', 'onClick' ]);
+  const linkProps = _omit(props, ['className']);
+  const partsProps = _omit(props, ['className', 'onClick']);
 
   return (
-    <Container className={ props.className } w="100%">
-      <Icon { ...partsProps }/>
-      <Link { ...linkProps }>
-        <Content { ...partsProps }/>
+    <Container className={props.className} w="100%">
+      <Icon {...partsProps} />
+      <Link {...linkProps}>
+        <Content {...partsProps} />
       </Link>
-      <Symbol { ...partsProps }/>
-      <Copy { ...partsProps }/>
+      <Symbol {...partsProps} />
+      <Copy {...partsProps} />
     </Container>
   );
 };
 
 export default React.memo(chakra(TokenEntity));
 
-export {
-  Container,
-  Link,
-  Icon,
-  Content,
-  Copy,
-};
+export { Container, Link, Icon, Content, Copy };

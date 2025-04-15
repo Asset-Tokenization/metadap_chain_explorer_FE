@@ -33,26 +33,26 @@ const test = base.extend({
 test.describe('no auth', () => {
   let component: Locator;
 
-  test.beforeEach(async({ mount }) => {
+  test.beforeEach(async ({ mount }) => {
     component = await mount(
       <TestApp>
         <Flex w="100%" minH="100vh" alignItems="stretch">
-          <NavigationDesktop/>
-          <Box bgColor="lightpink" w="100%"/>
+          <NavigationDesktop />
+          <Box bgColor="lightpink" w="100%" />
         </Flex>
       </TestApp>,
       { hooksConfig },
     );
   });
 
-  test('+@dark-mode', async() => {
+  test('+@dark-mode', async () => {
     await expect(component).toHaveScreenshot();
   });
 
   test.describe('xl screen', () => {
     test.use({ viewport: configs.viewport.xl });
 
-    test('+@dark-mode', async() => {
+    test('+@dark-mode', async () => {
       await expect(component).toHaveScreenshot();
     });
   });
@@ -60,10 +60,8 @@ test.describe('no auth', () => {
 
 base.describe('auth', () => {
   const test = base.extend({
-    context: async({ browser }, use) => {
-      const context = await createContextWithEnvs(browser, [
-        { name: 'NEXT_PUBLIC_FEATURED_NETWORKS', value: FEATURED_NETWORKS_URL },
-      ]);
+    context: async ({ browser }, use) => {
+      const context = await createContextWithEnvs(browser, [{ name: 'NEXT_PUBLIC_FEATURED_NETWORKS', value: FEATURED_NETWORKS_URL }]);
       authFixture(context);
       use(context);
     },
@@ -71,26 +69,26 @@ base.describe('auth', () => {
 
   let component: Locator;
 
-  test.beforeEach(async({ mount }) => {
+  test.beforeEach(async ({ mount }) => {
     component = await mount(
       <TestApp>
         <Flex w="100%" minH="100vh" alignItems="stretch">
-          <NavigationDesktop/>
-          <Box bgColor="lightpink" w="100%"/>
+          <NavigationDesktop />
+          <Box bgColor="lightpink" w="100%" />
         </Flex>
       </TestApp>,
       { hooksConfig },
     );
   });
 
-  test('+@dark-mode', async() => {
+  test('+@dark-mode', async () => {
     await expect(component).toHaveScreenshot();
   });
 
   test.describe('xl screen', () => {
     test.use({ viewport: configs.viewport.xl });
 
-    test('+@dark-mode', async() => {
+    test('+@dark-mode', async () => {
       await expect(component).toHaveScreenshot();
     });
   });
@@ -99,12 +97,12 @@ base.describe('auth', () => {
 test.describe('with tooltips', () => {
   test.use({ viewport: configs.viewport.xl });
 
-  test('', async({ mount, page }) => {
+  test('', async ({ mount, page }) => {
     const component = await mount(
       <TestApp>
         <Flex w="100%" minH="100vh" alignItems="stretch">
-          <NavigationDesktop/>
-          <Box bgColor="lightpink" w="100%"/>
+          <NavigationDesktop />
+          <Box bgColor="lightpink" w="100%" />
         </Flex>
       </TestApp>,
       { hooksConfig },
@@ -120,12 +118,12 @@ test.describe('with tooltips', () => {
 test.describe('with submenu', () => {
   let component: Locator;
 
-  test.beforeEach(async({ mount, page }) => {
+  test.beforeEach(async ({ mount, page }) => {
     component = await mount(
       <TestApp>
         <Flex w="100%" minH="100vh" alignItems="stretch">
-          <NavigationDesktop/>
-          <Box bgColor="lightpink" w="100%"/>
+          <NavigationDesktop />
+          <Box bgColor="lightpink" w="100%" />
         </Flex>
       </TestApp>,
       { hooksConfig },
@@ -133,14 +131,14 @@ test.describe('with submenu', () => {
     await page.locator('a[aria-label="Blockchain link group"]').hover();
   });
 
-  test('', async() => {
+  test('', async () => {
     await expect(component).toHaveScreenshot();
   });
 
   test.describe('xl screen', () => {
     test.use({ viewport: configs.viewport.xl });
 
-    test('', async() => {
+    test('', async () => {
       await expect(component).toHaveScreenshot();
     });
   });
@@ -148,30 +146,28 @@ test.describe('with submenu', () => {
 
 base.describe('cookie set to false', () => {
   const test = base.extend({
-    context: async({ browser }, use) => {
-      const context = await createContextWithEnvs(browser, [
-        { name: 'NEXT_PUBLIC_FEATURED_NETWORKS', value: FEATURED_NETWORKS_URL },
-      ]);
-      context.addCookies([ { name: cookies.NAMES.NAV_BAR_COLLAPSED, value: 'false', domain: app.domain, path: '/' } ]);
+    context: async ({ browser }, use) => {
+      const context = await createContextWithEnvs(browser, [{ name: 'NEXT_PUBLIC_FEATURED_NETWORKS', value: FEATURED_NETWORKS_URL }]);
+      context.addCookies([{ name: cookies.NAMES.NAV_BAR_COLLAPSED, value: 'false', domain: app.domain, path: '/' }]);
       use(context);
     },
   });
 
   let component: Locator;
 
-  test.beforeEach(async({ mount }) => {
+  test.beforeEach(async ({ mount }) => {
     component = await mount(
       <TestApp>
         <Flex w="100%" minH="100vh" alignItems="stretch">
-          <NavigationDesktop/>
-          <Box bgColor="lightpink" w="100%"/>
+          <NavigationDesktop />
+          <Box bgColor="lightpink" w="100%" />
         </Flex>
       </TestApp>,
       { hooksConfig },
     );
   });
 
-  test('', async() => {
+  test('', async () => {
     const networkMenu = component.locator('button[aria-label="Network menu"]');
     await expect(networkMenu).toBeVisible();
   });
@@ -179,7 +175,7 @@ base.describe('cookie set to false', () => {
   test.describe('xl screen', () => {
     test.use({ viewport: configs.viewport.xl });
 
-    test('', async() => {
+    test('', async () => {
       const networkMenu = component.locator('button[aria-label="Network menu"]');
       await expect(networkMenu).toBeVisible();
     });
@@ -188,21 +184,19 @@ base.describe('cookie set to false', () => {
 
 base.describe('cookie set to true', () => {
   const test = base.extend({
-    context: async({ browser }, use) => {
-      const context = await createContextWithEnvs(browser, [
-        { name: 'NEXT_PUBLIC_FEATURED_NETWORKS', value: FEATURED_NETWORKS_URL },
-      ]);
-      context.addCookies([ { name: cookies.NAMES.NAV_BAR_COLLAPSED, value: 'true', domain: 'localhost', path: '/' } ]);
+    context: async ({ browser }, use) => {
+      const context = await createContextWithEnvs(browser, [{ name: 'NEXT_PUBLIC_FEATURED_NETWORKS', value: FEATURED_NETWORKS_URL }]);
+      context.addCookies([{ name: cookies.NAMES.NAV_BAR_COLLAPSED, value: 'true', domain: 'localhost', path: '/' }]);
       use(context);
     },
   });
 
-  test('navbar is collapsed', async({ mount }) => {
+  test('navbar is collapsed', async ({ mount }) => {
     const component = await mount(
       <TestApp>
         <Flex w="100%" minH="100vh" alignItems="stretch">
-          <NavigationDesktop/>
-          <Box bgColor="lightpink" w="100%"/>
+          <NavigationDesktop />
+          <Box bgColor="lightpink" w="100%" />
         </Flex>
       </TestApp>,
       { hooksConfig },

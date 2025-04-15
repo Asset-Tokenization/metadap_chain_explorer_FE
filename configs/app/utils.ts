@@ -1,7 +1,7 @@
 import isBrowser from 'lib/isBrowser';
 import * as regexp from 'lib/regexp';
 
-export const replaceQuotes = (value: string | undefined) => value?.replaceAll('\'', '"');
+export const replaceQuotes = (value: string | undefined) => value?.replaceAll("'", '"');
 
 export const getEnvValue = (envName: string) => {
   const envs = isBrowser() ? window.__envs : process.env;
@@ -36,8 +36,11 @@ export const getExternalAssetFilePath = (envName: string) => {
 };
 
 export const buildExternalAssetFilePath = (name: string, value: string) => {
-  const fileName = name.replace(/^NEXT_PUBLIC_/, '').replace(/_URL$/, '').toLowerCase();
+  const fileName = name
+    .replace(/^NEXT_PUBLIC_/, '')
+    .replace(/_URL$/, '')
+    .toLowerCase();
   const fileExtension = value.match(regexp.FILE_EXTENSION)?.[1];
 
-  return `/assets/${ fileName }.${ fileExtension }`;
+  return `/assets/${fileName}.${fileExtension}`;
 };

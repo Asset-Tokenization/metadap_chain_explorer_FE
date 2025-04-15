@@ -23,40 +23,40 @@ const ContractVerificationFieldEvmVersion = ({ isVyper }: Props) => {
   const queryClient = useQueryClient();
   const config = queryClient.getQueryData<SmartContractVerificationConfig>(getResourceKey('contract_verification_config'));
 
-  const options = React.useMemo(() => (
-    (isVyper ? config?.vyper_evm_versions : config?.solidity_evm_versions)?.map((option) => ({ label: option, value: option })) || []
-  ), [ config?.solidity_evm_versions, config?.vyper_evm_versions, isVyper ]);
+  const options = React.useMemo(
+    () => (isVyper ? config?.vyper_evm_versions : config?.solidity_evm_versions)?.map((option) => ({ label: option, value: option })) || [],
+    [config?.solidity_evm_versions, config?.vyper_evm_versions, isVyper],
+  );
 
-  const renderControl = React.useCallback(({ field }: {field: ControllerRenderProps<FormFields, 'evm_version'>}) => {
-    const error = 'evm_version' in formState.errors ? formState.errors.evm_version : undefined;
+  const renderControl = React.useCallback(
+    ({ field }: { field: ControllerRenderProps<FormFields, 'evm_version'> }) => {
+      const error = 'evm_version' in formState.errors ? formState.errors.evm_version : undefined;
 
-    return (
-      <FancySelect
-        { ...field }
-        options={ options }
-        size={ isMobile ? 'md' : 'lg' }
-        placeholder="EVM Version"
-        isDisabled={ formState.isSubmitting }
-        error={ error }
-        isRequired
-      />
-    );
-  }, [ formState.errors, formState.isSubmitting, isMobile, options ]);
+      return (
+        <FancySelect
+          {...field}
+          options={options}
+          size={isMobile ? 'md' : 'lg'}
+          placeholder="EVM Version"
+          isDisabled={formState.isSubmitting}
+          error={error}
+          isRequired
+        />
+      );
+    },
+    [formState.errors, formState.isSubmitting, isMobile, options],
+  );
 
   return (
     <ContractVerificationFormRow>
-      <Controller
-        name="evm_version"
-        control={ control }
-        render={ renderControl }
-        rules={{ required: true }}
-      />
+      <Controller name="evm_version" control={control} render={renderControl} rules={{ required: true }} />
       <>
         <span>The EVM version the contract is written for. If the bytecode does not match the version, we try to verify using the latest EVM version. </span>
         <Link
-          href={ isVyper ?
-            'https://docs.vyperlang.org/en/stable/compiling-a-contract.html#target-options' :
-            'https://docs.soliditylang.org/en/latest/using-the-compiler.html#target-options'
+          href={
+            isVyper
+              ? 'https://docs.vyperlang.org/en/stable/compiling-a-contract.html#target-options'
+              : 'https://docs.soliditylang.org/en/latest/using-the-compiler.html#target-options'
           }
           target="_blank"
         >

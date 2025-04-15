@@ -5,7 +5,7 @@ export type L2DepositsItem = {
   l1_tx_origin: string;
   l2_tx_gas_limit: string;
   l2_tx_hash: string;
-}
+};
 
 export type L2DepositsResponse = {
   items: Array<L2DepositsItem>;
@@ -14,4 +14,4 @@ export type L2DepositsResponse = {
     l1_block_number: number;
     tx_hash: string;
   };
-}
+};

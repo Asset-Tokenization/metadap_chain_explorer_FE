@@ -12,8 +12,8 @@ import config from 'configs/app';
 const feature = config.features.web3Wallet;
 
 export default function useProvider() {
-  const [ provider, setProvider ] = React.useState<WindowProvider>();
-  const [ wallet, setWallet ] = React.useState<WalletType>();
+  const [provider, setProvider] = React.useState<WindowProvider>();
+  const [wallet, setWallet] = React.useState<WalletType>();
 
   React.useEffect(() => {
     if (!feature.isEnabled) {
@@ -49,7 +49,7 @@ export default function useProvider() {
 
     // if user has multiple wallets installed, they all are injected in the window.ethereum.providers array
     // if user has only one wallet, the provider is injected in the window.ethereum directly
-    const providers = Array.isArray(window.ethereum.providers) ? window.ethereum.providers : [ window.ethereum ];
+    const providers = Array.isArray(window.ethereum.providers) ? window.ethereum.providers : [window.ethereum];
 
     for (const wallet of feature.wallets) {
       const provider = providers.find((provider) => {

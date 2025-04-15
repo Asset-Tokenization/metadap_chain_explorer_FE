@@ -15,28 +15,34 @@ const API_URL_TOKEN_TRANSFERS_COUNT = buildApiUrl('token_instance_transfers_coun
   hash: tokenInstanceMock.unique.token.address,
 });
 
-test('base view +@dark-mode +@mobile', async({ mount, page }) => {
-  await page.route('http://localhost:3000/nft-marketplace-logo.png', (route) => route.fulfill({
-    status: 200,
-    path: './playwright/mocks/image_s.jpg',
-  }));
-  await page.route(API_URL_ADDRESS, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(addressMock.contract),
-  }));
-  await page.route(API_URL_TOKEN_TRANSFERS_COUNT, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify({ transfers_count: 42 }),
-  }));
+test('base view +@dark-mode +@mobile', async ({ mount, page }) => {
+  await page.route('http://localhost:3000/nft-marketplace-logo.png', (route) =>
+    route.fulfill({
+      status: 200,
+      path: './playwright/mocks/image_s.jpg',
+    }),
+  );
+  await page.route(API_URL_ADDRESS, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(addressMock.contract),
+    }),
+  );
+  await page.route(API_URL_TOKEN_TRANSFERS_COUNT, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify({ transfers_count: 42 }),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TokenInstanceDetails data={ tokenInstanceMock.unique }/>
+      <TokenInstanceDetails data={tokenInstanceMock.unique} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });

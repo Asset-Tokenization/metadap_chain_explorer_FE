@@ -20,24 +20,25 @@ const PAGE_PROPS = {
   q: '',
 };
 
-const TestApp = ({ children }: {children: React.ReactNode}) => {
-  const [ queryClient ] = React.useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        retry: 0,
-      },
-    },
-  }));
+const TestApp = ({ children }: { children: React.ReactNode }) => {
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: 0,
+          },
+        },
+      }),
+  );
 
   return (
-    <ChakraProvider theme={ theme }>
-      <QueryClientProvider client={ queryClient }>
-        <AppContextProvider pageProps={ PAGE_PROPS }>
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <AppContextProvider pageProps={PAGE_PROPS}>
           <ScrollDirectionProvider>
-            <SocketProvider>
-              { children }
-            </SocketProvider>
+            <SocketProvider>{children}</SocketProvider>
           </ScrollDirectionProvider>
         </AppContextProvider>
       </QueryClientProvider>
@@ -45,10 +46,7 @@ const TestApp = ({ children }: {children: React.ReactNode}) => {
   );
 };
 
-const customRender = (
-  ui: React.ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>,
-) => render(ui, { wrapper: TestApp, ...options });
+const customRender = (ui: React.ReactElement, options?: Omit<RenderOptions, 'wrapper'>) => render(ui, { wrapper: TestApp, ...options });
 
 export * from '@testing-library/react';
 export { customRender as render };

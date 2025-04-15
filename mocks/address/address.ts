@@ -81,10 +81,10 @@ export const contract: Address = {
   is_contract: true,
   is_verified: true,
   name: 'EternalStorageProxy',
-  private_tags: [ publicTag ],
-  public_tags: [ privateTag ],
+  private_tags: [publicTag],
+  public_tags: [privateTag],
   token: null,
-  watchlist_names: [ watchlistName ],
+  watchlist_names: [watchlistName],
   watchlist_address_id: 42,
 };
 

@@ -29,9 +29,7 @@ export const L2_WITHDRAWAL_ITEM: L2WithdrawalsItem = {
 export const L2_TXN_BATCHES_ITEM: L2TxnBatchesItem = {
   epoch_number: 9103513,
   l1_timestamp: '2023-06-01T14:46:48.000000Z',
-  l1_tx_hashes: [
-    TX_HASH,
-  ],
+  l1_tx_hashes: [TX_HASH],
   l2_block_number: 5218590,
   tx_count: 9,
 };

@@ -8,7 +8,7 @@ import Stats from 'ui/pages/Stats';
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/stats">
-      <Stats/>
+      <Stats />
     </PageNextJs>
   );
 };

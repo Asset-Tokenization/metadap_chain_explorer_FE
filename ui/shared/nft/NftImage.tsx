@@ -11,18 +11,7 @@ interface Props {
 }
 
 const NftImage = ({ src, onLoad, onError, onClick }: Props) => {
-  return (
-    <Image
-      w="100%"
-      h="100%"
-      src={ src }
-      alt="Token instance image"
-      onError={ onError }
-      onLoad={ onLoad }
-      onClick={ onClick }
-      { ...mediaStyleProps }
-    />
-  );
+  return <Image w="100%" h="100%" src={src} alt="Token instance image" onError={onError} onLoad={onLoad} onClick={onClick} {...mediaStyleProps} />;
 };
 
 export default NftImage;

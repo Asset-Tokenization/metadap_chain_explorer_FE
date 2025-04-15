@@ -25,10 +25,10 @@ export default function useMarketplace() {
   const defaultCategoryId = getQueryParamString(router.query.category);
   const defaultFilterQuery = getQueryParamString(router.query.filter);
 
-  const [ selectedAppId, setSelectedAppId ] = React.useState<string | null>(null);
-  const [ selectedCategoryId, setSelectedCategoryId ] = React.useState<string>(MarketplaceCategory.ALL);
-  const [ filterQuery, setFilterQuery ] = React.useState(defaultFilterQuery);
-  const [ favoriteApps, setFavoriteApps ] = React.useState<Array<string>>([]);
+  const [selectedAppId, setSelectedAppId] = React.useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = React.useState<string>(MarketplaceCategory.ALL);
+  const [filterQuery, setFilterQuery] = React.useState(defaultFilterQuery);
+  const [favoriteApps, setFavoriteApps] = React.useState<Array<string>>([]);
 
   const handleFavoriteClick = React.useCallback((id: string, isFavorite: boolean) => {
     const favoriteApps = getFavoriteApps();
@@ -42,7 +42,7 @@ export default function useMarketplace() {
       localStorage.setItem(favoriteAppsLocalStorageKey, JSON.stringify(favoriteApps));
       setFavoriteApps(favoriteApps);
     }
-  }, [ ]);
+  }, []);
 
   const showAppInfo = React.useCallback((id: string) => {
     setSelectedAppId(id);
@@ -58,12 +58,12 @@ export default function useMarketplace() {
   const { isPlaceholderData, isError, error, data, displayedApps } = useMarketplaceApps(debouncedFilterQuery, selectedCategoryId, favoriteApps);
 
   const categories = React.useMemo(() => {
-    return _unique(data?.map(app => app.categories).flat()) || [];
-  }, [ data ]);
+    return _unique(data?.map((app) => app.categories).flat()) || [];
+  }, [data]);
 
   React.useEffect(() => {
     setFavoriteApps(getFavoriteApps());
-  }, [ ]);
+  }, []);
 
   React.useEffect(() => {
     if (!isPlaceholderData && !isError) {
@@ -71,52 +71,54 @@ export default function useMarketplace() {
       isValidDefaultCategory && setSelectedCategoryId(defaultCategoryId);
     }
     // run only when data is loaded
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ isPlaceholderData ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaceholderData]);
 
   React.useEffect(() => {
-    const query = _pickBy({
-      category: selectedCategoryId === MarketplaceCategory.ALL ? undefined : selectedCategoryId,
-      filter: debouncedFilterQuery,
-    }, Boolean);
-    router.replace(
-      { pathname: '/apps', query },
-      undefined,
-      { shallow: true },
+    const query = _pickBy(
+      {
+        category: selectedCategoryId === MarketplaceCategory.ALL ? undefined : selectedCategoryId,
+        filter: debouncedFilterQuery,
+      },
+      Boolean,
     );
-  // omit router in the deps because router.push() somehow modifies it
-  // and we get infinite re-renders then
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ debouncedFilterQuery, selectedCategoryId ]);
+    router.replace({ pathname: '/apps', query }, undefined, { shallow: true });
+    // omit router in the deps because router.push() somehow modifies it
+    // and we get infinite re-renders then
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedFilterQuery, selectedCategoryId]);
 
-  return React.useMemo(() => ({
-    selectedCategoryId,
-    onCategoryChange: handleCategoryChange,
-    filterQuery: debouncedFilterQuery,
-    onSearchInputChange: setFilterQuery,
-    isPlaceholderData,
-    isError,
-    error,
-    categories,
-    displayedApps,
-    showAppInfo,
-    selectedAppId,
-    clearSelectedAppId,
-    favoriteApps,
-    onFavoriteClick: handleFavoriteClick,
-  }), [
-    selectedCategoryId,
-    categories,
-    clearSelectedAppId,
-    selectedAppId,
-    displayedApps,
-    error,
-    favoriteApps,
-    handleCategoryChange,
-    handleFavoriteClick,
-    isError,
-    isPlaceholderData,
-    showAppInfo,
-    debouncedFilterQuery,
-  ]);
+  return React.useMemo(
+    () => ({
+      selectedCategoryId,
+      onCategoryChange: handleCategoryChange,
+      filterQuery: debouncedFilterQuery,
+      onSearchInputChange: setFilterQuery,
+      isPlaceholderData,
+      isError,
+      error,
+      categories,
+      displayedApps,
+      showAppInfo,
+      selectedAppId,
+      clearSelectedAppId,
+      favoriteApps,
+      onFavoriteClick: handleFavoriteClick,
+    }),
+    [
+      selectedCategoryId,
+      categories,
+      clearSelectedAppId,
+      selectedAppId,
+      displayedApps,
+      error,
+      favoriteApps,
+      handleCategoryChange,
+      handleFavoriteClick,
+      isError,
+      isPlaceholderData,
+      showAppInfo,
+      debouncedFilterQuery,
+    ],
+  );
 }

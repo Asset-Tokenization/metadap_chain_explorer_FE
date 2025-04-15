@@ -8,9 +8,9 @@ import type { Sort } from '../utils/tokenUtils';
 import { filterTokens } from '../utils/tokenUtils';
 
 export default function useTokenSelect(data: FormattedData) {
-  const [ searchTerm, setSearchTerm ] = React.useState('');
-  const [ erc1155sort, setErc1155Sort ] = React.useState<Sort>('desc');
-  const [ erc20sort, setErc20Sort ] = React.useState<Sort>('desc');
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [erc1155sort, setErc1155Sort] = React.useState<Sort>('desc');
+  const [erc20sort, setErc20Sort] = React.useState<Sort>('desc');
 
   const onInputChange = React.useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -19,10 +19,10 @@ export default function useTokenSelect(data: FormattedData) {
   const onSortClick = React.useCallback((event: React.SyntheticEvent) => {
     const tokenType = (event.currentTarget as HTMLAnchorElement).getAttribute('data-type');
     if (tokenType === 'ERC-1155') {
-      setErc1155Sort((prevValue) => prevValue === 'desc' ? 'asc' : 'desc');
+      setErc1155Sort((prevValue) => (prevValue === 'desc' ? 'asc' : 'desc'));
     }
     if (tokenType === 'ERC-20') {
-      setErc20Sort((prevValue) => prevValue === 'desc' ? 'asc' : 'desc');
+      setErc20Sort((prevValue) => (prevValue === 'desc' ? 'asc' : 'desc'));
     }
   }, []);
 
@@ -31,7 +31,7 @@ export default function useTokenSelect(data: FormattedData) {
       isOverflow,
       items: items.filter(filterTokens(searchTerm.toLowerCase())),
     }));
-  }, [ data, searchTerm ]);
+  }, [data, searchTerm]);
 
   return {
     searchTerm,

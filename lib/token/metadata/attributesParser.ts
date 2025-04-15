@@ -9,12 +9,12 @@ function formatValue(value: string | number, display: string | undefined, trait:
   switch (display) {
     case 'boost_number': {
       return {
-        value: `+${ value } boost`,
+        value: `+${value} boost`,
       };
     }
     case 'boost_percentage': {
       return {
-        value: `${ value }% boost`,
+        value: `${value}% boost`,
       };
     }
     case 'date': {

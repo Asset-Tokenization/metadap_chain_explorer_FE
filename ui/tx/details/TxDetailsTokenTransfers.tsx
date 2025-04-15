@@ -1,15 +1,15 @@
-import { Icon, GridItem, Show, Flex } from "@chakra-ui/react";
-import React from "react";
+import { Icon, GridItem, Show, Flex } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TokenTransfer } from "types/api/tokenTransfer";
+import type { TokenTransfer } from 'types/api/tokenTransfer';
 
-import { route } from "nextjs-routes";
+import { route } from 'nextjs-routes';
 
-import tokenIcon from "icons/token.svg";
-import DetailsInfoItem from "ui/shared/DetailsInfoItem";
-import LinkInternal from "ui/shared/LinkInternal";
+import tokenIcon from 'icons/token.svg';
+import DetailsInfoItem from 'ui/shared/DetailsInfoItem';
+import LinkInternal from 'ui/shared/LinkInternal';
 
-import TxDetailsTokenTransfer from "./TxDetailsTokenTransfer";
+import TxDetailsTokenTransfer from './TxDetailsTokenTransfer';
 
 interface Props {
   data: Array<TokenTransfer>;
@@ -18,41 +18,39 @@ interface Props {
 
 const TOKEN_TRANSFERS_TYPES = [
   {
-    title: "Certificates transferred",
-    hint: "List of certificates transferred in the transaction",
-    type: "token_transfer",
+    title: 'Certificates transferred',
+    hint: 'List of certificates transferred in the transaction',
+    type: 'token_transfer',
   },
   {
-    title: "Certificates minted",
-    hint: "List of certificates minted in the transaction",
-    type: "token_minting",
+    title: 'Certificates minted',
+    hint: 'List of certificates minted in the transaction',
+    type: 'token_minting',
   },
   {
-    title: "Certificates burnt",
-    hint: "List of certificates burnt in the transaction",
-    type: "token_burning",
+    title: 'Certificates burnt',
+    hint: 'List of certificates burnt in the transaction',
+    type: 'token_burning',
   },
   {
-    title: "Certificates created",
-    hint: "List of certificates created in the transaction",
-    type: "token_spawning",
+    title: 'Certificates created',
+    hint: 'List of certificates created in the transaction',
+    type: 'token_spawning',
   },
 ];
 const VISIBLE_ITEMS_NUM = 3;
 
 const TxDetailsTokenTransfers = ({ data, txHash }: Props) => {
   const viewAllUrl = route({
-    pathname: "/tx/[hash]",
-    query: { hash: txHash, tab: "token_transfers" },
+    pathname: '/tx/[hash]',
+    query: { hash: txHash, tab: 'token_transfers' },
   });
 
   const transferGroups = TOKEN_TRANSFERS_TYPES.map((group) => ({
     ...group,
     items: data?.filter((token) => token.type === group.type) || [],
   }));
-  const showViewAllLink = transferGroups.some(
-    ({ items }) => items.length > VISIBLE_ITEMS_NUM
-  );
+  const showViewAllLink = transferGroups.some(({ items }) => items.length > VISIBLE_ITEMS_NUM);
 
   return (
     <>
@@ -62,19 +60,8 @@ const TxDetailsTokenTransfers = ({ data, txHash }: Props) => {
         }
 
         return (
-          <DetailsInfoItem
-            key={type}
-            title={title}
-            hint={hint}
-            position="relative"
-          >
-            <Flex
-              flexDirection="column"
-              alignItems="flex-start"
-              rowGap={5}
-              w="100%"
-              overflow="hidden"
-            >
+          <DetailsInfoItem key={type} title={title} hint={hint} position="relative">
+            <Flex flexDirection="column" alignItems="flex-start" rowGap={5} w="100%" overflow="hidden">
               {items.slice(0, VISIBLE_ITEMS_NUM).map((item, index) => (
                 <TxDetailsTokenTransfer key={index} data={item} />
               ))}
@@ -87,12 +74,7 @@ const TxDetailsTokenTransfers = ({ data, txHash }: Props) => {
           <Show above="lg" ssr={false}>
             <GridItem></GridItem>
           </Show>
-          <GridItem
-            fontSize="sm"
-            alignItems="center"
-            display="inline-flex"
-            pl={{ base: "28px", lg: 0 }}
-          >
+          <GridItem fontSize="sm" alignItems="center" display="inline-flex" pl={{ base: '28px', lg: 0 }}>
             <Icon as={tokenIcon} boxSize={6} />
             <LinkInternal href={viewAllUrl}>View all</LinkInternal>
           </GridItem>

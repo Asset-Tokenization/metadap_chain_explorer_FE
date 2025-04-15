@@ -7,16 +7,16 @@ import { default as Thead } from 'ui/shared/TheadSticky';
 
 import WithdrawalsTableItem from './WithdrawalsTableItem';
 
- type Props = {
-   items: Array<L2WithdrawalsItem>;
-   top: number;
-   isLoading?: boolean;
- }
+type Props = {
+  items: Array<L2WithdrawalsItem>;
+  top: number;
+  isLoading?: boolean;
+};
 
 const WithdrawalsTable = ({ items, top, isLoading }: Props) => {
   return (
     <Table variant="simple" size="sm" style={{ tableLayout: 'auto' }} minW="950px">
-      <Thead top={ top }>
+      <Thead top={top}>
         <Tr>
           <Th>Msg nonce</Th>
           <Th>From</Th>
@@ -28,9 +28,9 @@ const WithdrawalsTable = ({ items, top, isLoading }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        { items.map((item, index) => (
-          <WithdrawalsTableItem key={ item.l2_tx_hash + (isLoading ? index : '') } item={ item } isLoading={ isLoading }/>
-        )) }
+        {items.map((item, index) => (
+          <WithdrawalsTableItem key={item.l2_tx_hash + (isLoading ? index : '')} item={item} isLoading={isLoading} />
+        ))}
       </Tbody>
     </Table>
   );

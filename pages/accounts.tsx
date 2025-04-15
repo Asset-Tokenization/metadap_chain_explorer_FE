@@ -9,7 +9,7 @@ const Accounts = dynamic(() => import('ui/pages/Accounts'), { ssr: false });
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/accounts">
-      <Accounts/>
+      <Accounts />
     </PageNextJs>
   );
 };

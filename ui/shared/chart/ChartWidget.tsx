@@ -4,7 +4,8 @@ import {
   chakra,
   Flex,
   Icon,
-  IconButton, Link,
+  IconButton,
+  Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -40,14 +41,14 @@ export type Props = {
   isLoading: boolean;
   className?: string;
   isError: boolean;
-}
+};
 
 const DOWNLOAD_IMAGE_SCALE = 5;
 
 const ChartWidget = ({ items, title, description, isLoading, className, isError, units }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [ isFullscreen, setIsFullscreen ] = useState(false);
-  const [ isZoomResetInitial, setIsZoomResetInitial ] = React.useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isZoomResetInitial, setIsZoomResetInitial] = React.useState(true);
 
   const pngBackgroundColor = useColorModeValue('white', 'black');
   const borderColor = useColorModeValue('gray.200', 'gray.600');
@@ -72,8 +73,8 @@ const ChartWidget = ({ items, title, description, isLoading, className, isError,
     // wait for context menu to close
     setTimeout(() => {
       if (ref.current) {
-        domToImage.toPng(ref.current,
-          {
+        domToImage
+          .toPng(ref.current, {
             quality: 100,
             bgcolor: pngBackgroundColor,
             width: ref.current.offsetWidth * DOWNLOAD_IMAGE_SCALE,
@@ -81,78 +82,61 @@ const ChartWidget = ({ items, title, description, isLoading, className, isError,
             filter: (node) => node.nodeName !== 'BUTTON',
             style: {
               borderColor: 'transparent',
-              transform: `scale(${ DOWNLOAD_IMAGE_SCALE })`,
+              transform: `scale(${DOWNLOAD_IMAGE_SCALE})`,
               'transform-origin': 'top left',
             },
           })
           .then((dataUrl) => {
             const link = document.createElement('a');
-            link.download = `${ title } (Blockscout chart).png`;
+            link.download = `${title} (Blockscout chart).png`;
             link.href = dataUrl;
             link.click();
             link.remove();
           });
       }
     }, 100);
-  }, [ pngBackgroundColor, title ]);
+  }, [pngBackgroundColor, title]);
 
   const handleSVGSavingClick = useCallback(() => {
     if (items) {
-      const headerRows = [
-        'Date', 'Value',
-      ];
-      const dataRows = items.map((item) => [
-        dayjs(item.date).format('YYYY-MM-DD'), String(item.value),
-      ]);
+      const headerRows = ['Date', 'Value'];
+      const dataRows = items.map((item) => [dayjs(item.date).format('YYYY-MM-DD'), String(item.value)]);
 
-      saveAsCSV(headerRows, dataRows, `${ title } (Blockscout stats)`);
+      saveAsCSV(headerRows, dataRows, `${title} (Blockscout stats)`);
     }
-  }, [ items, title ]);
+  }, [items, title]);
 
   const hasItems = items && items.length > 2;
 
   const content = (() => {
     if (isError) {
       return (
-        <Flex
-          alignItems="center"
-          justifyContent="center"
-          flexGrow={ 1 }
-          py={ 4 }
-        >
-          <Text
-            variant="secondary"
-            fontSize="sm"
-            textAlign="center"
-          >
-            { `The data didn${ apos }t load. Please, ` }
-            <Link href={ window.document.location.href }>try to reload the page.</Link>
+        <Flex alignItems="center" justifyContent="center" flexGrow={1} py={4}>
+          <Text variant="secondary" fontSize="sm" textAlign="center">
+            {`The data didn${apos}t load. Please, `}
+            <Link href={window.document.location.href}>try to reload the page.</Link>
           </Text>
         </Flex>
       );
     }
 
     if (isLoading) {
-      return <Skeleton flexGrow={ 1 } w="100%"/>;
+      return <Skeleton flexGrow={1} w="100%" />;
     }
 
     if (!hasItems) {
       return (
-        <Center flexGrow={ 1 }>
-          <Text variant="secondary" fontSize="sm">No data</Text>
+        <Center flexGrow={1}>
+          <Text variant="secondary" fontSize="sm">
+            No data
+          </Text>
         </Center>
       );
     }
 
     return (
-      <Box flexGrow={ 1 } maxW="100%">
-        <ChartWidgetGraph
-          items={ items }
-          onZoom={ handleZoom }
-          isZoomResetInitial={ isZoomResetInitial }
-          title={ title }
-          units={ units }
-        />
+      <Box flexGrow={1} maxW="100%">
+        <ChartWidgetGraph items={items} onZoom={handleZoom} isZoomResetInitial={isZoomResetInitial} title={title} units={units} />
       </Box>
     );
   })();
@@ -161,113 +145,76 @@ const ChartWidget = ({ items, title, description, isLoading, className, isError,
     <>
       <Flex
         height="100%"
-        ref={ ref }
+        ref={ref}
         flexDir="column"
         padding={{ base: 3, lg: 4 }}
         borderRadius="md"
         border="1px"
-        borderColor={ borderColor }
-        className={ className }
+        borderColor={borderColor}
+        className={className}
       >
-        <Flex columnGap={ 6 } mb={ 1 } alignItems="flex-start">
-          <Flex flexGrow={ 1 } flexDir="column" alignItems="flex-start">
-            <Skeleton
-              isLoaded={ !isLoading }
-              fontWeight={ 600 }
-              size={{ base: 'xs', lg: 'sm' }}
-            >
-              { title }
+        <Flex columnGap={6} mb={1} alignItems="flex-start">
+          <Flex flexGrow={1} flexDir="column" alignItems="flex-start">
+            <Skeleton isLoaded={!isLoading} fontWeight={600} size={{ base: 'xs', lg: 'sm' }}>
+              {title}
             </Skeleton>
 
-            { description && (
-              <Skeleton
-                isLoaded={ !isLoading }
-                color="text_secondary"
-                fontSize="xs"
-                mt={ 1 }
-              >
-                <span>{ description }</span>
+            {description && (
+              <Skeleton isLoaded={!isLoading} color="text_secondary" fontSize="xs" mt={1}>
+                <span>{description}</span>
               </Skeleton>
-            ) }
+            )}
           </Flex>
 
-          <Flex ml="auto" columnGap={ 2 }>
+          <Flex ml="auto" columnGap={2}>
             <Tooltip label="Reset zoom">
               <IconButton
-                hidden={ isZoomResetInitial }
+                hidden={isZoomResetInitial}
                 aria-label="Reset zoom"
                 colorScheme="blue"
-                w={ 9 }
-                h={ 8 }
+                w={9}
+                h={8}
                 size="sm"
                 variant="outline"
-                onClick={ handleZoomResetClick }
-                icon={ <Icon as={ repeatArrowIcon } w={ 4 } h={ 4 }/> }
+                onClick={handleZoomResetClick}
+                icon={<Icon as={repeatArrowIcon} w={4} h={4} />}
               />
             </Tooltip>
 
-            { hasItems && (
+            {hasItems && (
               <Menu>
-                <Skeleton isLoaded={ !isLoading } borderRadius="base">
-                  <MenuButton
-                    w="36px"
-                    h="32px"
-                    icon={ <Icon as={ dotsIcon } w={ 4 } h={ 4 }/> }
-                    colorScheme="gray"
-                    variant="ghost"
-                    as={ IconButton }
-                  >
-                    <VisuallyHidden>
-                      Open chart options menu
-                    </VisuallyHidden>
+                <Skeleton isLoaded={!isLoading} borderRadius="base">
+                  <MenuButton w="36px" h="32px" icon={<Icon as={dotsIcon} w={4} h={4} />} colorScheme="gray" variant="ghost" as={IconButton}>
+                    <VisuallyHidden>Open chart options menu</VisuallyHidden>
                   </MenuButton>
                 </Skeleton>
                 <MenuList>
-                  <MenuItem
-                    display="flex"
-                    alignItems="center"
-                    onClick={ showChartFullscreen }
-                  >
-                    <Icon as={ scopeIcon } boxSize={ 5 } mr={ 3 }/>
-                  View fullscreen
+                  <MenuItem display="flex" alignItems="center" onClick={showChartFullscreen}>
+                    <Icon as={scopeIcon} boxSize={5} mr={3} />
+                    View fullscreen
                   </MenuItem>
 
-                  <MenuItem
-                    display="flex"
-                    alignItems="center"
-                    onClick={ handleFileSaveClick }
-                  >
-                    <Icon as={ imageIcon } boxSize={ 5 } mr={ 3 }/>
-                  Save as PNG
+                  <MenuItem display="flex" alignItems="center" onClick={handleFileSaveClick}>
+                    <Icon as={imageIcon} boxSize={5} mr={3} />
+                    Save as PNG
                   </MenuItem>
 
-                  <MenuItem
-                    display="flex"
-                    alignItems="center"
-                    onClick={ handleSVGSavingClick }
-                  >
-                    <Icon as={ svgFileIcon } boxSize={ 5 } mr={ 3 }/>
-                  Save as CSV
+                  <MenuItem display="flex" alignItems="center" onClick={handleSVGSavingClick}>
+                    <Icon as={svgFileIcon} boxSize={5} mr={3} />
+                    Save as CSV
                   </MenuItem>
                 </MenuList>
               </Menu>
-            ) }
+            )}
           </Flex>
         </Flex>
 
-        { content }
+        {content}
       </Flex>
 
-      { hasItems && (
-        <FullscreenChartModal
-          isOpen={ isFullscreen }
-          items={ items }
-          title={ title }
-          description={ description }
-          onClose={ clearFullscreenChart }
-          units={ units }
-        />
-      ) }
+      {hasItems && (
+        <FullscreenChartModal isOpen={isFullscreen} items={items} title={title} description={description} onClose={clearFullscreenChart} units={units} />
+      )}
     </>
   );
 };

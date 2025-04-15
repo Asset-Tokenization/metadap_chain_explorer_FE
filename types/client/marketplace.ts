@@ -7,7 +7,7 @@ export type MarketplaceAppPreview = {
   shortDescription: string;
   categories: Array<string>;
   url: string;
-}
+};
 
 export type MarketplaceAppOverview = MarketplaceAppPreview & {
   author: string;
@@ -16,7 +16,7 @@ export type MarketplaceAppOverview = MarketplaceAppPreview & {
   twitter?: string;
   telegram?: string;
   github?: string;
-}
+};
 
 export enum MarketplaceCategory {
   ALL = 'All apps',

@@ -24,30 +24,33 @@ const PublicTagsComponent: React.FC = () => {
   const router = useRouter();
   const addressHash = getQueryParamString(router.query.address);
 
-  const [ screen, setScreen ] = useState<TScreen>(addressHash ? 'form' : 'data');
-  const [ formData, setFormData ] = useState<Partial<PublicTag> | undefined>(addressHash ? { addresses: [ addressHash ] } : undefined);
+  const [screen, setScreen] = useState<TScreen>(addressHash ? 'form' : 'data');
+  const [formData, setFormData] = useState<Partial<PublicTag> | undefined>(addressHash ? { addresses: [addressHash] } : undefined);
 
   const toast = useToast();
   useRedirectForInvalidAuthToken();
 
   React.useEffect(() => {
     addressHash && router.replace({ pathname: '/account/public-tags-request' });
-  // componentDidMount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ ]);
+    // componentDidMount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const showToast = useCallback((action: TToastAction) => {
-    toast({
-      position: 'top-right',
-      title: 'Success',
-      description: toastDescriptions[action],
-      colorScheme: 'green',
-      status: 'success',
-      variant: 'subtle',
-      isClosable: true,
-      icon: null,
-    });
-  }, [ toast ]);
+  const showToast = useCallback(
+    (action: TToastAction) => {
+      toast({
+        position: 'top-right',
+        title: 'Success',
+        description: toastDescriptions[action],
+        colorScheme: 'green',
+        status: 'success',
+        variant: 'subtle',
+        isClosable: true,
+        icon: null,
+      });
+    },
+    [toast],
+  );
 
   const changeToFormScreen = useCallback((data?: PublicTag) => {
     setFormData(data);
@@ -58,28 +61,31 @@ const PublicTagsComponent: React.FC = () => {
     });
   }, []);
 
-  const changeToDataScreen = useCallback((success?: boolean) => {
-    if (success) {
-      showToast('added');
-    }
-    setScreen('data');
-    animateScroll.scrollToTop({
-      duration: 500,
-      delay: 100,
-    });
-  }, [ showToast ]);
+  const changeToDataScreen = useCallback(
+    (success?: boolean) => {
+      if (success) {
+        showToast('added');
+      }
+      setScreen('data');
+      animateScroll.scrollToTop({
+        duration: 500,
+        delay: 100,
+      });
+    },
+    [showToast],
+  );
 
-  const onTagDelete = useCallback(() => showToast('removed'), [ showToast ]);
-  const onGoBack = useCallback(() => setScreen('data'), [ ]);
+  const onTagDelete = useCallback(() => showToast('removed'), [showToast]);
+  const onGoBack = useCallback(() => setScreen('data'), []);
 
   let content;
   let header;
 
   if (screen === 'data') {
-    content = <PublicTagsData changeToFormScreen={ changeToFormScreen } onTagDelete={ onTagDelete }/>;
+    content = <PublicTagsData changeToFormScreen={changeToFormScreen} onTagDelete={onTagDelete} />;
     header = 'Public tags';
   } else {
-    content = <PublicTagsForm changeToDataScreen={ changeToDataScreen } data={ formData }/>;
+    content = <PublicTagsForm changeToDataScreen={changeToDataScreen} data={formData} />;
     header = formData ? 'Request to edit a public tag/label' : 'Request a public tag/label';
   }
 
@@ -90,12 +96,8 @@ const PublicTagsComponent: React.FC = () => {
 
   return (
     <>
-      <PageTitle
-        title={ header }
-        backLink={ screen === 'form' ? backLink : undefined }
-        display={{ base: 'block', lg: 'inline-flex' }}
-      />
-      { content }
+      <PageTitle title={header} backLink={screen === 'form' ? backLink : undefined} display={{ base: 'block', lg: 'inline-flex' }} />
+      {content}
     </>
   );
 };

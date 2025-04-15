@@ -1,11 +1,11 @@
-import { Table, Tbody, Tr, Th } from "@chakra-ui/react";
-import React from "react";
+import { Table, Tbody, Tr, Th } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TokenTransfer } from "types/api/tokenTransfer";
+import type { TokenTransfer } from 'types/api/tokenTransfer';
 
-import * as SocketNewItemsNotice from "ui/shared/SocketNewItemsNotice";
-import { default as Thead } from "ui/shared/TheadSticky";
-import TokenTransferTableItem from "ui/shared/TokenTransfer/TokenTransferTableItem";
+import * as SocketNewItemsNotice from 'ui/shared/SocketNewItemsNotice';
+import { default as Thead } from 'ui/shared/TheadSticky';
+import TokenTransferTableItem from 'ui/shared/TokenTransfer/TokenTransferTableItem';
 
 interface Props {
   data: Array<TokenTransfer>;
@@ -19,17 +19,7 @@ interface Props {
   isLoading?: boolean;
 }
 
-const TokenTransferTable = ({
-  data,
-  baseAddress,
-  showTxInfo,
-  top,
-  enableTimeIncrement,
-  showSocketInfo,
-  socketInfoAlert,
-  socketInfoNum,
-  isLoading,
-}: Props) => {
+const TokenTransferTable = ({ data, baseAddress, showTxInfo, top, enableTimeIncrement, showSocketInfo, socketInfoAlert, socketInfoNum, isLoading }: Props) => {
   return (
     <Table variant="simple" size="sm" minW="950px">
       <Thead top={top}>
@@ -48,22 +38,11 @@ const TokenTransferTable = ({
       </Thead>
       <Tbody>
         {showSocketInfo && (
-          <SocketNewItemsNotice.Desktop
-            url={window.location.href}
-            alert={socketInfoAlert}
-            num={socketInfoNum}
-            type="token_transfer"
-            isLoading={isLoading}
-          />
+          <SocketNewItemsNotice.Desktop url={window.location.href} alert={socketInfoAlert} num={socketInfoNum} type="token_transfer" isLoading={isLoading} />
         )}
         {data.map((item, index) => (
           <TokenTransferTableItem
-            key={
-              item.tx_hash +
-              item.block_hash +
-              item.log_index +
-              (isLoading ? index : "")
-            }
+            key={item.tx_hash + item.block_hash + item.log_index + (isLoading ? index : '')}
             {...item}
             baseAddress={baseAddress}
             showTxInfo={showTxInfo}

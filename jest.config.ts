@@ -10,21 +10,14 @@ const config: JestConfigWithTsJest = {
   clearMocks: true,
   coverageProvider: 'v8',
   globalSetup: '<rootDir>/jest/global-setup.ts',
-  moduleDirectories: [
-    'node_modules',
-    __dirname,
-  ],
+  moduleDirectories: ['node_modules', __dirname],
   moduleNameMapper: {
     '^jest/(.*)': '<rootDir>/jest/$1',
   },
-  modulePathIgnorePatterns: [
-    'node_modules_linux',
-  ],
+  modulePathIgnorePatterns: ['node_modules_linux'],
   preset: 'ts-jest',
-  reporters: [ 'default', 'github-actions' ],
-  setupFiles: [
-    '<rootDir>/jest/setup.ts',
-  ],
+  reporters: ['default', 'github-actions'],
+  setupFiles: ['<rootDir>/jest/setup.ts'],
   testEnvironment: 'jsdom',
   transform: {
     // '^.+\\.[tj]sx?$' to process js/ts with `ts-jest`

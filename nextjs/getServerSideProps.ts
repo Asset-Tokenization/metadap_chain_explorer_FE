@@ -9,9 +9,9 @@ export type Props = {
   height_or_hash: string;
   hash: string;
   q: string;
-}
+};
 
-export const base: GetServerSideProps<Props> = async({ req, query }) => {
+export const base: GetServerSideProps<Props> = async ({ req, query }) => {
   return {
     props: {
       cookies: req.headers.cookie || '',
@@ -24,7 +24,7 @@ export const base: GetServerSideProps<Props> = async({ req, query }) => {
   };
 };
 
-export const account: GetServerSideProps<Props> = async(context) => {
+export const account: GetServerSideProps<Props> = async (context) => {
   if (!config.features.account.isEnabled) {
     return {
       notFound: true,
@@ -34,7 +34,7 @@ export const account: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const verifiedAddresses: GetServerSideProps<Props> = async(context) => {
+export const verifiedAddresses: GetServerSideProps<Props> = async (context) => {
   if (!config.features.addressVerification.isEnabled) {
     return {
       notFound: true,
@@ -44,7 +44,7 @@ export const verifiedAddresses: GetServerSideProps<Props> = async(context) => {
   return account(context);
 };
 
-export const beaconChain: GetServerSideProps<Props> = async(context) => {
+export const beaconChain: GetServerSideProps<Props> = async (context) => {
   if (!config.features.beaconChain.isEnabled) {
     return {
       notFound: true,
@@ -54,7 +54,7 @@ export const beaconChain: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const L2: GetServerSideProps<Props> = async(context) => {
+export const L2: GetServerSideProps<Props> = async (context) => {
   if (!config.features.rollup.isEnabled) {
     return {
       notFound: true,
@@ -64,7 +64,7 @@ export const L2: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const marketplace: GetServerSideProps<Props> = async(context) => {
+export const marketplace: GetServerSideProps<Props> = async (context) => {
   if (!config.features.marketplace.isEnabled) {
     return {
       notFound: true,
@@ -74,7 +74,7 @@ export const marketplace: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const apiDocs: GetServerSideProps<Props> = async(context) => {
+export const apiDocs: GetServerSideProps<Props> = async (context) => {
   if (!config.features.restApiDocs.isEnabled) {
     return {
       notFound: true,
@@ -84,7 +84,7 @@ export const apiDocs: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const csvExport: GetServerSideProps<Props> = async(context) => {
+export const csvExport: GetServerSideProps<Props> = async (context) => {
   if (!config.features.csvExport.isEnabled) {
     return {
       notFound: true,
@@ -94,7 +94,7 @@ export const csvExport: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const stats: GetServerSideProps<Props> = async(context) => {
+export const stats: GetServerSideProps<Props> = async (context) => {
   if (!config.features.stats.isEnabled) {
     return {
       notFound: true,
@@ -104,7 +104,7 @@ export const stats: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const suave: GetServerSideProps<Props> = async(context) => {
+export const suave: GetServerSideProps<Props> = async (context) => {
   if (!config.features.suave.isEnabled) {
     return {
       notFound: true,
@@ -114,7 +114,7 @@ export const suave: GetServerSideProps<Props> = async(context) => {
   return base(context);
 };
 
-export const accounts: GetServerSideProps<Props> = async(context) => {
+export const accounts: GetServerSideProps<Props> = async (context) => {
   if (config.UI.views.address.hiddenViews?.top_accounts) {
     return {
       notFound: true,

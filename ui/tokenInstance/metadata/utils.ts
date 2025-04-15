@@ -1,16 +1,14 @@
 import _upperFirst from 'lodash/upperFirst';
 
 export function formatName(_name: string) {
-  const name = _name
-    .replaceAll('_', ' ')
-    .replaceAll(/\burl|nft|id\b/gi, (str) => str.toUpperCase());
+  const name = _name.replaceAll('_', ' ').replaceAll(/\burl|nft|id\b/gi, (str) => str.toUpperCase());
 
   return _upperFirst(name.trim());
 }
 
-const PINNED_FIELDS = [ 'name', 'description' ];
+const PINNED_FIELDS = ['name', 'description'];
 
-export function sortFields([ nameA ]: [string, unknown], [ nameB ]: [string, unknown]): number {
+export function sortFields([nameA]: [string, unknown], [nameB]: [string, unknown]): number {
   const pinnedIndexA = PINNED_FIELDS.indexOf(nameA.toLowerCase());
   const pinnedIndexB = PINNED_FIELDS.indexOf(nameB.toLowerCase());
 

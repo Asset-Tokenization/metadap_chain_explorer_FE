@@ -15,14 +15,14 @@ import ContractVerificationFieldOptimization from '../fields/ContractVerificatio
 const ContractVerificationFlattenSourceCode = ({ config }: { config: SmartContractVerificationConfig }) => {
   return (
     <ContractVerificationMethod title="Contract verification via Solidity (flattened source code)">
-      { !config?.is_rust_verifier_microservice_enabled && <ContractVerificationFieldName/> }
-      { config?.is_rust_verifier_microservice_enabled && <ContractVerificationFieldIsYul/> }
-      <ContractVerificationFieldCompiler/>
-      <ContractVerificationFieldEvmVersion/>
-      <ContractVerificationFieldOptimization/>
-      <ContractVerificationFieldCode/>
-      { !config?.is_rust_verifier_microservice_enabled && <ContractVerificationFieldAutodetectArgs/> }
-      <ContractVerificationFieldLibraries/>
+      {!config?.is_rust_verifier_microservice_enabled && <ContractVerificationFieldName />}
+      {config?.is_rust_verifier_microservice_enabled && <ContractVerificationFieldIsYul />}
+      <ContractVerificationFieldCompiler />
+      <ContractVerificationFieldEvmVersion />
+      <ContractVerificationFieldOptimization />
+      <ContractVerificationFieldCode />
+      {!config?.is_rust_verifier_microservice_enabled && <ContractVerificationFieldAutodetectArgs />}
+      <ContractVerificationFieldLibraries />
     </ContractVerificationMethod>
   );
 };

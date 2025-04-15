@@ -19,7 +19,7 @@ type Props = TokenTransfer & {
   showTxInfo?: boolean;
   enableTimeIncrement?: boolean;
   isLoading?: boolean;
-}
+};
 
 const TokenTransferTableItem = ({
   token,
@@ -38,81 +38,53 @@ const TokenTransferTableItem = ({
 
   return (
     <Tr alignItems="top">
-      { showTxInfo && txHash && (
+      {showTxInfo && txHash && (
         <Td>
           <Box my="3px">
-            <TxAdditionalInfo hash={ txHash } isLoading={ isLoading }/>
+            <TxAdditionalInfo hash={txHash} isLoading={isLoading} />
           </Box>
         </Td>
-      ) }
+      )}
       <Td>
-        <Flex flexDir="column" alignItems="flex-start" my="3px" rowGap={ 2 }>
-          <TokenEntity
-            token={ token }
-            isLoading={ isLoading }
-            noSymbol
-            noCopy
-            my="2px"
-          />
-          <Tag isLoading={ isLoading }>{ token.type }</Tag>
-          <Tag colorScheme="orange" isLoading={ isLoading }>{ getTokenTransferTypeText(type) }</Tag>
+        <Flex flexDir="column" alignItems="flex-start" my="3px" rowGap={2}>
+          <TokenEntity token={token} isLoading={isLoading} noSymbol noCopy my="2px" />
+          <Tag isLoading={isLoading}>{token.type}</Tag>
+          <Tag colorScheme="orange" isLoading={isLoading}>
+            {getTokenTransferTypeText(type)}
+          </Tag>
         </Flex>
       </Td>
-      <Td>
-        { 'token_id' in total && <NftEntity hash={ token.address } id={ total.token_id } isLoading={ isLoading }/> }
-      </Td>
-      { showTxInfo && txHash && (
+      <Td>{'token_id' in total && <NftEntity hash={token.address} id={total.token_id} isLoading={isLoading} />}</Td>
+      {showTxInfo && txHash && (
         <Td>
-          <TxEntity
-            hash={ txHash }
-            isLoading={ isLoading }
-            fontWeight={ 600 }
-            noIcon
-            mt="7px"
-          />
-          { timestamp && (
-            <Skeleton isLoaded={ !isLoading } color="text_secondary" fontWeight="400" mt="10px" display="inline-block">
-              <span>{ timeAgo }</span>
+          <TxEntity hash={txHash} isLoading={isLoading} fontWeight={600} noIcon mt="7px" />
+          {timestamp && (
+            <Skeleton isLoaded={!isLoading} color="text_secondary" fontWeight="400" mt="10px" display="inline-block">
+              <span>{timeAgo}</span>
             </Skeleton>
-          ) }
+          )}
         </Td>
-      ) }
+      )}
       <Td>
-        <AddressEntity
-          address={ from }
-          isLoading={ isLoading }
-          my="5px"
-          noLink={ baseAddress === from.hash }
-          noCopy={ baseAddress === from.hash }
-          flexGrow={ 1 }
-        />
+        <AddressEntity address={from} isLoading={isLoading} my="5px" noLink={baseAddress === from.hash} noCopy={baseAddress === from.hash} flexGrow={1} />
       </Td>
-      { baseAddress && (
-        <Td px={ 0 }>
+      {baseAddress && (
+        <Td px={0}>
           <Box mt="3px">
-            <InOutTag
-              isIn={ baseAddress === to.hash }
-              isOut={ baseAddress === from.hash }
-              w="50px"
-              textAlign="center"
-              isLoading={ isLoading }
-            />
+            <InOutTag isIn={baseAddress === to.hash} isOut={baseAddress === from.hash} w="50px" textAlign="center" isLoading={isLoading} />
           </Box>
         </Td>
-      ) }
+      )}
       <Td>
-        <AddressEntity
-          address={ to }
-          isLoading={ isLoading }
-          my="5px"
-          noLink={ baseAddress === to.hash }
-          noCopy={ baseAddress === to.hash }
-          flexGrow={ 1 }
-        />
+        <AddressEntity address={to} isLoading={isLoading} my="5px" noLink={baseAddress === to.hash} noCopy={baseAddress === to.hash} flexGrow={1} />
       </Td>
       <Td isNumeric verticalAlign="top">
-        <Skeleton isLoaded={ !isLoading } display="inline-block" my="7px">
-          { 'value' in total && BigNumber(total.value).div(BigNumber(10 ** Number(total.decimals))).dp(8).toFormat() }
+        <Skeleton isLoaded={!isLoading} display="inline-block" my="7px">
+          {'value' in total &&
+            BigNumber(total.value)
+              .div(BigNumber(10 ** Number(total.decimals)))
+              .dp(8)
+              .toFormat()}
         </Skeleton>
       </Td>
     </Tr>

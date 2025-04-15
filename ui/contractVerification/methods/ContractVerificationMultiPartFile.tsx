@@ -7,22 +7,22 @@ import ContractVerificationFieldLibraries from '../fields/ContractVerificationFi
 import ContractVerificationFieldOptimization from '../fields/ContractVerificationFieldOptimization';
 import ContractVerificationFieldSources from '../fields/ContractVerificationFieldSources';
 
-const FILE_TYPES = [ '.sol' as const, '.yul' as const ];
+const FILE_TYPES = ['.sol' as const, '.yul' as const];
 
 const ContractVerificationMultiPartFile = () => {
   return (
     <ContractVerificationMethod title="Contract verification via Solidity (multi-part files)">
-      <ContractVerificationFieldCompiler/>
-      <ContractVerificationFieldEvmVersion/>
-      <ContractVerificationFieldOptimization/>
+      <ContractVerificationFieldCompiler />
+      <ContractVerificationFieldEvmVersion />
+      <ContractVerificationFieldOptimization />
       <ContractVerificationFieldSources
-        fileTypes={ FILE_TYPES }
+        fileTypes={FILE_TYPES}
         multiple
         required
         title="Sources *.sol or *.yul files"
         hint="Upload all Solidity or Yul contract source files."
       />
-      <ContractVerificationFieldLibraries/>
+      <ContractVerificationFieldLibraries />
     </ContractVerificationMethod>
   );
 };

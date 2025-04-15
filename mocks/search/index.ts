@@ -79,13 +79,6 @@ export const tx1: SearchResultTx = {
 };
 
 export const baseResponse: SearchResult = {
-  items: [
-    token1,
-    token2,
-    block1,
-    address1,
-    contract1,
-    tx1,
-  ],
+  items: [token1, token2, block1, address1, contract1, tx1],
   next_page_params: null,
 };

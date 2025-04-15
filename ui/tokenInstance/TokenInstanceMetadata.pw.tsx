@@ -6,10 +6,10 @@ import TestApp from 'playwright/TestApp';
 
 import TokenInstanceMetadata from './TokenInstanceMetadata';
 
-test('base view +@mobile', async({ mount }) => {
+test('base view +@mobile', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <TokenInstanceMetadata data={ tokenInstanceMock.withRichMetadata.metadata }/>
+      <TokenInstanceMetadata data={tokenInstanceMock.withRichMetadata.metadata} />
     </TestApp>,
   );
 
@@ -26,10 +26,10 @@ test('base view +@mobile', async({ mount }) => {
   await expect(component).toHaveScreenshot();
 });
 
-test('raw view', async({ mount }) => {
+test('raw view', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <TokenInstanceMetadata data={ tokenInstanceMock.withRichMetadata.metadata }/>
+      <TokenInstanceMetadata data={tokenInstanceMock.withRichMetadata.metadata} />
     </TestApp>,
   );
 

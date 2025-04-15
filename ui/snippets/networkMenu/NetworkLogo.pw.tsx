@@ -18,10 +18,10 @@ base.describe('placeholder logo', () => {
     ]) as any,
   });
 
-  test('+@dark-mode', async({ mount }) => {
+  test('+@dark-mode', async ({ mount }) => {
     const component = await mount(
       <TestApp>
-        <NetworkLogo/>
+        <NetworkLogo />
       </TestApp>,
     );
 
@@ -31,10 +31,10 @@ base.describe('placeholder logo', () => {
   test.describe('screen xl', () => {
     test.use({ viewport: configs.viewport.xl });
 
-    test('+@dark-mode', async({ mount }) => {
+    test('+@dark-mode', async ({ mount }) => {
       const component = await mount(
         <TestApp>
-          <NetworkLogo/>
+          <NetworkLogo />
         </TestApp>,
       );
 
@@ -56,7 +56,7 @@ base.describe('custom logo', () => {
 
   let component: Locator;
 
-  test.beforeEach(async({ page, mount }) => {
+  test.beforeEach(async ({ page, mount }) => {
     await page.route(LOGO_URL, (route) => {
       return route.fulfill({
         status: 200,
@@ -72,19 +72,19 @@ base.describe('custom logo', () => {
 
     component = await mount(
       <TestApp>
-        <NetworkLogo/>
+        <NetworkLogo />
       </TestApp>,
     );
   });
 
-  test('+@dark-mode', async() => {
+  test('+@dark-mode', async () => {
     await expect(component.locator('a')).toHaveScreenshot();
   });
 
   test.describe('screen xl', () => {
     test.use({ viewport: configs.viewport.xl });
 
-    test('+@dark-mode', async() => {
+    test('+@dark-mode', async () => {
       await expect(component.locator('a')).toHaveScreenshot();
     });
   });
@@ -107,7 +107,7 @@ base.describe('custom logo with dark option -@default +@dark-mode', () => {
 
   let component: Locator;
 
-  test.beforeEach(async({ page, mount }) => {
+  test.beforeEach(async ({ page, mount }) => {
     await page.route(LOGO_URL, (route) => {
       return route.fulfill({
         status: 200,
@@ -135,19 +135,19 @@ base.describe('custom logo with dark option -@default +@dark-mode', () => {
 
     component = await mount(
       <TestApp>
-        <NetworkLogo/>
+        <NetworkLogo />
       </TestApp>,
     );
   });
 
-  test('', async() => {
+  test('', async () => {
     await expect(component.locator('a')).toHaveScreenshot();
   });
 
   test.describe('screen xl', () => {
     test.use({ viewport: configs.viewport.xl });
 
-    test('', async() => {
+    test('', async () => {
       await expect(component.locator('a')).toHaveScreenshot();
     });
   });

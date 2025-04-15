@@ -12,13 +12,8 @@ interface Props {
 
 const NftVideoWithFullscreen = ({ src, isOpen, onClose }: Props) => {
   return (
-    <NftMediaFullscreenModal isOpen={ isOpen } onClose={ onClose }>
-      <chakra.video
-        { ...videoPlayProps }
-        src={ src }
-        maxH="90vh"
-        maxW="90vw"
-      />
+    <NftMediaFullscreenModal isOpen={isOpen} onClose={onClose}>
+      <chakra.video {...videoPlayProps} src={src} maxH="90vh" maxW="90vw" />
     </NftMediaFullscreenModal>
   );
 };

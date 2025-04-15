@@ -43,10 +43,7 @@ export const contract2: VerifiedContract = {
 };
 
 export const baseResponse: VerifiedContractsResponse = {
-  items: [
-    contract1,
-    contract2,
-  ],
+  items: [contract1, contract2],
   next_page_params: {
     items_count: '50',
     smart_contract_id: '172',

@@ -18,22 +18,21 @@ const TxStateTableItem = ({ data, isLoading }: Props) => {
   return (
     <Tr>
       <Td>
-        <Box py="3px">
-          { tag }
-        </Box>
+        <Box py="3px">{tag}</Box>
       </Td>
       <Td>
-        <AddressEntity
-          address={ data.address }
-          isLoading={ isLoading }
-          truncation="constant"
-          py="7px"
-        />
+        <AddressEntity address={data.address} isLoading={isLoading} truncation="constant" py="7px" />
       </Td>
-      <Td isNumeric><Box py="7px">{ before }</Box></Td>
-      <Td isNumeric><Box py="7px">{ after }</Box></Td>
-      <Td isNumeric><Box py="7px">{ change }</Box></Td>
-      <Td>{ tokenId }</Td>
+      <Td isNumeric>
+        <Box py="7px">{before}</Box>
+      </Td>
+      <Td isNumeric>
+        <Box py="7px">{after}</Box>
+      </Td>
+      <Td isNumeric>
+        <Box py="7px">{change}</Box>
+      </Td>
+      <Td>{tokenId}</Td>
     </Tr>
   );
 };

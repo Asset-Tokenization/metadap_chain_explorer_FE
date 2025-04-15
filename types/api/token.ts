@@ -36,21 +36,21 @@ export type TokenHolder = TokenHolderERC20ERC721 | TokenHolderERC1155;
 export type TokenHolderBase = {
   address: AddressParam;
   value: string;
-}
+};
 
 export type TokenHolderERC20ERC721 = TokenHolderBase & {
   token: TokenInfo<'ERC-20'> | TokenInfo<'ERC-721'>;
-}
+};
 
 export type TokenHolderERC1155 = TokenHolderBase & {
   token: TokenInfo<'ERC-1155'>;
   token_id: string;
-}
+};
 
 export type TokenHoldersPagination = {
   items_count: number;
   value: string;
-}
+};
 
 export interface TokenInstance {
   is_unique: boolean;
@@ -75,6 +75,6 @@ export interface TokenInventoryResponse {
 
 export type TokenInventoryPagination = {
   unique_token: number;
-}
+};
 
 export type TokenVerifiedInfo = Omit<TokenInfoApplication, 'id' | 'status'>;

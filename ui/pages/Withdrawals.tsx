@@ -20,10 +20,12 @@ const Withdrawals = () => {
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'withdrawals',
     options: {
-      placeholderData: generateListStub<'withdrawals'>(WITHDRAWAL, 50, { next_page_params: {
-        index: 5,
-        items_count: 50,
-      } }),
+      placeholderData: generateListStub<'withdrawals'>(WITHDRAWAL, 50, {
+        next_page_params: {
+          index: 5,
+          items_count: 50,
+        },
+      }),
     },
   });
 
@@ -38,18 +40,13 @@ const Withdrawals = () => {
 
   const content = data?.items ? (
     <>
-      <Show below="lg" ssr={ false }>
-        { data.items.map(((item, index) => (
-          <WithdrawalsListItem
-            key={ item.index + (isPlaceholderData ? String(index) : '') }
-            item={ item }
-            view="list"
-            isLoading={ isPlaceholderData }
-          />
-        ))) }
+      <Show below="lg" ssr={false}>
+        {data.items.map((item, index) => (
+          <WithdrawalsListItem key={item.index + (isPlaceholderData ? String(index) : '')} item={item} view="list" isLoading={isPlaceholderData} />
+        ))}
       </Show>
-      <Hide below="lg" ssr={ false }>
-        <WithdrawalsTable items={ data.items } view="list" top={ pagination.isVisible ? 80 : 0 } isLoading={ isPlaceholderData }/>
+      <Hide below="lg" ssr={false}>
+        <WithdrawalsTable items={data.items} view="list" top={pagination.isVisible ? 80 : 0} isLoading={isPlaceholderData} />
       </Hide>
     </>
   ) : null;
@@ -60,29 +57,23 @@ const Withdrawals = () => {
     }
 
     return (
-      <Skeleton isLoaded={ !countersQuery.isPlaceholderData && !isPlaceholderData } display="flex" flexWrap="wrap">
-        { countersQuery.data && (
+      <Skeleton isLoaded={!countersQuery.isPlaceholderData && !isPlaceholderData} display="flex" flexWrap="wrap">
+        {countersQuery.data && (
           <Text lineHeight={{ base: '24px', lg: '32px' }}>
-            { BigNumber(countersQuery.data.withdrawal_count).toFormat() } withdrawals processed
-        and { getCurrencyValue({ value: countersQuery.data.withdrawal_sum }).valueStr } { feature.currency.symbol } withdrawn
+            {BigNumber(countersQuery.data.withdrawal_count).toFormat()} withdrawals processed and{' '}
+            {getCurrencyValue({ value: countersQuery.data.withdrawal_sum }).valueStr} {feature.currency.symbol} withdrawn
           </Text>
-        ) }
+        )}
       </Skeleton>
     );
   })();
 
-  const actionBar = <StickyPaginationWithText text={ text } pagination={ pagination }/>;
+  const actionBar = <StickyPaginationWithText text={text} pagination={pagination} />;
 
   return (
     <>
-      <PageTitle title="Withdrawals" withTextAd/>
-      <DataListDisplay
-        isError={ isError }
-        items={ data?.items }
-        emptyText="There are no withdrawals."
-        content={ content }
-        actionBar={ actionBar }
-      />
+      <PageTitle title="Withdrawals" withTextAd />
+      <DataListDisplay isError={isError} items={data?.items} emptyText="There are no withdrawals." content={content} actionBar={actionBar} />
     </>
   );
 };

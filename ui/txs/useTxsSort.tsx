@@ -11,43 +11,43 @@ type HookResult = UseQueryResult<TxsResponse> & {
   sorting: Sort;
   setSortByField: (field: 'val' | 'fee') => () => void;
   setSortByValue: (value: Sort | undefined) => void;
-}
+};
 
-export default function useTxsSort(
-  queryResult: UseQueryResult<TxsResponse>,
-): HookResult {
+export default function useTxsSort(queryResult: UseQueryResult<TxsResponse>): HookResult {
+  const [sorting, setSorting] = React.useState<Sort>(cookies.get(cookies.NAMES.TXS_SORT) as Sort);
 
-  const [ sorting, setSorting ] = React.useState<Sort>(cookies.get(cookies.NAMES.TXS_SORT) as Sort);
-
-  const setSortByField = React.useCallback((field: 'val' | 'fee') => () => {
-    if (queryResult.isPlaceholderData) {
-      return;
-    }
-
-    setSorting((prevVal) => {
-      let newVal: Sort = '';
-      if (field === 'val') {
-        if (prevVal === 'val-asc') {
-          newVal = '';
-        } else if (prevVal === 'val-desc') {
-          newVal = 'val-asc';
-        } else {
-          newVal = 'val-desc';
-        }
+  const setSortByField = React.useCallback(
+    (field: 'val' | 'fee') => () => {
+      if (queryResult.isPlaceholderData) {
+        return;
       }
-      if (field === 'fee') {
-        if (prevVal === 'fee-asc') {
-          newVal = '';
-        } else if (prevVal === 'fee-desc') {
-          newVal = 'fee-asc';
-        } else {
-          newVal = 'fee-desc';
+
+      setSorting((prevVal) => {
+        let newVal: Sort = '';
+        if (field === 'val') {
+          if (prevVal === 'val-asc') {
+            newVal = '';
+          } else if (prevVal === 'val-desc') {
+            newVal = 'val-asc';
+          } else {
+            newVal = 'val-desc';
+          }
         }
-      }
-      cookies.set(cookies.NAMES.TXS_SORT, newVal);
-      return newVal;
-    });
-  }, [ queryResult.isPlaceholderData ]);
+        if (field === 'fee') {
+          if (prevVal === 'fee-asc') {
+            newVal = '';
+          } else if (prevVal === 'fee-desc') {
+            newVal = 'fee-asc';
+          } else {
+            newVal = 'fee-desc';
+          }
+        }
+        cookies.set(cookies.NAMES.TXS_SORT, newVal);
+        return newVal;
+      });
+    },
+    [queryResult.isPlaceholderData],
+  );
 
   const setSortByValue = React.useCallback((value: Sort | undefined) => {
     setSorting((prevVal: Sort) => {
@@ -72,6 +72,5 @@ export default function useTxsSort(
       setSortByValue,
       sorting,
     };
-  }, [ queryResult, setSortByField, setSortByValue, sorting ]);
-
+  }, [queryResult, setSortByField, setSortByValue, sorting]);
 }

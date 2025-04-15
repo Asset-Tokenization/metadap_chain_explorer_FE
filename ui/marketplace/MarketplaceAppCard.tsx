@@ -33,17 +33,20 @@ const MarketplaceAppCard = ({
 }: Props) => {
   const categoriesLabel = categories.join(', ');
 
-  const handleInfoClick = useCallback((event: MouseEvent) => {
-    event.preventDefault();
-    onInfoClick(id);
-  }, [ onInfoClick, id ]);
+  const handleInfoClick = useCallback(
+    (event: MouseEvent) => {
+      event.preventDefault();
+      onInfoClick(id);
+    },
+    [onInfoClick, id],
+  );
 
   const handleFavoriteClick = useCallback(() => {
     onFavoriteClick(id, isFavorite);
-  }, [ onFavoriteClick, id, isFavorite ]);
+  }, [onFavoriteClick, id, isFavorite]);
 
   const logoUrl = useColorModeValue(logo, logoDarkMode || logo);
-  const moreButtonBgGradient = `linear(to-r, ${ useColorModeValue('whiteAlpha.50', 'blackAlpha.50') }, ${ useColorModeValue('white', 'black') } 20%)`;
+  const moreButtonBgGradient = `linear(to-r, ${useColorModeValue('whiteAlpha.50', 'blackAlpha.50')}, ${useColorModeValue('white', 'black')} 20%)`;
 
   return (
     <LinkBox
@@ -57,7 +60,7 @@ const MarketplaceAppCard = ({
       height="100%"
       padding={{ base: 3, sm: '20px' }}
       border="1px"
-      borderColor={ useColorModeValue('gray.200', 'gray.600') }
+      borderColor={useColorModeValue('gray.200', 'gray.600')}
       role="group"
     >
       <Box
@@ -69,24 +72,21 @@ const MarketplaceAppCard = ({
         height="100%"
       >
         <Skeleton
-          isLoaded={ !isLoading }
+          isLoaded={!isLoading}
           gridRow={{ base: '1 / 4', sm: 'auto' }}
-          marginBottom={ 4 }
+          marginBottom={4}
           w={{ base: '64px', sm: '96px' }}
           h={{ base: '64px', sm: '96px' }}
-          borderRadius={ 8 }
+          borderRadius={8}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Image
-            src={ isLoading ? undefined : logoUrl }
-            alt={ `${ title } app icon` }
-          />
+          <Image src={isLoading ? undefined : logoUrl} alt={`${title} app icon`} />
         </Skeleton>
 
         <Skeleton
-          isLoaded={ !isLoading }
+          isLoaded={!isLoading}
           gridColumn={{ base: 2, sm: 'auto' }}
           as="h3"
           marginBottom={{ base: 0, sm: 2 }}
@@ -95,40 +95,19 @@ const MarketplaceAppCard = ({
           fontFamily="heading"
           display="inline-block"
         >
-          <MarketplaceAppCardLink
-            id={ id }
-            url={ url }
-            external={ external }
-            title={ title }
-          />
+          <MarketplaceAppCardLink id={id} url={url} external={external} title={title} />
         </Skeleton>
 
-        <Skeleton
-          isLoaded={ !isLoading }
-          marginBottom={{ base: 0, sm: 2 }}
-          color="text_secondary"
-          fontSize="xs"
-        >
-          <span>{ categoriesLabel }</span>
+        <Skeleton isLoaded={!isLoading} marginBottom={{ base: 0, sm: 2 }} color="text_secondary" fontSize="xs">
+          <span>{categoriesLabel}</span>
         </Skeleton>
 
-        <Skeleton
-          isLoaded={ !isLoading }
-          fontSize={{ base: 'xs', sm: 'sm' }}
-          lineHeight="20px"
-          noOfLines={ 4 }
-        >
-          { shortDescription }
+        <Skeleton isLoaded={!isLoading} fontSize={{ base: 'xs', sm: 'sm' }} lineHeight="20px" noOfLines={4}>
+          {shortDescription}
         </Skeleton>
 
-        { !isLoading && (
-          <Box
-            position="absolute"
-            right={{ base: 3, sm: '20px' }}
-            bottom={{ base: 3, sm: '20px' }}
-            paddingLeft={ 8 }
-            bgGradient={ moreButtonBgGradient }
-          >
+        {!isLoading && (
+          <Box position="absolute" right={{ base: 3, sm: '20px' }} bottom={{ base: 3, sm: '20px' }} paddingLeft={8} bgGradient={moreButtonBgGradient}>
             <Link
               fontSize={{ base: 'xs', sm: 'sm' }}
               display="flex"
@@ -137,19 +116,15 @@ const MarketplaceAppCard = ({
               maxW="100%"
               overflow="hidden"
               href="#"
-              onClick={ handleInfoClick }
+              onClick={handleInfoClick}
             >
-            More
-
-              <Icon
-                as={ northEastIcon }
-                marginLeft={ 1 }
-              />
+              More
+              <Icon as={northEastIcon} marginLeft={1} />
             </Link>
           </Box>
-        ) }
+        )}
 
-        { !isLoading && (
+        {!isLoading && (
           <IconButton
             display={{ base: 'block', sm: isFavorite ? 'block' : 'none' }}
             _groupHover={{ display: 'block' }}
@@ -160,15 +135,12 @@ const MarketplaceAppCard = ({
             title="Mark as favorite"
             variant="ghost"
             colorScheme="gray"
-            w={ 9 }
-            h={ 8 }
-            onClick={ handleFavoriteClick }
-            icon={ isFavorite ?
-              <Icon as={ starFilledIcon } w={ 4 } h={ 4 } color="yellow.400"/> :
-              <Icon as={ starOutlineIcon } w={ 4 } h={ 4 } color="gray.300"/>
-            }
+            w={9}
+            h={8}
+            onClick={handleFavoriteClick}
+            icon={isFavorite ? <Icon as={starFilledIcon} w={4} h={4} color="yellow.400" /> : <Icon as={starOutlineIcon} w={4} h={4} color="gray.300" />}
           />
-        ) }
+        )}
       </Box>
     </LinkBox>
   );

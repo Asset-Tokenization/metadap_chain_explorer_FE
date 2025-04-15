@@ -5,19 +5,16 @@ import TestApp from 'playwright/TestApp';
 
 import BlockEntity from './BlockEntity';
 
-const iconSizes = [ 'md', 'lg' ];
+const iconSizes = ['md', 'lg'];
 
 test.use({ viewport: { width: 180, height: 30 } });
 
 test.describe('icon sizes', () => {
   iconSizes.forEach((size) => {
-    test(size, async({ mount }) => {
+    test(size, async ({ mount }) => {
       const component = await mount(
         <TestApp>
-          <BlockEntity
-            number={ 17943507 }
-            iconSize={ size }
-          />
+          <BlockEntity number={17943507} iconSize={size} />
         </TestApp>,
       );
 
@@ -26,26 +23,20 @@ test.describe('icon sizes', () => {
   });
 });
 
-test('loading', async({ mount }) => {
+test('loading', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <BlockEntity
-        number={ 17943507 }
-        isLoading
-      />
+      <BlockEntity number={17943507} isLoading />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('external link +@dark-mode', async({ mount }) => {
+test('external link +@dark-mode', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <BlockEntity
-        number={ 17943507 }
-        isExternal
-      />
+      <BlockEntity number={17943507} isExternal />
     </TestApp>,
   );
 
@@ -54,27 +45,20 @@ test('external link +@dark-mode', async({ mount }) => {
   await expect(component).toHaveScreenshot();
 });
 
-test('long number', async({ mount }) => {
+test('long number', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <BlockEntity
-        number={ 1794350723452223 }
-      />
+      <BlockEntity number={1794350723452223} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('customization', async({ mount }) => {
+test('customization', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <BlockEntity
-        number={ 17943507 }
-        p={ 3 }
-        borderWidth="1px"
-        borderColor="blue.700"
-      />
+      <BlockEntity number={17943507} p={3} borderWidth="1px" borderColor="blue.700" />
     </TestApp>,
   );
 

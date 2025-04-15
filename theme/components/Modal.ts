@@ -1,14 +1,10 @@
 import { modalAnatomy as parts } from '@chakra-ui/anatomy';
 import { Modal as ModalComponent } from '@chakra-ui/react';
-import {
-  createMultiStyleConfigHelpers,
-  defineStyle,
-} from '@chakra-ui/styled-system';
+import { createMultiStyleConfigHelpers, defineStyle } from '@chakra-ui/styled-system';
 import { mode } from '@chakra-ui/theme-tools';
 import { runIfFn } from '@chakra-ui/utils';
 
-const { defineMultiStyleConfig, definePartsStyle } =
-  createMultiStyleConfigHelpers(parts.keys);
+const { defineMultiStyleConfig, definePartsStyle } = createMultiStyleConfigHelpers(parts.keys);
 
 const baseStyleDialog = defineStyle((props) => {
   return {

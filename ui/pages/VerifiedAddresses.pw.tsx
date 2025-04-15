@@ -10,7 +10,7 @@ import VerifiedAddresses from './VerifiedAddresses';
 const VERIFIED_ADDRESS_URL = buildApiUrl('verified_addresses', { chainId: '1' });
 const TOKEN_INFO_APPLICATIONS_URL = buildApiUrl('token_info_applications', { chainId: '1', id: undefined });
 
-test.beforeEach(async({ context }) => {
+test.beforeEach(async ({ context }) => {
   await context.route(mocks.TOKEN_INFO_APPLICATION_BASE.iconUrl, (route) => {
     return route.fulfill({
       status: 200,
@@ -19,39 +19,49 @@ test.beforeEach(async({ context }) => {
   });
 });
 
-test('base view +@mobile', async({ mount, page }) => {
-  await page.route(VERIFIED_ADDRESS_URL, (route) => route.fulfill({
-    body: JSON.stringify(mocks.VERIFIED_ADDRESS_RESPONSE.DEFAULT),
-  }));
+test('base view +@mobile', async ({ mount, page }) => {
+  await page.route(VERIFIED_ADDRESS_URL, (route) =>
+    route.fulfill({
+      body: JSON.stringify(mocks.VERIFIED_ADDRESS_RESPONSE.DEFAULT),
+    }),
+  );
 
-  await page.route(TOKEN_INFO_APPLICATIONS_URL, (route) => route.fulfill({
-    body: JSON.stringify(mocks.TOKEN_INFO_APPLICATIONS_RESPONSE.DEFAULT),
-  }));
+  await page.route(TOKEN_INFO_APPLICATIONS_URL, (route) =>
+    route.fulfill({
+      body: JSON.stringify(mocks.TOKEN_INFO_APPLICATIONS_RESPONSE.DEFAULT),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <VerifiedAddresses/>
+      <VerifiedAddresses />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('address verification flow', async({ mount, page }) => {
+test('address verification flow', async ({ mount, page }) => {
   const CHECK_ADDRESS_URL = buildApiUrl('address_verification', { chainId: '1', type: ':prepare' });
   const VERIFY_ADDRESS_URL = buildApiUrl('address_verification', { chainId: '1', type: ':verify' });
 
-  await page.route(VERIFIED_ADDRESS_URL, (route) => route.fulfill({
-    body: JSON.stringify(mocks.VERIFIED_ADDRESS_RESPONSE.DEFAULT),
-  }));
+  await page.route(VERIFIED_ADDRESS_URL, (route) =>
+    route.fulfill({
+      body: JSON.stringify(mocks.VERIFIED_ADDRESS_RESPONSE.DEFAULT),
+    }),
+  );
 
-  await page.route(TOKEN_INFO_APPLICATIONS_URL, (route) => route.fulfill({
-    body: JSON.stringify(mocks.TOKEN_INFO_APPLICATIONS_RESPONSE.DEFAULT),
-  }));
+  await page.route(TOKEN_INFO_APPLICATIONS_URL, (route) =>
+    route.fulfill({
+      body: JSON.stringify(mocks.TOKEN_INFO_APPLICATIONS_RESPONSE.DEFAULT),
+    }),
+  );
 
-  await page.route(CHECK_ADDRESS_URL, (route) => route.fulfill({
-    body: JSON.stringify(mocks.ADDRESS_CHECK_RESPONSE.SUCCESS),
-  }));
+  await page.route(CHECK_ADDRESS_URL, (route) =>
+    route.fulfill({
+      body: JSON.stringify(mocks.ADDRESS_CHECK_RESPONSE.SUCCESS),
+    }),
+  );
 
   await page.route(VERIFY_ADDRESS_URL, (route) => {
     return route.fulfill({
@@ -61,7 +71,7 @@ test('address verification flow', async({ mount, page }) => {
 
   await mount(
     <TestApp>
-      <VerifiedAddresses/>
+      <VerifiedAddresses />
     </TestApp>,
   );
 
@@ -84,30 +94,38 @@ test('address verification flow', async({ mount, page }) => {
   await expect(page).toHaveScreenshot();
 });
 
-test('application update flow', async({ mount, page }) => {
+test('application update flow', async ({ mount, page }) => {
   const TOKEN_INFO_APPLICATION_URL = buildApiUrl('token_info_applications', { chainId: '1', id: mocks.TOKEN_INFO_APPLICATION.UPDATED_ITEM.id });
   const FORM_CONFIG_URL = buildApiUrl('token_info_applications_config', { chainId: '1' });
 
-  await page.route(VERIFIED_ADDRESS_URL, (route) => route.fulfill({
-    body: JSON.stringify(mocks.VERIFIED_ADDRESS_RESPONSE.DEFAULT),
-  }));
+  await page.route(VERIFIED_ADDRESS_URL, (route) =>
+    route.fulfill({
+      body: JSON.stringify(mocks.VERIFIED_ADDRESS_RESPONSE.DEFAULT),
+    }),
+  );
 
-  await page.route(TOKEN_INFO_APPLICATIONS_URL, (route) => route.fulfill({
-    body: JSON.stringify(mocks.TOKEN_INFO_APPLICATIONS_RESPONSE.FOR_UPDATE),
-  }));
+  await page.route(TOKEN_INFO_APPLICATIONS_URL, (route) =>
+    route.fulfill({
+      body: JSON.stringify(mocks.TOKEN_INFO_APPLICATIONS_RESPONSE.FOR_UPDATE),
+    }),
+  );
 
-  await page.route(FORM_CONFIG_URL, (route) => route.fulfill({
-    body: JSON.stringify(mocks.TOKEN_INFO_FORM_CONFIG),
-  }));
+  await page.route(FORM_CONFIG_URL, (route) =>
+    route.fulfill({
+      body: JSON.stringify(mocks.TOKEN_INFO_FORM_CONFIG),
+    }),
+  );
 
   // PUT request
-  await page.route(TOKEN_INFO_APPLICATION_URL, (route) => route.fulfill({
-    body: JSON.stringify(mocks.TOKEN_INFO_APPLICATION.UPDATED_ITEM),
-  }));
+  await page.route(TOKEN_INFO_APPLICATION_URL, (route) =>
+    route.fulfill({
+      body: JSON.stringify(mocks.TOKEN_INFO_APPLICATION.UPDATED_ITEM),
+    }),
+  );
 
   await mount(
     <TestApp>
-      <VerifiedAddresses/>
+      <VerifiedAddresses />
     </TestApp>,
   );
 

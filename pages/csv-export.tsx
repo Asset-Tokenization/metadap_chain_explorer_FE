@@ -8,7 +8,7 @@ import CsvExport from 'ui/pages/CsvExport';
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/csv-export">
-      <CsvExport/>
+      <CsvExport />
     </PageNextJs>
   );
 };

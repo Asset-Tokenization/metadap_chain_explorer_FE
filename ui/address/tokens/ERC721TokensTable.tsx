@@ -16,17 +16,19 @@ interface Props {
 const ERC721TokensTable = ({ data, top, isLoading }: Props) => {
   return (
     <Table variant="simple" size="sm">
-      <Thead top={ top }>
+      <Thead top={top}>
         <Tr>
           <Th width="40%">Asset</Th>
           <Th width="40%">Contract address</Th>
-          <Th width="20%" isNumeric>Quantity</Th>
+          <Th width="20%" isNumeric>
+            Quantity
+          </Th>
         </Tr>
       </Thead>
       <Tbody>
-        { data.map((item, index) => (
-          <ERC721TokensTableItem key={ item.token.address + (isLoading ? index : '') } { ...item } isLoading={ isLoading }/>
-        )) }
+        {data.map((item, index) => (
+          <ERC721TokensTableItem key={item.token.address + (isLoading ? index : '')} {...item} isLoading={isLoading} />
+        ))}
       </Tbody>
     </Table>
   );

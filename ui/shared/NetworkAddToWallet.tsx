@@ -15,7 +15,7 @@ const NetworkAddToWallet = () => {
   const { provider, wallet } = useProvider();
   const addOrSwitchChain = useAddOrSwitchChain();
 
-  const handleClick = React.useCallback(async() => {
+  const handleClick = React.useCallback(async () => {
     if (!wallet || !provider) {
       return;
     }
@@ -36,7 +36,6 @@ const NetworkAddToWallet = () => {
         Target: 'network',
         Wallet: wallet,
       });
-
     } catch (error) {
       toast({
         position: 'top-right',
@@ -47,16 +46,16 @@ const NetworkAddToWallet = () => {
         isClosable: true,
       });
     }
-  }, [ addOrSwitchChain, provider, toast, wallet ]);
+  }, [addOrSwitchChain, provider, toast, wallet]);
 
   if (!provider || !wallet || !config.chain.rpcUrl || !feature.isEnabled) {
     return null;
   }
 
   return (
-    <Button variant="outline" size="sm" onClick={ handleClick }>
-      <Icon as={ WALLETS_INFO[wallet].icon } boxSize={ 5 } mr={ 2 }/>
-        Add { config.chain.name }
+    <Button variant="outline" size="sm" onClick={handleClick}>
+      <Icon as={WALLETS_INFO[wallet].icon} boxSize={5} mr={2} />
+      Add {config.chain.name}
     </Button>
   );
 };

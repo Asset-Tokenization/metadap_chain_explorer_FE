@@ -14,7 +14,7 @@ type Props = {
   favoriteApps: Array<string>;
   onFavoriteClick: (id: string, isFavorite: boolean) => void;
   isLoading: boolean;
-}
+};
 
 const MarketplaceList = ({ apps, onAppClick, favoriteApps, onFavoriteClick, isLoading }: Props) => {
   return apps.length > 0 ? (
@@ -26,26 +26,26 @@ const MarketplaceList = ({ apps, onAppClick, favoriteApps, onFavoriteClick, isLo
       autoRows="1fr"
       gap={{ base: '16px', sm: '24px' }}
     >
-      { apps.map((app, index) => (
+      {apps.map((app, index) => (
         <MarketplaceAppCard
-          key={ app.id + (isLoading ? index : '') }
-          onInfoClick={ onAppClick }
-          id={ app.id }
-          external={ app.external }
-          url={ app.url }
-          title={ app.title }
-          logo={ app.logo }
-          logoDarkMode={ app.logoDarkMode }
-          shortDescription={ app.shortDescription }
-          categories={ app.categories }
-          isFavorite={ favoriteApps.includes(app.id) }
-          onFavoriteClick={ onFavoriteClick }
-          isLoading={ isLoading }
+          key={app.id + (isLoading ? index : '')}
+          onInfoClick={onAppClick}
+          id={app.id}
+          external={app.external}
+          url={app.url}
+          title={app.title}
+          logo={app.logo}
+          logoDarkMode={app.logoDarkMode}
+          shortDescription={app.shortDescription}
+          categories={app.categories}
+          isFavorite={favoriteApps.includes(app.id)}
+          onFavoriteClick={onFavoriteClick}
+          isLoading={isLoading}
         />
-      )) }
+      ))}
     </Grid>
   ) : (
-    <EmptySearchResult text={ `Couldn${ apos }t find an app that matches your filter query.` }/>
+    <EmptySearchResult text={`Couldn${apos}t find an app that matches your filter query.`} />
   );
 };
 

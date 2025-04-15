@@ -74,13 +74,13 @@ export interface AddressTransactionsResponse {
   } | null;
 }
 
-export const AddressFromToFilterValues = [ 'from', 'to' ] as const;
+export const AddressFromToFilterValues = ['from', 'to'] as const;
 
-export type AddressFromToFilter = typeof AddressFromToFilterValues[number] | undefined;
+export type AddressFromToFilter = (typeof AddressFromToFilterValues)[number] | undefined;
 
 export type AddressTxsFilters = {
   filter: AddressFromToFilter;
-}
+};
 
 export interface AddressTokenTransferResponse {
   items: Array<TokenTransfer>;
@@ -91,11 +91,11 @@ export type AddressTokenTransferFilters = {
   filter?: AddressFromToFilter;
   type?: Array<TokenType>;
   token?: string;
-}
+};
 
 export type AddressTokensFilter = {
   type: TokenType;
-}
+};
 
 export interface AddressCoinBalanceHistoryItem {
   block_number: number;
@@ -116,7 +116,7 @@ export interface AddressCoinBalanceHistoryResponse {
 export type AddressCoinBalanceHistoryChart = Array<{
   date: string;
   value: string;
-}>
+}>;
 
 export interface AddressBlocksValidatedResponse {
   items: Array<Block>;
@@ -141,7 +141,7 @@ export type AddressWithdrawalsResponse = {
     index: number;
     items_count: number;
   };
-}
+};
 
 export type AddressWithdrawalsItem = {
   amount: string;
@@ -149,7 +149,7 @@ export type AddressWithdrawalsItem = {
   index: number;
   timestamp: string;
   validator_index: number;
-}
+};
 
 export type AddressTabsCounters = {
   internal_txs_count: number | null;
@@ -159,4 +159,4 @@ export type AddressTabsCounters = {
   transactions_count: number | null;
   validations_count: number | null;
   withdrawals_count: number | null;
-}
+};

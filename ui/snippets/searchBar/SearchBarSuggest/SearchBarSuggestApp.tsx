@@ -17,32 +17,18 @@ interface Props {
 }
 
 const SearchBarSuggestApp = ({ data, isMobile, searchTerm, onClick }: Props) => {
-
-  const logo = (
-    <Image
-      borderRadius="base"
-      boxSize={ 5 }
-      src={ useColorModeValue(data.logo, data.logoDarkMode || data.logo) }
-      alt={ `${ data.title } app icon` }
-    />
-  );
+  const logo = <Image borderRadius="base" boxSize={5} src={useColorModeValue(data.logo, data.logoDarkMode || data.logo)} alt={`${data.title} app icon`} />;
 
   const content = (() => {
     if (isMobile) {
       return (
         <>
           <Flex alignItems="center">
-            { logo }
-            <Text
-              fontWeight={ 700 }
-              overflow="hidden"
-              whiteSpace="nowrap"
-              textOverflow="ellipsis"
-              ml={ 2 }
-            >
-              <span dangerouslySetInnerHTML={{ __html: highlightText(data.title, searchTerm) }}/>
+            {logo}
+            <Text fontWeight={700} overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" ml={2}>
+              <span dangerouslySetInnerHTML={{ __html: highlightText(data.title, searchTerm) }} />
             </Text>
-            { data.external && <Icon as={ arrowIcon } boxSize={ 4 } verticalAlign="middle"/> }
+            {data.external && <Icon as={arrowIcon} boxSize={4} verticalAlign="middle" />}
           </Flex>
           <Text
             variant="secondary"
@@ -54,51 +40,36 @@ const SearchBarSuggestApp = ({ data, isMobile, searchTerm, onClick }: Props) => 
               '-webkit-line-clamp': '3',
             }}
           >
-            { data.description }
+            {data.description}
           </Text>
         </>
       );
     }
     return (
-      <Flex gap={ 2 } alignItems="center">
-        { logo }
-        <Text
-          fontWeight={ 700 }
-          overflow="hidden"
-          whiteSpace="nowrap"
-          textOverflow="ellipsis"
-          w="200px"
-          flexShrink={ 0 }
-        >
-          <span dangerouslySetInnerHTML={{ __html: highlightText(data.title, searchTerm) }}/>
+      <Flex gap={2} alignItems="center">
+        {logo}
+        <Text fontWeight={700} overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" w="200px" flexShrink={0}>
+          <span dangerouslySetInnerHTML={{ __html: highlightText(data.title, searchTerm) }} />
         </Text>
-        <Text
-          variant="secondary"
-          overflow="hidden"
-          whiteSpace="nowrap"
-          textOverflow="ellipsis"
-          flexGrow={ 1 }
-        >
-          { data.description }
+        <Text variant="secondary" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" flexGrow={1}>
+          {data.description}
         </Text>
-        { data.external && <Icon as={ arrowIcon } boxSize={ 4 } verticalAlign="middle" color="text_secondary"/> }
+        {data.external && <Icon as={arrowIcon} boxSize={4} verticalAlign="middle" color="text_secondary" />}
       </Flex>
     );
   })();
 
   if (data.external) {
     return (
-      <SearchBarSuggestItemLink onClick={ onClick } href={ data.url } target="_blank">
-        { content }
+      <SearchBarSuggestItemLink onClick={onClick} href={data.url} target="_blank">
+        {content}
       </SearchBarSuggestItemLink>
     );
   }
 
   return (
     <NextLink href={{ pathname: '/apps/[id]', query: { id: data.id } }} passHref legacyBehavior>
-      <SearchBarSuggestItemLink onClick={ onClick }>
-        { content }
-      </SearchBarSuggestItemLink>
+      <SearchBarSuggestItemLink onClick={onClick}>{content}</SearchBarSuggestItemLink>
     </NextLink>
   );
 };

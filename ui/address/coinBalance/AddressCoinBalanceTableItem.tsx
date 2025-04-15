@@ -22,43 +22,26 @@ const AddressCoinBalanceTableItem = (props: Props) => {
   return (
     <Tr>
       <Td>
-        <BlockEntity
-          isLoading={ props.isLoading }
-          number={ props.block_number }
-          noIcon
-          fontSize="sm"
-          lineHeight={ 5 }
-          fontWeight={ 700 }
-        />
+        <BlockEntity isLoading={props.isLoading} number={props.block_number} noIcon fontSize="sm" lineHeight={5} fontWeight={700} />
       </Td>
+      <Td>{props.transaction_hash && <TxEntity hash={props.transaction_hash} isLoading={props.isLoading} noIcon fontWeight={700} maxW="150px" />}</Td>
       <Td>
-        { props.transaction_hash && (
-          <TxEntity
-            hash={ props.transaction_hash }
-            isLoading={ props.isLoading }
-            noIcon
-            fontWeight={ 700 }
-            maxW="150px"
-          />
-        ) }
-      </Td>
-      <Td>
-        <Skeleton isLoaded={ !props.isLoading } color="text_secondary" display="inline-block">
-          <span>{ timeAgo }</span>
+        <Skeleton isLoaded={!props.isLoading} color="text_secondary" display="inline-block">
+          <span>{timeAgo}</span>
         </Skeleton>
       </Td>
-      <Td isNumeric pr={ 1 }>
-        <Skeleton isLoaded={ !props.isLoading } color="text_secondary" display="inline-block">
-          <span>{ BigNumber(props.value).div(WEI).dp(8).toFormat() }</span>
+      <Td isNumeric pr={1}>
+        <Skeleton isLoaded={!props.isLoading} color="text_secondary" display="inline-block">
+          <span>{BigNumber(props.value).div(WEI).dp(8).toFormat()}</span>
         </Skeleton>
       </Td>
       <Td isNumeric display="flex" justifyContent="end">
-        <Skeleton isLoaded={ !props.isLoading }>
-          <Stat flexGrow="0" lineHeight={ 5 }>
-            <StatHelpText display="flex" mb={ 0 } alignItems="center">
-              <StatArrow type={ isPositiveDelta ? 'increase' : 'decrease' } mr={ 2 }/>
-              <Text as="span" color={ isPositiveDelta ? 'green.500' : 'red.500' } fontWeight={ 600 }>
-                { deltaBn.dp(8).toFormat() }
+        <Skeleton isLoaded={!props.isLoading}>
+          <Stat flexGrow="0" lineHeight={5}>
+            <StatHelpText display="flex" mb={0} alignItems="center">
+              <StatArrow type={isPositiveDelta ? 'increase' : 'decrease'} mr={2} />
+              <Text as="span" color={isPositiveDelta ? 'green.500' : 'red.500'} fontWeight={600}>
+                {deltaBn.dp(8).toFormat()}
               </Text>
             </StatHelpText>
           </Stat>

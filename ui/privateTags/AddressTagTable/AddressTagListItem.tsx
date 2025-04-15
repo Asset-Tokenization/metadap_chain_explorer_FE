@@ -17,31 +17,26 @@ interface Props {
 const AddressTagListItem = ({ item, onEditClick, onDeleteClick, isLoading }: Props) => {
   const onItemEditClick = useCallback(() => {
     return onEditClick(item);
-  }, [ item, onEditClick ]);
+  }, [item, onEditClick]);
 
   const onItemDeleteClick = useCallback(() => {
     return onDeleteClick(item);
-  }, [ item, onDeleteClick ]);
+  }, [item, onDeleteClick]);
 
   return (
     <ListItemMobile>
       <Flex alignItems="flex-start" flexDirection="column" maxW="100%">
-        <AddressEntity
-          address={ item.address }
-          isLoading={ isLoading }
-          fontWeight="600"
-          w="100%"
-        />
-        <HStack spacing={ 3 } mt={ 4 }>
-          <Text fontSize="sm" fontWeight={ 500 }>Private tag</Text>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" borderRadius="sm">
-            <Tag>
-              { item.name }
-            </Tag>
+        <AddressEntity address={item.address} isLoading={isLoading} fontWeight="600" w="100%" />
+        <HStack spacing={3} mt={4}>
+          <Text fontSize="sm" fontWeight={500}>
+            Private tag
+          </Text>
+          <Skeleton isLoaded={!isLoading} display="inline-block" borderRadius="sm">
+            <Tag>{item.name}</Tag>
           </Skeleton>
         </HStack>
       </Flex>
-      <TableItemActionButtons onDeleteClick={ onItemDeleteClick } onEditClick={ onItemEditClick } isLoading={ isLoading }/>
+      <TableItemActionButtons onDeleteClick={onItemDeleteClick} onEditClick={onItemEditClick} isLoading={isLoading} />
     </ListItemMobile>
   );
 };

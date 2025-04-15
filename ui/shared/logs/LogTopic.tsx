@@ -22,10 +22,10 @@ const VALUE_CONVERTERS: Record<DataType, (hex: string) => string> = {
   address: hexToAddress,
   number: (hex) => BigInt(hex).toString(),
 };
-const OPTIONS: Array<DataType> = [ 'hex', 'address', 'text', 'number' ];
+const OPTIONS: Array<DataType> = ['hex', 'address', 'text', 'number'];
 
 const LogTopic = ({ hex, index, isLoading }: Props) => {
-  const [ selectedDataType, setSelectedDataType ] = React.useState<DataType>('hex');
+  const [selectedDataType, setSelectedDataType] = React.useState<DataType>('hex');
 
   const handleSelectChange = React.useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDataType(event.target.value as DataType);
@@ -40,47 +40,39 @@ const LogTopic = ({ hex, index, isLoading }: Props) => {
       case 'text': {
         return (
           <>
-            <Skeleton isLoaded={ !isLoading } overflow="hidden" whiteSpace="nowrap">
-              <HashStringShortenDynamic hash={ value }/>
+            <Skeleton isLoaded={!isLoading} overflow="hidden" whiteSpace="nowrap">
+              <HashStringShortenDynamic hash={value} />
             </Skeleton>
-            <CopyToClipboard text={ value } isLoading={ isLoading }/>
+            <CopyToClipboard text={value} isLoading={isLoading} />
           </>
         );
       }
 
       case 'address': {
-        return (
-          <AddressEntity
-            address={{ hash: value, name: '', implementation_name: null, is_contract: false, is_verified: false }}
-            isLoading={ isLoading }
-          />
-        );
+        return <AddressEntity address={{ hash: value, name: '', implementation_name: null, is_contract: false, is_verified: false }} isLoading={isLoading} />;
       }
     }
   })();
 
   return (
     <Flex alignItems="center" px={{ base: 0, lg: 3 }} _notFirst={{ mt: 3 }} overflow="hidden" maxW="100%">
-      <Skeleton isLoaded={ !isLoading } mr={ 3 } borderRadius="base">
-        <Button variant="outline" colorScheme="gray" isActive size="xs" fontWeight={ 400 } w={ 6 }>
-          { index }
+      <Skeleton isLoaded={!isLoading} mr={3} borderRadius="base">
+        <Button variant="outline" colorScheme="gray" isActive size="xs" fontWeight={400} w={6}>
+          {index}
         </Button>
       </Skeleton>
-      { index !== 0 && (
-        <Skeleton isLoaded={ !isLoading } mr={ 3 } flexShrink={ 0 } borderRadius="base">
-          <Select
-            size="xs"
-            borderRadius="base"
-            value={ selectedDataType }
-            onChange={ handleSelectChange }
-            w="auto"
-            aria-label="Data type"
-          >
-            { OPTIONS.map((option) => <option key={ option } value={ option }>{ capitalize(option) }</option>) }
+      {index !== 0 && (
+        <Skeleton isLoaded={!isLoading} mr={3} flexShrink={0} borderRadius="base">
+          <Select size="xs" borderRadius="base" value={selectedDataType} onChange={handleSelectChange} w="auto" aria-label="Data type">
+            {OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {capitalize(option)}
+              </option>
+            ))}
           </Select>
         </Skeleton>
-      ) }
-      { content }
+      )}
+      {content}
     </Flex>
   );
 };

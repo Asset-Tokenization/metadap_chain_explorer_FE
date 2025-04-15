@@ -44,7 +44,7 @@ export default function useFetch() {
       },
     };
 
-    return fetch(path, reqParams).then(response => {
+    return fetch(path, reqParams).then((response) => {
       if (!response.ok) {
         const error = {
           status: response.status,
@@ -52,28 +52,30 @@ export default function useFetch() {
         };
 
         if (!meta?.omitSentryErrorLog) {
-          Sentry.captureException(new Error('Client fetch failed'), { tags: {
-            source: 'fetch',
-            'source.resource': meta?.resource,
-            'status.code': error.status,
-            'status.text': error.statusText,
-          } });
+          Sentry.captureException(new Error('Client fetch failed'), {
+            tags: {
+              source: 'fetch',
+              'source.resource': meta?.resource,
+              'status.code': error.status,
+              'status.text': error.statusText,
+            },
+          });
         }
 
         return response.json().then(
-          (jsonError) => Promise.reject({
-            payload: jsonError as Error,
-            status: response.status,
-            statusText: response.statusText,
-          }),
+          (jsonError) =>
+            Promise.reject({
+              payload: jsonError as Error,
+              status: response.status,
+              statusText: response.statusText,
+            }),
           () => {
             return Promise.reject(error);
           },
         );
-
       } else {
         return response.json() as Promise<Success>;
       }
     });
-  }, [ ]);
+  }, []);
 }

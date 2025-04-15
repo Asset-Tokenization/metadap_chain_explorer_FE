@@ -8,16 +8,15 @@ import ContentLoader from 'ui/shared/ContentLoader';
 import PageTitle from 'ui/shared/Page/PageTitle';
 
 const GraphQL = dynamic(() => import('ui/graphQL/GraphQL'), {
-  loading: () => <ContentLoader/>,
+  loading: () => <ContentLoader />,
   ssr: false,
 });
 
 const Page: NextPage = () => {
-
   return (
     <PageNextJs pathname="/graphiql">
-      <PageTitle title="GraphQL playground"/>
-      <GraphQL/>
+      <PageTitle title="GraphQL playground" />
+      <GraphQL />
     </PageNextJs>
   );
 };

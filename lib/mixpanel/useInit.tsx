@@ -13,7 +13,7 @@ import getGoogleAnalyticsClientId from './getGoogleAnalyticsClientId';
 import isGoogleAnalyticsLoaded from './isGoogleAnalyticsLoaded';
 
 export default function useMixpanelInit() {
-  const [ isInited, setIsInited ] = React.useState(false);
+  const [isInited, setIsInited] = React.useState(false);
   const router = useRouter();
   const debugFlagQuery = React.useRef(getQueryParamString(router.query._mixpanel_debug));
 

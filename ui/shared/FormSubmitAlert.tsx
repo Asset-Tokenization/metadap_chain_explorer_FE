@@ -4,9 +4,7 @@ import React from 'react';
 const FormSubmitAlert = () => {
   return (
     <Alert status="error">
-      <AlertDescription>
-        There has been an error processing your request
-      </AlertDescription>
+      <AlertDescription>There has been an error processing your request</AlertDescription>
     </Alert>
   );
 };

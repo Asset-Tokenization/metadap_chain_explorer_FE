@@ -17,8 +17,8 @@ const CoderEditorCollapseButton = ({ onClick, label, isDisabled, isCollapsed }: 
     <Box
       ml="auto"
       alignSelf="center"
-      className={ isCollapsed ? 'codicon codicon-search-expand-results' : 'codicon codicon-collapse-all' }
-      opacity={ isDisabled ? 0.6 : 1 }
+      className={isCollapsed ? 'codicon codicon-search-expand-results' : 'codicon codicon-collapse-all'}
+      opacity={isDisabled ? 0.6 : 1}
       boxSize="20px"
       p="2px"
       borderRadius="sm"
@@ -28,10 +28,10 @@ const CoderEditorCollapseButton = ({ onClick, label, isDisabled, isCollapsed }: 
       _hover={{
         bgColor: themeColors['custom.inputOption.hoverBackground'],
       }}
-      onClick={ onClick }
+      onClick={onClick}
       cursor="pointer"
-      title={ label }
-      aria-label={ label }
+      title={label}
+      aria-label={label}
     />
   );
 };

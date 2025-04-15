@@ -11,17 +11,7 @@ interface Props {
 }
 
 const NftVideo = ({ src, onLoad, onError, onClick }: Props) => {
-  return (
-    <chakra.video
-      { ...videoPlayProps }
-      src={ src }
-      onCanPlayThrough={ onLoad }
-      onError={ onError }
-      borderRadius="md"
-      onClick={ onClick }
-      { ...mediaStyleProps }
-    />
-  );
+  return <chakra.video {...videoPlayProps} src={src} onCanPlayThrough={onLoad} onError={onError} borderRadius="md" onClick={onClick} {...mediaStyleProps} />;
 };
 
 export default chakra(NftVideo);

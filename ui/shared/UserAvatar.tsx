@@ -13,29 +13,29 @@ interface Props {
 const UserAvatar = ({ size }: Props) => {
   const appProps = useAppContext();
   const hasAuth = Boolean(cookies.get(cookies.NAMES.API_TOKEN, appProps.cookies));
-  const [ isImageLoadError, setImageLoadError ] = React.useState(false);
+  const [isImageLoadError, setImageLoadError] = React.useState(false);
   const { data, isFetched } = useFetchProfileInfo();
 
-  const sizeString = `${ size }px`;
+  const sizeString = `${size}px`;
 
   const handleImageLoadError = React.useCallback(() => {
     setImageLoadError(true);
   }, []);
 
   if (hasAuth && !isFetched) {
-    return <SkeletonCircle h={ sizeString } w={ sizeString }/>;
+    return <SkeletonCircle h={sizeString} w={sizeString} />;
   }
 
   return (
     <Image
-      flexShrink={ 0 }
-      src={ data?.avatar }
-      alt={ `Profile picture of ${ data?.name || data?.nickname || '' }` }
-      boxSize={ `${ size }px` }
+      flexShrink={0}
+      src={data?.avatar}
+      alt={`Profile picture of ${data?.name || data?.nickname || ''}`}
+      boxSize={`${size}px`}
       borderRadius="full"
       overflow="hidden"
-      fallback={ isImageLoadError || !data?.avatar ? <IdenticonGithub size={ size } seed={ data?.email || 'randomness' } flexShrink={ 0 }/> : undefined }
-      onError={ handleImageLoadError }
+      fallback={isImageLoadError || !data?.avatar ? <IdenticonGithub size={size} seed={data?.email || 'randomness'} flexShrink={0} /> : undefined}
+      onError={handleImageLoadError}
     />
   );
 };

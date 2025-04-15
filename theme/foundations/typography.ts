@@ -5,12 +5,12 @@ export const HEADING_TYPEFACE = 'Poppins';
 
 const typography = {
   fonts: {
-    heading: `${ HEADING_TYPEFACE }, ${ theme.fonts.heading }`,
-    body: `${ BODY_TYPEFACE }, ${ theme.fonts.body }`,
+    heading: `${HEADING_TYPEFACE}, ${theme.fonts.heading}`,
+    body: `${BODY_TYPEFACE}, ${theme.fonts.body}`,
   },
   textStyles: {
     h2: {
-      fontSize: [ '32px' ],
+      fontSize: ['32px'],
       fontWeight: '500',
       lineHeight: '40px',
       fontFamily: 'heading',

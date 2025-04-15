@@ -1,10 +1,7 @@
 import { tabsAnatomy as parts } from '@chakra-ui/anatomy';
-import {
-  createMultiStyleConfigHelpers,
-} from '@chakra-ui/styled-system';
+import { createMultiStyleConfigHelpers } from '@chakra-ui/styled-system';
 import { mode } from '@chakra-ui/theme-tools';
-const { defineMultiStyleConfig, definePartsStyle } =
-  createMultiStyleConfigHelpers(parts.keys);
+const { defineMultiStyleConfig, definePartsStyle } = createMultiStyleConfigHelpers(parts.keys);
 
 import Button from './Button/Button';
 

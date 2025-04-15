@@ -17,30 +17,36 @@ const test = base.extend({
   context: contextWithEnvs(configs.featureEnvs.rollup) as any,
 });
 
-test('base view +@mobile', async({ mount, page }) => {
+test('base view +@mobile', async ({ mount, page }) => {
   // test on mobile is flaky
   // my assumption is there is not enough time to calculate hashes truncation so component is unstable
   // so I raised the test timeout to check if it helps
   test.slow();
 
-  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) => route.fulfill({
-    status: 200,
-    body: '',
-  }));
+  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) =>
+    route.fulfill({
+      status: 200,
+      body: '',
+    }),
+  );
 
-  await page.route(DEPOSITS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(depositsData),
-  }));
+  await page.route(DEPOSITS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(depositsData),
+    }),
+  );
 
-  await page.route(DEPOSITS_COUNT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: '3971111',
-  }));
+  await page.route(DEPOSITS_COUNT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: '3971111',
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <L2Deposits/>
+      <L2Deposits />
     </TestApp>,
   );
 

@@ -33,28 +33,28 @@ const AddressFavoriteButton = ({ className, hash, watchListId }: Props) => {
     }
     watchListId ? deleteModalProps.onOpen() : addModalProps.onOpen();
     !watchListId && mixpanel.logEvent(mixpanel.EventTypes.PAGE_WIDGET, { Type: 'Add to watchlist' });
-  }, [ isAccountActionAllowed, watchListId, deleteModalProps, addModalProps ]);
+  }, [isAccountActionAllowed, watchListId, deleteModalProps, addModalProps]);
 
-  const handleAddOrDeleteSuccess = React.useCallback(async() => {
+  const handleAddOrDeleteSuccess = React.useCallback(async () => {
     const queryKey = getResourceKey('address', { pathParams: { hash: router.query.hash?.toString() } });
     await queryClient.refetchQueries({ queryKey });
     addModalProps.onClose();
-  }, [ addModalProps, queryClient, router.query.hash ]);
+  }, [addModalProps, queryClient, router.query.hash]);
 
   const handleAddModalClose = React.useCallback(() => {
     addModalProps.onClose();
-  }, [ addModalProps ]);
+  }, [addModalProps]);
 
   const handleDeleteModalClose = React.useCallback(() => {
     deleteModalProps.onClose();
-  }, [ deleteModalProps ]);
+  }, [deleteModalProps]);
 
   const formData = React.useMemo(() => {
     return {
       address_hash: hash,
       id: String(watchListId),
     };
-  }, [ hash, watchListId ]);
+  }, [hash, watchListId]);
 
   if (!config.features.account.isEnabled) {
     return null;
@@ -62,34 +62,23 @@ const AddressFavoriteButton = ({ className, hash, watchListId }: Props) => {
 
   return (
     <>
-      <Tooltip label={ `${ watchListId ? 'Remove address from Watch list' : 'Add address to Watch list' }` }>
+      <Tooltip label={`${watchListId ? 'Remove address from Watch list' : 'Add address to Watch list'}`}>
         <IconButton
-          isActive={ Boolean(watchListId) }
-          className={ className }
+          isActive={Boolean(watchListId)}
+          className={className}
           aria-label="edit"
           variant="outline"
           size="sm"
           pl="6px"
           pr="6px"
-          flexShrink={ 0 }
-          onClick={ handleClick }
-          icon={ <Icon as={ watchListId ? starFilledIcon : starOutlineIcon } boxSize={ 5 }/> }
-          onFocusCapture={ onFocusCapture }
+          flexShrink={0}
+          onClick={handleClick}
+          icon={<Icon as={watchListId ? starFilledIcon : starOutlineIcon} boxSize={5} />}
+          onFocusCapture={onFocusCapture}
         />
       </Tooltip>
-      <WatchlistAddModal
-        { ...addModalProps }
-        isAdd
-        onClose={ handleAddModalClose }
-        onSuccess={ handleAddOrDeleteSuccess }
-        data={ formData }
-      />
-      <DeleteAddressModal
-        { ...deleteModalProps }
-        onClose={ handleDeleteModalClose }
-        data={ formData }
-        onSuccess={ handleAddOrDeleteSuccess }
-      />
+      <WatchlistAddModal {...addModalProps} isAdd onClose={handleAddModalClose} onSuccess={handleAddOrDeleteSuccess} data={formData} />
+      <DeleteAddressModal {...deleteModalProps} onClose={handleDeleteModalClose} data={formData} onSuccess={handleAddOrDeleteSuccess} />
     </>
   );
 };

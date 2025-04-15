@@ -14,7 +14,7 @@ export default function useSearchQuery() {
   const q = React.useRef(getQueryParamString(router.query.q));
   const initialValue = q.current;
 
-  const [ searchTerm, setSearchTerm ] = React.useState(initialValue);
+  const [searchTerm, setSearchTerm] = React.useState(initialValue);
 
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
   const pathname = router.pathname;
@@ -38,12 +38,15 @@ export default function useSearchQuery() {
     query.onFilterChange({ q: debouncedSearchTerm });
   }, debouncedSearchTerm);
 
-  return React.useMemo(() => ({
-    searchTerm,
-    debouncedSearchTerm,
-    handleSearchTermChange: setSearchTerm,
-    query,
-    redirectCheckQuery,
-    pathname,
-  }), [ debouncedSearchTerm, pathname, query, redirectCheckQuery, searchTerm ]);
+  return React.useMemo(
+    () => ({
+      searchTerm,
+      debouncedSearchTerm,
+      handleSearchTermChange: setSearchTerm,
+      query,
+      redirectCheckQuery,
+      pathname,
+    }),
+    [debouncedSearchTerm, pathname, query, redirectCheckQuery, searchTerm],
+  );
 }

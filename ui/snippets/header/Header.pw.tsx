@@ -5,10 +5,10 @@ import TestApp from 'playwright/TestApp';
 
 import Header from './Header';
 
-test('no auth +@mobile', async({ mount, page }) => {
+test('no auth +@mobile', async ({ mount, page }) => {
   await mount(
     <TestApp>
-      <Header/>
+      <Header />
     </TestApp>,
   );
 
@@ -18,10 +18,10 @@ test('no auth +@mobile', async({ mount, page }) => {
 test.describe('dark mode', () => {
   test.use({ colorScheme: 'dark' });
 
-  test('+@mobile', async({ mount, page }) => {
+  test('+@mobile', async ({ mount, page }) => {
     await mount(
       <TestApp>
-        <Header/>
+        <Header />
       </TestApp>,
     );
 

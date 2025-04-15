@@ -9,7 +9,7 @@ const WatchList = dynamic(() => import('ui/pages/Watchlist'), { ssr: false });
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/account/watchlist">
-      <WatchList/>
+      <WatchList />
     </PageNextJs>
   );
 };

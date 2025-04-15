@@ -21,7 +21,11 @@ const NetworkExplorers = ({ className, type, pathParam }: Props) => {
     .filter((explorer) => explorer.paths[type])
     .map((explorer) => {
       const url = new URL(explorer.paths[type] + '/' + pathParam, explorer.baseUrl);
-      return <LinkExternal key={ explorer.baseUrl } href={ url.toString() }>{ explorer.title }</LinkExternal>;
+      return (
+        <LinkExternal key={explorer.baseUrl} href={url.toString()}>
+          {explorer.title}
+        </LinkExternal>
+      );
     });
 
   if (explorersLinks.length === 0) {
@@ -29,35 +33,31 @@ const NetworkExplorers = ({ className, type, pathParam }: Props) => {
   }
 
   return (
-    <Popover isOpen={ isOpen } onClose={ onClose } placement="bottom-start" isLazy>
+    <Popover isOpen={isOpen} onClose={onClose} placement="bottom-start" isLazy>
       <PopoverTrigger>
         <Button
-          className={ className }
+          className={className}
           size="sm"
           variant="outline"
           colorScheme="gray"
-          onClick={ onToggle }
+          onClick={onToggle}
           aria-label="Verify in other explorers"
-          fontWeight={ 500 }
-          px={ 2 }
+          fontWeight={500}
+          px={2}
           h="32px"
-          flexShrink={ 0 }
+          flexShrink={0}
         >
-          <Icon as={ explorerIcon } boxSize={ 5 }/>
-          <Icon as={ arrowIcon } transform={ isOpen ? 'rotate(90deg)' : 'rotate(-90deg)' } transitionDuration="faster" boxSize={ 5 }/>
+          <Icon as={explorerIcon} boxSize={5} />
+          <Icon as={arrowIcon} transform={isOpen ? 'rotate(90deg)' : 'rotate(-90deg)'} transitionDuration="faster" boxSize={5} />
         </Button>
       </PopoverTrigger>
       <PopoverContent w="240px">
-        <PopoverBody >
-          <chakra.span color="text_secondary" fontSize="xs">Verify with other explorers</chakra.span>
-          <Flex
-            alignItems="center"
-            flexWrap="wrap"
-            columnGap={ 6 }
-            rowGap={ 3 }
-            mt={ 3 }
-          >
-            { explorersLinks }
+        <PopoverBody>
+          <chakra.span color="text_secondary" fontSize="xs">
+            Verify with other explorers
+          </chakra.span>
+          <Flex alignItems="center" flexWrap="wrap" columnGap={6} rowGap={3} mt={3}>
+            {explorersLinks}
           </Flex>
         </PopoverBody>
       </PopoverContent>

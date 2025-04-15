@@ -41,31 +41,33 @@ const AddressVerificationStepAddress = ({ defaultAddress, onContinue }: Props) =
 
   React.useEffect(() => {
     clearErrors('root');
-  }, [ address, clearErrors ]);
+  }, [address, clearErrors]);
 
-  const onFormSubmit: SubmitHandler<Fields> = React.useCallback(async(data) => {
-    try {
-      const body = {
-        contractAddress: data.address,
-      };
-      const response = await apiFetch<'address_verification', AddressCheckResponseSuccess, AddressVerificationResponseError>('address_verification', {
-        fetchParams: { method: 'POST', body },
-        pathParams: { chainId: config.chain.id, type: ':prepare' },
-      });
+  const onFormSubmit: SubmitHandler<Fields> = React.useCallback(
+    async (data) => {
+      try {
+        const body = {
+          contractAddress: data.address,
+        };
+        const response = await apiFetch<'address_verification', AddressCheckResponseSuccess, AddressVerificationResponseError>('address_verification', {
+          fetchParams: { method: 'POST', body },
+          pathParams: { chainId: config.chain.id, type: ':prepare' },
+        });
 
-      if (response.status !== 'SUCCESS') {
-        const type = typeof response.status === 'number' ? 'UNKNOWN_ERROR' : response.status;
-        const message = ('payload' in response ? response.payload?.message : undefined) || 'Oops! Something went wrong';
-        return setError('root', { type, message });
+        if (response.status !== 'SUCCESS') {
+          const type = typeof response.status === 'number' ? 'UNKNOWN_ERROR' : response.status;
+          const message = ('payload' in response ? response.payload?.message : undefined) || 'Oops! Something went wrong';
+          return setError('root', { type, message });
+        }
+
+        onContinue({ ...response.result, address: data.address });
+      } catch (_error) {
+        const error = _error as ResourceError<AddressVerificationResponseError>;
+        setError('root', { type: 'manual', message: error.payload?.message || 'Oops! Something went wrong' });
       }
-
-      onContinue({ ...response.result, address: data.address });
-    } catch (_error) {
-      const error = _error as ResourceError<AddressVerificationResponseError>;
-      setError('root', { type: 'manual', message: error.payload?.message || 'Oops! Something went wrong' });
-    }
-
-  }, [ apiFetch, onContinue, setError ]);
+    },
+    [apiFetch, onContinue, setError],
+  );
 
   const onSubmit = handleSubmit(onFormSubmit);
 
@@ -85,7 +87,7 @@ const AddressVerificationStepAddress = ({ defaultAddress, onContinue }: Props) =
         return (
           <Box>
             <span>The contract source code you entered is not yet verified. Please follow these steps to </span>
-            <LinkInternal href={ href }>verify the contract</LinkInternal>
+            <LinkInternal href={href}>verify the contract</LinkInternal>
             <span>.</span>
           </Box>
         );
@@ -100,15 +102,19 @@ const AddressVerificationStepAddress = ({ defaultAddress, onContinue }: Props) =
   })();
 
   return (
-    <form noValidate onSubmit={ onSubmit }>
+    <form noValidate onSubmit={onSubmit}>
       <Box>Enter the contract address you are verifying ownership for.</Box>
-      { rootError && <Alert status="warning" mt={ 3 }>{ rootError }</Alert> }
-      <AddressVerificationFieldAddress formState={ formState } control={ control }/>
-      <Flex alignItems={{ base: 'flex-start', lg: 'center' }} mt={ 8 } columnGap={ 5 } rowGap={ 2 } flexDir={{ base: 'column', lg: 'row' }}>
-        <Button size="lg" type="submit" isDisabled={ formState.isSubmitting } flexShrink={ 0 }>
-            Continue
+      {rootError && (
+        <Alert status="warning" mt={3}>
+          {rootError}
+        </Alert>
+      )}
+      <AddressVerificationFieldAddress formState={formState} control={control} />
+      <Flex alignItems={{ base: 'flex-start', lg: 'center' }} mt={8} columnGap={5} rowGap={2} flexDir={{ base: 'column', lg: 'row' }}>
+        <Button size="lg" type="submit" isDisabled={formState.isSubmitting} flexShrink={0}>
+          Continue
         </Button>
-        <AdminSupportText/>
+        <AdminSupportText />
       </Flex>
     </form>
   );

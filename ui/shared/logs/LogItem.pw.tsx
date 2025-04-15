@@ -15,35 +15,27 @@ const TOPICS = [
 ];
 const DATA = '0x0000000000000000000000000000000000000000000000000070265bf0112cee';
 
-test('with decoded input data +@mobile +@dark-mode', async({ mount }) => {
+test('with decoded input data +@mobile +@dark-mode', async ({ mount }) => {
   const component = await mount(
     <TestApp>
       <LogItem
-        index={ 42 }
-        decoded={ inputDataMocks.withIndexedFields }
+        index={42}
+        decoded={inputDataMocks.withIndexedFields}
         address={{ ...addressMocks.withName, is_verified: true }}
-        topics={ TOPICS }
-        data={ DATA }
+        topics={TOPICS}
+        data={DATA}
         type="transaction"
-        tx_hash={ null }
+        tx_hash={null}
       />
     </TestApp>,
   );
   await expect(component).toHaveScreenshot();
 });
 
-test('without decoded input data +@mobile', async({ mount }) => {
+test('without decoded input data +@mobile', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <LogItem
-        index={ 42 }
-        decoded={ null }
-        address={ addressMocks.withoutName }
-        topics={ TOPICS }
-        data={ DATA }
-        type="transaction"
-        tx_hash={ null }
-      />
+      <LogItem index={42} decoded={null} address={addressMocks.withoutName} topics={TOPICS} data={DATA} type="transaction" tx_hash={null} />
     </TestApp>,
   );
   await expect(component).toHaveScreenshot();

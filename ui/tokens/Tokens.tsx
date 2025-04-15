@@ -1,20 +1,18 @@
-import { Hide, Show } from "@chakra-ui/react";
-import React from "react";
+import { Hide, Show } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TokensSortingValue } from "types/api/tokens";
+import type { TokensSortingValue } from 'types/api/tokens';
 
-import { apos } from "lib/html-entities";
-import DataFetchAlert from "ui/shared/DataFetchAlert";
-import DataListDisplay from "ui/shared/DataListDisplay";
-import type { QueryWithPagesResult } from "ui/shared/pagination/useQueryWithPages";
+import { apos } from 'lib/html-entities';
+import DataFetchAlert from 'ui/shared/DataFetchAlert';
+import DataListDisplay from 'ui/shared/DataListDisplay';
+import type { QueryWithPagesResult } from 'ui/shared/pagination/useQueryWithPages';
 
-import TokensListItem from "./TokensListItem";
-import TokensTable from "./TokensTable";
+import TokensListItem from './TokensListItem';
+import TokensTable from './TokensTable';
 
 interface Props {
-  query:
-    | QueryWithPagesResult<"tokens">
-    | QueryWithPagesResult<"tokens_bridged">;
+  query: QueryWithPagesResult<'tokens'> | QueryWithPagesResult<'tokens_bridged'>;
   onSortChange: () => void;
   sort: TokensSortingValue | undefined;
   actionBar?: React.ReactNode;
@@ -22,14 +20,7 @@ interface Props {
   description?: React.ReactNode;
 }
 
-const Tokens = ({
-  query,
-  onSortChange,
-  sort,
-  actionBar,
-  description,
-  hasActiveFilters,
-}: Props) => {
+const Tokens = ({ query, onSortChange, sort, actionBar, description, hasActiveFilters }: Props) => {
   const { isError, isPlaceholderData, data, pagination } = query;
 
   if (isError) {
@@ -42,7 +33,7 @@ const Tokens = ({
         {description}
         {data.items.map((item, index) => (
           <TokensListItem
-            key={item.address + (isPlaceholderData ? index : "")}
+            key={item.address + (isPlaceholderData ? index : '')}
             token={item}
             index={index}
             page={pagination.page}
@@ -52,13 +43,7 @@ const Tokens = ({
       </Show>
       <Hide below="lg" ssr={false}>
         {description}
-        <TokensTable
-          items={data.items}
-          page={pagination.page}
-          isLoading={isPlaceholderData}
-          setSorting={onSortChange}
-          sorting={sort}
-        />
+        <TokensTable items={data.items} page={pagination.page} isLoading={isPlaceholderData} setSorting={onSortChange} sorting={sort} />
       </Hide>
     </>
   ) : null;
@@ -73,9 +58,7 @@ const Tokens = ({
         hasActiveFilters,
       }}
       content={content}
-      actionBar={
-        query.pagination.isVisible || hasActiveFilters ? actionBar : null
-      }
+      actionBar={query.pagination.isVisible || hasActiveFilters ? actionBar : null}
     />
   );
 };

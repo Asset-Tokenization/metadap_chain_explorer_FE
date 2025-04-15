@@ -10,17 +10,13 @@ import LayoutHome from 'ui/shared/layout/LayoutHome';
 const Page: NextPageWithLayout = () => {
   return (
     <PageNextJs pathname="/">
-      <Home/>
+      <Home />
     </PageNextJs>
   );
 };
 
 Page.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <LayoutHome>
-      { page }
-    </LayoutHome>
-  );
+  return <LayoutHome>{page}</LayoutHome>;
 };
 
 export default Page;

@@ -8,8 +8,6 @@ export function mixpanel(): CspDev.DirectiveDescriptor {
   }
 
   return {
-    'connect-src': [
-      '*.mixpanel.com',
-    ],
+    'connect-src': ['*.mixpanel.com'],
   };
 }

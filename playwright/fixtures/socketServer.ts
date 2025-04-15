@@ -19,7 +19,7 @@ export interface SocketServerFixture {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const createSocket: TestFixture<ReturnType, { page: Page}> = async({ page }, use) => {
+export const createSocket: TestFixture<ReturnType, { page: Page }> = async ({ page }, use) => {
   const socketServer = new WebSocketServer({ port: app.socketPort });
 
   const connectionPromise = new Promise<WebSocket>((resolve) => {
@@ -33,22 +33,16 @@ export const createSocket: TestFixture<ReturnType, { page: Page}> = async({ page
   socketServer.close();
 };
 
-export const joinChannel = async(socket: WebSocket, channelName: string) => {
+export const joinChannel = async (socket: WebSocket, channelName: string) => {
   return new Promise<[string, string, string]>((resolve, reject) => {
     socket.on('message', (msg) => {
       try {
         const payload = JSON.parse(msg.toString()) as Array<string>;
 
         if (channelName === payload[2] && payload[3] === 'phx_join') {
-          socket.send(JSON.stringify([
-            payload[0],
-            payload[1],
-            payload[2],
-            'phx_reply',
-            { response: {}, status: 'ok' },
-          ]));
+          socket.send(JSON.stringify([payload[0], payload[1], payload[2], 'phx_reply', { response: {}, status: 'ok' }]));
 
-          resolve([ payload[0], payload[1], payload[2] ]);
+          resolve([payload[0], payload[1], payload[2]]);
         }
       } catch (error) {
         reject(error);
@@ -68,14 +62,10 @@ export function sendMessage(socket: WebSocket, channel: Channel, msg: 'pending_t
 export function sendMessage(socket: WebSocket, channel: Channel, msg: 'pending_transaction', payload: { pending_transactions: Array<Transaction> }): void;
 export function sendMessage(socket: WebSocket, channel: Channel, msg: 'new_block', payload: NewBlockSocketResponse): void;
 export function sendMessage(socket: WebSocket, channel: Channel, msg: 'verification_result', payload: SmartContractVerificationResponse): void;
-export function sendMessage(socket: WebSocket, channel: Channel, msg: 'total_supply', payload: { total_supply: number}): void;
+export function sendMessage(socket: WebSocket, channel: Channel, msg: 'total_supply', payload: { total_supply: number }): void;
 export function sendMessage(socket: WebSocket, channel: Channel, msg: 'changed_bytecode', payload: Record<string, never>): void;
 export function sendMessage(socket: WebSocket, channel: Channel, msg: 'smart_contract_was_verified', payload: Record<string, never>): void;
 export function sendMessage(socket: WebSocket, channel: Channel, msg: 'token_transfer', payload: { token_transfers: Array<TokenTransfer> }): void;
 export function sendMessage(socket: WebSocket, channel: Channel, msg: string, payload: unknown): void {
-  socket.send(JSON.stringify([
-    ...channel,
-    msg,
-    payload,
-  ]));
+  socket.send(JSON.stringify([...channel, msg, payload]));
 }

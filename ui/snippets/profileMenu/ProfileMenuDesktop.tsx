@@ -11,20 +11,16 @@ import ProfileMenuContent from 'ui/snippets/profileMenu/ProfileMenuContent';
 const ProfileMenuDesktop = () => {
   const { data, error, isLoading } = useFetchProfileInfo();
   const loginUrl = useLoginUrl();
-  const [ hasMenu, setHasMenu ] = React.useState(false);
+  const [hasMenu, setHasMenu] = React.useState(false);
 
   React.useEffect(() => {
     if (!isLoading) {
       setHasMenu(Boolean(data));
     }
-  }, [ data, error?.status, isLoading ]);
+  }, [data, error?.status, isLoading]);
 
   const handleSignInClick = React.useCallback(() => {
-    mixpanel.logEvent(
-      mixpanel.EventTypes.ACCOUNT_ACCESS,
-      { Action: 'Auth0 init' },
-      { send_immediately: true },
-    );
+    mixpanel.logEvent(mixpanel.EventTypes.ACCOUNT_ACCESS, { Action: 'Auth0 init' }, { send_immediately: true });
   }, []);
 
   const buttonProps: Partial<ButtonProps> = (() => {
@@ -40,25 +36,19 @@ const ProfileMenuDesktop = () => {
   })();
 
   return (
-    <Popover openDelay={ 300 } placement="bottom-end" gutter={ 10 } isLazy>
+    <Popover openDelay={300} placement="bottom-end" gutter={10} isLazy>
       <PopoverTrigger>
-        <Button
-          variant="unstyled"
-          display="block"
-          boxSize="50px"
-          flexShrink={ 0 }
-          { ...buttonProps }
-        >
-          <UserAvatar size={ 50 }/>
+        <Button variant="unstyled" display="block" boxSize="50px" flexShrink={0} {...buttonProps}>
+          <UserAvatar size={50} />
         </Button>
       </PopoverTrigger>
-      { hasMenu && (
+      {hasMenu && (
         <PopoverContent w="212px">
           <PopoverBody padding="24px 16px 16px 16px">
-            <ProfileMenuContent data={ data }/>
+            <ProfileMenuContent data={data} />
           </PopoverBody>
         </PopoverContent>
-      ) }
+      )}
     </Popover>
   );
 };

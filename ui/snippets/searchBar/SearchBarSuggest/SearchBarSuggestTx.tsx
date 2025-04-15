@@ -14,10 +14,10 @@ interface Props {
 }
 
 const SearchBarSuggestTx = ({ data, isMobile }: Props) => {
-  const icon = <TxEntity.Icon/>;
+  const icon = <TxEntity.Icon />;
   const hash = (
-    <chakra.mark overflow="hidden" whiteSpace="nowrap" fontWeight={ 700 }>
-      <HashStringShortenDynamic hash={ data.tx_hash } isTooltipDisabled/>
+    <chakra.mark overflow="hidden" whiteSpace="nowrap" fontWeight={700}>
+      <HashStringShortenDynamic hash={data.tx_hash} isTooltipDisabled />
     </chakra.mark>
   );
   const date = dayjs(data.timestamp).format('llll');
@@ -26,21 +26,23 @@ const SearchBarSuggestTx = ({ data, isMobile }: Props) => {
     return (
       <>
         <Flex alignItems="center">
-          { icon }
-          { hash }
+          {icon}
+          {hash}
         </Flex>
-        <Text variant="secondary">{ date }</Text>
+        <Text variant="secondary">{date}</Text>
       </>
     );
   }
 
   return (
-    <Flex columnGap={ 2 }>
-      <Flex alignItems="center" minW={ 0 }>
-        { icon }
-        { hash }
+    <Flex columnGap={2}>
+      <Flex alignItems="center" minW={0}>
+        {icon}
+        {hash}
       </Flex>
-      <Text variant="secondary" textAlign="end" flexShrink={ 0 } ml="auto">{ date }</Text>
+      <Text variant="secondary" textAlign="end" flexShrink={0} ml="auto">
+        {date}
+      </Text>
     </Flex>
   );
 };

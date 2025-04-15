@@ -33,8 +33,7 @@ const EntityTags = ({ className, data, tagsBefore = [], tagsAfter = [], isLoadin
     ...(data?.public_tags || []),
     ...(data?.watchlist_names || []),
     ...tagsAfter,
-  ]
-    .filter(Boolean);
+  ].filter(Boolean);
 
   if (tags.length === 0 && !contentAfter) {
     return null;
@@ -44,42 +43,30 @@ const EntityTags = ({ className, data, tagsBefore = [], tagsAfter = [], isLoadin
     if (isMobile && tags.length > 2) {
       return (
         <>
-          {
-            tags
-              .slice(0, 2)
-              .map((tag) => (
-                <Tag
-                  key={ tag.label }
-                  isLoading={ isLoading }
-                  isTruncated
-                  maxW={{ base: '115px', lg: 'initial' }}
-                  colorScheme={ 'colorScheme' in tag ? tag.colorScheme : 'gray' }
-                  variant={ 'variant' in tag ? tag.variant : 'subtle' }
-                >
-                  { tag.display_name }
-                </Tag>
-              ))
-          }
-          <Popover isOpen={ isOpen } onClose={ onClose } placement="bottom-start" isLazy>
+          {tags.slice(0, 2).map((tag) => (
+            <Tag
+              key={tag.label}
+              isLoading={isLoading}
+              isTruncated
+              maxW={{ base: '115px', lg: 'initial' }}
+              colorScheme={'colorScheme' in tag ? tag.colorScheme : 'gray'}
+              variant={'variant' in tag ? tag.variant : 'subtle'}
+            >
+              {tag.display_name}
+            </Tag>
+          ))}
+          <Popover isOpen={isOpen} onClose={onClose} placement="bottom-start" isLazy>
             <PopoverTrigger>
-              <Tag onClick={ onToggle }>+{ tags.length - 1 }</Tag>
+              <Tag onClick={onToggle}>+{tags.length - 1}</Tag>
             </PopoverTrigger>
             <PopoverContent w="240px">
-              <PopoverBody >
-                <Flex columnGap={ 2 } rowGap={ 2 } flexWrap="wrap">
-                  {
-                    tags
-                      .slice(2)
-                      .map((tag) => (
-                        <Tag
-                          key={ tag.label }
-                          colorScheme={ 'colorScheme' in tag ? tag.colorScheme : 'gray' }
-                          variant={ 'variant' in tag ? tag.variant : 'subtle' }
-                        >
-                          { tag.display_name }
-                        </Tag>
-                      ))
-                  }
+              <PopoverBody>
+                <Flex columnGap={2} rowGap={2} flexWrap="wrap">
+                  {tags.slice(2).map((tag) => (
+                    <Tag key={tag.label} colorScheme={'colorScheme' in tag ? tag.colorScheme : 'gray'} variant={'variant' in tag ? tag.variant : 'subtle'}>
+                      {tag.display_name}
+                    </Tag>
+                  ))}
                 </Flex>
               </PopoverBody>
             </PopoverContent>
@@ -90,22 +77,22 @@ const EntityTags = ({ className, data, tagsBefore = [], tagsAfter = [], isLoadin
 
     return tags.map((tag) => (
       <Tag
-        key={ tag.label }
-        isLoading={ isLoading }
+        key={tag.label}
+        isLoading={isLoading}
         isTruncated
         maxW={{ base: '115px', lg: 'initial' }}
-        colorScheme={ 'colorScheme' in tag ? tag.colorScheme : 'gray' }
-        variant={ 'variant' in tag ? tag.variant : 'subtle' }
+        colorScheme={'colorScheme' in tag ? tag.colorScheme : 'gray'}
+        variant={'variant' in tag ? tag.variant : 'subtle'}
       >
-        { tag.display_name }
+        {tag.display_name}
       </Tag>
     ));
   })();
 
   return (
-    <Flex className={ className } columnGap={ 2 } rowGap={ 2 } flexWrap="wrap" alignItems="center" flexGrow={ 1 }>
-      { content }
-      { contentAfter }
+    <Flex className={className} columnGap={2} rowGap={2} flexWrap="wrap" alignItems="center" flexGrow={1}>
+      {content}
+      {contentAfter}
     </Flex>
   );
 };

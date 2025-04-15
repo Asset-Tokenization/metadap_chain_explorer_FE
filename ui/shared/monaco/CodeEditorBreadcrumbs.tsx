@@ -14,8 +14,8 @@ const CodeEditorBreadcrumbs = ({ path }: Props) => {
 
   return (
     <Flex
-      color={ themeColors['breadcrumbs.foreground'] }
-      bgColor={ themeColors['editor.background'] }
+      color={themeColors['breadcrumbs.foreground']}
+      bgColor={themeColors['editor.background']}
       pl="16px"
       pr="8px"
       flexWrap="wrap"
@@ -23,21 +23,22 @@ const CodeEditorBreadcrumbs = ({ path }: Props) => {
       lineHeight="22px"
       alignItems="center"
     >
-      { chunks.map((chunk, index) => {
+      {chunks.map((chunk, index) => {
         return (
-          <React.Fragment key={ index }>
-            { index !== 0 && (
+          <React.Fragment key={index}>
+            {index !== 0 && (
               <Box
                 className="codicon codicon-breadcrumb-separator"
                 boxSize="16px"
                 _before={{
                   content: '"\\eab6"',
-                }}/>
-            ) }
-            <Box>{ chunk }</Box>
+                }}
+              />
+            )}
+            <Box>{chunk}</Box>
           </React.Fragment>
         );
-      }) }
+      })}
     </Flex>
   );
 };

@@ -26,22 +26,22 @@ const getConfig = () => {
         symbol: config.chain.currency.symbol || '',
       },
       rpcUrls: {
-        'public': {
-          http: [ config.chain.rpcUrl || '' ],
+        public: {
+          http: [config.chain.rpcUrl || ''],
         },
-        'default': {
-          http: [ config.chain.rpcUrl || '' ],
+        default: {
+          http: [config.chain.rpcUrl || ''],
         },
       },
       blockExplorers: {
-        'default': {
+        default: {
           name: 'Blockscout',
           url: config.app.baseUrl,
         },
       },
     };
 
-    const chains = [ currentChain ];
+    const chains = [currentChain];
 
     const { publicClient } = configureChains(chains, [
       jsonRpcProvider({
@@ -75,18 +75,16 @@ const Web3ModalProvider = ({ children, fallback }: Props) => {
   const web3ModalTheme = useColorModeValue('light', 'dark');
 
   if (!wagmiConfig || !ethereumClient || !feature.isEnabled) {
-    return typeof fallback === 'function' ? fallback() : (fallback || null);
+    return typeof fallback === 'function' ? fallback() : fallback || null;
   }
 
   return (
     <>
-      <WagmiConfig config={ wagmiConfig }>
-        { children }
-      </WagmiConfig>
+      <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
       <Web3Modal
-        projectId={ feature.walletConnect.projectId }
-        ethereumClient={ ethereumClient }
-        themeMode={ web3ModalTheme }
+        projectId={feature.walletConnect.projectId}
+        ethereumClient={ethereumClient}
+        themeMode={web3ModalTheme}
         themeVariables={{
           '--w3m-z-index': modalZIndex,
         }}

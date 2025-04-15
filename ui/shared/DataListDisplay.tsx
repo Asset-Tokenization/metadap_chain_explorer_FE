@@ -18,30 +18,30 @@ type Props = {
   content: React.ReactNode;
   className?: string;
   filterProps?: FilterProps;
-}
+};
 
 const DataListDisplay = (props: Props) => {
   if (props.isError) {
-    return <DataFetchAlert className={ props.className }/>;
+    return <DataFetchAlert className={props.className} />;
   }
 
   if (props.filterProps?.hasActiveFilters && !props.items?.length) {
     return (
-      <Box className={ props.className }>
-        { props.actionBar }
-        <EmptySearchResult text={ props.filterProps.emptyFilteredText }/>
+      <Box className={props.className}>
+        {props.actionBar}
+        <EmptySearchResult text={props.filterProps.emptyFilteredText} />
       </Box>
     );
   }
 
   if (!props.items?.length) {
-    return props.emptyText ? <Text className={ props.className }>{ props.emptyText }</Text> : null;
+    return props.emptyText ? <Text className={props.className}>{props.emptyText}</Text> : null;
   }
 
   return (
-    <Box className={ props.className }>
-      { props.actionBar }
-      { props.content }
+    <Box className={props.className}>
+      {props.actionBar}
+      {props.content}
     </Box>
   );
 };

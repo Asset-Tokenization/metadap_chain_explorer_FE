@@ -1,15 +1,7 @@
-import {
-  CheckboxGroup,
-  Checkbox,
-  Text,
-  Flex,
-  Link,
-  useCheckboxGroup,
-  chakra,
-} from "@chakra-ui/react";
-import React from "react";
+import { CheckboxGroup, Checkbox, Text, Flex, Link, useCheckboxGroup, chakra } from '@chakra-ui/react';
+import React from 'react';
 
-import config from "configs/app";
+import config from 'configs/app';
 
 const feature = config.features.bridgedTokens;
 
@@ -34,7 +26,7 @@ const TokensBridgedChainsFilter = ({ onChange, defaultValue }: Props) => {
       setValue(nextValue);
       onChange(nextValue);
     },
-    [onChange, setValue]
+    [onChange, setValue],
   );
 
   if (!feature.isEnabled) {
@@ -49,9 +41,9 @@ const TokensBridgedChainsFilter = ({ onChange, defaultValue }: Props) => {
         </Text>
         <Link
           onClick={handleReset}
-          color={value.length > 0 ? "link" : "text_secondary"}
+          color={value.length > 0 ? 'link' : 'text_secondary'}
           _hover={{
-            color: value.length > 0 ? "link_hovered" : "text_secondary",
+            color: value.length > 0 ? 'link_hovered' : 'text_secondary',
           }}
         >
           Reset

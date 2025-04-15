@@ -21,9 +21,7 @@ const TokenEntityWithAddressFilter = (props: Props) => {
     },
   });
 
-  return (
-    <TokenEntity.default { ...props } href={ props.href ?? defaultHref }/>
-  );
+  return <TokenEntity.default {...props} href={props.href ?? defaultHref} />;
 };
 
 export default chakra(TokenEntityWithAddressFilter);

@@ -28,13 +28,13 @@ type Fields = RootFields & AddressVerificationFormSecondStepFields;
 
 type SignMethod = 'wallet' | 'manual';
 
-interface Props extends AddressVerificationFormFirstStepFields, AddressCheckStatusSuccess{
+interface Props extends AddressVerificationFormFirstStepFields, AddressCheckStatusSuccess {
   onContinue: (newItem: VerifiedAddress, signMethod: SignMethod) => void;
   noWeb3Provider?: boolean;
 }
 
 const AddressVerificationStepSignature = ({ address, signingMessage, contractCreator, contractOwner, onContinue, noWeb3Provider }: Props) => {
-  const [ signMethod, setSignMethod ] = React.useState<SignMethod>(noWeb3Provider ? 'manual' : 'wallet');
+  const [signMethod, setSignMethod] = React.useState<SignMethod>(noWeb3Provider ? 'manual' : 'wallet');
 
   const { open: openWeb3Modal } = useWeb3Modal();
   const { isConnected } = useAccount();
@@ -52,31 +52,34 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
   const signature = watch('signature');
   React.useEffect(() => {
     clearErrors('root');
-  }, [ clearErrors, signature ]);
+  }, [clearErrors, signature]);
 
-  const onFormSubmit: SubmitHandler<Fields> = React.useCallback(async(data) => {
-    try {
-      const body = {
-        contractAddress: address,
-        message: data.message,
-        signature: data.signature,
-      };
+  const onFormSubmit: SubmitHandler<Fields> = React.useCallback(
+    async (data) => {
+      try {
+        const body = {
+          contractAddress: address,
+          message: data.message,
+          signature: data.signature,
+        };
 
-      const response = await apiFetch<'address_verification', AddressValidationResponseSuccess, AddressVerificationResponseError>('address_verification', {
-        fetchParams: { method: 'POST', body },
-        pathParams: { chainId: config.chain.id, type: ':verify' },
-      });
+        const response = await apiFetch<'address_verification', AddressValidationResponseSuccess, AddressVerificationResponseError>('address_verification', {
+          fetchParams: { method: 'POST', body },
+          pathParams: { chainId: config.chain.id, type: ':verify' },
+        });
 
-      if (response.status !== 'SUCCESS') {
-        const type = typeof response.status === 'number' ? 'UNKNOWN_STATUS' : response.status;
-        return setError('root', { type, message: response.status === 'INVALID_SIGNER_ERROR' ? response.invalidSigner.signer : undefined });
+        if (response.status !== 'SUCCESS') {
+          const type = typeof response.status === 'number' ? 'UNKNOWN_STATUS' : response.status;
+          return setError('root', { type, message: response.status === 'INVALID_SIGNER_ERROR' ? response.invalidSigner.signer : undefined });
+        }
+
+        onContinue(response.result.verifiedAddress, signMethod);
+      } catch (error) {
+        setError('root', { type: 'UNKNOWN_STATUS' });
       }
-
-      onContinue(response.result.verifiedAddress, signMethod);
-    } catch (error) {
-      setError('root', { type: 'UNKNOWN_STATUS' });
-    }
-  }, [ address, apiFetch, onContinue, setError, signMethod ]);
+    },
+    [address, apiFetch, onContinue, setError, signMethod],
+  );
 
   const onSubmit = handleSubmit(onFormSubmit);
 
@@ -90,15 +93,18 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
     },
   });
 
-  const handleSignMethodChange = React.useCallback((value: typeof signMethod) => {
-    setSignMethod(value);
-    clearErrors('root');
-  }, [ clearErrors ]);
+  const handleSignMethodChange = React.useCallback(
+    (value: typeof signMethod) => {
+      setSignMethod(value);
+      clearErrors('root');
+    },
+    [clearErrors],
+  );
 
   const handleOpenWeb3Modal = React.useCallback(() => {
     clearErrors('root');
     openWeb3Modal();
-  }, [ clearErrors, openWeb3Modal ]);
+  }, [clearErrors, openWeb3Modal]);
 
   const handleWeb3SignClick = React.useCallback(() => {
     clearErrors('root');
@@ -109,22 +115,17 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
 
     const message = getValues('message');
     signMessage({ message });
-  }, [ clearErrors, isConnected, getValues, signMessage, setError ]);
+  }, [clearErrors, isConnected, getValues, signMessage, setError]);
 
   const handleManualSignClick = React.useCallback(() => {
     clearErrors('root');
     onSubmit();
-  }, [ clearErrors, onSubmit ]);
+  }, [clearErrors, onSubmit]);
 
   const button = (() => {
     if (signMethod === 'manual') {
       return (
-        <Button
-          size="lg"
-          onClick={ handleManualSignClick }
-          isLoading={ formState.isSubmitting }
-          loadingText="Verifying"
-        >
+        <Button size="lg" onClick={handleManualSignClick} isLoading={formState.isSubmitting} loadingText="Verifying">
           Verify
         </Button>
       );
@@ -133,16 +134,20 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
     return (
       <Button
         size="lg"
-        onClick={ isConnected ? handleWeb3SignClick : handleOpenWeb3Modal }
-        isLoading={ formState.isSubmitting || isSigning }
-        loadingText={ isSigning ? 'Signing' : 'Verifying' }
+        onClick={isConnected ? handleWeb3SignClick : handleOpenWeb3Modal}
+        isLoading={formState.isSubmitting || isSigning}
+        loadingText={isSigning ? 'Signing' : 'Verifying'}
       >
-        { isConnected ? 'Sign and verify' : 'Connect wallet' }
+        {isConnected ? 'Sign and verify' : 'Connect wallet'}
       </Button>
     );
   })();
 
-  const contactUsLink = <span>contact us <Link href="mailto:help@blockscout.com">help@blockscout.com</Link></span>;
+  const contactUsLink = (
+    <span>
+      contact us <Link href="mailto:help@blockscout.com">help@blockscout.com</Link>
+    </span>
+  );
 
   const rootError = (() => {
     switch (formState.errors.root?.type) {
@@ -153,17 +158,17 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
         return <span>This verification message has expired. Add the contract address to restart the process.</span>;
       }
       case 'SIGNING_FAIL': {
-        return <span>{ formState.errors.root.message }</span>;
+        return <span>{formState.errors.root.message}</span>;
       }
       case 'INVALID_SIGNER_ERROR': {
         const signer = shortenString(formState.errors.root.message || '');
-        const expectedSigners = [ contractCreator, contractOwner ].filter(Boolean).map(shortenString).join(', ');
+        const expectedSigners = [contractCreator, contractOwner].filter(Boolean).map(shortenString).join(', ');
         return (
           <Box>
             <span>This address </span>
-            <span>{ signer }</span>
+            <span>{signer}</span>
             <span> is not a creator/owner of the requested contract and cannot claim ownership. Only </span>
-            <span>{ expectedSigners }</span>
+            <span>{expectedSigners}</span>
             <span> can verify ownership of this contract.</span>
           </Box>
         );
@@ -172,7 +177,7 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
         return (
           <Box>
             <span>We are not able to process the verify account ownership for this contract address. Kindly </span>
-            { contactUsLink }
+            {contactUsLink}
             <span> for further assistance.</span>
           </Box>
         );
@@ -184,49 +189,53 @@ const AddressVerificationStepSignature = ({ address, signingMessage, contractCre
   })();
 
   return (
-    <form noValidate onSubmit={ onSubmit }>
-      { rootError && <Alert status="warning" mb={ 6 }>{ rootError }</Alert> }
-      <Box mb={ 8 }>
+    <form noValidate onSubmit={onSubmit}>
+      {rootError && (
+        <Alert status="warning" mb={6}>
+          {rootError}
+        </Alert>
+      )}
+      <Box mb={8}>
         <span>Please select the address to sign and copy the message and sign it using the Blockscout message provider of your choice. </span>
         <Link href="https://docs.blockscout.com/for-users/my-account/verified-addresses/copy-and-sign-message" target="_blank">
           Additional instructions
         </Link>
         <span>. If you do not see your address here but are sure that you are the owner of the contract, kindly </span>
-        { contactUsLink }
+        {contactUsLink}
         <span> for further assistance.</span>
       </Box>
-      { (contractOwner || contractCreator) && (
-        <Flex flexDir="column" rowGap={ 4 } mb={ 4 }>
-          { contractCreator && (
+      {(contractOwner || contractCreator) && (
+        <Flex flexDir="column" rowGap={4} mb={4}>
+          {contractCreator && (
             <Box>
-              <chakra.span fontWeight={ 600 }>Contract creator: </chakra.span>
-              <chakra.span>{ contractCreator }</chakra.span>
+              <chakra.span fontWeight={600}>Contract creator: </chakra.span>
+              <chakra.span>{contractCreator}</chakra.span>
             </Box>
-          ) }
-          { contractOwner && (
+          )}
+          {contractOwner && (
             <Box>
-              <chakra.span fontWeight={ 600 }>Contract owner: </chakra.span>
-              <chakra.span>{ contractOwner }</chakra.span>
+              <chakra.span fontWeight={600}>Contract owner: </chakra.span>
+              <chakra.span>{contractOwner}</chakra.span>
             </Box>
-          ) }
+          )}
         </Flex>
-      ) }
-      <Flex rowGap={ 5 } flexDir="column">
+      )}
+      <Flex rowGap={5} flexDir="column">
         <div>
-          <CopyToClipboard text={ signingMessage } ml="auto" display="block"/>
-          <AddressVerificationFieldMessage formState={ formState } control={ control }/>
+          <CopyToClipboard text={signingMessage} ml="auto" display="block" />
+          <AddressVerificationFieldMessage formState={formState} control={control} />
         </div>
-        { !noWeb3Provider && (
-          <RadioGroup onChange={ handleSignMethodChange } value={ signMethod } display="flex" flexDir="column" rowGap={ 4 }>
+        {!noWeb3Provider && (
+          <RadioGroup onChange={handleSignMethodChange} value={signMethod} display="flex" flexDir="column" rowGap={4}>
             <Radio value="wallet">Sign via Web3 wallet</Radio>
             <Radio value="manually">Sign manually</Radio>
           </RadioGroup>
-        ) }
-        { signMethod === 'manual' && <AddressVerificationFieldSignature formState={ formState } control={ control }/> }
+        )}
+        {signMethod === 'manual' && <AddressVerificationFieldSignature formState={formState} control={control} />}
       </Flex>
-      <Flex alignItems={{ base: 'flex-start', lg: 'center' }} mt={ 8 } columnGap={ 5 } rowGap={ 2 } flexDir={{ base: 'column', lg: 'row' }}>
-        { button }
-        <AdminSupportText/>
+      <Flex alignItems={{ base: 'flex-start', lg: 'center' }} mt={8} columnGap={5} rowGap={2} flexDir={{ base: 'column', lg: 'row' }}>
+        {button}
+        <AdminSupportText />
       </Flex>
     </form>
   );

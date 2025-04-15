@@ -15,9 +15,10 @@ export default function buildUrl(
   const path = basePath + resource.path;
   const url = new URL(compile(path)(pathParams), baseUrl);
 
-  queryParams && Object.entries(queryParams).forEach(([ key, value ]) => {
-    value && url.searchParams.append(key, String(value));
-  });
+  queryParams &&
+    Object.entries(queryParams).forEach(([key, value]) => {
+      value && url.searchParams.append(key, String(value));
+    });
 
   return url.toString();
 }

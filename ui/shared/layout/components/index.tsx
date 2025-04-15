@@ -6,14 +6,7 @@ import MainArea from './MainArea';
 import MainColumn from './MainColumn';
 import SideBar from './SideBar';
 
-export {
-  Container,
-  Content,
-  MainArea,
-  SideBar,
-  MainColumn,
-  Footer,
-};
+export { Container, Content, MainArea, SideBar, MainColumn, Footer };
 
 // Container
 //    MainArea

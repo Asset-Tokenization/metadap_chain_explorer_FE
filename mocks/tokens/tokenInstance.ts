@@ -68,7 +68,8 @@ export const base: TokenInstance = {
         value: 3,
       },
     ],
-    description: '**GENESIS #188848**, **22a5f8bbb1602995** :: *84th* generation of *#57772 and #57775* :: **eGenetic Hash Code (eDNA)** = *3c457cc7f60f7853* :: [Click here for full biography.](https://vipsland.com/nft/collections/genesis/188848) :: crafted by [vipsland](https://vipsland.com/)',
+    description:
+      '**GENESIS #188848**, **22a5f8bbb1602995** :: *84th* generation of *#57772 and #57775* :: **eGenetic Hash Code (eDNA)** = *3c457cc7f60f7853* :: [Click here for full biography.](https://vipsland.com/nft/collections/genesis/188848) :: crafted by [vipsland](https://vipsland.com/)',
     external_url: 'https://vipsland.com/nft/collections/genesis/188848',
     image: 'https://i.seadn.io/gcs/files/1ee1c5e1ead058322615e3206abb8ba3.png?w=500&auto=format',
     name: 'GENESIS #188848, 22a5f8bbb1602995. Blockchain pixel PFP NFT + "on music video" trait inspired by God',
@@ -85,10 +86,12 @@ export const withRichMetadata: TokenInstance = {
     chain_address: '0x66edbdb80001da74cbf3e6c01ba91154f6e2fb7c',
     name: 'Carmelo Anthony',
     total_nfts: 0,
-    animation_url: 'https://nftu.com/nft-content/media/PAPAYA/92ee5f5c-bce9-4d64-8a25-c7e1e6305572/dee8734bbefb0d63d6156b6fa0e1385822480589daa1862cbd37a94f6bc2ba3a',
+    animation_url:
+      'https://nftu.com/nft-content/media/PAPAYA/92ee5f5c-bce9-4d64-8a25-c7e1e6305572/dee8734bbefb0d63d6156b6fa0e1385822480589daa1862cbd37a94f6bc2ba3a',
     series_key: 'Series',
     nft_id: 'c746af09-8dcb-4cec-aa8a-5ff02fffc3f1',
-    description: 'All-Conference and All-American honors await Carmelo Anthony during his Freshman season for Syracuse. However, Anthony must first defeat a worthy opponent in Georgetown with a double-double effort of 30 points and 15 rebounds.\n \n\n© Syracuse University',
+    description:
+      'All-Conference and All-American honors await Carmelo Anthony during his Freshman season for Syracuse. However, Anthony must first defeat a worthy opponent in Georgetown with a double-double effort of 30 points and 15 rebounds.\n \n\n© Syracuse University',
     immutable_uri: 'https://nftu.com/nft-content/metadata/PAPAYA/92ee5f5c-bce9-4d64-8a25-c7e1e6305572/7741920',
     contract_address: '0x63cf7b3d5808cb190aa301b55aafd6b4bb95efbb',
     is_pack: false,
@@ -116,7 +119,7 @@ export const withRichMetadata: TokenInstance = {
           cid: 'QmPGMksnyQemncHKQ67zGiuTAsnFi8HTJkY9ebQ6eVVQLv',
         },
       },
-      'default': 'mp4',
+      default: 'mp4',
       webp: [
         'QmPGMksnyQemncHKQ67zGiuTAsnFi8HTJkY9ebQ6eVVQLv',
         'https://nftu.com/nft/92ee5f5c-bce9-4d64-8a25-c7e1e6305572/949',
@@ -131,7 +134,7 @@ export const withRichMetadata: TokenInstance = {
               name: 'Mary',
               email: 'mary@foo.com',
             },
-            [ 1, 2 ],
+            [1, 2],
           ],
         },
         [
@@ -167,7 +170,7 @@ export const withRichMetadata: TokenInstance = {
         display_type: 'number',
       },
     ],
-    tags: [ 'foo', 123, true ],
+    tags: ['foo', 123, true],
     token_id: '7741920',
     serial_total: 1100,
     blockchain_state: 'BURNING',

@@ -9,19 +9,14 @@ type Props = {
   data: Array<InternalTransaction>;
   currentAddress: string;
   isLoading?: boolean;
-}
+};
 
 const AddressIntTxsList = ({ data, currentAddress, isLoading }: Props) => {
   return (
     <Box>
-      { data.map((item, index) => (
-        <AddressIntTxsListItem
-          key={ item.transaction_hash + '_' + index }
-          { ...item }
-          currentAddress={ currentAddress }
-          isLoading={ isLoading }
-        />
-      )) }
+      {data.map((item, index) => (
+        <AddressIntTxsListItem key={item.transaction_hash + '_' + index} {...item} currentAddress={currentAddress} isLoading={isLoading} />
+      ))}
     </Box>
   );
 };

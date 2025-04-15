@@ -8,7 +8,7 @@ type Props = {
   description?: string;
   value: string;
   isLoading?: boolean;
-}
+};
 
 const NumberWidget = ({ label, value, isLoading, description }: Props) => {
   const bgColor = useColorModeValue('blue.50', 'blue.800');
@@ -18,40 +18,24 @@ const NumberWidget = ({ label, value, isLoading, description }: Props) => {
   return (
     <Flex
       alignItems="flex-start"
-      bg={ isLoading ? skeletonBgColor : bgColor }
-      px={ 3 }
+      bg={isLoading ? skeletonBgColor : bgColor}
+      px={3}
       py={{ base: 2, lg: 3 }}
-      borderRadius={ 12 }
+      borderRadius={12}
       justifyContent="space-between"
-      columnGap={ 3 }
+      columnGap={3}
     >
-      <Box
-      >
-        <Skeleton
-          isLoaded={ !isLoading }
-          color="text_secondary"
-          fontSize="xs"
-          w="fit-content"
-        >
-          <span>{ label }</span>
+      <Box>
+        <Skeleton isLoaded={!isLoading} color="text_secondary" fontSize="xs" w="fit-content">
+          <span>{label}</span>
         </Skeleton>
 
-        <Skeleton
-          isLoaded={ !isLoading }
-          fontWeight={ 500 }
-          fontSize="lg"
-          w="fit-content"
-        >
-          { value }
+        <Skeleton isLoaded={!isLoading} fontWeight={500} fontSize="lg" w="fit-content">
+          {value}
         </Skeleton>
-
       </Box>
-      <Skeleton isLoaded={ !isLoading } alignSelf="center" borderRadius="base">
-        <Hint
-          label={ description }
-          boxSize={ 6 }
-          color={ hintColor }
-        />
+      <Skeleton isLoaded={!isLoading} alignSelf="center" borderRadius="base">
+        <Hint label={description} boxSize={6} color={hintColor} />
       </Skeleton>
     </Flex>
   );

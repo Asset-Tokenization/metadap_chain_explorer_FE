@@ -10,7 +10,7 @@ interface Env {
 
 // keep in mind that all passed variables here should be present in env config files (.env.pw or .env.poa)
 export default function contextWithEnvsFixture(envs: Array<Env>): Parameters<typeof test.extend>[0]['context'] {
-  return async({ browser }, use) => {
+  return async ({ browser }, use) => {
     const context = await createContextWithEnvs(browser, envs);
 
     await use(context);
@@ -21,9 +21,7 @@ export default function contextWithEnvsFixture(envs: Array<Env>): Parameters<typ
 export async function createContextWithEnvs(browser: Browser, envs: Array<Env>) {
   return browser.newContext({
     storageState: {
-      origins: [
-        { origin: app.url, localStorage: envs },
-      ],
+      origins: [{ origin: app.url, localStorage: envs }],
       cookies: [],
     },
   });

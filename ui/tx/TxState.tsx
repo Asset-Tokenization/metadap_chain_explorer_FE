@@ -32,38 +32,38 @@ const TxState = () => {
   });
 
   if (!txInfo.isLoading && !txInfo.isPlaceholderData && !txInfo.isError && !txInfo.data.status) {
-    return txInfo.socketStatus ? <TxSocketAlert status={ txInfo.socketStatus }/> : <TxPendingAlert/>;
+    return txInfo.socketStatus ? <TxSocketAlert status={txInfo.socketStatus} /> : <TxPendingAlert />;
   }
 
   const content = data ? (
-    <Accordion allowMultiple defaultIndex={ [] }>
-      <Hide below="lg" ssr={ false }>
-        <TxStateTable data={ data.items } isLoading={ isPlaceholderData } top={ pagination.isVisible ? 80 : 0 }/>
+    <Accordion allowMultiple defaultIndex={[]}>
+      <Hide below="lg" ssr={false}>
+        <TxStateTable data={data.items} isLoading={isPlaceholderData} top={pagination.isVisible ? 80 : 0} />
       </Hide>
-      <Show below="lg" ssr={ false }>
-        <TxStateList data={ data.items } isLoading={ isPlaceholderData }/>
+      <Show below="lg" ssr={false}>
+        <TxStateList data={data.items} isLoading={isPlaceholderData} />
       </Show>
     </Accordion>
   ) : null;
 
   const actionBar = pagination.isVisible ? (
-    <ActionBar mt={ -6 } showShadow>
-      <Pagination ml="auto" { ...pagination }/>
+    <ActionBar mt={-6} showShadow>
+      <Pagination ml="auto" {...pagination} />
     </ActionBar>
   ) : null;
 
   return (
     <>
-      <Text mb={ 6 }>
-        A set of information that represents the current state is updated when a transaction takes place on the network.
-        The below is a summary of those changes.
+      <Text mb={6}>
+        A set of information that represents the current state is updated when a transaction takes place on the network. The below is a summary of those
+        changes.
       </Text>
       <DataListDisplay
-        isError={ isError }
-        items={ data?.items }
+        isError={isError}
+        items={data?.items}
         emptyText="There are no state changes for this transaction."
-        content={ content }
-        actionBar={ actionBar }
+        content={content}
+        actionBar={actionBar}
       />
     </>
   );

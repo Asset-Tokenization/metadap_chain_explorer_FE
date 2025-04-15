@@ -12,18 +12,8 @@ interface Props {
 
 const NftHtml = ({ src, onLoad, onError, onClick }: Props) => {
   return (
-    <LinkOverlay
-      onClick={ onClick }
-      { ...mediaStyleProps }
-    >
-      <chakra.iframe
-        src={ src }
-        h="100%"
-        w="100%"
-        sandbox="allow-scripts"
-        onLoad={ onLoad }
-        onError={ onError }
-      />
+    <LinkOverlay onClick={onClick} {...mediaStyleProps}>
+      <chakra.iframe src={src} h="100%" w="100%" sandbox="allow-scripts" onLoad={onLoad} onError={onError} />
     </LinkOverlay>
   );
 };

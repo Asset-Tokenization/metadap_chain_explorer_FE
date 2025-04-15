@@ -12,18 +12,16 @@ const LayoutError = ({ children }: Props) => {
   return (
     <Layout.Container>
       <Layout.MainArea>
-        <Layout.SideBar/>
+        <Layout.SideBar />
         <Layout.MainColumn>
-          <HeaderAlert/>
-          <Header/>
+          <HeaderAlert />
+          <Header />
           <AppErrorBoundary>
-            <main>
-              { children }
-            </main>
+            <main>{children}</main>
           </AppErrorBoundary>
         </Layout.MainColumn>
       </Layout.MainArea>
-      <Layout.Footer/>
+      <Layout.Footer />
     </Layout.Container>
   );
 };

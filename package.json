@@ -26,7 +26,8 @@
     "test:pw:ci": "yarn test:pw --project=$PW_PROJECT",
     "test:jest": "jest",
     "test:jest:watch": "jest --watch",
-    "favicon:generate:dev": "./tools/scripts/favicon-generator.dev.sh"
+    "favicon:generate:dev": "./tools/scripts/favicon-generator.dev.sh",
+    "format": "npx prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
     "@chakra-ui/react": "2.7.1",

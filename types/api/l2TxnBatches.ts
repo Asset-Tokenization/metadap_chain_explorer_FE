@@ -4,7 +4,7 @@ export type L2TxnBatchesItem = {
   l1_timestamp: string;
   l2_block_number: number;
   tx_count: number;
-}
+};
 
 export type L2TxnBatchesResponse = {
   items: Array<L2TxnBatchesItem>;
@@ -12,4 +12,4 @@ export type L2TxnBatchesResponse = {
     block_number: number;
     items_count: number;
   };
-}
+};

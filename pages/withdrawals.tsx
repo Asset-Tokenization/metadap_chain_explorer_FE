@@ -9,7 +9,7 @@ const Withdrawals = dynamic(() => import('ui/pages/Withdrawals'), { ssr: false }
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/withdrawals">
-      <Withdrawals/>
+      <Withdrawals />
     </PageNextJs>
   );
 };

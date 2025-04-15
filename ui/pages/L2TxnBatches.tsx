@@ -16,16 +16,12 @@ const L2TxnBatches = () => {
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'l2_txn_batches',
     options: {
-      placeholderData: generateListStub<'l2_txn_batches'>(
-        L2_TXN_BATCHES_ITEM,
-        50,
-        {
-          next_page_params: {
-            items_count: 50,
-            block_number: 9045200,
-          },
+      placeholderData: generateListStub<'l2_txn_batches'>(L2_TXN_BATCHES_ITEM, 50, {
+        next_page_params: {
+          items_count: 50,
+          block_number: 9045200,
         },
-      ),
+      }),
     },
   });
 
@@ -37,16 +33,14 @@ const L2TxnBatches = () => {
 
   const content = data?.items ? (
     <>
-      <Show below="lg" ssr={ false }>
-        { data.items.map(((item, index) => (
-          <TxnBatchesListItem
-            key={ item.l2_block_number + (isPlaceholderData ? String(index) : '') }
-            item={ item }
-            isLoading={ isPlaceholderData }
-          />
-        ))) }
+      <Show below="lg" ssr={false}>
+        {data.items.map((item, index) => (
+          <TxnBatchesListItem key={item.l2_block_number + (isPlaceholderData ? String(index) : '')} item={item} isLoading={isPlaceholderData} />
+        ))}
       </Show>
-      <Hide below="lg" ssr={ false }><TxnBatchesTable items={ data.items } top={ pagination.isVisible ? 80 : 0 } isLoading={ isPlaceholderData }/></Hide>
+      <Hide below="lg" ssr={false}>
+        <TxnBatchesTable items={data.items} top={pagination.isVisible ? 80 : 0} isLoading={isPlaceholderData} />
+      </Hide>
     </>
   ) : null;
 
@@ -56,27 +50,28 @@ const L2TxnBatches = () => {
     }
 
     return (
-      <Skeleton isLoaded={ !countersQuery.isPlaceholderData && !isPlaceholderData } display="flex" flexWrap="wrap">
+      <Skeleton isLoaded={!countersQuery.isPlaceholderData && !isPlaceholderData} display="flex" flexWrap="wrap">
         Tx batch (L2 block)
-        <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[0].l2_block_number } </Text>to
-        <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[data.items.length - 1].l2_block_number } </Text>
-        (total of { countersQuery.data?.toLocaleString() } batches)
+        <Text fontWeight={600} whiteSpace="pre">
+          {' '}
+          #{data.items[0].l2_block_number}{' '}
+        </Text>
+        to
+        <Text fontWeight={600} whiteSpace="pre">
+          {' '}
+          #{data.items[data.items.length - 1].l2_block_number}{' '}
+        </Text>
+        (total of {countersQuery.data?.toLocaleString()} batches)
       </Skeleton>
     );
   })();
 
-  const actionBar = <StickyPaginationWithText text={ text } pagination={ pagination }/>;
+  const actionBar = <StickyPaginationWithText text={text} pagination={pagination} />;
 
   return (
     <>
-      <PageTitle title={ `Tx batches (L2${ nbsp }blocks)` } withTextAd/>
-      <DataListDisplay
-        isError={ isError }
-        items={ data?.items }
-        emptyText="There are no tx batches."
-        content={ content }
-        actionBar={ actionBar }
-      />
+      <PageTitle title={`Tx batches (L2${nbsp}blocks)`} withTextAd />
+      <DataListDisplay isError={isError} items={data?.items} emptyText="There are no tx batches." content={content} actionBar={actionBar} />
     </>
   );
 };

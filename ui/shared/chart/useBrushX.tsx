@@ -18,19 +18,13 @@ export default function useBrushX({ limits, anchor, setRange }: Props) {
     }
 
     const svgEl = d3.select(anchor).select('g');
-    brushRef.current = d3.brushX()
-      .extent(limits);
+    brushRef.current = d3.brushX().extent(limits);
     brushRef.current.on('end', (event) => {
       setRange(event.selection);
     });
 
-    const gBrush = svgEl?.append('g')
-      .attr('class', 'ChartBrush')
-      .call(brushRef.current);
+    const gBrush = svgEl?.append('g').attr('class', 'ChartBrush').call(brushRef.current);
 
-    gBrush.select('.selection')
-      .attr('stroke', 'none')
-      .attr('fill', brushSelectionBg);
-
-  }, [ anchor, brushSelectionBg, limits, setRange ]);
+    gBrush.select('.selection').attr('stroke', 'none').attr('fill', brushSelectionBg);
+  }, [anchor, brushSelectionBg, limits, setRange]);
 }

@@ -21,11 +21,8 @@ const Link = chakra((props: LinkProps) => {
   const defaultHref = route({ pathname: '/address/[hash]', query: { ...props.query, hash: props.address.hash } });
 
   return (
-    <EntityBase.Link
-      { ...props }
-      href={ props.href ?? defaultHref }
-    >
-      { props.children }
+    <EntityBase.Link {...props} href={props.href ?? defaultHref}>
+      {props.children}
     </EntityBase.Link>
   );
 });
@@ -45,29 +42,19 @@ const Icon = (props: IconProps) => {
   };
 
   if (props.isLoading) {
-    return <Skeleton { ...styles } borderRadius="full" flexShrink={ 0 }/>;
+    return <Skeleton {...styles} borderRadius="full" flexShrink={0} />;
   }
 
   if (props.address.is_contract) {
     if (props.isSafeAddress) {
-      return (
-        <EntityBase.Icon
-          { ...props }
-          asProp={ iconSafe }
-        />
-      );
+      return <EntityBase.Icon {...props} asProp={iconSafe} />;
     }
 
     if (props.address.is_verified) {
       return (
         <Tooltip label="Verified contract">
           <span>
-            <EntityBase.Icon
-              { ...props }
-              asProp={ iconContractVerified }
-              color="green.500"
-              borderRadius={ 0 }
-            />
+            <EntityBase.Icon {...props} asProp={iconContractVerified} color="green.500" borderRadius={0} />
           </span>
         </Tooltip>
       );
@@ -76,23 +63,16 @@ const Icon = (props: IconProps) => {
     return (
       <Tooltip label="Contract">
         <span>
-          <EntityBase.Icon
-            { ...props }
-            asProp={ iconContract }
-            borderRadius={ 0 }
-          />
+          <EntityBase.Icon {...props} asProp={iconContract} borderRadius={0} />
         </span>
       </Tooltip>
     );
   }
 
   return (
-    <Tooltip label={ props.address.implementation_name }>
-      <Flex marginRight={ styles.marginRight }>
-        <AddressIdenticon
-          size={ props.iconSize === 'lg' ? 30 : 20 }
-          hash={ props.address.hash }
-        />
+    <Tooltip label={props.address.implementation_name}>
+      <Flex marginRight={styles.marginRight}>
+        <AddressIdenticon size={props.iconSize === 'lg' ? 30 : 20} hash={props.address.hash} />
       </Flex>
     </Tooltip>
   );
@@ -103,38 +83,32 @@ type ContentProps = Omit<EntityBase.ContentBaseProps, 'text'> & Pick<EntityProps
 const Content = chakra((props: ContentProps) => {
   if (props.address.name) {
     const label = (
-      <VStack gap={ 0 } py={ 1 } color="inherit">
-        <Box fontWeight={ 600 } whiteSpace="pre-wrap" wordBreak="break-word">{ props.address.name }</Box>
-        <Box whiteSpace="pre-wrap" wordBreak="break-word">{ props.address.hash }</Box>
+      <VStack gap={0} py={1} color="inherit">
+        <Box fontWeight={600} whiteSpace="pre-wrap" wordBreak="break-word">
+          {props.address.name}
+        </Box>
+        <Box whiteSpace="pre-wrap" wordBreak="break-word">
+          {props.address.hash}
+        </Box>
       </VStack>
     );
 
     return (
-      <Tooltip label={ label } maxW="100vw">
-        <Skeleton isLoaded={ !props.isLoading } overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap" as="span">
-          { props.address.name }
+      <Tooltip label={label} maxW="100vw">
+        <Skeleton isLoaded={!props.isLoading} overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap" as="span">
+          {props.address.name}
         </Skeleton>
       </Tooltip>
     );
   }
 
-  return (
-    <EntityBase.Content
-      { ...props }
-      text={ props.address.hash }
-    />
-  );
+  return <EntityBase.Content {...props} text={props.address.hash} />;
 });
 
 type CopyProps = Omit<EntityBase.CopyBaseProps, 'text'> & Pick<EntityProps, 'address'>;
 
 const Copy = (props: CopyProps) => {
-  return (
-    <EntityBase.Copy
-      { ...props }
-      text={ props.address.hash }
-    />
-  );
+  return <EntityBase.Copy {...props} text={props.address.hash} />;
 };
 
 const Container = EntityBase.Container;
@@ -145,26 +119,20 @@ export interface EntityProps extends EntityBase.EntityBaseProps {
 }
 
 const AddressEntry = (props: EntityProps) => {
-  const linkProps = _omit(props, [ 'className' ]);
-  const partsProps = _omit(props, [ 'className', 'onClick' ]);
+  const linkProps = _omit(props, ['className']);
+  const partsProps = _omit(props, ['className', 'onClick']);
 
   return (
-    <Container className={ props.className }>
-      <Icon { ...partsProps }/>
-      <Link { ...linkProps }>
-        <Content { ...partsProps }/>
+    <Container className={props.className}>
+      <Icon {...partsProps} />
+      <Link {...linkProps}>
+        <Content {...partsProps} />
       </Link>
-      <Copy { ...partsProps }/>
+      <Copy {...partsProps} />
     </Container>
   );
 };
 
 export default React.memo(chakra(AddressEntry));
 
-export {
-  Container,
-  Link,
-  Icon,
-  Content,
-  Copy,
-};
+export { Container, Link, Icon, Content, Copy };

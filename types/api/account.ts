@@ -6,14 +6,14 @@ export interface AddressTag {
   id: string;
 }
 
-export type AddressTags = Array<AddressTag>
+export type AddressTags = Array<AddressTag>;
 
 export interface ApiKey {
   api_key: string;
   name: string;
 }
 
-export type ApiKeys = Array<ApiKey>
+export type ApiKeys = Array<ApiKey>;
 
 export interface ModelError {
   message: string;
@@ -25,7 +25,7 @@ export interface NotificationDirection {
 }
 
 export interface NotificationSettings {
-  'native': NotificationDirection;
+  native: NotificationDirection;
   'ERC-20': NotificationDirection;
   'ERC-721': NotificationDirection;
 }
@@ -46,9 +46,9 @@ export interface TransactionTag {
   id: string;
 }
 
-export type TransactionTags = Array<TransactionTag>
+export type TransactionTags = Array<TransactionTag>;
 
-export type Transactions = Array<Transaction>
+export type Transactions = Array<Transaction>;
 
 export interface UserInfo {
   name?: string;
@@ -76,7 +76,7 @@ export interface WatchlistAddressNew {
   notificationSettings: NotificationSettings;
 }
 
-export type WatchlistAddresses = Array<WatchlistAddress>
+export type WatchlistAddresses = Array<WatchlistAddress>;
 
 export interface PublicTag {
   website: string;
@@ -91,11 +91,11 @@ export interface PublicTag {
   additional_comment: string;
 }
 
-export type PublicTagNew = Omit<PublicTag, 'id' | 'addresses_with_info'>
+export type PublicTagNew = Omit<PublicTag, 'id' | 'addresses_with_info'>;
 
 export type PublicTags = Array<PublicTag>;
 
-export type CustomAbis = Array<CustomAbi>
+export type CustomAbis = Array<CustomAbi>;
 
 export interface CustomAbi {
   name: string;
@@ -124,14 +124,14 @@ export type WatchlistErrors = {
   address_hash?: Array<string>;
   name?: Array<string>;
   watchlist_id?: Array<string>;
-}
+};
 
 export type CustomAbiErrors = {
   address_hash?: Array<string>;
   name?: Array<string>;
   abi?: Array<string>;
   identity_id?: Array<string>;
-}
+};
 
 export type ApiKeyErrors = {
   name?: Array<string>;
@@ -142,13 +142,13 @@ export type AddressTagErrors = {
   address_hash: Array<string>;
   name: Array<string>;
   identity_id?: Array<string>;
-}
+};
 
 export type TransactionTagErrors = {
   tx_hash: Array<string>;
   name: Array<string>;
   identity_id?: Array<string>;
-}
+};
 
 export type PublicTagErrors = {
   additional_comment: Array<string>;
@@ -156,7 +156,7 @@ export type PublicTagErrors = {
   email: Array<string>;
   full_name: Array<string>;
   tags: Array<string>;
-}
+};
 
 export interface VerifiedAddress {
   userId: string;

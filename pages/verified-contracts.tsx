@@ -9,7 +9,7 @@ const VerifiedContracts = dynamic(() => import('ui/pages/VerifiedContracts'), { 
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/verified-contracts">
-      <VerifiedContracts/>
+      <VerifiedContracts />
     </PageNextJs>
   );
 };

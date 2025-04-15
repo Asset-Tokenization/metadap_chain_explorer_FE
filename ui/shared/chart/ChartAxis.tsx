@@ -38,11 +38,8 @@ const ChartAxis = ({ type, scale, ticks, tickFormatGenerator, disableAnimation, 
     }
     axisGroup.select('.domain').remove();
     axisGroup.selectAll('line').remove();
-    axisGroup.selectAll('text')
-      .attr('opacity', 1)
-      .attr('color', textColor)
-      .attr('font-size', '0.75rem');
-  }, [ scale, ticks, tickFormatGenerator, disableAnimation, type, textColor ]);
+    axisGroup.selectAll('text').attr('opacity', 1).attr('color', textColor).attr('font-size', '0.75rem');
+  }, [scale, ticks, tickFormatGenerator, disableAnimation, type, textColor]);
 
   React.useEffect(() => {
     if (!anchorEl) {
@@ -53,26 +50,23 @@ const ChartAxis = ({ type, scale, ticks, tickFormatGenerator, disableAnimation, 
 
     anchorD3
       .on('mouseout.axisX', () => {
-        d3.select(ref.current)
-          .selectAll('text')
-          .style('font-weight', 'normal');
+        d3.select(ref.current).selectAll('text').style('font-weight', 'normal');
       })
       .on('mousemove.axisX', (event) => {
-        const [ x ] = d3.pointer(event, anchorEl);
+        const [x] = d3.pointer(event, anchorEl);
         const xDate = scale.invert(x);
         const textElements = d3.select(ref.current).selectAll('text');
         const data = textElements.data();
         const index = d3.bisector((d) => d).left(data, xDate);
-        textElements
-          .style('font-weight', (d, i) => i === index - 1 ? 'bold' : 'normal');
+        textElements.style('font-weight', (d, i) => (i === index - 1 ? 'bold' : 'normal'));
       });
 
     return () => {
       anchorD3.on('mouseout.axisX mousemove.axisX', null);
     };
-  }, [ anchorEl, scale ]);
+  }, [anchorEl, scale]);
 
-  return <g ref={ ref } { ...props }/>;
+  return <g ref={ref} {...props} />;
 };
 
 export default React.memo(ChartAxis);

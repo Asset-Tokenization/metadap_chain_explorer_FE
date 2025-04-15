@@ -8,8 +8,8 @@ import ContractVerification from 'ui/pages/ContractVerification';
 
 const Page: NextPage<Props> = (props: Props) => {
   return (
-    <PageNextJs pathname="/address/[hash]/contract-verification" query={ props }>
-      <ContractVerification/>
+    <PageNextJs pathname="/address/[hash]/contract-verification" query={props}>
+      <ContractVerification />
     </PageNextJs>
   );
 };

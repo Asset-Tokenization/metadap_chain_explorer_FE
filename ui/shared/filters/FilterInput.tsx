@@ -12,57 +12,52 @@ type Props = {
   placeholder: string;
   initialValue?: string;
   isLoading?: boolean;
-}
+};
 
 const FilterInput = ({ onChange, className, size = 'sm', placeholder, initialValue, isLoading }: Props) => {
-  const [ filterQuery, setFilterQuery ] = useState(initialValue || '');
+  const [filterQuery, setFilterQuery] = useState(initialValue || '');
   const inputRef = React.useRef<HTMLInputElement>(null);
   const iconColor = useColorModeValue('blackAlpha.600', 'whiteAlpha.600');
 
-  const handleFilterQueryChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+  const handleFilterQueryChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
 
-    setFilterQuery(value);
-    onChange(value);
-  }, [ onChange ]);
+      setFilterQuery(value);
+      onChange(value);
+    },
+    [onChange],
+  );
 
   const handleFilterQueryClear = useCallback(() => {
     setFilterQuery('');
     onChange('');
     inputRef?.current?.focus();
-  }, [ onChange ]);
+  }, [onChange]);
 
   return (
-    <Skeleton
-      isLoaded={ !isLoading }
-      className={ className }
-      minW="250px"
-    >
-      <InputGroup
-        size={ size }
-      >
-        <InputLeftElement
-          pointerEvents="none"
-        >
-          <Icon as={ searchIcon } color={ iconColor }/>
+    <Skeleton isLoaded={!isLoading} className={className} minW="250px">
+      <InputGroup size={size}>
+        <InputLeftElement pointerEvents="none">
+          <Icon as={searchIcon} color={iconColor} />
         </InputLeftElement>
 
         <Input
-          ref={ inputRef }
-          size={ size }
-          value={ filterQuery }
-          onChange={ handleFilterQueryChange }
-          placeholder={ placeholder }
+          ref={inputRef}
+          size={size}
+          value={filterQuery}
+          onChange={handleFilterQueryChange}
+          placeholder={placeholder}
           borderWidth="2px"
           textOverflow="ellipsis"
           whiteSpace="nowrap"
         />
 
-        { filterQuery ? (
+        {filterQuery ? (
           <InputRightElement>
-            <ClearButton onClick={ handleFilterQueryClear }/>
+            <ClearButton onClick={handleFilterQueryClear} />
           </InputRightElement>
-        ) : null }
+        ) : null}
       </InputGroup>
     </Skeleton>
   );

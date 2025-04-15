@@ -11,17 +11,17 @@ export type HomeStats = {
   static_gas_price: string | null;
   market_cap: string;
   network_utilization_percentage: number;
-}
+};
 
 export type GasPrices = {
   average: number;
   fast: number;
   slow: number;
-}
+};
 
 export type Counters = {
   counters: Array<Counter>;
-}
+};
 
 export type Counter = {
   id: string;
@@ -29,28 +29,28 @@ export type Counter = {
   title: string;
   description?: string;
   units: string;
-}
+};
 
 export type StatsCharts = {
   sections: Array<StatsChartsSection>;
-}
+};
 
 export type StatsChartsSection = {
   id: string;
   title: string;
   charts: Array<StatsChartInfo>;
-}
+};
 
 export type StatsChartInfo = {
   id: string;
   title: string;
   description: string;
   units: string | null;
-}
+};
 
 export type StatsChart = { chart: Array<StatsChartItem> };
 
 export type StatsChartItem = {
   date: string;
   value: string;
-}
+};

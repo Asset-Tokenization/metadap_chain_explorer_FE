@@ -17,14 +17,13 @@ const TxDetailsFeePerGas = ({ txFee, gasUsed, isLoading }: Props) => {
   }
 
   return (
-    <DetailsInfoItem
-      title="Fee per gas"
-      hint="Fee per gas"
-      isLoading={ isLoading }
-    >
-      <Skeleton isLoaded={ !isLoading } mr={ 1 }>
-        { BigNumber(txFee).dividedBy(10 ** config.chain.currency.decimals).dividedBy(gasUsed).toFixed() }
-        { config.UI.views.tx.hiddenFields?.fee_currency ? '' : ` ${ config.chain.currency.symbol }` }
+    <DetailsInfoItem title="Fee per gas" hint="Fee per gas" isLoading={isLoading}>
+      <Skeleton isLoaded={!isLoading} mr={1}>
+        {BigNumber(txFee)
+          .dividedBy(10 ** config.chain.currency.decimals)
+          .dividedBy(gasUsed)
+          .toFixed()}
+        {config.UI.views.tx.hiddenFields?.fee_currency ? '' : ` ${config.chain.currency.symbol}`}
       </Skeleton>
     </DetailsInfoItem>
   );

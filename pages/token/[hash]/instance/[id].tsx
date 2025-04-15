@@ -9,8 +9,8 @@ const TokenInstance = dynamic(() => import('ui/pages/TokenInstance'), { ssr: fal
 
 const Page: NextPage<Props> = (props: Props) => {
   return (
-    <PageNextJs pathname="/token/[hash]/instance/[id]" query={ props }>
-      <TokenInstance/>
+    <PageNextJs pathname="/token/[hash]/instance/[id]" query={props}>
+      <TokenInstance />
     </PageNextJs>
   );
 };

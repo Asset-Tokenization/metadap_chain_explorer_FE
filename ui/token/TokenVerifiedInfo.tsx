@@ -14,7 +14,6 @@ interface Props {
 }
 
 const TokenVerifiedInfo = ({ verifiedInfoQuery }: Props) => {
-
   const { data, isLoading, isError } = verifiedInfoQuery;
 
   const content = (() => {
@@ -25,9 +24,9 @@ const TokenVerifiedInfo = ({ verifiedInfoQuery }: Props) => {
     if (isLoading) {
       return (
         <>
-          <Skeleton w="100px" h="30px" borderRadius="base"/>
-          <Skeleton w="100px" h="30px" borderRadius="base"/>
-          <Skeleton w="80px" h="30px" borderRadius="base"/>
+          <Skeleton w="100px" h="30px" borderRadius="base" />
+          <Skeleton w="100px" h="30px" borderRadius="base" />
+          <Skeleton w="80px" h="30px" borderRadius="base" />
         </>
       );
     }
@@ -40,8 +39,8 @@ const TokenVerifiedInfo = ({ verifiedInfoQuery }: Props) => {
       try {
         const url = new URL(data.projectWebsite);
         return (
-          <LinkExternal href={ data.projectWebsite } variant="subtle" flexShrink={ 0 }>
-            { url.host }
+          <LinkExternal href={data.projectWebsite} variant="subtle" flexShrink={0}>
+            {url.host}
           </LinkExternal>
         );
       } catch (error) {
@@ -51,8 +50,8 @@ const TokenVerifiedInfo = ({ verifiedInfoQuery }: Props) => {
 
     return (
       <>
-        { websiteLink }
-        <TokenProjectInfo data={ data }/>
+        {websiteLink}
+        <TokenProjectInfo data={data} />
       </>
     );
   })();

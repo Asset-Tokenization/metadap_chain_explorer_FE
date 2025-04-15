@@ -12,7 +12,7 @@ const MockAddressPage = ({ children }: { children: JSX.Element }): JSX.Element =
   });
 
   if (!data) {
-    return <div/>;
+    return <div />;
   }
 
   return children;

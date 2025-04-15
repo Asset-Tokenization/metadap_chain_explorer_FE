@@ -31,12 +31,12 @@ const TEST_CASES: Array<TestCase<Route>> = [
       query: { hash: '0x12345' },
     },
     apiData: { symbol: 'USDT' },
-  } as TestCase<{ pathname: '/token/[hash]'; query: { hash: string }}>,
+  } as TestCase<{ pathname: '/token/[hash]'; query: { hash: string } }>,
 ];
 
 describe('generates correct metadata for:', () => {
   TEST_CASES.forEach((testCase) => {
-    it(`${ testCase.title }`, () => {
+    it(`${testCase.title}`, () => {
       const result = generate(testCase.route, testCase.apiData);
       expect(result).toMatchSnapshot();
     });

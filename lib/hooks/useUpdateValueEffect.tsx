@@ -15,7 +15,7 @@ const useUpdateValueEffect = (effect: () => void, value: string) => {
       valueRef.current = undefined;
       isChangedRef.current = false;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -23,8 +23,8 @@ const useUpdateValueEffect = (effect: () => void, value: string) => {
       isChangedRef.current = true;
       return effect();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ value ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 };
 
 export default useUpdateValueEffect;

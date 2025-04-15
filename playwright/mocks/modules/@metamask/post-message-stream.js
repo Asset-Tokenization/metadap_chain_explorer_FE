@@ -4,6 +4,4 @@ class WindowPostMessageStream {
   }
 }
 
-export {
-  WindowPostMessageStream,
-};
+export { WindowPostMessageStream };

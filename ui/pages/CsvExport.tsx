@@ -84,7 +84,7 @@ const CsvExport = () => {
       label: 'Back to address',
       url: appProps.referrer,
     };
-  }, [ appProps.referrer ]);
+  }, [appProps.referrer]);
 
   if (!isCorrectExportType(exportType) || !addressHash || addressQuery.error?.status === 400) {
     throw Error('Not found', { cause: { status: 404 } });
@@ -105,43 +105,40 @@ const CsvExport = () => {
 
   const content = (() => {
     if (addressQuery.isError) {
-      return <DataFetchAlert/>;
+      return <DataFetchAlert />;
     }
 
     if (addressQuery.isLoading) {
-      return <ContentLoader/>;
+      return <ContentLoader />;
     }
 
     return (
       <CsvExportForm
-        hash={ addressHash }
-        resource={ EXPORT_TYPES[exportType].resource }
-        filterType={ filterType }
-        filterValue={ filterValue }
-        fileNameTemplate={ EXPORT_TYPES[exportType].fileNameTemplate }
+        hash={addressHash}
+        resource={EXPORT_TYPES[exportType].resource}
+        filterType={filterType}
+        filterValue={filterValue}
+        fileNameTemplate={EXPORT_TYPES[exportType].fileNameTemplate}
       />
     );
   })();
 
   return (
     <>
-      <PageTitle
-        title="Export data to CSV file"
-        backLink={ backLink }
-      />
-      <Flex mb={ 10 } whiteSpace="pre-wrap" flexWrap="wrap">
-        <span>Export { EXPORT_TYPES[exportType].text } for address </span>
-        <AddressEntity
-          address={{ hash: addressHash, is_contract: true, implementation_name: null }}
-          truncation={ isMobile ? 'constant' : 'dynamic' }
-          noCopy
-        />
-        <span>{ nbsp }</span>
-        { filterType && filterValue && <span>with applied filter by { filterType } ({ filterValue }) </span> }
+      <PageTitle title="Export data to CSV file" backLink={backLink} />
+      <Flex mb={10} whiteSpace="pre-wrap" flexWrap="wrap">
+        <span>Export {EXPORT_TYPES[exportType].text} for address </span>
+        <AddressEntity address={{ hash: addressHash, is_contract: true, implementation_name: null }} truncation={isMobile ? 'constant' : 'dynamic'} noCopy />
+        <span>{nbsp}</span>
+        {filterType && filterValue && (
+          <span>
+            with applied filter by {filterType} ({filterValue}){' '}
+          </span>
+        )}
         <span>to CSV file. </span>
-        <span>Exports are limited to the last 10K { EXPORT_TYPES[exportType].text }.</span>
+        <span>Exports are limited to the last 10K {EXPORT_TYPES[exportType].text}.</span>
       </Flex>
-      { content }
+      {content}
     </>
   );
 };

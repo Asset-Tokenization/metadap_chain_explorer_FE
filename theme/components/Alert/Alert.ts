@@ -3,17 +3,16 @@ import type { StyleFunctionProps } from '@chakra-ui/styled-system';
 import { createMultiStyleConfigHelpers, cssVar } from '@chakra-ui/styled-system';
 import { transparentize } from '@chakra-ui/theme-tools';
 
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(parts.keys);
+const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(parts.keys);
 
 const $fg = cssVar('alert-fg');
 const $bg = cssVar('alert-bg');
 
 function getBg(props: StyleFunctionProps) {
   const { theme, colorScheme: c } = props;
-  const darkBg = transparentize(`${ c }.200`, 0.16)(theme);
+  const darkBg = transparentize(`${c}.200`, 0.16)(theme);
   return {
-    light: `colors.${ c }.100`,
+    light: `colors.${c}.100`,
     dark: darkBg,
   };
 }
@@ -55,10 +54,10 @@ const variantSubtle = definePartsStyle((props) => {
 
   return {
     container: {
-      [$fg.variable]: colorScheme === 'gray' ? 'colors.blackAlpha.800' : `colors.${ colorScheme }.500`,
+      [$fg.variable]: colorScheme === 'gray' ? 'colors.blackAlpha.800' : `colors.${colorScheme}.500`,
       [$bg.variable]: colorScheme === 'gray' ? 'colors.gray.100' : bg.light,
       _dark: {
-        [$fg.variable]: colorScheme === 'gray' ? 'colors.whiteAlpha.800' : `colors.${ colorScheme }.200`,
+        [$fg.variable]: colorScheme === 'gray' ? 'colors.whiteAlpha.800' : `colors.${colorScheme}.200`,
         [$bg.variable]: colorScheme === 'gray' ? 'colors.gray.800' : bg.dark,
       },
     },
@@ -70,10 +69,10 @@ const variantSolid = definePartsStyle((props) => {
   return {
     container: {
       [$fg.variable]: `colors.white`,
-      [$bg.variable]: `colors.${ c }.500`,
+      [$bg.variable]: `colors.${c}.500`,
       _dark: {
         [$fg.variable]: `colors.gray.900`,
-        [$bg.variable]: `colors.${ c }.200`,
+        [$bg.variable]: `colors.${c}.200`,
       },
       color: $fg.reference,
     },

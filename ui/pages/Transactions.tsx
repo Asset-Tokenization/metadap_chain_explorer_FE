@@ -31,12 +31,14 @@ const Transactions = () => {
     filters: { filter: router.query.tab === 'pending' ? 'pending' : 'validated' },
     options: {
       enabled: !router.query.tab || router.query.tab === 'validated' || router.query.tab === 'pending',
-      placeholderData: generateListStub<'txs_validated'>(TX, 50, { next_page_params: {
-        block_number: 9005713,
-        index: 5,
-        items_count: 50,
-        filter: 'validated',
-      } }),
+      placeholderData: generateListStub<'txs_validated'>(TX, 50, {
+        next_page_params: {
+          block_number: 9005713,
+          index: 5,
+          items_count: 50,
+          filter: 'validated',
+        },
+      }),
     },
   });
 
@@ -44,11 +46,13 @@ const Transactions = () => {
     resourceName: 'txs_watchlist',
     options: {
       enabled: router.query.tab === 'watchlist',
-      placeholderData: generateListStub<'txs_watchlist'>(TX, 50, { next_page_params: {
-        block_number: 9005713,
-        index: 5,
-        items_count: 50,
-      } }),
+      placeholderData: generateListStub<'txs_watchlist'>(TX, 50, {
+        next_page_params: {
+          block_number: 9005713,
+          index: 5,
+          items_count: 50,
+        },
+      }),
     },
   });
 
@@ -60,39 +64,34 @@ const Transactions = () => {
     {
       id: 'validated',
       title: verifiedTitle,
-      component: <TxsContent query={ txsQuery } showSocketInfo={ txsQuery.pagination.page === 1 } socketInfoNum={ num } socketInfoAlert={ socketAlert }/> },
+      component: <TxsContent query={txsQuery} showSocketInfo={txsQuery.pagination.page === 1} socketInfoNum={num} socketInfoAlert={socketAlert} />,
+    },
     {
       id: 'pending',
       title: 'Pending',
       component: (
-        <TxsContent
-          query={ txsQuery }
-          showBlockInfo={ false }
-          showSocketInfo={ txsQuery.pagination.page === 1 }
-          socketInfoNum={ num }
-          socketInfoAlert={ socketAlert }
-        />
+        <TxsContent query={txsQuery} showBlockInfo={false} showSocketInfo={txsQuery.pagination.page === 1} socketInfoNum={num} socketInfoAlert={socketAlert} />
       ),
     },
-    hasAccount ? {
-      id: 'watchlist',
-      title: 'Watch list',
-      component: <TxsWatchlist query={ txsWatchlistQuery }/>,
-    } : undefined,
+    hasAccount
+      ? {
+          id: 'watchlist',
+          title: 'Watch list',
+          component: <TxsWatchlist query={txsWatchlistQuery} />,
+        }
+      : undefined,
   ].filter(Boolean);
 
   const pagination = router.query.tab === 'watchlist' ? txsWatchlistQuery.pagination : txsQuery.pagination;
 
   return (
     <>
-      <PageTitle title="Transactions" withTextAd/>
+      <PageTitle title="Transactions" withTextAd />
       <RoutedTabs
-        tabs={ tabs }
-        tabListProps={ isMobile ? undefined : TAB_LIST_PROPS }
-        rightSlot={ (
-          pagination.isVisible && !isMobile ? <Pagination my={ 1 } { ...pagination }/> : null
-        ) }
-        stickyEnabled={ !isMobile }
+        tabs={tabs}
+        tabListProps={isMobile ? undefined : TAB_LIST_PROPS}
+        rightSlot={pagination.isVisible && !isMobile ? <Pagination my={1} {...pagination} /> : null}
+        stickyEnabled={!isMobile}
       />
     </>
   );

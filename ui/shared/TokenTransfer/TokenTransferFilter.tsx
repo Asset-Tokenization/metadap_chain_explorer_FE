@@ -1,9 +1,4 @@
-import {
-  Text,
-  Radio,
-  RadioGroup,
-  Stack,
-} from '@chakra-ui/react';
+import { Text, Radio, RadioGroup, Stack } from '@chakra-ui/react';
 import React from 'react';
 
 import type { AddressFromToFilter } from 'types/api/address';
@@ -35,28 +30,38 @@ const TokenTransferFilter = ({
   const isInitialLoading = useIsInitialLoading(isLoading);
 
   return (
-    <PopoverFilter appliedFiltersNum={ appliedFiltersNum } contentProps={{ w: '200px' }} isLoading={ isInitialLoading }>
-      { withAddressFilter && (
+    <PopoverFilter appliedFiltersNum={appliedFiltersNum} contentProps={{ w: '200px' }} isLoading={isInitialLoading}>
+      {withAddressFilter && (
         <>
-          <Text variant="secondary" fontWeight={ 600 }>Address</Text>
+          <Text variant="secondary" fontWeight={600}>
+            Address
+          </Text>
           <RadioGroup
             size="lg"
-            onChange={ onAddressFilterChange }
-            defaultValue={ defaultAddressFilter || 'all' }
-            paddingBottom={ 4 }
+            onChange={onAddressFilterChange}
+            defaultValue={defaultAddressFilter || 'all'}
+            paddingBottom={4}
             borderBottom="1px solid"
             borderColor="divider"
           >
-            <Stack spacing={ 4 }>
-              <Radio value="all"><Text fontSize="md">All</Text></Radio>
-              <Radio value="from"><Text fontSize="md">From</Text></Radio>
-              <Radio value="to"><Text fontSize="md">To</Text></Radio>
+            <Stack spacing={4}>
+              <Radio value="all">
+                <Text fontSize="md">All</Text>
+              </Radio>
+              <Radio value="from">
+                <Text fontSize="md">From</Text>
+              </Radio>
+              <Radio value="to">
+                <Text fontSize="md">To</Text>
+              </Radio>
             </Stack>
           </RadioGroup>
         </>
-      ) }
-      <Text variant="secondary" fontWeight={ 600 }>Type</Text>
-      <TokenTypeFilter onChange={ onTypeFilterChange } defaultValue={ defaultTypeFilters }/>
+      )}
+      <Text variant="secondary" fontWeight={600}>
+        Type
+      </Text>
+      <TokenTypeFilter onChange={onTypeFilterChange} defaultValue={defaultTypeFilters} />
     </PopoverFilter>
   );
 };

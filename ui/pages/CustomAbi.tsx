@@ -19,8 +19,8 @@ const CustomAbiPage: React.FC = () => {
   const deleteModalProps = useDisclosure();
   useRedirectForInvalidAuthToken();
 
-  const [ customAbiModalData, setCustomAbiModalData ] = useState<CustomAbi>();
-  const [ deleteModalData, setDeleteModalData ] = useState<CustomAbi>();
+  const [customAbiModalData, setCustomAbiModalData] = useState<CustomAbi>();
+  const [deleteModalData, setDeleteModalData] = useState<CustomAbi>();
 
   const { data, isPlaceholderData, isError } = useApiQuery('custom_abi', {
     queryOptions: {
@@ -28,25 +28,31 @@ const CustomAbiPage: React.FC = () => {
     },
   });
 
-  const onEditClick = useCallback((data: CustomAbi) => {
-    setCustomAbiModalData(data);
-    customAbiModalProps.onOpen();
-  }, [ customAbiModalProps ]);
+  const onEditClick = useCallback(
+    (data: CustomAbi) => {
+      setCustomAbiModalData(data);
+      customAbiModalProps.onOpen();
+    },
+    [customAbiModalProps],
+  );
 
   const onCustomAbiModalClose = useCallback(() => {
     setCustomAbiModalData(undefined);
     customAbiModalProps.onClose();
-  }, [ customAbiModalProps ]);
+  }, [customAbiModalProps]);
 
-  const onDeleteClick = useCallback((data: CustomAbi) => {
-    setDeleteModalData(data);
-    deleteModalProps.onOpen();
-  }, [ deleteModalProps ]);
+  const onDeleteClick = useCallback(
+    (data: CustomAbi) => {
+      setDeleteModalData(data);
+      deleteModalProps.onOpen();
+    },
+    [deleteModalProps],
+  );
 
   const onDeleteModalClose = useCallback(() => {
     setDeleteModalData(undefined);
     deleteModalProps.onClose();
-  }, [ deleteModalProps ]);
+  }, [deleteModalProps]);
 
   const description = (
     <AccountPageDescription>
@@ -56,55 +62,47 @@ const CustomAbiPage: React.FC = () => {
 
   const content = (() => {
     if (isError) {
-      return <DataFetchAlert/>;
+      return <DataFetchAlert />;
     }
 
     const list = (
       <>
         <Box display={{ base: 'block', lg: 'none' }}>
-          { data?.map((item, index) => (
+          {data?.map((item, index) => (
             <CustomAbiListItem
-              key={ item.id + (isPlaceholderData ? index : '') }
-              item={ item }
-              isLoading={ isPlaceholderData }
-              onDeleteClick={ onDeleteClick }
-              onEditClick={ onEditClick }
+              key={item.id + (isPlaceholderData ? index : '')}
+              item={item}
+              isLoading={isPlaceholderData}
+              onDeleteClick={onDeleteClick}
+              onEditClick={onEditClick}
             />
-          )) }
+          ))}
         </Box>
         <Box display={{ base: 'none', lg: 'block' }}>
-          <CustomAbiTable
-            data={ data }
-            isLoading={ isPlaceholderData }
-            onDeleteClick={ onDeleteClick }
-            onEditClick={ onEditClick }
-          />
+          <CustomAbiTable data={data} isLoading={isPlaceholderData} onDeleteClick={onDeleteClick} onEditClick={onEditClick} />
         </Box>
       </>
     );
 
     return (
       <>
-        { description }
-        { Boolean(data?.length) && list }
-        <Skeleton mt={ 8 } isLoaded={ !isPlaceholderData } display="inline-block">
-          <Button
-            size="lg"
-            onClick={ customAbiModalProps.onOpen }
-          >
+        {description}
+        {Boolean(data?.length) && list}
+        <Skeleton mt={8} isLoaded={!isPlaceholderData} display="inline-block">
+          <Button size="lg" onClick={customAbiModalProps.onOpen}>
             Add custom ABI
           </Button>
         </Skeleton>
-        <CustomAbiModal { ...customAbiModalProps } onClose={ onCustomAbiModalClose } data={ customAbiModalData }/>
-        { deleteModalData && <DeleteCustomAbiModal { ...deleteModalProps } onClose={ onDeleteModalClose } data={ deleteModalData }/> }
+        <CustomAbiModal {...customAbiModalProps} onClose={onCustomAbiModalClose} data={customAbiModalData} />
+        {deleteModalData && <DeleteCustomAbiModal {...deleteModalProps} onClose={onDeleteModalClose} data={deleteModalData} />}
       </>
     );
   })();
 
   return (
     <>
-      <PageTitle title="Custom ABI"/>
-      { content }
+      <PageTitle title="Custom ABI" />
+      {content}
     </>
   );
 };

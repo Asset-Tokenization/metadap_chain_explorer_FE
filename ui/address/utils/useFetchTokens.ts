@@ -29,7 +29,7 @@ export default function useFetchTokens({ hash }: Props) {
     erc20query.refetch();
     erc721query.refetch();
     erc1155query.refetch();
-  }, [ erc1155query, erc20query, erc721query ]);
+  }, [erc1155query, erc20query, erc721query]);
 
   const data = React.useMemo(() => {
     return {
@@ -46,7 +46,7 @@ export default function useFetchTokens({ hash }: Props) {
         isOverflow: Boolean(erc1155query.data?.next_page_params),
       },
     };
-  }, [ erc1155query.data, erc20query.data, erc721query.data ]);
+  }, [erc1155query.data, erc20query.data, erc721query.data]);
 
   return {
     isLoading: erc20query.isLoading || erc721query.isLoading || erc1155query.isLoading,

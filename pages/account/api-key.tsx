@@ -9,7 +9,7 @@ const ApiKeys = dynamic(() => import('ui/pages/ApiKeys'), { ssr: false });
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/account/api-key">
-      <ApiKeys/>
+      <ApiKeys />
     </PageNextJs>
   );
 };

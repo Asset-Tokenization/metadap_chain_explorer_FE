@@ -18,14 +18,8 @@ const InOutTag = ({ isIn, isOut, className, isLoading }: Props) => {
   const colorScheme = isOut ? 'orange' : 'green';
 
   return (
-    <Tag
-      className={ className }
-      colorScheme={ colorScheme }
-      display="flex"
-      justifyContent="center"
-      isLoading={ isLoading }
-    >
-      { isOut ? 'OUT' : 'IN' }
+    <Tag className={className} colorScheme={colorScheme} display="flex" justifyContent="center" isLoading={isLoading}>
+      {isOut ? 'OUT' : 'IN'}
     </Tag>
   );
 };

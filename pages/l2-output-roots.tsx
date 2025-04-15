@@ -9,7 +9,7 @@ const L2OutputRoots = dynamic(() => import('ui/pages/L2OutputRoots'), { ssr: fal
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/l2-output-roots">
-      <L2OutputRoots/>
+      <L2OutputRoots />
     </PageNextJs>
   );
 };

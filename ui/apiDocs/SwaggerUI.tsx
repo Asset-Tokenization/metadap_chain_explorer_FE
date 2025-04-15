@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 const SwaggerUIReact = dynamic(() => import('swagger-ui-react'), {
-  loading: () => <ContentLoader/>,
+  loading: () => <ContentLoader />,
   ssr: false,
 });
 
@@ -39,9 +39,10 @@ const SwaggerUI = () => {
       outline: 'none',
     },
     // eslint-disable-next-line max-len
-    '.swagger-ui .opblock .opblock-summary-path, .swagger-ui .opblock .opblock-summary-description, .swagger-ui div, .swagger-ui p, .swagger-ui h5, .swagger-ui .response-col_links, .swagger-ui h4, .swagger-ui table thead tr th, .swagger-ui table thead tr td, .swagger-ui .parameter__name, .swagger-ui .parameter__type, .swagger-ui .response-col_status, .swagger-ui .tab li, .swagger-ui .opblock .opblock-section-header h4': {
-      color: 'unset',
-    },
+    '.swagger-ui .opblock .opblock-summary-path, .swagger-ui .opblock .opblock-summary-description, .swagger-ui div, .swagger-ui p, .swagger-ui h5, .swagger-ui .response-col_links, .swagger-ui h4, .swagger-ui table thead tr th, .swagger-ui table thead tr td, .swagger-ui .parameter__name, .swagger-ui .parameter__type, .swagger-ui .response-col_status, .swagger-ui .tab li, .swagger-ui .opblock .opblock-section-header h4':
+      {
+        color: 'unset',
+      },
     '.swagger-ui input': {
       color: 'blackAlpha.800',
     },
@@ -72,12 +73,8 @@ const SwaggerUI = () => {
   }
 
   return (
-    <Box sx={ swaggerStyle }>
-      <SwaggerUIReact
-        url={ feature.specUrl }
-        plugins={ [ NeverShowInfoPlugin ] }
-        requestInterceptor={ reqInterceptor }
-      />
+    <Box sx={swaggerStyle}>
+      <SwaggerUIReact url={feature.specUrl} plugins={[NeverShowInfoPlugin]} requestInterceptor={reqInterceptor} />
     </Box>
   );
 };

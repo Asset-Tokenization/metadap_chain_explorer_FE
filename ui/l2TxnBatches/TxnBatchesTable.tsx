@@ -11,12 +11,12 @@ type Props = {
   items: Array<L2TxnBatchesItem>;
   top: number;
   isLoading?: boolean;
-}
+};
 
 const TxnBatchesTable = ({ items, top, isLoading }: Props) => {
   return (
     <Table variant="simple" size="sm" minW="850px">
-      <Thead top={ top }>
+      <Thead top={top}>
         <Tr>
           <Th width="170px">L2 block #</Th>
           <Th width="170px">L2 block txn count</Th>
@@ -26,13 +26,9 @@ const TxnBatchesTable = ({ items, top, isLoading }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        { items.map((item, index) => (
-          <TxnBatchesTableItem
-            key={ item.l2_block_number + (isLoading ? String(index) : '') }
-            item={ item }
-            isLoading={ isLoading }
-          />
-        )) }
+        {items.map((item, index) => (
+          <TxnBatchesTableItem key={item.l2_block_number + (isLoading ? String(index) : '')} item={item} isLoading={isLoading} />
+        ))}
       </Tbody>
     </Table>
   );

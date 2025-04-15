@@ -5,7 +5,7 @@ import type { Props as PageProps } from 'nextjs/getServerSideProps';
 type Props = {
   children: React.ReactNode;
   pageProps: PageProps;
-}
+};
 
 const AppContext = createContext<PageProps>({
   cookies: '',
@@ -17,11 +17,7 @@ const AppContext = createContext<PageProps>({
 });
 
 export function AppContextProvider({ children, pageProps }: Props) {
-  return (
-    <AppContext.Provider value={ pageProps }>
-      { children }
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={pageProps}>{children}</AppContext.Provider>;
 }
 
 export function useAppContext() {

@@ -14,8 +14,8 @@ interface Props<T extends SmartContractMethod> {
 }
 
 const ContractMethodsAccordion = <T extends SmartContractMethod>({ data, addressHash, renderItemContent }: Props<T>) => {
-  const [ expandedSections, setExpandedSections ] = React.useState<Array<number>>(data.length === 1 ? [ 0 ] : []);
-  const [ id, setId ] = React.useState(0);
+  const [expandedSections, setExpandedSections] = React.useState<Array<number>>(data.length === 1 ? [0] : []);
+  const [id, setId] = React.useState(0);
 
   React.useEffect(() => {
     const hash = window.location.hash.replace('#', '');
@@ -26,14 +26,14 @@ const ContractMethodsAccordion = <T extends SmartContractMethod>({ data, address
 
     const index = data.findIndex((item) => 'method_id' in item && item.method_id === hash);
     if (index > -1) {
-      scroller.scrollTo(`method_${ hash }`, {
+      scroller.scrollTo(`method_${hash}`, {
         duration: 500,
         smooth: true,
         offset: -100,
       });
-      setExpandedSections([ index ]);
+      setExpandedSections([index]);
     }
-  }, [ data ]);
+  }, [data]);
 
   const handleAccordionStateChange = React.useCallback((newValue: Array<number>) => {
     setExpandedSections(newValue);
@@ -49,7 +49,7 @@ const ContractMethodsAccordion = <T extends SmartContractMethod>({ data, address
     } else {
       setExpandedSections([]);
     }
-  }, [ data, expandedSections.length ]);
+  }, [data, expandedSections.length]);
 
   const handleReset = React.useCallback(() => {
     setId((id) => id + 1);
@@ -61,26 +61,26 @@ const ContractMethodsAccordion = <T extends SmartContractMethod>({ data, address
 
   return (
     <>
-      <Flex mb={ 3 }>
-        <Box fontWeight={ 500 } mr="auto">Contract information</Box>
-        { data.length > 1 && (
-          <Link onClick={ handleExpandAll }>
-            { expandedSections.length === data.length ? 'Collapse' : 'Expand' } all
-          </Link>
-        ) }
-        <Link onClick={ handleReset } ml={ 3 }>Reset</Link>
+      <Flex mb={3}>
+        <Box fontWeight={500} mr="auto">
+          Contract information
+        </Box>
+        {data.length > 1 && <Link onClick={handleExpandAll}>{expandedSections.length === data.length ? 'Collapse' : 'Expand'} all</Link>}
+        <Link onClick={handleReset} ml={3}>
+          Reset
+        </Link>
       </Flex>
-      <Accordion allowMultiple position="relative" onChange={ handleAccordionStateChange } index={ expandedSections }>
-        { data.map((item, index) => (
+      <Accordion allowMultiple position="relative" onChange={handleAccordionStateChange} index={expandedSections}>
+        {data.map((item, index) => (
           <ContractMethodsAccordionItem
-            key={ index }
-            data={ item }
-            id={ id }
-            index={ index }
-            addressHash={ addressHash }
-            renderContent={ renderItemContent as (item: SmartContractMethod, index: number, id: number) => React.ReactNode }
+            key={index}
+            data={item}
+            id={id}
+            index={index}
+            addressHash={addressHash}
+            renderContent={renderItemContent as (item: SmartContractMethod, index: number, id: number) => React.ReactNode}
           />
-        )) }
+        ))}
       </Accordion>
     </>
   );

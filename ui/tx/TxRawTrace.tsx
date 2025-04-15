@@ -17,8 +17,8 @@ import TxSocketAlert from 'ui/tx/TxSocketAlert';
 import useFetchTxInfo from 'ui/tx/useFetchTxInfo';
 
 const TxRawTrace = () => {
-  const [ isQueryEnabled, setIsQueryEnabled ] = React.useState(false);
-  const [ rawTraces, setRawTraces ] = React.useState<RawTracesResponse>();
+  const [isQueryEnabled, setIsQueryEnabled] = React.useState(false);
+  const [rawTraces, setRawTraces] = React.useState<RawTracesResponse>();
   const router = useRouter();
   const hash = getQueryParamString(router.query.hash);
 
@@ -33,12 +33,12 @@ const TxRawTrace = () => {
 
   const handleRawTraceMessage: SocketMessage.TxRawTrace['handler'] = React.useCallback((payload) => {
     setRawTraces(payload);
-  }, [ ]);
+  }, []);
 
   const enableQuery = React.useCallback(() => setIsQueryEnabled(true), []);
 
   const channel = useSocketChannel({
-    topic: `transactions:${ hash }`,
+    topic: `transactions:${hash}`,
     isDisabled: !hash || txInfo.isPlaceholderData || !txInfo.data?.status,
     onJoin: enableQuery,
     onSocketError: enableQuery,
@@ -50,11 +50,11 @@ const TxRawTrace = () => {
   });
 
   if (!txInfo.isLoading && !txInfo.isPlaceholderData && !txInfo.isError && !txInfo.data.status) {
-    return txInfo.socketStatus ? <TxSocketAlert status={ txInfo.socketStatus }/> : <TxPendingAlert/>;
+    return txInfo.socketStatus ? <TxSocketAlert status={txInfo.socketStatus} /> : <TxPendingAlert />;
   }
 
   if (isError || txInfo.isError) {
-    return <DataFetchAlert/>;
+    return <DataFetchAlert />;
   }
 
   const dataToDisplay = rawTraces ? rawTraces : data;
@@ -65,7 +65,7 @@ const TxRawTrace = () => {
 
   const text = JSON.stringify(dataToDisplay, undefined, 4);
 
-  return <RawDataSnippet data={ text } isLoading={ isPlaceholderData }/>;
+  return <RawDataSnippet data={text} isLoading={isPlaceholderData} />;
 };
 
 export default TxRawTrace;

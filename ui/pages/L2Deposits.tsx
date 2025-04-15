@@ -16,17 +16,13 @@ const L2Deposits = () => {
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'l2_deposits',
     options: {
-      placeholderData: generateListStub<'l2_deposits'>(
-        L2_DEPOSIT_ITEM,
-        50,
-        {
-          next_page_params: {
-            items_count: 50,
-            l1_block_number: 9045200,
-            tx_hash: '',
-          },
+      placeholderData: generateListStub<'l2_deposits'>(L2_DEPOSIT_ITEM, 50, {
+        next_page_params: {
+          items_count: 50,
+          l1_block_number: 9045200,
+          tx_hash: '',
         },
-      ),
+      }),
     },
   });
 
@@ -38,17 +34,13 @@ const L2Deposits = () => {
 
   const content = data?.items ? (
     <>
-      <Show below="lg" ssr={ false }>
-        { data.items.map(((item, index) => (
-          <DepositsListItem
-            key={ item.l2_tx_hash + (isPlaceholderData ? index : '') }
-            isLoading={ isPlaceholderData }
-            item={ item }
-          />
-        ))) }
+      <Show below="lg" ssr={false}>
+        {data.items.map((item, index) => (
+          <DepositsListItem key={item.l2_tx_hash + (isPlaceholderData ? index : '')} isLoading={isPlaceholderData} item={item} />
+        ))}
       </Show>
-      <Hide below="lg" ssr={ false }>
-        <DepositsTable items={ data.items } top={ pagination.isVisible ? 80 : 0 } isLoading={ isPlaceholderData }/>
+      <Hide below="lg" ssr={false}>
+        <DepositsTable items={data.items} top={pagination.isVisible ? 80 : 0} isLoading={isPlaceholderData} />
       </Hide>
     </>
   ) : null;
@@ -59,27 +51,18 @@ const L2Deposits = () => {
     }
 
     return (
-      <Skeleton
-        isLoaded={ !countersQuery.isPlaceholderData }
-        display="inline-block"
-      >
-        A total of { countersQuery.data?.toLocaleString() } deposits found
+      <Skeleton isLoaded={!countersQuery.isPlaceholderData} display="inline-block">
+        A total of {countersQuery.data?.toLocaleString()} deposits found
       </Skeleton>
     );
   })();
 
-  const actionBar = <StickyPaginationWithText text={ text } pagination={ pagination }/>;
+  const actionBar = <StickyPaginationWithText text={text} pagination={pagination} />;
 
   return (
     <>
-      <PageTitle title={ `Deposits (L1${ nbsp }${ rightLineArrow }${ nbsp }L2)` } withTextAd/>
-      <DataListDisplay
-        isError={ isError }
-        items={ data?.items }
-        emptyText="There are no withdrawals."
-        content={ content }
-        actionBar={ actionBar }
-      />
+      <PageTitle title={`Deposits (L1${nbsp}${rightLineArrow}${nbsp}L2)`} withTextAd />
+      <DataListDisplay isError={isError} items={data?.items} emptyText="There are no withdrawals." content={content} actionBar={actionBar} />
     </>
   );
 };

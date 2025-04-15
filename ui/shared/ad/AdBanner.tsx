@@ -21,23 +21,23 @@ const AdBanner = ({ className, isLoading }: { className?: string; isLoading?: bo
   const content = (() => {
     switch (feature.provider) {
       case 'adbutler':
-        return <AdbutlerBanner/>;
+        return <AdbutlerBanner />;
       case 'coinzilla':
-        return <CoinzillaBanner/>;
+        return <CoinzillaBanner />;
       case 'slise':
-        return <SliseBanner/>;
+        return <SliseBanner />;
     }
   })();
 
   return (
     <Skeleton
-      className={ className }
-      isLoaded={ !isLoading }
+      className={className}
+      isLoaded={!isLoading}
       borderRadius="none"
-      maxW={ feature.provider === 'adbutler' ? feature.adButler.config.desktop.width : '728px' }
+      maxW={feature.provider === 'adbutler' ? feature.adButler.config.desktop.width : '728px'}
       w="100%"
     >
-      { content }
+      {content}
     </Skeleton>
   );
 };

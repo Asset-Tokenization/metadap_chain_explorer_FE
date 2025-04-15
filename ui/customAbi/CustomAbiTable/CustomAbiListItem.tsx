@@ -15,28 +15,23 @@ interface Props {
 }
 
 const CustomAbiListItem = ({ item, isLoading, onEditClick, onDeleteClick }: Props) => {
-
   const onItemEditClick = useCallback(() => {
     return onEditClick(item);
-  }, [ item, onEditClick ]);
+  }, [item, onEditClick]);
 
   const onItemDeleteClick = useCallback(() => {
     return onDeleteClick(item);
-  }, [ item, onDeleteClick ]);
+  }, [item, onDeleteClick]);
 
   return (
     <ListItemMobile>
       <Box maxW="100%">
-        <AddressEntity
-          address={ item.contract_address }
-          fontWeight="600"
-          isLoading={ isLoading }
-        />
-        <Skeleton fontSize="sm" color="text_secondary" mt={ 0.5 } ml={ 8 } display="inline-block" isLoaded={ !isLoading }>
-          <span>{ item.name }</span>
+        <AddressEntity address={item.contract_address} fontWeight="600" isLoading={isLoading} />
+        <Skeleton fontSize="sm" color="text_secondary" mt={0.5} ml={8} display="inline-block" isLoaded={!isLoading}>
+          <span>{item.name}</span>
         </Skeleton>
       </Box>
-      <TableItemActionButtons onDeleteClick={ onItemDeleteClick } onEditClick={ onItemEditClick } isLoading={ isLoading }/>
+      <TableItemActionButtons onDeleteClick={onItemDeleteClick} onEditClick={onItemEditClick} isLoading={isLoading} />
     </ListItemMobile>
   );
 };

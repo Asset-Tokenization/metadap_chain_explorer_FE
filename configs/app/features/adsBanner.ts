@@ -13,17 +13,19 @@ const provider: AdBannerProviders = (() => {
 
 const title = 'Banner ads';
 
-type AdsBannerFeaturePayload = {
-  provider: Exclude<AdBannerProviders, 'adbutler' | 'none'>;
-} | {
-  provider: 'adbutler';
-  adButler: {
-    config: {
-      desktop: AdButlerConfig;
-      mobile: AdButlerConfig;
+type AdsBannerFeaturePayload =
+  | {
+      provider: Exclude<AdBannerProviders, 'adbutler' | 'none'>;
+    }
+  | {
+      provider: 'adbutler';
+      adButler: {
+        config: {
+          desktop: AdButlerConfig;
+          mobile: AdButlerConfig;
+        };
+      };
     };
-  };
-}
 
 const config: Feature<AdsBannerFeaturePayload> = (() => {
   if (provider === 'adbutler') {

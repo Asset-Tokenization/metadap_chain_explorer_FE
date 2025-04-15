@@ -1,9 +1,4 @@
-import {
-  Tr,
-  Td,
-  Box,
-  Skeleton,
-} from '@chakra-ui/react';
+import { Tr, Td, Box, Skeleton } from '@chakra-ui/react';
 import React, { useCallback } from 'react';
 
 import type { CustomAbi } from 'types/api/account';
@@ -19,31 +14,26 @@ interface Props {
 }
 
 const CustomAbiTableItem = ({ item, isLoading, onEditClick, onDeleteClick }: Props) => {
-
   const onItemEditClick = useCallback(() => {
     return onEditClick(item);
-  }, [ item, onEditClick ]);
+  }, [item, onEditClick]);
 
   const onItemDeleteClick = useCallback(() => {
     return onDeleteClick(item);
-  }, [ item, onDeleteClick ]);
+  }, [item, onDeleteClick]);
 
   return (
-    <Tr alignItems="top" key={ item.id }>
+    <Tr alignItems="top" key={item.id}>
       <Td>
         <Box maxW="100%">
-          <AddressEntity
-            address={ item.contract_address }
-            fontWeight="600"
-            isLoading={ isLoading }
-          />
-          <Skeleton fontSize="sm" color="text_secondary" mt={ 0.5 } ml={ 8 } display="inline-block" isLoaded={ !isLoading }>
-            <span>{ item.name }</span>
+          <AddressEntity address={item.contract_address} fontWeight="600" isLoading={isLoading} />
+          <Skeleton fontSize="sm" color="text_secondary" mt={0.5} ml={8} display="inline-block" isLoaded={!isLoading}>
+            <span>{item.name}</span>
           </Skeleton>
         </Box>
       </Td>
       <Td>
-        <TableItemActionButtons onDeleteClick={ onItemDeleteClick } onEditClick={ onItemEditClick } isLoading={ isLoading }/>
+        <TableItemActionButtons onDeleteClick={onItemDeleteClick} onEditClick={onItemEditClick} isLoading={isLoading} />
       </Td>
     </Tr>
   );

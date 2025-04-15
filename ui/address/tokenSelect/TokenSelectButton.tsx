@@ -29,24 +29,23 @@ const TokenSelectButton = ({ isOpen, isLoading, onClick, data }: Props, ref: Rea
 
     mixpanel.logEvent(mixpanel.EventTypes.PAGE_WIDGET, { Type: 'Tokens dropdown' });
     onClick();
-  }, [ isLoading, isOpen, onClick ]);
+  }, [isLoading, isOpen, onClick]);
 
   return (
     <Box position="relative">
-      <Button
-        ref={ ref }
-        size="sm"
-        variant="outline"
-        colorScheme="gray"
-        onClick={ handleClick }
-        aria-label="Token select"
-      >
-        <Icon as={ tokensIcon } boxSize={ 4 } mr={ 2 }/>
-        <Text fontWeight={ 600 }>{ prefix }{ num }</Text>
-        <Text whiteSpace="pre" variant="secondary" fontWeight={ 400 }> ({ prefix }${ usd.toFormat(2) })</Text>
-        <Icon as={ arrowIcon } transform={ isOpen ? 'rotate(90deg)' : 'rotate(-90deg)' } transitionDuration="faster" boxSize={ 5 } ml={ 3 }/>
+      <Button ref={ref} size="sm" variant="outline" colorScheme="gray" onClick={handleClick} aria-label="Token select">
+        <Icon as={tokensIcon} boxSize={4} mr={2} />
+        <Text fontWeight={600}>
+          {prefix}
+          {num}
+        </Text>
+        <Text whiteSpace="pre" variant="secondary" fontWeight={400}>
+          {' '}
+          ({prefix}${usd.toFormat(2)})
+        </Text>
+        <Icon as={arrowIcon} transform={isOpen ? 'rotate(90deg)' : 'rotate(-90deg)'} transitionDuration="faster" boxSize={5} ml={3} />
       </Button>
-      { isLoading && !isOpen && <Skeleton h="100%" w="100%" position="absolute" top={ 0 } left={ 0 } bgColor={ skeletonBgColor }/> }
+      {isLoading && !isOpen && <Skeleton h="100%" w="100%" position="absolute" top={0} left={0} bgColor={skeletonBgColor} />}
     </Box>
   );
 };

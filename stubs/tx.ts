@@ -28,9 +28,7 @@ export const TX: Transaction = {
   base_fee_per_gas: '24',
   from: ADDRESS_PARAMS,
   token_transfers: null,
-  tx_types: [
-    'coin_transfer',
-  ],
+  tx_types: ['coin_transfer'],
   gas_used: '21000',
   created_contract: null,
   position: 0,
@@ -43,10 +41,7 @@ export const TX: Transaction = {
   value: '42000420000000000000',
   max_priority_fee_per_gas: null,
   revert_reason: null,
-  confirmation_duration: [
-    0,
-    14545,
-  ],
+  confirmation_duration: [0, 14545],
   tx_tag: null,
 };
 

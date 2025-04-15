@@ -40,8 +40,4 @@ export const STATE_CHANGE_TOKEN: TxStateChange = {
   type: 'token',
 };
 
-export const TX_STATE_CHANGES: Array<TxStateChange> = [
-  STATE_CHANGE_MINER,
-  STATE_CHANGE_COIN,
-  STATE_CHANGE_TOKEN,
-];
+export const TX_STATE_CHANGES: Array<TxStateChange> = [STATE_CHANGE_MINER, STATE_CHANGE_COIN, STATE_CHANGE_TOKEN];

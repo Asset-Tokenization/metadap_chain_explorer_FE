@@ -18,7 +18,7 @@ type Props = {
   appContext?: {
     pageProps: PageProps;
   };
-}
+};
 
 const defaultAppContext = {
   pageProps: {
@@ -32,38 +32,34 @@ const defaultAppContext = {
 };
 
 // >>> Web3 stuff
-const { publicClient } = configureChains(
-  [ mainnet ],
-  [
-    w3mProvider({ projectId: '' }),
-  ],
-);
+const { publicClient } = configureChains([mainnet], [w3mProvider({ projectId: '' })]);
 
 const wagmiConfig = createConfig({
   autoConnect: false,
-  connectors: [ ],
+  connectors: [],
   publicClient,
 });
 // <<<<
 
 const TestApp = ({ children, withSocket, appContext = defaultAppContext }: Props) => {
-  const [ queryClient ] = React.useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        retry: 0,
-      },
-    },
-  }));
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: 0,
+          },
+        },
+      }),
+  );
 
   return (
-    <ChakraProvider theme={ theme }>
-      <QueryClientProvider client={ queryClient }>
-        <SocketProvider url={ withSocket ? `ws://${ app.domain }:${ app.socketPort }` : undefined }>
-          <AppContextProvider { ...appContext }>
-            <WagmiConfig config={ wagmiConfig }>
-              { children }
-            </WagmiConfig>
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <SocketProvider url={withSocket ? `ws://${app.domain}:${app.socketPort}` : undefined}>
+          <AppContextProvider {...appContext}>
+            <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
           </AppContextProvider>
         </SocketProvider>
       </QueryClientProvider>

@@ -40,58 +40,46 @@ const TxInternalsListItem = ({
   const isIn = Boolean(currentAddress && currentAddress === toData?.hash);
 
   return (
-    <ListItemMobile rowGap={ 3 }>
-      <Flex columnGap={ 2 }>
-        { typeTitle && <Tag colorScheme="cyan" isLoading={ isLoading }>{ typeTitle }</Tag> }
-        <TxStatus status={ success ? 'ok' : 'error' } errorText={ error } isLoading={ isLoading }/>
+    <ListItemMobile rowGap={3}>
+      <Flex columnGap={2}>
+        {typeTitle && (
+          <Tag colorScheme="cyan" isLoading={isLoading}>
+            {typeTitle}
+          </Tag>
+        )}
+        <TxStatus status={success ? 'ok' : 'error'} errorText={error} isLoading={isLoading} />
       </Flex>
       <Flex justifyContent="space-between" width="100%">
-        <TxEntity
-          hash={ txnHash }
-          isLoading={ isLoading }
-          fontWeight={ 700 }
-          truncation="constant"
-        />
-        <Skeleton isLoaded={ !isLoading } color="text_secondary" fontWeight="400" fontSize="sm">
-          <span>{ dayjs(timestamp).fromNow() }</span>
+        <TxEntity hash={txnHash} isLoading={isLoading} fontWeight={700} truncation="constant" />
+        <Skeleton isLoaded={!isLoading} color="text_secondary" fontWeight="400" fontSize="sm">
+          <span>{dayjs(timestamp).fromNow()}</span>
         </Skeleton>
       </Flex>
-      <HStack spacing={ 1 }>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" fontWeight={ 500 }>Block</Skeleton>
-        <BlockEntity
-          isLoading={ isLoading }
-          number={ block }
-          noIcon
-          fontSize="sm"
-          lineHeight={ 5 }
-        />
+      <HStack spacing={1}>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" fontWeight={500}>
+          Block
+        </Skeleton>
+        <BlockEntity isLoading={isLoading} number={block} noIcon fontSize="sm" lineHeight={5} />
       </HStack>
-      <Box w="100%" display="flex" columnGap={ 3 }>
-        <AddressEntity
-          address={ from }
-          isLoading={ isLoading }
-          noLink={ isOut }
-          noCopy={ isOut }
-          width="calc((100% - 48px) / 2)"
-        />
-        { (isIn || isOut) ?
-          <InOutTag isIn={ isIn } isOut={ isOut } isLoading={ isLoading }/> :
-          <Icon as={ eastArrowIcon } boxSize={ 6 } color="gray.500" isLoading={ isLoading }/>
-        }
-        { toData && (
-          <AddressEntity
-            address={ toData }
-            isLoading={ isLoading }
-            noLink={ isIn }
-            noCopy={ isIn }
-            width="calc((100% - 48px) / 2)"
-          />
-        ) }
+      <Box w="100%" display="flex" columnGap={3}>
+        <AddressEntity address={from} isLoading={isLoading} noLink={isOut} noCopy={isOut} width="calc((100% - 48px) / 2)" />
+        {isIn || isOut ? (
+          <InOutTag isIn={isIn} isOut={isOut} isLoading={isLoading} />
+        ) : (
+          <Icon as={eastArrowIcon} boxSize={6} color="gray.500" isLoading={isLoading} />
+        )}
+        {toData && <AddressEntity address={toData} isLoading={isLoading} noLink={isIn} noCopy={isIn} width="calc((100% - 48px) / 2)" />}
       </Box>
-      <HStack spacing={ 3 }>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" fontWeight={ 500 }>Value { config.chain.currency.symbol }</Skeleton>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" color="text_secondary" minW={ 6 }>
-          <span>{ BigNumber(value).div(BigNumber(10 ** config.chain.currency.decimals)).toFormat() }</span>
+      <HStack spacing={3}>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" fontWeight={500}>
+          Value {config.chain.currency.symbol}
+        </Skeleton>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" color="text_secondary" minW={6}>
+          <span>
+            {BigNumber(value)
+              .div(BigNumber(10 ** config.chain.currency.decimals))
+              .toFormat()}
+          </span>
         </Skeleton>
       </HStack>
     </ListItemMobile>

@@ -20,35 +20,37 @@ const TxInternalsListItem = ({ type, from, to, value, success, error, gas_limit:
   const toData = to ? to : createdContract;
 
   return (
-    <ListItemMobile rowGap={ 3 }>
-      <Flex columnGap={ 2 }>
-        { typeTitle && <Tag colorScheme="cyan" isLoading={ isLoading }>{ typeTitle }</Tag> }
-        <TxStatus status={ success ? 'ok' : 'error' } errorText={ error } isLoading={ isLoading }/>
+    <ListItemMobile rowGap={3}>
+      <Flex columnGap={2}>
+        {typeTitle && (
+          <Tag colorScheme="cyan" isLoading={isLoading}>
+            {typeTitle}
+          </Tag>
+        )}
+        <TxStatus status={success ? 'ok' : 'error'} errorText={error} isLoading={isLoading} />
       </Flex>
-      <Box w="100%" display="flex" columnGap={ 3 } fontWeight="500">
-        <AddressEntity
-          address={ from }
-          isLoading={ isLoading }
-          width="calc((100% - 48px) / 2)"
-        />
-        <Icon as={ eastArrowIcon } boxSize={ 6 } color="gray.500" isLoading={ isLoading }/>
-        { toData && (
-          <AddressEntity
-            address={ toData }
-            isLoading={ isLoading }
-            width="calc((100% - 48px) / 2)"
-          />
-        ) }
+      <Box w="100%" display="flex" columnGap={3} fontWeight="500">
+        <AddressEntity address={from} isLoading={isLoading} width="calc((100% - 48px) / 2)" />
+        <Icon as={eastArrowIcon} boxSize={6} color="gray.500" isLoading={isLoading} />
+        {toData && <AddressEntity address={toData} isLoading={isLoading} width="calc((100% - 48px) / 2)" />}
       </Box>
-      <HStack spacing={ 3 }>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" fontWeight={ 500 }>Value { config.chain.currency.symbol }</Skeleton>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" color="text_secondary">
-          { BigNumber(value).div(BigNumber(10 ** config.chain.currency.decimals)).toFormat() }
+      <HStack spacing={3}>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" fontWeight={500}>
+          Value {config.chain.currency.symbol}
+        </Skeleton>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" color="text_secondary">
+          {BigNumber(value)
+            .div(BigNumber(10 ** config.chain.currency.decimals))
+            .toFormat()}
         </Skeleton>
       </HStack>
-      <HStack spacing={ 3 }>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" fontWeight={ 500 }>Gas limit</Skeleton>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" color="text_secondary">{ BigNumber(gasLimit).toFormat() }</Skeleton>
+      <HStack spacing={3}>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" fontWeight={500}>
+          Gas limit
+        </Skeleton>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" color="text_secondary">
+          {BigNumber(gasLimit).toFormat()}
+        </Skeleton>
       </HStack>
     </ListItemMobile>
   );

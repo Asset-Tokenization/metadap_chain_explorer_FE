@@ -10,7 +10,7 @@ interface Props extends TableHeadProps {
 
 const TheadSticky = ({ top, children, ...restProps }: Props) => {
   const ref = React.useRef<HTMLTableSectionElement>(null);
-  const [ isSticky, setIsSticky ] = React.useState(false);
+  const [isSticky, setIsSticky] = React.useState(false);
 
   const handleScroll = React.useCallback(() => {
     if (Number(ref.current?.getBoundingClientRect().y) <= (top || 0)) {
@@ -18,7 +18,7 @@ const TheadSticky = ({ top, children, ...restProps }: Props) => {
     } else {
       setIsSticky(false);
     }
-  }, [ top ]);
+  }, [top]);
 
   React.useEffect(() => {
     const throttledHandleScroll = throttle(handleScroll, 300);
@@ -28,20 +28,20 @@ const TheadSticky = ({ top, children, ...restProps }: Props) => {
     return () => {
       window.removeEventListener('scroll', throttledHandleScroll);
     };
-  }, [ handleScroll ]);
+  }, [handleScroll]);
 
   const props = {
     ...restProps,
     position: 'sticky' as PositionProps['position'],
-    top: `${ top }px` || 0,
+    top: `${top}px` || 0,
     backgroundColor: useColorModeValue('white', 'black'),
     boxShadow: isSticky ? 'md' : 'none',
     zIndex: '1',
   };
 
   return (
-    <Thead { ...props } ref={ ref }>
-      { children }
+    <Thead {...props} ref={ref}>
+      {children}
     </Thead>
   );
 };

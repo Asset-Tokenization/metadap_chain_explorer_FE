@@ -20,11 +20,10 @@ export function account(req: NextRequest) {
   if (!apiTokenCookie) {
     // we don't have any info from router here, so just do straight forward sub-string search (sorry)
     const isAccountRoute =
-        req.nextUrl.pathname.includes('/account/') ||
-        (req.nextUrl.pathname === '/txs' && req.nextUrl.searchParams.get('tab') === 'watchlist');
+      req.nextUrl.pathname.includes('/account/') || (req.nextUrl.pathname === '/txs' && req.nextUrl.searchParams.get('tab') === 'watchlist');
     const isProfileRoute = req.nextUrl.pathname.includes('/auth/profile');
 
-    if ((isAccountRoute || isProfileRoute)) {
+    if (isAccountRoute || isProfileRoute) {
       const authUrl = feature.authUrl + route({ pathname: '/auth/auth0', query: { path: req.nextUrl.pathname } });
       return NextResponse.redirect(authUrl);
     }

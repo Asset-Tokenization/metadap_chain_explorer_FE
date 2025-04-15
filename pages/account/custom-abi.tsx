@@ -9,7 +9,7 @@ const CustomAbi = dynamic(() => import('ui/pages/CustomAbi'), { ssr: false });
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/account/custom-abi">
-      <CustomAbi/>
+      <CustomAbi />
     </PageNextJs>
   );
 };

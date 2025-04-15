@@ -1,11 +1,4 @@
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuOptionGroup,
-  MenuItemOption,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Menu, MenuButton, MenuList, MenuOptionGroup, MenuItemOption, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 
 import type { AddressFromToFilter } from 'types/api/address';
@@ -27,15 +20,10 @@ const AddressTxsFilter = ({ onFilterChange, defaultFilter, isActive, isLoading }
   return (
     <Menu>
       <MenuButton>
-        <FilterButton
-          isActive={ isOpen || isActive }
-          isLoading={ isInitialLoading }
-          onClick={ onToggle }
-          as="div"
-        />
+        <FilterButton isActive={isOpen || isActive} isLoading={isInitialLoading} onClick={onToggle} as="div" />
       </MenuButton>
-      <MenuList zIndex={ 2 }>
-        <MenuOptionGroup defaultValue={ defaultFilter || 'all' } title="Address" type="radio" onChange={ onFilterChange }>
+      <MenuList zIndex={2}>
+        <MenuOptionGroup defaultValue={defaultFilter || 'all'} title="Address" type="radio" onChange={onFilterChange}>
           <MenuItemOption value="all">All</MenuItemOption>
           <MenuItemOption value="from">From</MenuItemOption>
           <MenuItemOption value="to">To</MenuItemOption>

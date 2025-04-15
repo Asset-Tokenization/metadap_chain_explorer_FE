@@ -18,7 +18,7 @@ const responses = {
     next_page_params: null,
   },
   page_1: {
-    items: [ { hash: '11' }, { hash: '12' } ],
+    items: [{ hash: '11' }, { hash: '12' }],
     next_page_params: {
       block_number: 11,
       index: 12,
@@ -26,7 +26,7 @@ const responses = {
     },
   },
   page_2: {
-    items: [ { hash: '21' }, { hash: '22' } ],
+    items: [{ hash: '21' }, { hash: '22' }],
     next_page_params: {
       block_number: 21,
       index: 22,
@@ -34,11 +34,11 @@ const responses = {
     },
   },
   page_3: {
-    items: [ { hash: '31' }, { hash: '32' } ],
+    items: [{ hash: '31' }, { hash: '32' }],
     next_page_params: null,
   },
   page_filtered: {
-    items: [ { hash: '41' }, { hash: '42' } ],
+    items: [{ hash: '41' }, { hash: '42' }],
     next_page_params: {
       block_number: 41,
       index: 42,
@@ -46,7 +46,7 @@ const responses = {
     },
   },
   page_sorted: {
-    items: [ { hash: '61' }, { hash: '62' } ],
+    items: [{ hash: '61' }, { hash: '62' }],
     next_page_params: null,
   },
 };
@@ -55,7 +55,7 @@ beforeEach(() => {
   fetch.resetMocks();
 });
 
-it('returns correct data if there is only one page', async() => {
+it('returns correct data if there is only one page', async () => {
   const params: Params<'address_txs'> = {
     resourceName: 'address_txs',
     pathParams: { hash: addressMock.hash },
@@ -82,7 +82,7 @@ describe('if there are multiple pages', () => {
     pathParams: { hash: addressMock.hash },
   };
 
-  it('return correct data for the first page', async() => {
+  it('return correct data for the first page', async () => {
     fetch.mockResponse(JSON.stringify(responses.page_1));
 
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
@@ -104,7 +104,7 @@ describe('if there are multiple pages', () => {
       current: QueryWithPagesResult<'address_txs'>;
     };
 
-    beforeEach(async() => {
+    beforeEach(async () => {
       routerPush.mockClear();
       useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush });
 
@@ -119,7 +119,7 @@ describe('if there are multiple pages', () => {
       await waitForApiResponse();
     });
 
-    it('from page 1 to page 2', async() => {
+    it('from page 1 to page 2', async () => {
       await act(() => {
         result.current.pagination.onNextPageClick();
       });
@@ -152,13 +152,13 @@ describe('if there are multiple pages', () => {
       expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
     });
 
-    it('from page 2 to page 3', async() => {
-      await act(async() => {
+    it('from page 2 to page 3', async () => {
+      await act(async () => {
         result.current.pagination.onNextPageClick();
       });
       await waitForApiResponse();
 
-      await act(async() => {
+      await act(async () => {
         result.current.pagination.onNextPageClick();
       });
       await waitForApiResponse();
@@ -190,8 +190,7 @@ describe('if there are multiple pages', () => {
       expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
     });
 
-    it('from page 3 to page 2', async() => {
-
+    it('from page 3 to page 2', async () => {
       await act(() => {
         result.current.pagination.onNextPageClick();
       });
@@ -234,7 +233,7 @@ describe('if there are multiple pages', () => {
       expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
     });
 
-    it('from page 2 to page 1', async() => {
+    it('from page 2 to page 1', async () => {
       await act(() => {
         result.current.pagination.onNextPageClick();
       });
@@ -280,7 +279,7 @@ describe('if there are multiple pages', () => {
     });
   });
 
-  it('correctly resets the page', async() => {
+  it('correctly resets the page', async () => {
     const routerPush = jest.fn(() => Promise.resolve());
     useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush });
 
@@ -292,17 +291,17 @@ describe('if there are multiple pages', () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.pagination.resetPage();
     });
     await waitForApiResponse();
@@ -331,7 +330,7 @@ describe('if there are multiple pages', () => {
     expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
   });
 
-  it('when navigates between pages can scroll to custom element', async() => {
+  it('when navigates between pages can scroll to custom element', async () => {
     const scrollRef = {
       current: {
         scrollIntoView: jest.fn(),
@@ -348,7 +347,7 @@ describe('if there are multiple pages', () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
@@ -359,7 +358,7 @@ describe('if there are multiple pages', () => {
 });
 
 describe('if there is page query param in URL', () => {
-  it('sets this param as the page number', async() => {
+  it('sets this param as the page number', async () => {
     useRouter.mockReturnValueOnce({ ...router, query: { page: '3' } });
 
     const params: Params<'address_txs'> = {
@@ -382,7 +381,7 @@ describe('if there is page query param in URL', () => {
     });
   });
 
-  it('correctly navigates to the following pages', async() => {
+  it('correctly navigates to the following pages', async () => {
     const routerPush = jest.fn(() => Promise.resolve());
     useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { page: '2' } });
 
@@ -396,7 +395,7 @@ describe('if there is page query param in URL', () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
@@ -427,7 +426,7 @@ describe('if there is page query param in URL', () => {
 });
 
 describe('queries with filters', () => {
-  it('reset page, keep sorting when filter is changed', async() => {
+  it('reset page, keep sorting when filter is changed', async () => {
     const routerPush = jest.fn(() => Promise.resolve());
     useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { foo: 'bar', sort: 'val-desc' } });
 
@@ -445,12 +444,12 @@ describe('queries with filters', () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.onFilterChange({ filter: 'from' });
     });
     await waitForApiResponse();
@@ -479,7 +478,7 @@ describe('queries with filters', () => {
     expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
   });
 
-  it('saves filter params in query when navigating between pages', async() => {
+  it('saves filter params in query when navigating between pages', async () => {
     const routerPush = jest.fn(() => Promise.resolve());
     useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { filter: 'from', foo: 'bar' } });
 
@@ -493,7 +492,7 @@ describe('queries with filters', () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
@@ -516,7 +515,7 @@ describe('queries with filters', () => {
 });
 
 describe('queries with sorting', () => {
-  it('reset page, save filter when sorting is changed', async() => {
+  it('reset page, save filter when sorting is changed', async () => {
     const routerPush = jest.fn(() => Promise.resolve());
     useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { foo: 'bar', filter: 'from' } });
 
@@ -532,12 +531,12 @@ describe('queries with sorting', () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore:
       result.current.onSortingChange({ sort: 'val-desc' });
@@ -568,7 +567,7 @@ describe('queries with sorting', () => {
     expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
   });
 
-  it('saves sorting params in query when navigating between pages', async() => {
+  it('saves sorting params in query when navigating between pages', async () => {
     const routerPush = jest.fn(() => Promise.resolve());
     useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { foo: 'bar', sort: 'val-desc' } });
 
@@ -585,7 +584,7 @@ describe('queries with sorting', () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async() => {
+    await act(async () => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();

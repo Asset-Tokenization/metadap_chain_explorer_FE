@@ -8,7 +8,7 @@ import MyProfile from 'ui/pages/MyProfile';
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/auth/profile">
-      <MyProfile/>
+      <MyProfile />
     </PageNextJs>
   );
 };

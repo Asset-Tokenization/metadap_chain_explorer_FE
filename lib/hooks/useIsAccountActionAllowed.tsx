@@ -9,7 +9,7 @@ import useLoginUrl from 'lib/hooks/useLoginUrl';
 export default function useIsAccountActionAllowed() {
   const queryClient = useQueryClient();
 
-  const profileData = queryClient.getQueryData<UserInfo>([ resourceKey('user_info') ]);
+  const profileData = queryClient.getQueryData<UserInfo>([resourceKey('user_info')]);
   const isAuth = Boolean(profileData);
   const loginUrl = useLoginUrl();
 
@@ -24,5 +24,5 @@ export default function useIsAccountActionAllowed() {
     }
 
     return true;
-  }, [ isAuth, loginUrl ]);
+  }, [isAuth, loginUrl]);
 }

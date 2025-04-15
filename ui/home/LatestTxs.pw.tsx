@@ -14,20 +14,17 @@ export const test = base.extend<socketServer.SocketServerFixture>({
 
 test.describe('mobile', () => {
   test.use({ viewport: devices['iPhone 13 Pro'].viewport });
-  test('default view', async({ mount, page }) => {
-    await page.route(buildApiUrl('homepage_txs'), (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify([
-        txMock.base,
-        txMock.withContractCreation,
-        txMock.withTokenTransfer,
-        txMock.withWatchListNames,
-      ]),
-    }));
+  test('default view', async ({ mount, page }) => {
+    await page.route(buildApiUrl('homepage_txs'), (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify([txMock.base, txMock.withContractCreation, txMock.withTokenTransfer, txMock.withWatchListNames]),
+      }),
+    );
 
     const component = await mount(
       <TestApp>
-        <LatestTxs/>
+        <LatestTxs />
       </TestApp>,
     );
 
@@ -35,20 +32,17 @@ test.describe('mobile', () => {
   });
 });
 
-test('default view +@dark-mode', async({ mount, page }) => {
-  await page.route(buildApiUrl('homepage_txs'), (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify([
-      txMock.base,
-      txMock.withContractCreation,
-      txMock.withTokenTransfer,
-      txMock.withWatchListNames,
-    ]),
-  }));
+test('default view +@dark-mode', async ({ mount, page }) => {
+  await page.route(buildApiUrl('homepage_txs'), (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify([txMock.base, txMock.withContractCreation, txMock.withTokenTransfer, txMock.withWatchListNames]),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <LatestTxs/>
+      <LatestTxs />
     </TestApp>,
   );
 
@@ -65,19 +59,17 @@ test.describe('socket', () => {
     },
   };
 
-  test('new item', async({ mount, page, createSocket }) => {
-    await page.route(buildApiUrl('homepage_txs'), (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify([
-        txMock.base,
-        txMock.withContractCreation,
-        txMock.withTokenTransfer,
-      ]),
-    }));
+  test('new item', async ({ mount, page, createSocket }) => {
+    await page.route(buildApiUrl('homepage_txs'), (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify([txMock.base, txMock.withContractCreation, txMock.withTokenTransfer]),
+      }),
+    );
 
     const component = await mount(
       <TestApp withSocket>
-        <LatestTxs/>
+        <LatestTxs />
       </TestApp>,
       { hooksConfig },
     );

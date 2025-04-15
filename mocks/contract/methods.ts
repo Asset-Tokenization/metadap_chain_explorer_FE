@@ -8,14 +8,10 @@ import type {
 export const read: Array<SmartContractReadMethod> = [
   {
     constant: true,
-    inputs: [
-      { internalType: 'address', name: '', type: 'address' },
-    ],
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
     method_id: '70a08231',
     name: 'FLASHLOAN_PREMIUM_TOTAL',
-    outputs: [
-      { internalType: 'uint256', name: '', type: 'uint256' },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'view',
     type: 'function',
@@ -25,9 +21,7 @@ export const read: Array<SmartContractReadMethod> = [
     inputs: [],
     method_id: '06fdde03',
     name: 'name',
-    outputs: [
-      { internalType: 'string', name: '', type: 'string', value: 'Wrapped POA' },
-    ],
+    outputs: [{ internalType: 'string', name: '', type: 'string', value: 'Wrapped POA' }],
     payable: false,
     stateMutability: 'view',
     type: 'function',
@@ -37,9 +31,7 @@ export const read: Array<SmartContractReadMethod> = [
     inputs: [],
     method_id: '18160ddd',
     name: 'totalSupply',
-    outputs: [
-      { internalType: 'uint256', name: '', type: 'uint256', value: '139905710421584994690047413' },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256', value: '139905710421584994690047413' }],
     payable: false,
     stateMutability: 'view',
     type: 'function',
@@ -50,9 +42,7 @@ export const read: Array<SmartContractReadMethod> = [
     inputs: [],
     method_id: 'df0ad3de',
     name: 'upgradeabilityAdmin',
-    outputs: [
-      { name: '', type: 'address', value: '' },
-    ],
+    outputs: [{ name: '', type: 'address', value: '' }],
     payable: false,
     stateMutability: 'view',
     type: 'function',
@@ -83,10 +73,7 @@ export const read: Array<SmartContractReadMethod> = [
       {
         type: 'bytes32[]',
         name: 'bytes32[]',
-        value: [
-          '0x7265736572766564000000000000000000000000000000000000000000000000',
-          '0x6973737565640000000000000000000000000000000000000000000000000000',
-        ],
+        value: ['0x7265736572766564000000000000000000000000000000000000000000000000', '0x6973737565640000000000000000000000000000000000000000000000000000'],
       },
     ],
     stateMutability: 'view',
@@ -97,10 +84,8 @@ export const read: Array<SmartContractReadMethod> = [
 export const readResultSuccess: SmartContractQueryMethodReadSuccess = {
   is_error: false,
   result: {
-    names: [ 'uint256' ],
-    output: [
-      { type: 'uint256', value: '42' },
-    ],
+    names: ['uint256'],
+    output: [{ type: 'uint256', value: '42' }],
   },
 };
 
@@ -126,9 +111,7 @@ export const write: Array<SmartContractWriteMethod> = [
       { internalType: 'uint256', name: 'wad', type: 'uint256' },
     ],
     name: 'setReserveInterestRateStrategyAddress',
-    outputs: [
-      { internalType: 'bool', name: '', type: 'bool' },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
@@ -140,9 +123,7 @@ export const write: Array<SmartContractWriteMethod> = [
       { internalType: 'address', name: 'dst', type: 'address' },
     ],
     name: 'transferFrom',
-    outputs: [
-      { internalType: 'bool', name: '', type: 'bool' },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     payable: true,
     stateMutability: 'payable',
     type: 'function',
@@ -184,9 +165,7 @@ export const write: Array<SmartContractWriteMethod> = [
       { name: '_signature', type: 'bytes' },
     ],
     name: 'requestToken',
-    outputs: [
-      { name: 'reward', type: 'uint256' },
-    ],
+    outputs: [{ name: 'reward', type: 'uint256' }],
     payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
@@ -202,9 +181,7 @@ export const write: Array<SmartContractWriteMethod> = [
       { name: '_initialKeyIsRequestKey', type: 'bool' },
     ],
     name: 'hydrateToken',
-    outputs: [
-      { name: '', type: 'uint256' },
-    ],
+    outputs: [{ name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'nonpayable',
     type: 'function',

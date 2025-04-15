@@ -14,29 +14,19 @@ interface Props {
 }
 
 const TokenInfoFieldRequesterEmail = ({ control, isReadOnly }: Props) => {
-  const renderControl: ControllerProps<Fields, 'requester_email'>['render'] = React.useCallback(({ field, fieldState, formState }) => {
-    return (
-      <FormControl variant="floating" id={ field.name } isRequired size={{ base: 'md', lg: 'lg' }}>
-        <Input
-          { ...field }
-          required
-          isInvalid={ Boolean(fieldState.error) }
-          isDisabled={ formState.isSubmitting || isReadOnly }
-          autoComplete="off"
-        />
-        <InputPlaceholder text="Requester email" error={ fieldState.error }/>
-      </FormControl>
-    );
-  }, [ isReadOnly ]);
-
-  return (
-    <Controller
-      name="requester_email"
-      control={ control }
-      render={ renderControl }
-      rules={{ required: true, pattern: EMAIL_REGEXP }}
-    />
+  const renderControl: ControllerProps<Fields, 'requester_email'>['render'] = React.useCallback(
+    ({ field, fieldState, formState }) => {
+      return (
+        <FormControl variant="floating" id={field.name} isRequired size={{ base: 'md', lg: 'lg' }}>
+          <Input {...field} required isInvalid={Boolean(fieldState.error)} isDisabled={formState.isSubmitting || isReadOnly} autoComplete="off" />
+          <InputPlaceholder text="Requester email" error={fieldState.error} />
+        </FormControl>
+      );
+    },
+    [isReadOnly],
   );
+
+  return <Controller name="requester_email" control={control} render={renderControl} rules={{ required: true, pattern: EMAIL_REGEXP }} />;
 };
 
 export default React.memo(TokenInfoFieldRequesterEmail);

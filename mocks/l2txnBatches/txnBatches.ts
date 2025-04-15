@@ -12,18 +12,14 @@ export const txnBatchesData = {
     },
     {
       epoch_number: 8547348,
-      l1_tx_hashes: [
-        '0xc45f846ee28ce9ba116ce2d378d3dd00b55d324b833b3ecd4241c919c572c4aa',
-      ],
+      l1_tx_hashes: ['0xc45f846ee28ce9ba116ce2d378d3dd00b55d324b833b3ecd4241c919c572c4aa'],
       l1_timestamp: '2023-02-24T10:16:00.000000Z',
       l2_block_number: 5902835,
       tx_count: 0,
     },
     {
       epoch_number: 8547348,
-      l1_tx_hashes: [
-        '0x48139721f792d3a68c3781b4cf50e66e8fc7dbb38adff778e09066ea5be9adb8',
-      ],
+      l1_tx_hashes: ['0x48139721f792d3a68c3781b4cf50e66e8fc7dbb38adff778e09066ea5be9adb8'],
       l1_timestamp: '2023-02-24T10:16:00.000000Z',
       l2_block_number: 5902834,
       tx_count: 0,

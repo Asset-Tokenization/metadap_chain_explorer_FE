@@ -39,17 +39,12 @@ interface ExtendedError extends Error {
 }
 
 export function isExtendedError(error: unknown): error is ExtendedError {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    'message' in error &&
-    typeof (error as Record<string, unknown>).message === 'string'
-  );
+  return typeof error === 'object' && error !== null && 'message' in error && typeof (error as Record<string, unknown>).message === 'string';
 }
 
 export function prepareAbi(abi: Abi, item: SmartContractWriteMethod): Abi {
   if ('name' in item) {
-    const hasMethodsWithSameName = abi.filter((abiItem) => 'name' in abiItem ? abiItem.name === item.name : false).length > 1;
+    const hasMethodsWithSameName = abi.filter((abiItem) => ('name' in abiItem ? abiItem.name === item.name : false)).length > 1;
 
     if (hasMethodsWithSameName) {
       return abi.filter((abiItem) => {

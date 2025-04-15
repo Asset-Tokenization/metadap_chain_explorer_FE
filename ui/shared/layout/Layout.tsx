@@ -12,18 +12,16 @@ const LayoutDefault = ({ children }: Props) => {
   return (
     <Layout.Container>
       <Layout.MainArea>
-        <Layout.SideBar/>
+        <Layout.SideBar />
         <Layout.MainColumn>
-          <HeaderAlert/>
-          <Header/>
+          <HeaderAlert />
+          <Header />
           <AppErrorBoundary>
-            <Layout.Content>
-              { children }
-            </Layout.Content>
+            <Layout.Content>{children}</Layout.Content>
           </AppErrorBoundary>
         </Layout.MainColumn>
       </Layout.MainArea>
-      <Layout.Footer/>
+      <Layout.Footer />
     </Layout.Container>
   );
 };

@@ -12,16 +12,9 @@ export interface Props {
 
 const ServiceLink = ({ href, title, icon }: Props) => {
   return (
-    <Link
-      href={ href }
-      aria-label={ title }
-      title={ title }
-      target="_blank"
-      display="inline-flex"
-      alignItems="center"
-    >
-      <Icon as={ icon } boxSize={ 5 } mr={ 2 } color="text_secondary"/>
-      <span>{ title }</span>
+    <Link href={href} aria-label={title} title={title} target="_blank" display="inline-flex" alignItems="center">
+      <Icon as={icon} boxSize={5} mr={2} color="text_secondary" />
+      <span>{title}</span>
     </Link>
   );
 };

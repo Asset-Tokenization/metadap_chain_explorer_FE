@@ -45,19 +45,19 @@ type Props = {
   scrollRef?: React.RefObject<HTMLDivElement>;
   // for tests only
   overloadCount?: number;
-}
+};
 
 const AddressTxs = ({ scrollRef, overloadCount = OVERLOAD_COUNT }: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const [ socketAlert, setSocketAlert ] = React.useState('');
-  const [ newItemsCount, setNewItemsCount ] = React.useState(0);
+  const [socketAlert, setSocketAlert] = React.useState('');
+  const [newItemsCount, setNewItemsCount] = React.useState(0);
 
   const isMobile = useIsMobile();
   const currentAddress = getQueryParamString(router.query.hash);
 
-  const [ filterValue, setFilterValue ] = React.useState<AddressFromToFilter>(getFilterValue(router.query.filter));
+  const [filterValue, setFilterValue] = React.useState<AddressFromToFilter>(getFilterValue(router.query.filter));
 
   const addressTxsQuery = useQueryWithPages({
     resourceName: 'address_txs',
@@ -65,20 +65,24 @@ const AddressTxs = ({ scrollRef, overloadCount = OVERLOAD_COUNT }: Props) => {
     filters: { filter: filterValue },
     scrollRef,
     options: {
-      placeholderData: generateListStub<'address_txs'>(TX, 50, { next_page_params: {
-        block_number: 9005713,
-        index: 5,
-        items_count: 50,
-      } }),
+      placeholderData: generateListStub<'address_txs'>(TX, 50, {
+        next_page_params: {
+          block_number: 9005713,
+          index: 5,
+          items_count: 50,
+        },
+      }),
     },
   });
 
-  const handleFilterChange = React.useCallback((val: string | Array<string>) => {
-
-    const newVal = getFilterValue(val);
-    setFilterValue(newVal);
-    addressTxsQuery.onFilterChange({ filter: newVal });
-  }, [ addressTxsQuery ]);
+  const handleFilterChange = React.useCallback(
+    (val: string | Array<string>) => {
+      const newVal = getFilterValue(val);
+      setFilterValue(newVal);
+      addressTxsQuery.onFilterChange({ filter: newVal });
+    },
+    [addressTxsQuery],
+  );
 
   const handleNewSocketMessage: SocketMessage.AddressTxs['handler'] = (payload) => {
     setSocketAlert('');
@@ -93,7 +97,7 @@ const AddressTxs = ({ scrollRef, overloadCount = OVERLOAD_COUNT }: Props) => {
         const newItems: Array<Transaction> = [];
         let newCount = 0;
 
-        payload.transactions.forEach(tx => {
+        payload.transactions.forEach((tx) => {
           const currIndex = prevData.items.findIndex((item) => item.hash === tx.hash);
 
           if (currIndex > -1) {
@@ -110,17 +114,15 @@ const AddressTxs = ({ scrollRef, overloadCount = OVERLOAD_COUNT }: Props) => {
         });
 
         if (newCount > 0) {
-          setNewItemsCount(prev => prev + newCount);
+          setNewItemsCount((prev) => prev + newCount);
         }
 
         return {
           ...prevData,
-          items: [
-            ...newItems,
-            ...prevData.items,
-          ],
+          items: [...newItems, ...prevData.items],
         };
-      });
+      },
+    );
   };
 
   const handleSocketClose = React.useCallback(() => {
@@ -132,7 +134,7 @@ const AddressTxs = ({ scrollRef, overloadCount = OVERLOAD_COUNT }: Props) => {
   }, []);
 
   const channel = useSocketChannel({
-    topic: `addresses:${ currentAddress?.toLowerCase() }`,
+    topic: `addresses:${currentAddress?.toLowerCase()}`,
     onSocketClose: handleSocketClose,
     onSocketError: handleSocketError,
     isDisabled: addressTxsQuery.pagination.page !== 1 || addressTxsQuery.isPlaceholderData,
@@ -152,41 +154,41 @@ const AddressTxs = ({ scrollRef, overloadCount = OVERLOAD_COUNT }: Props) => {
 
   const filter = (
     <AddressTxsFilter
-      defaultFilter={ filterValue }
-      onFilterChange={ handleFilterChange }
-      isActive={ Boolean(filterValue) }
-      isLoading={ addressTxsQuery.pagination.isLoading }
+      defaultFilter={filterValue}
+      onFilterChange={handleFilterChange}
+      isActive={Boolean(filterValue)}
+      isLoading={addressTxsQuery.pagination.isLoading}
     />
   );
 
   const csvExportLink = (
     <AddressCsvExportLink
-      address={ currentAddress }
+      address={currentAddress}
       params={{ type: 'transactions', filterType: 'address', filterValue }}
       ml="auto"
-      isLoading={ addressTxsQuery.pagination.isLoading }
+      isLoading={addressTxsQuery.pagination.isLoading}
     />
   );
 
   return (
     <>
-      { !isMobile && (
-        <ActionBar mt={ -6 }>
-          { filter }
-          { currentAddress && csvExportLink }
-          <Pagination { ...addressTxsQuery.pagination } ml={ 8 }/>
+      {!isMobile && (
+        <ActionBar mt={-6}>
+          {filter}
+          {currentAddress && csvExportLink}
+          <Pagination {...addressTxsQuery.pagination} ml={8} />
         </ActionBar>
-      ) }
+      )}
       <TxsContent
-        filter={ filter }
-        filterValue={ filterValue }
-        query={ addressTxsQuery }
-        currentAddress={ typeof currentAddress === 'string' ? currentAddress : undefined }
+        filter={filter}
+        filterValue={filterValue}
+        query={addressTxsQuery}
+        currentAddress={typeof currentAddress === 'string' ? currentAddress : undefined}
         enableTimeIncrement
-        showSocketInfo={ addressTxsQuery.pagination.page === 1 }
-        socketInfoAlert={ socketAlert }
-        socketInfoNum={ newItemsCount }
-        top={ 80 }
+        showSocketInfo={addressTxsQuery.pagination.page === 1}
+        socketInfoAlert={socketAlert}
+        socketInfoNum={newItemsCount}
+        top={80}
       />
     </>
   );

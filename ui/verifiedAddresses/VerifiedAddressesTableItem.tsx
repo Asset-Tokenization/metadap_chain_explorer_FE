@@ -1,15 +1,15 @@
-import { Td, Tr, Link, Tooltip, IconButton, Skeleton } from "@chakra-ui/react";
-import React from "react";
+import { Td, Tr, Link, Tooltip, IconButton, Skeleton } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TokenInfoApplication, VerifiedAddress } from "types/api/account";
+import type { TokenInfoApplication, VerifiedAddress } from 'types/api/account';
 
-import editIcon from "icons/edit.svg";
-import dayjs from "lib/date/dayjs";
-import Icon from "ui/shared/chakra/Icon";
-import AddressEntity from "ui/shared/entities/address/AddressEntity";
-import TokenEntity from "ui/shared/entities/token/TokenEntity";
+import editIcon from 'icons/edit.svg';
+import dayjs from 'lib/date/dayjs';
+import Icon from 'ui/shared/chakra/Icon';
+import AddressEntity from 'ui/shared/entities/address/AddressEntity';
+import TokenEntity from 'ui/shared/entities/token/TokenEntity';
 
-import VerifiedAddressesStatus from "./VerifiedAddressesStatus";
+import VerifiedAddressesStatus from './VerifiedAddressesStatus';
 
 interface Props {
   item: VerifiedAddress;
@@ -19,13 +19,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const VerifiedAddressesTableItem = ({
-  item,
-  application,
-  onAdd,
-  onEdit,
-  isLoading,
-}: Props) => {
+const VerifiedAddressesTableItem = ({ item, application, onAdd, onEdit, isLoading }: Props) => {
   const handleAddClick = React.useCallback(() => {
     if (isLoading) {
       return;
@@ -57,17 +51,10 @@ const VerifiedAddressesTableItem = ({
       icon_url: application.iconUrl,
       address: application.tokenAddress,
       name: item.metadata.tokenName,
-      symbol: "",
+      symbol: '',
     };
 
-    return (
-      <TokenEntity
-        token={token}
-        noLink={application.status === "IN_PROCESS"}
-        noCopy
-        noSymbol
-      />
-    );
+    return <TokenEntity token={token} noLink={application.status === 'IN_PROCESS'} noCopy noSymbol />;
   })();
 
   return (
@@ -88,7 +75,7 @@ const VerifiedAddressesTableItem = ({
       </Td>
       <Td pl="0">
         {item.metadata.tokenName && application && !isLoading ? (
-          <Tooltip label={isLoading ? undefined : "Edit"}>
+          <Tooltip label={isLoading ? undefined : 'Edit'}>
             <IconButton
               aria-label="edit"
               variant="simple"
@@ -103,16 +90,12 @@ const VerifiedAddressesTableItem = ({
       </Td>
       <Td fontSize="sm">
         <Skeleton isLoaded={!isLoading} display="inline-block">
-          <VerifiedAddressesStatus
-            status={item.metadata.tokenName ? application?.status : undefined}
-          />
+          <VerifiedAddressesStatus status={item.metadata.tokenName ? application?.status : undefined} />
         </Skeleton>
       </Td>
       <Td fontSize="sm" color="text_secondary">
         <Skeleton isLoaded={!isLoading} display="inline-block">
-          {item.metadata.tokenName && application
-            ? dayjs(application.updatedAt).format("MMM DD, YYYY")
-            : null}
+          {item.metadata.tokenName && application ? dayjs(application.updatedAt).format('MMM DD, YYYY') : null}
         </Skeleton>
       </Td>
     </Tr>

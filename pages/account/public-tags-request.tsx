@@ -9,7 +9,7 @@ const PublicTags = dynamic(() => import('ui/pages/PublicTags'), { ssr: false });
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/account/public-tags-request">
-      <PublicTags/>
+      <PublicTags />
     </PageNextJs>
   );
 };

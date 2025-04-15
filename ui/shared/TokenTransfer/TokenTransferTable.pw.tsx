@@ -7,30 +7,22 @@ import TestApp from 'playwright/TestApp';
 
 import TokenTransferTable from './TokenTransferTable';
 
-test('without tx info', async({ mount }) => {
+test('without tx info', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h={{ base: '134px', lg: 6 }}/>
-      <TokenTransferTable
-        data={ tokenTransferMock.mixTokens.items }
-        top={ 0 }
-        showTxInfo={ false }
-      />
+      <Box h={{ base: '134px', lg: 6 }} />
+      <TokenTransferTable data={tokenTransferMock.mixTokens.items} top={0} showTxInfo={false} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('with tx info', async({ mount }) => {
+test('with tx info', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h={{ base: '134px', lg: 6 }}/>
-      <TokenTransferTable
-        data={ tokenTransferMock.mixTokens.items }
-        top={ 0 }
-        showTxInfo={ true }
-      />
+      <Box h={{ base: '134px', lg: 6 }} />
+      <TokenTransferTable data={tokenTransferMock.mixTokens.items} top={0} showTxInfo={true} />
     </TestApp>,
   );
 

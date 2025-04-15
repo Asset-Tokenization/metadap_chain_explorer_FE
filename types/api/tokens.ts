@@ -9,7 +9,7 @@ export type TokensResponse = {
     name: string;
     market_cap: string | null;
   };
-}
+};
 
 export type TokensFilters = { q: string; type: Array<TokenType> | undefined };
 
@@ -34,4 +34,4 @@ export interface TokensSorting {
 
 export type TokensSortingField = TokensSorting['sort'];
 
-export type TokensSortingValue = `${ TokensSortingField }-${ TokensSorting['order'] }`;
+export type TokensSortingValue = `${TokensSortingField}-${TokensSorting['order']}`;

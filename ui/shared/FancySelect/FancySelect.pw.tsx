@@ -22,16 +22,12 @@ const defaultProps = {
   onChange: _noop,
 };
 
-[ 'md' as const, 'lg' as const ].forEach((size) => {
-  test.describe(`size ${ size } +@dark-mode`, () => {
-    test('empty', async({ mount, page }) => {
+['md' as const, 'lg' as const].forEach((size) => {
+  test.describe(`size ${size} +@dark-mode`, () => {
+    test('empty', async ({ mount, page }) => {
       const component = await mount(
         <TestApp>
-          <FancySelect
-            { ...defaultProps }
-            size={ size }
-            value={ null }
-          />
+          <FancySelect {...defaultProps} size={size} value={null} />
         </TestApp>,
       );
 
@@ -42,27 +38,23 @@ const defaultProps = {
       await expect(page).toHaveScreenshot();
     });
 
-    test('filled', async({ mount }) => {
+    test('filled', async ({ mount }) => {
       const component = await mount(
         <TestApp>
-          <FancySelect
-            { ...defaultProps }
-            size={ size }
-            value={ OPTIONS[0] }
-          />
+          <FancySelect {...defaultProps} size={size} value={OPTIONS[0]} />
         </TestApp>,
       );
 
       await expect(component).toHaveScreenshot();
     });
 
-    test('error', async({ mount }) => {
+    test('error', async ({ mount }) => {
       const component = await mount(
         <TestApp>
           <FancySelect
-            { ...defaultProps }
-            size={ size }
-            value={ null }
+            {...defaultProps}
+            size={size}
+            value={null}
             error={{
               type: 'unknown',
               message: 'cannot be empty',
@@ -78,15 +70,10 @@ const defaultProps = {
       await expect(component).toHaveScreenshot();
     });
 
-    test('disabled', async({ mount }) => {
+    test('disabled', async ({ mount }) => {
       const component = await mount(
         <TestApp>
-          <FancySelect
-            { ...defaultProps }
-            size={ size }
-            value={ OPTIONS[0] }
-            isDisabled
-          />
+          <FancySelect {...defaultProps} size={size} value={OPTIONS[0]} isDisabled />
         </TestApp>,
       );
 

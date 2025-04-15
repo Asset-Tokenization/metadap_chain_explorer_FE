@@ -24,50 +24,39 @@ const OutputRootsListItem = ({ item, isLoading }: Props) => {
 
   return (
     <ListItemMobileGrid.Container>
-
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L2 output index</ListItemMobileGrid.Label>
-      <ListItemMobileGrid.Value fontWeight={ 600 } color="text">
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.l2_output_index }</Skeleton>
-      </ListItemMobileGrid.Value>
-
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
-      <ListItemMobileGrid.Value>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">
-          <span>{ timeAgo }</span>
+      <ListItemMobileGrid.Label isLoading={isLoading}>L2 output index</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Value fontWeight={600} color="text">
+        <Skeleton isLoaded={!isLoading} display="inline-block">
+          {item.l2_output_index}
         </Skeleton>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L2 block #</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>Age</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <BlockEntityL2
-          isLoading={ isLoading }
-          number={ item.l2_block_number }
-          fontSize="sm"
-          lineHeight={ 5 }
-          noIcon
-        />
+        <Skeleton isLoaded={!isLoading} display="inline-block">
+          <span>{timeAgo}</span>
+        </Skeleton>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L1 txn hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>L2 block #</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Value>
+        <BlockEntityL2 isLoading={isLoading} number={item.l2_block_number} fontSize="sm" lineHeight={5} noIcon />
+      </ListItemMobileGrid.Value>
+
+      <ListItemMobileGrid.Label isLoading={isLoading}>L1 txn hash</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value py="3px">
-        <TxEntityL1
-          isLoading={ isLoading }
-          hash={ item.l1_tx_hash }
-          fontSize="sm"
-          lineHeight={ 5 }
-        />
+        <TxEntityL1 isLoading={isLoading} hash={item.l1_tx_hash} fontSize="sm" lineHeight={5} />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Output root</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>Output root</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Flex overflow="hidden" whiteSpace="nowrap" alignItems="center" w="100%" justifyContent="space-between">
-          <Skeleton isLoaded={ !isLoading } color="text_secondary" w="calc(100% - 24px)">
-            <HashStringShortenDynamic hash={ item.output_root }/>
+          <Skeleton isLoaded={!isLoading} color="text_secondary" w="calc(100% - 24px)">
+            <HashStringShortenDynamic hash={item.output_root} />
           </Skeleton>
-          <CopyToClipboard text={ item.output_root } isLoading={ isLoading }/>
+          <CopyToClipboard text={item.output_root} isLoading={isLoading} />
         </Flex>
       </ListItemMobileGrid.Value>
-
     </ListItemMobileGrid.Container>
   );
 };

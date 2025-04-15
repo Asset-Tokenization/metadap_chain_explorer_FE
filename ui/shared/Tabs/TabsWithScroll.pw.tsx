@@ -7,7 +7,7 @@ import TestApp from 'playwright/TestApp';
 
 import TabsWithScroll from './TabsWithScroll';
 
-test('with counters', async({ mount }) => {
+test('with counters', async ({ mount }) => {
   const tabs: Array<TabItem> = [
     {
       id: 'tab1',
@@ -30,7 +30,7 @@ test('with counters', async({ mount }) => {
   ];
   const component = await mount(
     <TestApp>
-      <TabsWithScroll tabs={ tabs }/>
+      <TabsWithScroll tabs={tabs} />
     </TestApp>,
   );
 

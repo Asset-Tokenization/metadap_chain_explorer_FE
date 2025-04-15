@@ -18,22 +18,23 @@ export const test = base.extend<socketServer.SocketServerFixture>({
   createSocket: socketServer.createSocket,
 });
 
-test('default view +@mobile +@dark-mode', async({ mount, page }) => {
-  await page.route(STATS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(statsMock.base),
-  }));
-  await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify([
-      blockMock.base,
-      blockMock.base2,
-    ]),
-  }));
+test('default view +@mobile +@dark-mode', async ({ mount, page }) => {
+  await page.route(STATS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(statsMock.base),
+    }),
+  );
+  await page.route(BLOCKS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify([blockMock.base, blockMock.base2]),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <LatestBlocks/>
+      <LatestBlocks />
     </TestApp>,
   );
 
@@ -45,22 +46,23 @@ const testL2 = test.extend({
   context: contextWithEnvs(configs.featureEnvs.rollup) as any,
 });
 
-testL2('L2 view', async({ mount, page }) => {
-  await page.route(STATS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(statsMock.base),
-  }));
-  await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify([
-      blockMock.base,
-      blockMock.base2,
-    ]),
-  }));
+testL2('L2 view', async ({ mount, page }) => {
+  await page.route(STATS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(statsMock.base),
+    }),
+  );
+  await page.route(BLOCKS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify([blockMock.base, blockMock.base2]),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <LatestBlocks/>
+      <LatestBlocks />
     </TestApp>,
   );
 
@@ -72,46 +74,51 @@ const testNoReward = test.extend({
   context: contextWithEnvs(configs.viewsEnvs.block.hiddenFields) as any,
 });
 
-testNoReward('no reward view', async({ mount, page }) => {
-  await page.route(STATS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(statsMock.base),
-  }));
-  await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify([
-      blockMock.base,
-      blockMock.base2,
-    ]),
-  }));
+testNoReward('no reward view', async ({ mount, page }) => {
+  await page.route(STATS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(statsMock.base),
+    }),
+  );
+  await page.route(BLOCKS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify([blockMock.base, blockMock.base2]),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <LatestBlocks/>
+      <LatestBlocks />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('with long block height', async({ mount, page }) => {
-  await page.route(STATS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(statsMock.base),
-  }));
-  await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify([
-      {
-        ...blockMock.base,
-        height: 123456789012345,
-      },
-    ]),
-  }));
+test('with long block height', async ({ mount, page }) => {
+  await page.route(STATS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(statsMock.base),
+    }),
+  );
+  await page.route(BLOCKS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify([
+        {
+          ...blockMock.base,
+          height: 123456789012345,
+        },
+      ]),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <LatestBlocks/>
+      <LatestBlocks />
     </TestApp>,
   );
 
@@ -121,22 +128,23 @@ test('with long block height', async({ mount, page }) => {
 test.describe('socket', () => {
   test.describe.configure({ mode: 'serial' });
 
-  test('new item', async({ mount, page, createSocket }) => {
-    await page.route(STATS_API_URL, (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify(statsMock.base),
-    }));
-    await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify([
-        blockMock.base,
-        blockMock.base2,
-      ]),
-    }));
+  test('new item', async ({ mount, page, createSocket }) => {
+    await page.route(STATS_API_URL, (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify(statsMock.base),
+      }),
+    );
+    await page.route(BLOCKS_API_URL, (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify([blockMock.base, blockMock.base2]),
+      }),
+    );
 
     const component = await mount(
       <TestApp withSocket>
-        <LatestBlocks/>
+        <LatestBlocks />
       </TestApp>,
     );
 

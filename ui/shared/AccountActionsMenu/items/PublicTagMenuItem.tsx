@@ -19,11 +19,11 @@ const PublicTagMenuItem = ({ className, hash, onBeforeClick }: Props) => {
     }
 
     router.push({ pathname: '/account/public-tags-request', query: { address: hash } });
-  }, [ hash, onBeforeClick, router ]);
+  }, [hash, onBeforeClick, router]);
 
   return (
-    <MenuItem className={ className }onClick={ handleClick }>
-      <Icon as={ iconPublicTags } boxSize={ 6 } mr={ 2 }/>
+    <MenuItem className={className} onClick={handleClick}>
+      <Icon as={iconPublicTags} boxSize={6} mr={2} />
       <span>Add public tag</span>
     </MenuItem>
   );

@@ -9,8 +9,8 @@ interface Props extends IconProps {
 
 const Icon = ({ isLoading, ...props }: Props, ref: React.LegacyRef<SVGSVGElement>) => {
   return (
-    <Skeleton isLoaded={ !isLoading } boxSize={ props.boxSize } w={ props.w } h={ props.h } borderRadius={ props.borderRadius }>
-      <ChakraIcon { ...props } ref={ ref }/>
+    <Skeleton isLoaded={!isLoading} boxSize={props.boxSize} w={props.w} h={props.h} borderRadius={props.borderRadius}>
+      <ChakraIcon {...props} ref={ref} />
     </Skeleton>
   );
 };

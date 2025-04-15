@@ -7,8 +7,8 @@ const CUT_HEIGHT = 144;
 const AccountPageDescription = ({ children, allowCut = true }: { children: React.ReactNode; allowCut?: boolean }) => {
   const ref = useRef<HTMLParagraphElement>(null);
 
-  const [ needCut, setNeedCut ] = useState(false);
-  const [ expanded, setExpanded ] = useState(false);
+  const [needCut, setNeedCut] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const calculateCut = useCallback(() => {
     const textHeight = ref.current?.offsetHeight;
@@ -17,7 +17,7 @@ const AccountPageDescription = ({ children, allowCut = true }: { children: React
     } else if (needCut && textHeight && textHeight < CUT_HEIGHT) {
       setNeedCut(false);
     }
-  }, [ needCut ]);
+  }, [needCut]);
 
   useEffect(() => {
     if (!allowCut) {
@@ -30,8 +30,8 @@ const AccountPageDescription = ({ children, allowCut = true }: { children: React
     return function cleanup() {
       window.removeEventListener('resize', resizeHandler);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const expand = useCallback(() => {
     setExpanded(true);
@@ -45,25 +45,16 @@ const AccountPageDescription = ({ children, allowCut = true }: { children: React
   return (
     <Box position="relative" marginBottom={{ base: 6, lg: 8 }}>
       <Box
-        ref={ ref }
-        maxHeight={ needCut && !expanded ? `${ CUT_HEIGHT }px` : 'auto' }
+        ref={ref}
+        maxHeight={needCut && !expanded ? `${CUT_HEIGHT}px` : 'auto'}
         overflow="hidden"
-        style={ needCut && !expanded ? { WebkitLineClamp: '6', WebkitBoxOrient: 'vertical', display: '-webkit-box' } : {} }
+        style={needCut && !expanded ? { WebkitLineClamp: '6', WebkitBoxOrient: 'vertical', display: '-webkit-box' } : {}}
       >
-        { children }
+        {children}
       </Box>
-      { needCut && !expanded && (
-        <Box
-          position="absolute"
-          bottom="-16px"
-          left={ 0 }
-          width="100%"
-          height="63px"
-          style={{ background: gradient }}
-          onClick={ expand }
-        >
-        </Box>
-      ) }
+      {needCut && !expanded && (
+        <Box position="absolute" bottom="-16px" left={0} width="100%" height="63px" style={{ background: gradient }} onClick={expand}></Box>
+      )}
     </Box>
   );
 };

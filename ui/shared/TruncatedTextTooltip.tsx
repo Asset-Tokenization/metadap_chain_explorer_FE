@@ -12,11 +12,9 @@ interface Props {
 
 const TruncatedTextTooltip = ({ children, label }: Props) => {
   const childRef = React.useRef<HTMLElement>(null);
-  const [ isTruncated, setTruncated ] = React.useState(false);
+  const [isTruncated, setTruncated] = React.useState(false);
 
-  const isFontFaceLoaded = useFontFaceObserver([
-    { family: BODY_TYPEFACE },
-  ]);
+  const isFontFaceLoaded = useFontFaceObserver([{ family: BODY_TYPEFACE }]);
 
   const updatedTruncateState = React.useCallback(() => {
     if (childRef.current) {
@@ -35,7 +33,7 @@ const TruncatedTextTooltip = ({ children, label }: Props) => {
   // let's keep it as it is until the first issue
   React.useEffect(() => {
     updatedTruncateState();
-  }, [ updatedTruncateState, isFontFaceLoaded ]);
+  }, [updatedTruncateState, isFontFaceLoaded]);
 
   // we want to do recalculation when isFontFaceLoaded flag is changed
   // but we don't want to create more resize event listeners
@@ -47,20 +45,21 @@ const TruncatedTextTooltip = ({ children, label }: Props) => {
     return function cleanup() {
       window.removeEventListener('resize', handleResize);
     };
-  }, [ updatedTruncateState ]);
+  }, [updatedTruncateState]);
 
   // as for now it supports only one child
   // and it is not cleared how to manage case with two or more children
   const child = React.Children.only(children) as React.ReactElement & {
     ref?: React.Ref<React.ReactNode>;
   };
-  const modifiedChildren = React.cloneElement(
-    child,
-    { ref: childRef },
-  );
+  const modifiedChildren = React.cloneElement(child, { ref: childRef });
 
   if (isTruncated) {
-    return <Tooltip label={ label } maxW={{ base: '100vw', lg: '400px' }}>{ modifiedChildren }</Tooltip>;
+    return (
+      <Tooltip label={label} maxW={{ base: '100vw', lg: '400px' }}>
+        {modifiedChildren}
+      </Tooltip>
+    );
   }
 
   return modifiedChildren;

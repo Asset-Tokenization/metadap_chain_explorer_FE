@@ -22,30 +22,30 @@ const TxInternalsTable = ({ data, sort, onSortToggle, top, isLoading }: Props) =
 
   return (
     <Table variant="simple" size="sm">
-      <Thead top={ top }>
+      <Thead top={top}>
         <Tr>
           <Th width="28%">Type</Th>
           <Th width="20%">From</Th>
-          <Th width="24px" px={ 0 }/>
+          <Th width="24px" px={0} />
           <Th width="20%">To</Th>
           <Th width="16%" isNumeric>
-            <Link display="flex" alignItems="center" justifyContent="flex-end" onClick={ onSortToggle('value') } columnGap={ 1 }>
-              { sort?.includes('value') && <Icon as={ arrowIcon } boxSize={ 4 } transform={ sortIconTransform }/> }
-                Value { config.chain.currency.symbol }
+            <Link display="flex" alignItems="center" justifyContent="flex-end" onClick={onSortToggle('value')} columnGap={1}>
+              {sort?.includes('value') && <Icon as={arrowIcon} boxSize={4} transform={sortIconTransform} />}
+              Value {config.chain.currency.symbol}
             </Link>
           </Th>
           <Th width="16%" isNumeric>
-            <Link display="flex" alignItems="center" justifyContent="flex-end" onClick={ onSortToggle('gas-limit') } columnGap={ 1 }>
-              { sort?.includes('gas-limit') && <Icon as={ arrowIcon } boxSize={ 4 } transform={ sortIconTransform }/> }
-                Gas limit { config.chain.currency.symbol }
+            <Link display="flex" alignItems="center" justifyContent="flex-end" onClick={onSortToggle('gas-limit')} columnGap={1}>
+              {sort?.includes('gas-limit') && <Icon as={arrowIcon} boxSize={4} transform={sortIconTransform} />}
+              Gas limit {config.chain.currency.symbol}
             </Link>
           </Th>
         </Tr>
       </Thead>
       <Tbody>
-        { data.map((item, index) => (
-          <TxInternalsTableItem key={ item.transaction_hash + (isLoading ? index : '') } { ...item } isLoading={ isLoading }/>
-        )) }
+        {data.map((item, index) => (
+          <TxInternalsTableItem key={item.transaction_hash + (isLoading ? index : '')} {...item} isLoading={isLoading} />
+        ))}
       </Tbody>
     </Table>
   );

@@ -8,7 +8,7 @@ import UnverifiedEmail from 'ui/pages/UnverifiedEmail';
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/auth/unverified-email">
-      <UnverifiedEmail/>
+      <UnverifiedEmail />
     </PageNextJs>
   );
 };

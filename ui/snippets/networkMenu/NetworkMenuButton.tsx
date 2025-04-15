@@ -18,27 +18,27 @@ const NetworkMenuButton = ({ isMobile, isActive, onClick, className }: Props, re
 
   return (
     <Button
-      className={ className }
+      className={className}
       variant="unstyled"
       display="inline-flex"
       alignItems="center"
-      ref={ ref }
+      ref={ref}
       h="36px"
       borderRadius="base"
-      backgroundColor={ isActive ? bgColorMobile : 'none' }
-      onClick={ onClick }
+      backgroundColor={isActive ? bgColorMobile : 'none'}
+      onClick={onClick}
       aria-label="Network menu"
       aria-roledescription="menu"
     >
       <Icon
-        as={ networksIcon }
+        as={networksIcon}
         width="36px"
         height="36px"
         padding="10px"
-        color={ isActive ? iconColorMobile : defaultIconColor }
+        color={isActive ? iconColorMobile : defaultIconColor}
         _hover={{ color: isMobile ? undefined : 'link_hovered' }}
         cursor="pointer"
-        { ...getDefaultTransitionProps({ transitionProperty: 'margin' }) }
+        {...getDefaultTransitionProps({ transitionProperty: 'margin' })}
       />
     </Button>
   );

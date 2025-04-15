@@ -26,7 +26,7 @@ const bridgedTokensChainIds = (() => {
     return [];
   }
 
-  return feature.chains.map(chain => chain.id);
+  return feature.chains.map((chain) => chain.id);
 })();
 export const getBridgedChainsFilterValue = (getFilterValuesFromQuery<string>).bind(null, bridgedTokensChainIds);
 
@@ -36,7 +36,7 @@ export const getSortValueFromQuery = (query: Query): TokensSortingValue | undefi
   }
 
   const str = query.sort + '-' + query.order;
-  if (SORT_OPTIONS.map(option => option.id).includes(str)) {
+  if (SORT_OPTIONS.map((option) => option.id).includes(str)) {
     return str as TokensSortingValue;
   }
 };
@@ -45,6 +45,6 @@ export const getSortParamsFromValue = (val?: TokensSortingValue): TokensSorting 
   if (!val) {
     return undefined;
   }
-  const sortingChunks = val.split('-') as [ TokensSortingField, TokensSorting['order'] ];
+  const sortingChunks = val.split('-') as [TokensSortingField, TokensSorting['order']];
   return { sort: sortingChunks[0], order: sortingChunks[1] };
 };

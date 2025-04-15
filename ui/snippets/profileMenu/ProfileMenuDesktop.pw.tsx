@@ -9,7 +9,7 @@ import buildApiUrl from 'playwright/utils/buildApiUrl';
 
 import ProfileMenuDesktop from './ProfileMenuDesktop';
 
-test('no auth', async({ mount, page }) => {
+test('no auth', async ({ mount, page }) => {
   const hooksConfig = {
     router: {
       asPath: '/',
@@ -18,13 +18,13 @@ test('no auth', async({ mount, page }) => {
   };
   const component = await mount(
     <TestApp>
-      <ProfileMenuDesktop/>
+      <ProfileMenuDesktop />
     </TestApp>,
     { hooksConfig },
   );
 
   await component.locator('.identicon').click();
-  expect(page.url()).toBe(`${ app.url }/auth/auth0?path=%2F`);
+  expect(page.url()).toBe(`${app.url}/auth/auth0?path=%2F`);
 });
 
 test.describe('auth', () => {
@@ -35,11 +35,13 @@ test.describe('auth', () => {
     },
   });
 
-  extendedTest('+@dark-mode', async({ mount, page }) => {
-    await page.route(buildApiUrl('user_info'), (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify(profileMock.base),
-    }));
+  extendedTest('+@dark-mode', async ({ mount, page }) => {
+    await page.route(buildApiUrl('user_info'), (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify(profileMock.base),
+      }),
+    );
     await page.route(profileMock.base.avatar, (route) => {
       return route.fulfill({
         status: 200,
@@ -49,7 +51,7 @@ test.describe('auth', () => {
 
     const component = await mount(
       <TestApp>
-        <ProfileMenuDesktop/>
+        <ProfileMenuDesktop />
       </TestApp>,
     );
 

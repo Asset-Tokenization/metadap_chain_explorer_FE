@@ -165,13 +165,6 @@ export const erc1155D: TokenTransfer = {
 };
 
 export const mixTokens: TokenTransferResponse = {
-  items: [
-    erc20,
-    erc721,
-    erc1155A,
-    erc1155B,
-    erc1155C,
-    erc1155D,
-  ],
+  items: [erc20, erc721, erc1155A, erc1155B, erc1155C, erc1155D],
   next_page_params: null,
 };

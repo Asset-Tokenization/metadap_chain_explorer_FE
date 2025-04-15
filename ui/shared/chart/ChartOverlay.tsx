@@ -9,8 +9,8 @@ interface Props {
 const ChartOverlay = ({ width, height, children }: Props, ref: React.ForwardedRef<SVGRectElement>) => {
   return (
     <g className="ChartOverlay">
-      { children }
-      <rect ref={ ref } width={ width } height={ height } opacity={ 0 }/>
+      {children}
+      <rect ref={ref} width={width} height={height} opacity={0} />
     </g>
   );
 };

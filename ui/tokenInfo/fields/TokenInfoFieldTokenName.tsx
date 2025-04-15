@@ -1,37 +1,27 @@
-import { FormControl, Input } from "@chakra-ui/react";
-import React from "react";
-import type { Control, ControllerRenderProps } from "react-hook-form";
-import { Controller } from "react-hook-form";
+import { FormControl, Input } from '@chakra-ui/react';
+import React from 'react';
+import type { Control, ControllerRenderProps } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
-import type { Fields } from "../types";
+import type { Fields } from '../types';
 
-import InputPlaceholder from "ui/shared/InputPlaceholder";
+import InputPlaceholder from 'ui/shared/InputPlaceholder';
 
 interface Props {
   control: Control<Fields>;
 }
 
 const TokenInfoFieldTokenName = ({ control }: Props) => {
-  const renderControl = React.useCallback(
-    ({ field }: { field: ControllerRenderProps<Fields, "token_name"> }) => {
-      return (
-        <FormControl
-          variant="floating"
-          id={field.name}
-          isRequired
-          size={{ base: "md", lg: "lg" }}
-        >
-          <Input {...field} required isDisabled />
-          <InputPlaceholder text="Certificate name" />
-        </FormControl>
-      );
-    },
-    []
-  );
+  const renderControl = React.useCallback(({ field }: { field: ControllerRenderProps<Fields, 'token_name'> }) => {
+    return (
+      <FormControl variant="floating" id={field.name} isRequired size={{ base: 'md', lg: 'lg' }}>
+        <Input {...field} required isDisabled />
+        <InputPlaceholder text="Certificate name" />
+      </FormControl>
+    );
+  }, []);
 
-  return (
-    <Controller name="token_name" control={control} render={renderControl} />
-  );
+  return <Controller name="token_name" control={control} render={renderControl} />;
 };
 
 export default React.memo(TokenInfoFieldTokenName);

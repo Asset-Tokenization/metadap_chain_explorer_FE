@@ -1,15 +1,6 @@
 import type { LazyMode } from '@chakra-ui/lazy-utils';
 import type { ChakraProps, ThemingProps } from '@chakra-ui/react';
-import {
-  Tab,
-  Tabs,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Box,
-  useColorModeValue,
-  chakra,
-} from '@chakra-ui/react';
+import { Tab, Tabs, TabList, TabPanel, TabPanels, Box, useColorModeValue, chakra } from '@chakra-ui/react';
 import type { StyleProps } from '@chakra-ui/styled-system';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -58,27 +49,30 @@ const TabsWithScroll = ({
   ...themeProps
 }: Props) => {
   const scrollDirection = useScrollDirection();
-  const [ activeTabIndex, setActiveTabIndex ] = useState<number>(defaultTabIndex || 0);
+  const [activeTabIndex, setActiveTabIndex] = useState<number>(defaultTabIndex || 0);
   const isMobile = useIsMobile();
   const tabsRef = useRef<HTMLDivElement>(null);
 
   const tabsList = React.useMemo(() => {
-    return [ ...tabs, menuButton ];
-  }, [ tabs ]);
+    return [...tabs, menuButton];
+  }, [tabs]);
 
   const { tabsCut, tabsRefs, listRef, rightSlotRef } = useAdaptiveTabs(tabsList, isMobile);
   const isSticky = useIsSticky(listRef, 5, stickyEnabled);
   const listBgColor = useColorModeValue('white', 'black');
 
-  const handleTabChange = React.useCallback((index: number) => {
-    onTabChange ? onTabChange(index) : setActiveTabIndex(index);
-  }, [ onTabChange ]);
+  const handleTabChange = React.useCallback(
+    (index: number) => {
+      onTabChange ? onTabChange(index) : setActiveTabIndex(index);
+    },
+    [onTabChange],
+  );
 
   useEffect(() => {
     if (defaultTabIndex !== undefined) {
       setActiveTabIndex(defaultTabIndex);
     }
-  }, [ defaultTabIndex ]);
+  }, [defaultTabIndex]);
 
   useEffect(() => {
     if (activeTabIndex < tabs.length && isMobile) {
@@ -91,29 +85,29 @@ const TabsWithScroll = ({
             behavior: 'smooth',
           });
         }
-      // have to wait until DOM is updated and all styles to tabs is applied
+        // have to wait until DOM is updated and all styles to tabs is applied
       }, 300);
     }
-  // run only when tab index or device type is updated
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ activeTabIndex, isMobile ]);
+    // run only when tab index or device type is updated
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTabIndex, isMobile]);
 
   if (tabs.length === 1) {
-    return <div>{ tabs[0].component }</div>;
+    return <div>{tabs[0].component}</div>;
   }
 
   return (
     <Tabs
-      className={ className }
-      variant={ themeProps.variant || 'soft-rounded' }
-      colorScheme={ themeProps.colorScheme || 'blue' }
+      className={className}
+      variant={themeProps.variant || 'soft-rounded'}
+      colorScheme={themeProps.colorScheme || 'blue'}
       isLazy
-      onChange={ handleTabChange }
-      index={ activeTabIndex }
+      onChange={handleTabChange}
+      index={activeTabIndex}
       position="relative"
-      size={ themeProps.size || 'md' }
-      ref={ tabsRef }
-      lazyBehavior={ lazyBehavior }
+      size={themeProps.size || 'md'}
+      ref={tabsRef}
+      lazyBehavior={lazyBehavior}
     >
       <TabList
         marginBottom={{ base: 6, lg: 8 }}
@@ -121,73 +115,83 @@ const TabsWithScroll = ({
         px={{ base: '16px', lg: 'unset' }}
         flexWrap="nowrap"
         whiteSpace="nowrap"
-        ref={ listRef }
+        ref={listRef}
         overflowX={{ base: 'auto', lg: 'initial' }}
         overscrollBehaviorX="contain"
         css={{
           'scroll-snap-type': 'x mandatory',
           // hide scrollbar
-          '&::-webkit-scrollbar': { /* Chromiums */
-            display: 'none',
+          '&::-webkit-scrollbar': {
+            /* Chromiums */ display: 'none',
           },
-          '-ms-overflow-style': 'none', /* IE and Edge */
-          'scrollbar-width': 'none', /* Firefox */
+          '-ms-overflow-style': 'none' /* IE and Edge */,
+          'scrollbar-width': 'none' /* Firefox */,
         }}
-        bgColor={ listBgColor }
+        bgColor={listBgColor}
         transitionProperty="top,box-shadow,background-color,color"
         transitionDuration="normal"
         transitionTimingFunction="ease"
-        {
-          ...(stickyEnabled ? {
-            position: 'sticky',
-            boxShadow: { base: isSticky ? 'md' : 'none', lg: 'none' },
-            top: { base: scrollDirection === 'down' ? `0px` : `106px`, lg: 0 },
-            zIndex: { base: 'sticky2', lg: 'docked' },
-          } : { })
-        }
-        { ...(typeof tabListProps === 'function' ? tabListProps({ isSticky, activeTabIndex }) : tabListProps) }
+        {...(stickyEnabled
+          ? {
+              position: 'sticky',
+              boxShadow: { base: isSticky ? 'md' : 'none', lg: 'none' },
+              top: { base: scrollDirection === 'down' ? `0px` : `106px`, lg: 0 },
+              zIndex: { base: 'sticky2', lg: 'docked' },
+            }
+          : {})}
+        {...(typeof tabListProps === 'function' ? tabListProps({ isSticky, activeTabIndex }) : tabListProps)}
       >
-        { tabsList.map((tab, index) => {
+        {tabsList.map((tab, index) => {
           if (!tab.id) {
             return (
               <TabsMenu
                 key="menu"
-                tabs={ tabs }
-                activeTab={ tabs[activeTabIndex] }
-                tabsCut={ tabsCut }
-                isActive={ activeTabIndex >= tabsCut }
-                styles={ tabsCut < tabs.length ?
-                  // initially our cut is 0 and we don't want to show the menu button too
-                  // but we want to keep it in the tabs row so it won't collapse
-                  // that's why we only change opacity but not the position itself
-                  { opacity: tabsCut === 0 ? 0 : 1 } :
-                  hiddenItemStyles
+                tabs={tabs}
+                activeTab={tabs[activeTabIndex]}
+                tabsCut={tabsCut}
+                isActive={activeTabIndex >= tabsCut}
+                styles={
+                  tabsCut < tabs.length
+                    ? // initially our cut is 0 and we don't want to show the menu button too
+                      // but we want to keep it in the tabs row so it won't collapse
+                      // that's why we only change opacity but not the position itself
+                      { opacity: tabsCut === 0 ? 0 : 1 }
+                    : hiddenItemStyles
                 }
-                onItemClick={ handleTabChange }
-                buttonRef={ tabsRefs[index] }
-                size={ themeProps.size || 'md' }
+                onItemClick={handleTabChange}
+                buttonRef={tabsRefs[index]}
+                size={themeProps.size || 'md'}
               />
             );
           }
 
           return (
             <Tab
-              key={ tab.id }
-              ref={ tabsRefs[index] }
-              { ...(index < tabsCut ? {} : hiddenItemStyles) }
+              key={tab.id}
+              ref={tabsRefs[index]}
+              {...(index < tabsCut ? {} : hiddenItemStyles)}
               scrollSnapAlign="start"
-              flexShrink={ 0 }
-              className={ TAB_CLASSNAME }
+              flexShrink={0}
+              className={TAB_CLASSNAME}
             >
-              { typeof tab.title === 'function' ? tab.title() : tab.title }
-              <TabCounter count={ tab.count } parentClassName={ TAB_CLASSNAME }/>
+              {typeof tab.title === 'function' ? tab.title() : tab.title}
+              <TabCounter count={tab.count} parentClassName={TAB_CLASSNAME} />
             </Tab>
           );
-        }) }
-        { rightSlot && tabsCut > 0 ? <Box ref={ rightSlotRef } ml="auto" { ...rightSlotProps }> { rightSlot } </Box> : null }
+        })}
+        {rightSlot && tabsCut > 0 ? (
+          <Box ref={rightSlotRef} ml="auto" {...rightSlotProps}>
+            {' '}
+            {rightSlot}{' '}
+          </Box>
+        ) : null}
       </TabList>
       <TabPanels>
-        { tabsList.map((tab) => <TabPanel padding={ 0 } key={ tab.id }>{ tab.component }</TabPanel>) }
+        {tabsList.map((tab) => (
+          <TabPanel padding={0} key={tab.id}>
+            {tab.component}
+          </TabPanel>
+        ))}
       </TabPanels>
     </Tabs>
   );

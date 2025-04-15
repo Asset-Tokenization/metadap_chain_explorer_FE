@@ -10,8 +10,8 @@ const MarketplaceApp = dynamic(() => import('ui/pages/MarketplaceApp'), { ssr: f
 
 const Page: NextPageWithLayout<Props> = (props: Props) => {
   return (
-    <PageNextJs pathname="/apps/[id]" query={ props }>
-      <MarketplaceApp/>
+    <PageNextJs pathname="/apps/[id]" query={props}>
+      <MarketplaceApp />
     </PageNextJs>
   );
 };
