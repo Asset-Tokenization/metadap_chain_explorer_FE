@@ -23,10 +23,10 @@ const SORT_SEQUENCE: Record<
   ],
 };
 
-const getNextSortValue = getNextSortValueShared<
+const getNextSortValue = (getNextSortValueShared<
   TokensSortingField,
   TokensSortingValue
->.bind(undefined, SORT_SEQUENCE);
+>).bind(undefined, SORT_SEQUENCE);
 
 type Props = {
   items: Array<TokenInfo>;
@@ -52,7 +52,7 @@ const TokensTable = ({
       const value = getNextSortValue(field)(sorting);
       setSorting(value);
     },
-    [sorting, setSorting]
+    [sorting, setSorting],
   );
 
   return (

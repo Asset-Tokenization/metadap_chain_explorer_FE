@@ -49,13 +49,13 @@ type Filters = {
   filter: AddressFromToFilter | undefined;
 };
 
-const getTokenFilterValue = getFilterValuesFromQuery<TokenType>.bind(
+const getTokenFilterValue = (getFilterValuesFromQuery<TokenType>).bind(
   null,
-  TOKEN_TYPE_IDS
+  TOKEN_TYPE_IDS,
 );
-const getAddressFilterValue = getFilterValueFromQuery<AddressFromToFilter>.bind(
+const getAddressFilterValue = (getFilterValueFromQuery<AddressFromToFilter>).bind(
   null,
-  AddressFromToFilterValues
+  AddressFromToFilterValues,
 );
 
 const OVERLOAD_COUNT = 75;
@@ -63,7 +63,7 @@ const OVERLOAD_COUNT = 75;
 const matchFilters = (
   filters: Filters,
   tokenTransfer: TokenTransfer,
-  address?: string
+  address?: string,
 ) => {
   if (filters.filter) {
     if (filters.filter === "from" && tokenTransfer.from.hash !== address) {
@@ -128,7 +128,7 @@ const AddressTokenTransfers = ({
       onFilterChange({ ...filters, type: nextValue });
       setFilters((prevState) => ({ ...prevState, type: nextValue }));
     },
-    [filters, onFilterChange]
+    [filters, onFilterChange],
   );
 
   const handleAddressFilterChange = React.useCallback(
@@ -137,7 +137,7 @@ const AddressTokenTransfers = ({
       onFilterChange({ ...filters, filter: filterVal });
       setFilters((prevState) => ({ ...prevState, filter: filterVal }));
     },
-    [filters, onFilterChange]
+    [filters, onFilterChange],
   );
 
   const resetTokenFilter = React.useCallback(() => {
@@ -188,20 +188,20 @@ const AddressTokenTransfers = ({
               ...prevData,
               items: [...newItems, ...prevData.items],
             };
-          }
+          },
         );
       }
     };
 
   const handleSocketClose = React.useCallback(() => {
     setSocketAlert(
-      "Connection is lost. Please refresh the page to load new token transfers."
+      "Connection is lost. Please refresh the page to load new token transfers.",
     );
   }, []);
 
   const handleSocketError = React.useCallback(() => {
     setSocketAlert(
-      "An error has occurred while fetching new token transfers. Please refresh the page."
+      "An error has occurred while fetching new token transfers. Please refresh the page.",
     );
   }, []);
 
@@ -267,7 +267,7 @@ const AddressTokenTransfers = ({
       symbol: "",
       type: "ERC-20" as const,
     }),
-    [tokenFilter]
+    [tokenFilter],
   );
 
   const tokenFilterComponent = tokenFilter && (

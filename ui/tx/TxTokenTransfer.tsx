@@ -21,9 +21,9 @@ import TxPendingAlert from "ui/tx/TxPendingAlert";
 import TxSocketAlert from "ui/tx/TxSocketAlert";
 import useFetchTxInfo from "ui/tx/useFetchTxInfo";
 
-const getTokenFilterValue = getFilterValuesFromQuery<TokenType>.bind(
+const getTokenFilterValue = (getFilterValuesFromQuery<TokenType>).bind(
   null,
-  TOKEN_TYPE_IDS
+  TOKEN_TYPE_IDS,
 );
 
 const TxTokenTransfer = () => {
@@ -32,7 +32,7 @@ const TxTokenTransfer = () => {
   const router = useRouter();
 
   const [typeFilter, setTypeFilter] = React.useState<Array<TokenType>>(
-    getTokenFilterValue(router.query.type) || []
+    getTokenFilterValue(router.query.type) || [],
   );
 
   const tokenTransferQuery = useQueryWithPages({
@@ -52,7 +52,7 @@ const TxTokenTransfer = () => {
       tokenTransferQuery.onFilterChange({ type: nextValue });
       setTypeFilter(nextValue);
     },
-    [tokenTransferQuery]
+    [tokenTransferQuery],
   );
 
   if (
