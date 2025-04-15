@@ -34,7 +34,8 @@ const AdbutlerBanner = ({ className }: { className?: string }) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore:
       window.AdButler.ads.push({
-        handler: function (opt) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        handler: function (opt: any) {
           window.AdButler.register(
             ADBUTLER_ACCOUNT,
             adButlerConfig.id,
