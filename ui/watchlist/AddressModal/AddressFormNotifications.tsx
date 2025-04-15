@@ -18,6 +18,7 @@ export default function AddressFormNotifications<Inputs extends FieldValues, Che
   // eslint-disable-next-line react/display-name
   const renderCheckbox = useCallback(
     (text: string) =>
+      // eslint-disable-next-line react/display-name
       ({ field }: { field: ControllerRenderProps<Inputs, Checkboxes> }) =>
         <CheckboxInput<Inputs, Checkboxes> text={text} field={field} />,
     [],
