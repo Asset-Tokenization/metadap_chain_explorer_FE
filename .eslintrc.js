@@ -56,7 +56,6 @@ module.exports = {
     ],
     '@typescript-eslint/brace-style': ['error', '1tbs'],
     '@typescript-eslint/consistent-type-imports': ['error'],
-    '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/member-delimiter-style': ['error'],
     '@typescript-eslint/naming-convention': [
       'error',
@@ -130,7 +129,6 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-useless-constructor': 'off',
 
-    'array-bracket-spacing': ['error', 'always'],
     'arrow-spacing': ['error', { before: true, after: true }],
     'comma-dangle': ['error', 'always-multiline'],
     'comma-spacing': ['error'],
@@ -139,7 +137,6 @@ module.exports = {
     'eol-last': 'error',
     eqeqeq: ['error', 'allow-null'],
     'id-match': ['error', '^[\\w$]+$'],
-    'jsx-quotes': ['error', 'prefer-double'],
     'key-spacing': [
       'error',
       {
@@ -156,7 +153,6 @@ module.exports = {
         allowBlockStart: true,
       },
     ],
-    'max-len': ['error', 160, 4],
     'no-console': 'error',
     'no-empty': ['error', { allowEmptyCatch: true }],
     'no-implicit-coercion': [
@@ -191,7 +187,6 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'],
     'object-shorthand': 'off',
     'one-var': ['error', 'never'],
-    'operator-linebreak': ['error', 'after'],
     'prefer-const': 'error',
     'quote-props': [
       'error',
@@ -201,19 +196,10 @@ module.exports = {
         numbers: true,
       },
     ],
-    quotes: [
-      'error',
-      'single',
-      {
-        allowTemplateLiterals: true,
-      },
-    ],
-    'space-before-function-paren': ['error', 'never'],
     'space-before-blocks': ['error', 'always'],
     'space-in-parens': ['error', 'never'],
     'space-infix-ops': 'error',
     'space-unary-ops': 'off',
-    'template-curly-spacing': ['error', 'always'],
     'wrap-iife': ['error', 'inside'],
     semi: ['error', 'always'],
 
@@ -257,29 +243,11 @@ module.exports = {
         children: 'never',
       },
     ],
-    'react/jsx-curly-spacing': [
-      'error',
-      {
-        when: 'always',
-        children: true,
-        spacing: {
-          objectLiterals: 'never',
-        },
-      },
-    ],
     'react/jsx-equals-spacing': ['error', 'never'],
     'react/jsx-fragments': ['error', 'syntax'],
     'react/jsx-no-duplicate-props': 'error',
     'react/jsx-no-target-blank': 'off',
     'react/jsx-no-useless-fragment': 'error',
-    'react/jsx-tag-spacing': [
-      'error',
-      {
-        afterOpening: 'never',
-        beforeSelfClosing: 'never',
-        closingSlash: 'never',
-      },
-    ],
     'react/jsx-wrap-multilines': [
       'error',
       {
