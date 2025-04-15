@@ -30,11 +30,7 @@ const logoutUrl = (() => {
 const title = 'My account';
 
 const config: Feature<{ authUrl: string; logoutUrl: string }> = (() => {
-  if (
-    getEnvValue('NEXT_PUBLIC_IS_ACCOUNT_SUPPORTED') === 'true' &&
-    authUrl &&
-    logoutUrl
-  ) {
+  if (getEnvValue('NEXT_PUBLIC_IS_ACCOUNT_SUPPORTED') === 'true' && authUrl && logoutUrl) {
     return Object.freeze({
       title,
       isEnabled: true,

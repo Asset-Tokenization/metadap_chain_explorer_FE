@@ -1,7 +1,7 @@
-import { Alert } from "@chakra-ui/react";
-import React from "react";
+import { Alert } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TokenInfoApplication } from "types/api/account";
+import type { TokenInfoApplication } from 'types/api/account';
 
 interface Props {
   application?: TokenInfoApplication;
@@ -13,22 +13,18 @@ const TokenInfoFormStatusText = ({ application }: Props) => {
   }
 
   switch (application.status) {
-    case "IN_PROCESS": {
+    case 'IN_PROCESS': {
       return (
         <div>
-          <div>
-            Requests are sent to a moderator for review and approval. This
-            process can take several days.
-          </div>
+          <div>Requests are sent to a moderator for review and approval. This process can take several days.</div>
           <Alert status="warning" mt={6}>
-            Request in progress. Once an admin approves your request you can
-            edit certificate info.
+            Request in progress. Once an admin approves your request you can edit certificate info.
           </Alert>
         </div>
       );
     }
 
-    case "UPDATE_REQUIRED": {
+    case 'UPDATE_REQUIRED': {
       return (
         <div>
           {application.adminComments && (
@@ -40,7 +36,7 @@ const TokenInfoFormStatusText = ({ application }: Props) => {
       );
     }
 
-    case "REJECTED": {
+    case 'REJECTED': {
       return (
         <div>
           {application.adminComments && (

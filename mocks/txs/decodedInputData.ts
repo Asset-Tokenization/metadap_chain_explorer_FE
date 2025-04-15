@@ -43,7 +43,10 @@ export const withIndexedFields: DecodedInput = {
       indexed: true,
       name: 'inputArray',
       type: 'uint256[2][2]',
-      value: [ [ '1', '1' ], [ '1', '1' ] ],
+      value: [
+        ['1', '1'],
+        ['1', '1'],
+      ],
     },
   ],
 };

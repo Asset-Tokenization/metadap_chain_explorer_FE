@@ -25,57 +25,43 @@ const DepositsListItem = ({ item, isLoading }: Props) => {
 
   return (
     <ListItemMobileGrid.Container>
-
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L1 block No</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>L1 block No</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <BlockEntityL1
-          number={ item.l1_block_number }
-          isLoading={ isLoading }
-          fontSize="sm"
-          lineHeight={ 5 }
-          fontWeight={ 600 }
-        />
+        <BlockEntityL1 number={item.l1_block_number} isLoading={isLoading} fontSize="sm" lineHeight={5} fontWeight={600} />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L2 txn hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>L2 txn hash</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <TxEntity
-          isLoading={ isLoading }
-          hash={ item.l2_tx_hash }
-          fontSize="sm"
-          lineHeight={ 5 }
-        />
+        <TxEntity isLoading={isLoading} hash={item.l2_tx_hash} fontSize="sm" lineHeight={5} />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>Age</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ timeAgo }</Skeleton>
+        <Skeleton isLoaded={!isLoading} display="inline-block">
+          {timeAgo}
+        </Skeleton>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L1 txn hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>L1 txn hash</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <TxEntityL1
-          isLoading={ isLoading }
-          hash={ item.l1_tx_hash }
-          fontSize="sm"
-          lineHeight={ 5 }
-        />
+        <TxEntityL1 isLoading={isLoading} hash={item.l1_tx_hash} fontSize="sm" lineHeight={5} />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L1 txn origin</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>L1 txn origin</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <AddressEntityL1
           address={{ hash: item.l1_tx_origin, name: '', is_contract: false, is_verified: false, implementation_name: '' }}
-          isLoading={ isLoading }
+          isLoading={isLoading}
           noCopy
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Gas limit</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>Gas limit</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ BigNumber(item.l2_tx_gas_limit).toFormat() }</Skeleton>
+        <Skeleton isLoaded={!isLoading} display="inline-block">
+          {BigNumber(item.l2_tx_gas_limit).toFormat()}
+        </Skeleton>
       </ListItemMobileGrid.Value>
-
     </ListItemMobileGrid.Container>
   );
 };

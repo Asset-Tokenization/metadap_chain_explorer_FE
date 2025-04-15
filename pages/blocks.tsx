@@ -9,7 +9,7 @@ const Blocks = dynamic(() => import('ui/pages/Blocks'), { ssr: false });
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/blocks">
-      <Blocks/>
+      <Blocks />
     </PageNextJs>
   );
 };

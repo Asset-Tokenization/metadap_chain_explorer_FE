@@ -11,7 +11,7 @@ const NEXT_ROUTER_MOCK = {
   push: () => Promise.resolve(),
 };
 
-beforeMount(async({ hooksConfig }) => {
+beforeMount(async ({ hooksConfig }) => {
   // Before mount, redefine useRouter to return mock value from test.
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore: I really want to redefine this property :)

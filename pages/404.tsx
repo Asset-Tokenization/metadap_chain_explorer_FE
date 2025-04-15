@@ -17,17 +17,13 @@ const Page: NextPageWithLayout = () => {
 
   return (
     <PageNextJs pathname="/404">
-      <AppError error={ error }/>
+      <AppError error={error} />
     </PageNextJs>
   );
 };
 
 Page.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <LayoutError>
-      { page }
-    </LayoutError>
-  );
+  return <LayoutError>{page}</LayoutError>;
 };
 
 export default Page;

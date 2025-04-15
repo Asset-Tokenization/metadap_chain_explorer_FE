@@ -17,11 +17,10 @@ const graphQLStyle = {
 };
 
 const GraphQL = () => {
-
   const { colorMode } = useColorMode();
 
   // colorModeState used as a key to re-render GraphiQL conponent after color mode change
-  const [ colorModeState, setColorModeState ] = React.useState(colorMode);
+  const [colorModeState, setColorModeState] = React.useState(colorMode);
 
   React.useEffect(() => {
     if (isBrowser()) {
@@ -31,7 +30,7 @@ const GraphQL = () => {
         setColorModeState(colorMode);
       }
     }
-  }, [ colorMode ]);
+  }, [colorMode]);
 
   if (!feature.isEnabled) {
     return null;
@@ -39,7 +38,7 @@ const GraphQL = () => {
 
   const initialQuery = `{
     transaction(
-      hash: "${ feature.defaultTxHash }"
+      hash: "${feature.defaultTxHash}"
     ) {
       hash
       blockNumber
@@ -60,9 +59,9 @@ const GraphQL = () => {
   });
 
   return (
-    <Box h="100vh" overflowX="scroll" sx={ graphQLStyle }>
-      <Box h="100vh" minW="900px" sx={ graphQLStyle }>
-        <GraphiQL fetcher={ fetcher } defaultQuery={ initialQuery } key={ colorModeState }/>
+    <Box h="100vh" overflowX="scroll" sx={graphQLStyle}>
+      <Box h="100vh" minW="900px" sx={graphQLStyle}>
+        <GraphiQL fetcher={fetcher} defaultQuery={initialQuery} key={colorModeState} />
       </Box>
     </Box>
   );

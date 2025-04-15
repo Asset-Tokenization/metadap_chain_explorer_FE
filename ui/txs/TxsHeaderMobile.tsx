@@ -29,30 +29,25 @@ type Props = {
   showPagination?: boolean;
   filterComponent?: React.ReactNode;
   linkSlot?: React.ReactNode;
-}
+};
 
 const TxsHeaderMobile = ({ filterComponent, sorting, setSorting, paginationProps, className, showPagination = true, linkSlot }: Props) => {
   return (
-    <ActionBar className={ className }>
+    <ActionBar className={className}>
       <HStack>
-        { filterComponent }
-        <Sort
-          options={ SORT_OPTIONS }
-          setSort={ setSorting }
-          sort={ sorting }
-          isLoading={ paginationProps.isLoading }
-        />
-        { /* api is not implemented */ }
-        { /* <FilterInput
+        {filterComponent}
+        <Sort options={SORT_OPTIONS} setSort={setSorting} sort={sorting} isLoading={paginationProps.isLoading} />
+        {/* api is not implemented */}
+        {/* <FilterInput
           // eslint-disable-next-line react/jsx-no-bind
           onChange={ () => {} }
           maxW="360px"
           size="xs"
           placeholder="Search by addresses, hash, method..."
-        /> */ }
-        { linkSlot }
+        /> */}
+        {linkSlot}
       </HStack>
-      { showPagination && <Pagination { ...paginationProps }/> }
+      {showPagination && <Pagination {...paginationProps} />}
     </ActionBar>
   );
 };

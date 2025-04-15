@@ -18,32 +18,25 @@ const NFTItem = ({ token, token_id: tokenId, token_instance: tokenInstance, isLo
     <Box
       w={{ base: '100%', lg: '210px' }}
       border="1px solid"
-      borderColor={ useColorModeValue('blackAlpha.100', 'whiteAlpha.200') }
+      borderColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.200')}
       borderRadius="12px"
       p="10px"
       fontSize="sm"
-      fontWeight={ 500 }
+      fontWeight={500}
       lineHeight="20px"
     >
-      <Link href={ isLoading ? undefined : tokenInstanceLink }>
-        <NftMedia
-          mb="18px"
-          url={ tokenInstance?.animation_url || tokenInstance?.image_url || null }
-          isLoading={ isLoading }
-        />
+      <Link href={isLoading ? undefined : tokenInstanceLink}>
+        <NftMedia mb="18px" url={tokenInstance?.animation_url || tokenInstance?.image_url || null} isLoading={isLoading} />
       </Link>
-      { tokenId && (
-        <Flex mb={ 2 } ml={ 1 }>
-          <Text whiteSpace="pre" variant="secondary">ID# </Text>
-          <NftEntity hash={ token.address } id={ tokenId } isLoading={ isLoading } noIcon/>
+      {tokenId && (
+        <Flex mb={2} ml={1}>
+          <Text whiteSpace="pre" variant="secondary">
+            ID#{' '}
+          </Text>
+          <NftEntity hash={token.address} id={tokenId} isLoading={isLoading} noIcon />
         </Flex>
-      ) }
-      <TokenEntity
-        token={ token }
-        isLoading={ isLoading }
-        noCopy
-        noSymbol
-      />
+      )}
+      <TokenEntity token={token} isLoading={isLoading} noCopy noSymbol />
     </Box>
   );
 };

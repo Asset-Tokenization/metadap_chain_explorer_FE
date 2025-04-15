@@ -3,7 +3,7 @@ export default function getFilePathParts(path: string, tabsPathChunks: Array<Arr
   const fileName = chunks[chunks.length - 1];
   const folderName = getFolderName(chunks, tabsPathChunks);
 
-  return [ fileName, folderName ];
+  return [fileName, folderName];
 }
 
 function getFolderName(chunks: Array<string>, tabsPathChunks: Array<Array<string>>): string | undefined {

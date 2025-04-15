@@ -15,16 +15,12 @@ const L2OutputRoots = () => {
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'l2_output_roots',
     options: {
-      placeholderData: generateListStub<'l2_output_roots'>(
-        L2_OUTPUT_ROOTS_ITEM,
-        50,
-        {
-          next_page_params: {
-            items_count: 50,
-            index: 9045200,
-          },
+      placeholderData: generateListStub<'l2_output_roots'>(L2_OUTPUT_ROOTS_ITEM, 50, {
+        next_page_params: {
+          items_count: 50,
+          index: 9045200,
         },
-      ),
+      }),
     },
   });
 
@@ -36,17 +32,13 @@ const L2OutputRoots = () => {
 
   const content = data?.items ? (
     <>
-      <Show below="lg" ssr={ false }>
-        { data.items.map(((item, index) => (
-          <OutputRootsListItem
-            key={ item.l2_output_index + (isPlaceholderData ? String(index) : '') }
-            item={ item }
-            isLoading={ isPlaceholderData }
-          />
-        ))) }
+      <Show below="lg" ssr={false}>
+        {data.items.map((item, index) => (
+          <OutputRootsListItem key={item.l2_output_index + (isPlaceholderData ? String(index) : '')} item={item} isLoading={isPlaceholderData} />
+        ))}
       </Show>
-      <Hide below="lg" ssr={ false }>
-        <OutputRootsTable items={ data.items } top={ pagination.isVisible ? 80 : 0 } isLoading={ isPlaceholderData }/>
+      <Hide below="lg" ssr={false}>
+        <OutputRootsTable items={data.items} top={pagination.isVisible ? 80 : 0} isLoading={isPlaceholderData} />
       </Hide>
     </>
   ) : null;
@@ -57,27 +49,28 @@ const L2OutputRoots = () => {
     }
 
     return (
-      <Skeleton isLoaded={ !countersQuery.isPlaceholderData && !isPlaceholderData } display="flex" flexWrap="wrap">
+      <Skeleton isLoaded={!countersQuery.isPlaceholderData && !isPlaceholderData} display="flex" flexWrap="wrap">
         L2 output index
-        <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[0].l2_output_index } </Text>to
-        <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[data.items.length - 1].l2_output_index } </Text>
-        (total of { countersQuery.data?.toLocaleString() } roots)
+        <Text fontWeight={600} whiteSpace="pre">
+          {' '}
+          #{data.items[0].l2_output_index}{' '}
+        </Text>
+        to
+        <Text fontWeight={600} whiteSpace="pre">
+          {' '}
+          #{data.items[data.items.length - 1].l2_output_index}{' '}
+        </Text>
+        (total of {countersQuery.data?.toLocaleString()} roots)
       </Skeleton>
     );
   })();
 
-  const actionBar = <StickyPaginationWithText text={ text } pagination={ pagination }/>;
+  const actionBar = <StickyPaginationWithText text={text} pagination={pagination} />;
 
   return (
     <>
-      <PageTitle title="Output roots" withTextAd/>
-      <DataListDisplay
-        isError={ isError }
-        items={ data?.items }
-        emptyText="There are no output roots."
-        content={ content }
-        actionBar={ actionBar }
-      />
+      <PageTitle title="Output roots" withTextAd />
+      <DataListDisplay isError={isError} items={data?.items} emptyText="There are no output roots." content={content} actionBar={actionBar} />
     </>
   );
 };

@@ -20,8 +20,5 @@ export type Monaco = typeof monaco;
 
 export interface SearchResult {
   file_path: string;
-  matches: Array<
-  Pick<monaco.editor.FindMatch['range'], 'startColumn' | 'endColumn' | 'startLineNumber' | 'endLineNumber'> &
-  { lineContent: string }
-  >;
+  matches: Array<Pick<monaco.editor.FindMatch['range'], 'startColumn' | 'endColumn' | 'startLineNumber' | 'endLineNumber'> & { lineContent: string }>;
 }

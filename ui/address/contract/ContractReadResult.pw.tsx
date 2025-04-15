@@ -13,7 +13,7 @@ const onSettle = () => Promise.resolve();
 
 test.use({ viewport: { width: 500, height: 500 } });
 
-test('default error', async({ mount }) => {
+test('default error', async ({ mount }) => {
   const result: ContractMethodReadResult = {
     is_error: true,
     result: {
@@ -22,14 +22,14 @@ test('default error', async({ mount }) => {
   };
   const component = await mount(
     <TestApp>
-      <ContractReadResult item={ item } onSettle={ onSettle } result={ result }/>
+      <ContractReadResult item={item} onSettle={onSettle} result={result} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('error with code', async({ mount }) => {
+test('error with code', async ({ mount }) => {
   const result: ContractMethodReadResult = {
     is_error: true,
     result: {
@@ -39,14 +39,14 @@ test('error with code', async({ mount }) => {
   };
   const component = await mount(
     <TestApp>
-      <ContractReadResult item={ item } onSettle={ onSettle } result={ result }/>
+      <ContractReadResult item={item} onSettle={onSettle} result={result} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('raw error', async({ mount }) => {
+test('raw error', async ({ mount }) => {
   const result: ContractMethodReadResult = {
     is_error: true,
     result: {
@@ -55,14 +55,14 @@ test('raw error', async({ mount }) => {
   };
   const component = await mount(
     <TestApp>
-      <ContractReadResult item={ item } onSettle={ onSettle } result={ result }/>
+      <ContractReadResult item={item} onSettle={onSettle} result={result} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('complex error', async({ mount }) => {
+test('complex error', async ({ mount }) => {
   const result: ContractMethodReadResult = {
     is_error: true,
     result: {
@@ -76,24 +76,24 @@ test('complex error', async({ mount }) => {
   };
   const component = await mount(
     <TestApp>
-      <ContractReadResult item={ item } onSettle={ onSettle } result={ result }/>
+      <ContractReadResult item={item} onSettle={onSettle} result={result} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('success', async({ mount }) => {
+test('success', async ({ mount }) => {
   const result: ContractMethodReadResult = {
     is_error: false,
     result: {
-      names: [ 'address' ],
-      output: [ { type: 'address', value: '0x0000000000000000000000000000000000000000' } ],
+      names: ['address'],
+      output: [{ type: 'address', value: '0x0000000000000000000000000000000000000000' }],
     },
   };
   const component = await mount(
     <TestApp>
-      <ContractReadResult item={ item } onSettle={ onSettle } result={ result }/>
+      <ContractReadResult item={item} onSettle={onSettle} result={result} />
     </TestApp>,
   );
 

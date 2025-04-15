@@ -24,21 +24,16 @@ const Sol2Uml = () => {
       label: 'Back to address',
       url: appProps.referrer,
     };
-  }, [ appProps.referrer ]);
+  }, [appProps.referrer]);
 
   return (
     <>
-      <PageTitle
-        title="Solidity UML diagram"
-        backLink={ backLink }
-      />
-      <Flex mb={ 10 } flexWrap="wrap" columnGap={ 3 }>
+      <PageTitle title="Solidity UML diagram" backLink={backLink} />
+      <Flex mb={10} flexWrap="wrap" columnGap={3}>
         <span>For contract</span>
-        <AddressEntity
-          address={{ hash: addressHash, is_contract: true, implementation_name: null }}
-        />
+        <AddressEntity address={{ hash: addressHash, is_contract: true, implementation_name: null }} />
       </Flex>
-      <Sol2UmlDiagram addressHash={ addressHash }/>
+      <Sol2UmlDiagram addressHash={addressHash} />
     </>
   );
 };

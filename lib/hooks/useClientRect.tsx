@@ -2,8 +2,8 @@ import _debounce from 'lodash/debounce';
 import type { LegacyRef } from 'react';
 import React from 'react';
 
-export default function useClientRect<E extends Element>(): [ DOMRect | null, LegacyRef<E> | undefined ] {
-  const [ rect, setRect ] = React.useState<DOMRect | null>(null);
+export default function useClientRect<E extends Element>(): [DOMRect | null, LegacyRef<E> | undefined] {
+  const [rect, setRect] = React.useState<DOMRect | null>(null);
   const nodeRef = React.useRef<E>();
 
   const ref = React.useCallback((node: E) => {
@@ -31,7 +31,7 @@ export default function useClientRect<E extends Element>(): [ DOMRect | null, Le
       resizeObserver.unobserve(content);
       resizeObserver.unobserve(window.document.body);
     };
-  }, [ ]);
+  }, []);
 
-  return [ rect, ref ];
+  return [rect, ref];
 }

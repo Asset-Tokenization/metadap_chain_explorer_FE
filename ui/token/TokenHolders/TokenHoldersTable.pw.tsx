@@ -8,22 +8,22 @@ import TestApp from 'playwright/TestApp';
 
 import TokenHoldersTable from './TokenHoldersTable';
 
-test('base view without IDs', async({ mount }) => {
+test('base view without IDs', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h="128px"/>
-      <TokenHoldersTable data={ tokenHoldersERC20.items } token={ tokenInfo } top={ 80 }/>
+      <Box h="128px" />
+      <TokenHoldersTable data={tokenHoldersERC20.items} token={tokenInfo} top={80} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('base view with IDs', async({ mount }) => {
+test('base view with IDs', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h="128px"/>
-      <TokenHoldersTable data={ tokenHoldersERC1155.items } token={ tokenInfoERC1155a } top={ 80 }/>
+      <Box h="128px" />
+      <TokenHoldersTable data={tokenHoldersERC1155.items} token={tokenInfoERC1155a} top={80} />
     </TestApp>,
   );
 

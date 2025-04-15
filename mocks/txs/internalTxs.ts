@@ -68,10 +68,6 @@ export const withContractCreated: InternalTransaction = {
 };
 
 export const baseResponse: InternalTransactionsResponse = {
-  items: [
-    base,
-    typeStaticCall,
-    withContractCreated,
-  ],
+  items: [base, typeStaticCall, withContractCreated],
   next_page_params: null,
 };

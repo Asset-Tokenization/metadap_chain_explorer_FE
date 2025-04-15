@@ -15,16 +15,9 @@ const NftHtmlWithFullscreen = ({ src, onLoad, onError }: Props) => {
 
   return (
     <>
-      <NftHtml src={ src } onLoad={ onLoad } onError={ onError } onClick={ onOpen }/>
-      <NftMediaFullscreenModal isOpen={ isOpen } onClose={ onClose }>
-        <chakra.iframe
-          w="90vw"
-          h="90vh"
-          src={ src }
-          sandbox="allow-scripts"
-          onLoad={ onLoad }
-          onError={ onError }
-        />
+      <NftHtml src={src} onLoad={onLoad} onError={onError} onClick={onOpen} />
+      <NftMediaFullscreenModal isOpen={isOpen} onClose={onClose}>
+        <chakra.iframe w="90vw" h="90vh" src={src} sandbox="allow-scripts" onLoad={onLoad} onError={onError} />
       </NftMediaFullscreenModal>
     </>
   );

@@ -9,7 +9,7 @@ const L2Deposits = dynamic(() => import('ui/pages/L2Deposits'), { ssr: false });
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/l2-deposits">
-      <L2Deposits/>
+      <L2Deposits />
     </PageNextJs>
   );
 };

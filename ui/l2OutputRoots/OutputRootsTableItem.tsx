@@ -24,34 +24,27 @@ const OutputRootsTableItem = ({ item, isLoading }: Props) => {
   return (
     <Tr>
       <Td verticalAlign="middle">
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.l2_output_index }</Skeleton>
+        <Skeleton isLoaded={!isLoading} display="inline-block">
+          {item.l2_output_index}
+        </Skeleton>
       </Td>
       <Td verticalAlign="middle">
-        <Skeleton isLoaded={ !isLoading } color="text_secondary" display="inline-block"><span>{ timeAgo }</span></Skeleton>
+        <Skeleton isLoaded={!isLoading} color="text_secondary" display="inline-block">
+          <span>{timeAgo}</span>
+        </Skeleton>
       </Td>
       <Td verticalAlign="middle">
-        <BlockEntityL2
-          isLoading={ isLoading }
-          number={ item.l2_block_number }
-          fontSize="sm"
-          lineHeight={ 5 }
-          fontWeight={ 600 }
-        />
+        <BlockEntityL2 isLoading={isLoading} number={item.l2_block_number} fontSize="sm" lineHeight={5} fontWeight={600} />
       </Td>
-      <Td verticalAlign="middle" pr={ 12 }>
-        <TxEntityL1
-          isLoading={ isLoading }
-          hash={ item.l1_tx_hash }
-          fontSize="sm"
-          lineHeight={ 5 }
-        />
+      <Td verticalAlign="middle" pr={12}>
+        <TxEntityL1 isLoading={isLoading} hash={item.l1_tx_hash} fontSize="sm" lineHeight={5} />
       </Td>
       <Td verticalAlign="middle">
         <Flex overflow="hidden" whiteSpace="nowrap" w="100%" alignItems="center">
-          <Skeleton isLoaded={ !isLoading } w="calc(100% - 36px)">
-            <HashStringShortenDynamic hash={ item.output_root }/>
+          <Skeleton isLoaded={!isLoading} w="calc(100% - 36px)">
+            <HashStringShortenDynamic hash={item.output_root} />
           </Skeleton>
-          <CopyToClipboard text={ item.output_root } ml={ 2 } isLoading={ isLoading }/>
+          <CopyToClipboard text={item.output_root} ml={2} isLoading={isLoading} />
         </Flex>
       </Td>
     </Tr>

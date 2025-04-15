@@ -21,51 +21,40 @@ function getBgColor(status?: AlertStatus) {
 }
 
 const Toast = ({ onClose, title, description, id, isClosable, status }: ToastProps) => {
-
-  const ids = id ?
-    {
-      root: `toast-${ id }`,
-      title: `toast-${ id }-title`,
-      description: `toast-${ id }-description`,
-    } :
-    undefined;
+  const ids = id
+    ? {
+        root: `toast-${id}`,
+        title: `toast-${id}-title`,
+        description: `toast-${id}-description`,
+      }
+    : undefined;
 
   const bgColor = getBgColor(status);
 
   return (
     <Alert
-      id={ ids?.root }
+      id={ids?.root}
       alignItems="start"
       borderRadius="md"
       boxShadow="lg"
-      paddingY={ 4 }
-      paddingLeft={ 6 }
+      paddingY={4}
+      paddingLeft={6}
       paddingRight="72px"
       color="gray.700"
-      bgColor={ bgColor }
+      bgColor={bgColor}
       textAlign="start"
       width="auto"
       maxWidth="400px"
     >
       <chakra.div flex="1" maxWidth="100%">
-        { title && <AlertTitle id={ ids?.title }>{ title }</AlertTitle> }
-        { description && (
-          <AlertDescription id={ ids?.description } display="block">
-            { description }
+        {title && <AlertTitle id={ids?.title}>{title}</AlertTitle>}
+        {description && (
+          <AlertDescription id={ids?.description} display="block">
+            {description}
           </AlertDescription>
-        ) }
+        )}
       </chakra.div>
-      { isClosable && (
-        <CloseButton
-          size="md"
-          borderRadius="base"
-          color="gray.700"
-          onClick={ onClose }
-          position="absolute"
-          insetEnd={ 4 }
-          top={ 4 }
-        />
-      ) }
+      {isClosable && <CloseButton size="md" borderRadius="base" color="gray.700" onClick={onClose} position="absolute" insetEnd={4} top={4} />}
     </Alert>
   );
 };

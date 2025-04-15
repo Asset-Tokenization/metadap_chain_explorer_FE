@@ -13,21 +13,17 @@ const ProfileMenuMobile = () => {
 
   const { data, error, isLoading } = useFetchProfileInfo();
   const loginUrl = useLoginUrl();
-  const [ hasMenu, setHasMenu ] = React.useState(false);
+  const [hasMenu, setHasMenu] = React.useState(false);
 
   const handleSignInClick = React.useCallback(() => {
-    mixpanel.logEvent(
-      mixpanel.EventTypes.ACCOUNT_ACCESS,
-      { Action: 'Auth0 init' },
-      { send_immediately: true },
-    );
+    mixpanel.logEvent(mixpanel.EventTypes.ACCOUNT_ACCESS, { Action: 'Auth0 init' }, { send_immediately: true });
   }, []);
 
   React.useEffect(() => {
     if (!isLoading) {
       setHasMenu(Boolean(data));
     }
-  }, [ data, error?.status, isLoading ]);
+  }, [data, error?.status, isLoading]);
 
   const buttonProps: Partial<ButtonProps> = (() => {
     if (hasMenu || !loginUrl) {
@@ -43,32 +39,21 @@ const ProfileMenuMobile = () => {
 
   return (
     <>
-      <Box padding={ 2 } onClick={ hasMenu ? onOpen : undefined }>
-        <Button
-          variant="unstyled"
-          display="block"
-          boxSize="24px"
-          flexShrink={ 0 }
-          { ...buttonProps }
-        >
-          <UserAvatar size={ 24 }/>
+      <Box padding={2} onClick={hasMenu ? onOpen : undefined}>
+        <Button variant="unstyled" display="block" boxSize="24px" flexShrink={0} {...buttonProps}>
+          <UserAvatar size={24} />
         </Button>
       </Box>
-      { hasMenu && (
-        <Drawer
-          isOpen={ isOpen }
-          placement="right"
-          onClose={ onClose }
-          autoFocus={ false }
-        >
-          <DrawerOverlay/>
+      {hasMenu && (
+        <Drawer isOpen={isOpen} placement="right" onClose={onClose} autoFocus={false}>
+          <DrawerOverlay />
           <DrawerContent maxWidth="260px">
-            <DrawerBody p={ 6 }>
-              <ProfileMenuContent data={ data } onNavLinkClick={ onClose }/>
+            <DrawerBody p={6}>
+              <ProfileMenuContent data={data} onNavLinkClick={onClose} />
             </DrawerBody>
           </DrawerContent>
         </Drawer>
-      ) }
+      )}
     </>
   );
 };

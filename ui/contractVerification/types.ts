@@ -73,5 +73,11 @@ export interface FormFieldsVyperStandardInput {
   sources: Array<File>;
 }
 
-export type FormFields = FormFieldsFlattenSourceCode | FormFieldsStandardInput | FormFieldsSourcify |
-FormFieldsMultiPartFile | FormFieldsVyperContract | FormFieldsVyperMultiPartFile | FormFieldsVyperStandardInput;
+export type FormFields =
+  | FormFieldsFlattenSourceCode
+  | FormFieldsStandardInput
+  | FormFieldsSourcify
+  | FormFieldsMultiPartFile
+  | FormFieldsVyperContract
+  | FormFieldsVyperMultiPartFile
+  | FormFieldsVyperStandardInput;

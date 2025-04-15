@@ -12,7 +12,7 @@ interface SocketProviderProps {
 }
 
 export function SocketProvider({ children, options, url }: SocketProviderProps) {
-  const [ socket, setSocket ] = useState<Socket | null>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
     if (!url) {
@@ -27,13 +27,9 @@ export function SocketProvider({ children, options, url }: SocketProviderProps) 
       socketInstance.disconnect();
       setSocket(null);
     };
-  }, [ options, url ]);
+  }, [options, url]);
 
-  return (
-    <SocketContext.Provider value={ socket }>
-      { children }
-    </SocketContext.Provider>
-  );
+  return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
 }
 
 export function useSocket() {

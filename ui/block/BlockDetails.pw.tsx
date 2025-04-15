@@ -18,7 +18,7 @@ const hooksConfig = {
   },
 };
 
-test('regular block +@mobile +@dark-mode', async({ mount, page }) => {
+test('regular block +@mobile +@dark-mode', async ({ mount, page }) => {
   const query = {
     data: blockMock.base,
     isLoading: false,
@@ -26,7 +26,7 @@ test('regular block +@mobile +@dark-mode', async({ mount, page }) => {
 
   const component = await mount(
     <TestApp>
-      <BlockDetails query={ query }/>
+      <BlockDetails query={query} />
     </TestApp>,
     { hooksConfig },
   );
@@ -36,7 +36,7 @@ test('regular block +@mobile +@dark-mode', async({ mount, page }) => {
   await expect(component).toHaveScreenshot();
 });
 
-test('genesis block', async({ mount, page }) => {
+test('genesis block', async ({ mount, page }) => {
   const query = {
     data: blockMock.genesis,
     isLoading: false,
@@ -44,7 +44,7 @@ test('genesis block', async({ mount, page }) => {
 
   const component = await mount(
     <TestApp>
-      <BlockDetails query={ query }/>
+      <BlockDetails query={query} />
     </TestApp>,
     { hooksConfig },
   );
@@ -59,7 +59,7 @@ const customFieldsTest = test.extend({
   context: contextWithEnvs(configs.viewsEnvs.block.hiddenFields) as any,
 });
 
-customFieldsTest('rootstock custom fields', async({ mount, page }) => {
+customFieldsTest('rootstock custom fields', async ({ mount, page }) => {
   const query = {
     data: blockMock.rootstock,
     isLoading: false,
@@ -67,7 +67,7 @@ customFieldsTest('rootstock custom fields', async({ mount, page }) => {
 
   const component = await mount(
     <TestApp>
-      <BlockDetails query={ query }/>
+      <BlockDetails query={query} />
     </TestApp>,
     { hooksConfig },
   );

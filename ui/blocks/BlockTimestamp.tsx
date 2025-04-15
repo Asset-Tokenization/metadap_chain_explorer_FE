@@ -14,8 +14,8 @@ const BlockTimestamp = ({ ts, isEnabled, isLoading, className }: Props) => {
   const timeAgo = useTimeAgoIncrement(ts, isEnabled);
 
   return (
-    <Skeleton isLoaded={ !isLoading } color="text_secondary" fontWeight={ 400 } className={ className } display="inline-block">
-      <span>{ timeAgo }</span>
+    <Skeleton isLoaded={!isLoading} color="text_secondary" fontWeight={400} className={className} display="inline-block">
+      <span>{timeAgo}</span>
     </Skeleton>
   );
 };

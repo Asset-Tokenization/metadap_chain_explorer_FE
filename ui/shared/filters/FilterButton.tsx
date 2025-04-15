@@ -4,7 +4,7 @@ import React from 'react';
 
 import filterIcon from 'icons/filter.svg';
 
-const FilterIcon = <Icon as={ filterIcon } boxSize={ 5 } mr={{ base: 0, lg: 2 }}/>;
+const FilterIcon = <Icon as={filterIcon} boxSize={5} mr={{ base: 0, lg: 2 }} />;
 
 interface Props {
   isActive?: boolean;
@@ -19,24 +19,30 @@ const FilterButton = ({ isActive, isLoading, appliedFiltersNum, onClick, as }: P
   const badgeBgColor = useColorModeValue('blue.700', 'gray.50');
 
   if (isLoading) {
-    return <Skeleton w={{ base: 9, lg: '78px' }} h={ 8 } borderRadius="base"/>;
+    return <Skeleton w={{ base: 9, lg: '78px' }} h={8} borderRadius="base" />;
   }
 
   return (
     <Button
-      ref={ ref }
-      rightIcon={ appliedFiltersNum ? <Circle bg={ badgeBgColor } size={ 5 } color={ badgeColor }>{ appliedFiltersNum }</Circle> : undefined }
+      ref={ref}
+      rightIcon={
+        appliedFiltersNum ? (
+          <Circle bg={badgeBgColor} size={5} color={badgeColor}>
+            {appliedFiltersNum}
+          </Circle>
+        ) : undefined
+      }
       size="sm"
       fontWeight="500"
       variant="outline"
       colorScheme="gray-dark"
-      onClick={ onClick }
-      isActive={ isActive }
-      px={ 1.5 }
-      flexShrink={ 0 }
-      as={ as }
+      onClick={onClick}
+      isActive={isActive}
+      px={1.5}
+      flexShrink={0}
+      as={as}
     >
-      { FilterIcon }
+      {FilterIcon}
       <Box display={{ base: 'none', lg: 'block' }}>Filter</Box>
     </Button>
   );

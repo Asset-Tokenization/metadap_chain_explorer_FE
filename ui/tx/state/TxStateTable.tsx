@@ -1,10 +1,10 @@
-import { Table, Tbody, Tr, Th } from "@chakra-ui/react";
-import React from "react";
+import { Table, Tbody, Tr, Th } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TxStateChange } from "types/api/txStateChanges";
+import type { TxStateChange } from 'types/api/txStateChanges';
 
-import { default as Thead } from "ui/shared/TheadSticky";
-import TxStateTableItem from "ui/tx/state/TxStateTableItem";
+import { default as Thead } from 'ui/shared/TheadSticky';
+import TxStateTableItem from 'ui/tx/state/TxStateTableItem';
 
 interface Props {
   data: Array<TxStateChange>;

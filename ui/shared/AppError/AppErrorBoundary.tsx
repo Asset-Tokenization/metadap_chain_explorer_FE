@@ -12,14 +12,16 @@ interface Props {
 }
 
 const AppErrorBoundary = ({ className, children, onError }: Props) => {
-
-  const renderErrorScreen = React.useCallback((error?: Error) => {
-    return <AppError error={ error } className={ className }/>;
-  }, [ className ]);
+  const renderErrorScreen = React.useCallback(
+    (error?: Error) => {
+      return <AppError error={error} className={className} />;
+    },
+    [className],
+  );
 
   return (
-    <ErrorBoundary renderErrorScreen={ renderErrorScreen } onError={ onError }>
-      { children }
+    <ErrorBoundary renderErrorScreen={renderErrorScreen} onError={onError}>
+      {children}
     </ErrorBoundary>
   );
 };

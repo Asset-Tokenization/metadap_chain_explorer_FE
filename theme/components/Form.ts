@@ -9,17 +9,17 @@ import FormLabel from './FormLabel';
 import Input from './Input';
 import Textarea from './Textarea';
 
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(parts.keys);
+const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(parts.keys);
 
 function getFloatingVariantStylesForSize(size: 'md' | 'lg', props: StyleFunctionProps) {
   const { theme } = props;
   const { focusPlaceholderColor, errorColor } = getDefaultFormColors(props);
 
-  const activeLabelStyles = {
-    ...FormLabel.variants?.floating?.(props)._focusWithin,
-    ...FormLabel.sizes?.[size](props)._focusWithin,
-  } || {};
+  const activeLabelStyles =
+    {
+      ...FormLabel.variants?.floating?.(props)._focusWithin,
+      ...FormLabel.sizes?.[size](props)._focusWithin,
+    } || {};
 
   const activeInputStyles = (() => {
     switch (size) {

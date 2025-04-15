@@ -9,12 +9,12 @@ const TokenLogoPlaceholder = ({ className }: { className?: string }) => {
 
   return (
     <Icon
-      className={ className }
-      fontWeight={ 600 }
-      bgColor={ bgColor }
-      color={ color }
+      className={className}
+      fontWeight={600}
+      bgColor={bgColor}
+      color={color}
       borderRadius="base"
-      as={ tokenPlaceholderIcon }
+      as={tokenPlaceholderIcon}
       transitionProperty="background-color,color"
       transitionDuration="normal"
       transitionTimingFunction="ease"

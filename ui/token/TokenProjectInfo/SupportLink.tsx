@@ -10,19 +10,13 @@ interface Props {
 
 const SupportLink = ({ url }: Props) => {
   const isEmail = url.includes('@');
-  const href = isEmail ? `mailto:${ url }` : url;
+  const href = isEmail ? `mailto:${url}` : url;
   const icon = isEmail ? iconEmail : iconLink;
 
   return (
-    <Link
-      href={ href }
-      target="_blank"
-      display="inline-flex"
-      alignItems="center"
-      columnGap={ 1 }
-    >
-      <Icon as={ icon } boxSize={ 6 } color="text_secondary"/>
-      <span>{ url }</span>
+    <Link href={href} target="_blank" display="inline-flex" alignItems="center" columnGap={1}>
+      <Icon as={icon} boxSize={6} color="text_secondary" />
+      <span>{url}</span>
     </Link>
   );
 };

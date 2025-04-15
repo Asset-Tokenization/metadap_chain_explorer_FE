@@ -12,7 +12,7 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 
 import AddressCsvExportLink from './AddressCsvExportLink';
 
-const AddressLogs = ({ scrollRef }: {scrollRef?: React.RefObject<HTMLDivElement>}) => {
+const AddressLogs = ({ scrollRef }: { scrollRef?: React.RefObject<HTMLDivElement> }) => {
   const router = useRouter();
 
   const hash = getQueryParamString(router.query.hash);
@@ -21,37 +21,27 @@ const AddressLogs = ({ scrollRef }: {scrollRef?: React.RefObject<HTMLDivElement>
     pathParams: { hash },
     scrollRef,
     options: {
-      placeholderData: generateListStub<'address_logs'>(LOG, 3, { next_page_params: {
-        block_number: 9005750,
-        index: 42,
-        items_count: 50,
-        transaction_index: 23,
-      } }),
+      placeholderData: generateListStub<'address_logs'>(LOG, 3, {
+        next_page_params: {
+          block_number: 9005750,
+          index: 42,
+          items_count: 50,
+          transaction_index: 23,
+        },
+      }),
     },
   });
 
   const actionBar = (
-    <ActionBar mt={ -6 } showShadow justifyContent={{ base: 'space-between', lg: 'end' }}>
-      <AddressCsvExportLink
-        address={ hash }
-        isLoading={ pagination.isLoading }
-        params={{ type: 'logs' }}
-      />
-      <Pagination ml={{ base: 0, lg: 8 }} { ...pagination }/>
+    <ActionBar mt={-6} showShadow justifyContent={{ base: 'space-between', lg: 'end' }}>
+      <AddressCsvExportLink address={hash} isLoading={pagination.isLoading} params={{ type: 'logs' }} />
+      <Pagination ml={{ base: 0, lg: 8 }} {...pagination} />
     </ActionBar>
   );
 
-  const content = data?.items ? data.items.map((item, index) => <LogItem key={ index } { ...item } type="address" isLoading={ isPlaceholderData }/>) : null;
+  const content = data?.items ? data.items.map((item, index) => <LogItem key={index} {...item} type="address" isLoading={isPlaceholderData} />) : null;
 
-  return (
-    <DataListDisplay
-      isError={ isError }
-      items={ data?.items }
-      emptyText="There are no logs for this address."
-      content={ content }
-      actionBar={ actionBar }
-    />
-  );
+  return <DataListDisplay isError={isError} items={data?.items} emptyText="There are no logs for this address." content={content} actionBar={actionBar} />;
 };
 
 export default AddressLogs;

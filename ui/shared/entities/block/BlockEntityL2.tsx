@@ -10,18 +10,18 @@ import * as BlockEntity from './BlockEntity';
 const feature = config.features.rollup;
 
 const BlockEntityL2 = (props: BlockEntity.EntityProps) => {
-  const linkProps = _omit(props, [ 'className' ]);
-  const partsProps = _omit(props, [ 'className', 'onClick' ]);
+  const linkProps = _omit(props, ['className']);
+  const partsProps = _omit(props, ['className', 'onClick']);
 
   if (!feature.isEnabled) {
     return null;
   }
 
   return (
-    <BlockEntity.Container className={ props.className }>
-      <BlockEntity.Icon { ...partsProps } asProp={ txBatchIcon }/>
-      <BlockEntity.Link { ...linkProps }>
-        <BlockEntity.Content { ...partsProps }/>
+    <BlockEntity.Container className={props.className}>
+      <BlockEntity.Icon {...partsProps} asProp={txBatchIcon} />
+      <BlockEntity.Link {...linkProps}>
+        <BlockEntity.Content {...partsProps} />
       </BlockEntity.Link>
     </BlockEntity.Container>
   );

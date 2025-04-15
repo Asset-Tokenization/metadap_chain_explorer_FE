@@ -18,5 +18,5 @@ export default function useSocketMessage({ channel, event, handler }: SocketMess
     return () => {
       channel.off(event, ref);
     };
-  }, [ channel, event ]);
+  }, [channel, event]);
 }

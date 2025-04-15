@@ -47,9 +47,9 @@ const ContractVerification = () => {
     if (method && hash) {
       router.replace({ pathname: '/address/[hash]/contract-verification', query: { hash } }, undefined, { scroll: false, shallow: true });
     }
-  // onMount only
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ ]);
+    // onMount only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const isVerifiedContract = contractQuery.data?.is_verified && !contractQuery.data.is_partially_verified;
 
@@ -57,22 +57,22 @@ const ContractVerification = () => {
     if (isVerifiedContract) {
       router.push({ pathname: '/address/[hash]', query: { hash, tab: 'contract' } }, undefined, { scroll: false, shallow: true });
     }
-  }, [ hash, isVerifiedContract, router ]);
+  }, [hash, isVerifiedContract, router]);
 
   const content = (() => {
     if (configQuery.isError || !hash || contractQuery.isError) {
-      return <DataFetchAlert/>;
+      return <DataFetchAlert />;
     }
 
     if (configQuery.isLoading || contractQuery.isLoading || isVerifiedContract) {
-      return <ContentLoader/>;
+      return <ContentLoader />;
     }
 
     return (
       <ContractVerificationForm
-        method={ method && configQuery.data.verification_options.includes(method) ? method : undefined }
-        config={ configQuery.data }
-        hash={ hash }
+        method={method && configQuery.data.verification_options.includes(method) ? method : undefined}
+        config={configQuery.data}
+        hash={hash}
       />
     );
   })();
@@ -88,23 +88,13 @@ const ContractVerification = () => {
       label: 'Back to contract',
       url: appProps.referrer,
     };
-  }, [ appProps.referrer ]);
+  }, [appProps.referrer]);
 
   return (
     <>
-      <PageTitle
-        title="New smart contract verification"
-        backLink={ backLink }
-      />
-      <AddressEntity
-        address={{ hash, is_contract: true, implementation_name: null }}
-        noLink
-        fontFamily="heading"
-        fontSize="lg"
-        fontWeight={ 500 }
-        mb={ 12 }
-      />
-      { content }
+      <PageTitle title="New smart contract verification" backLink={backLink} />
+      <AddressEntity address={{ hash, is_contract: true, implementation_name: null }} noLink fontFamily="heading" fontSize="lg" fontWeight={500} mb={12} />
+      {content}
     </>
   );
 };

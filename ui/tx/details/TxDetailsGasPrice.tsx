@@ -20,13 +20,13 @@ const TxDetailsGasPrice = ({ gasPrice, isLoading }: Props) => {
     <DetailsInfoItem
       title="Gas price"
       hint="Price per unit of gas specified by the sender. Higher gas prices can prioritize transaction inclusion during times of high usage"
-      isLoading={ isLoading }
+      isLoading={isLoading}
     >
-      <Skeleton isLoaded={ !isLoading } mr={ 1 }>
-        { BigNumber(gasPrice).dividedBy(WEI).toFixed() } { config.chain.currency.symbol }
+      <Skeleton isLoaded={!isLoading} mr={1}>
+        {BigNumber(gasPrice).dividedBy(WEI).toFixed()} {config.chain.currency.symbol}
       </Skeleton>
-      <Skeleton isLoaded={ !isLoading } color="text_secondary">
-        <span>({ BigNumber(gasPrice).dividedBy(WEI_IN_GWEI).toFixed() } Gwei)</span>
+      <Skeleton isLoaded={!isLoading} color="text_secondary">
+        <span>({BigNumber(gasPrice).dividedBy(WEI_IN_GWEI).toFixed()} Gwei)</span>
       </Skeleton>
     </DetailsInfoItem>
   );

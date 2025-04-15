@@ -48,7 +48,7 @@ const Sol2UmlDiagram = ({ addressHash }: Props) => {
     },
   });
 
-  const imgUrl = `data:image/svg+xml;base64,${ umlQuery.data?.svg }`;
+  const imgUrl = `data:image/svg+xml;base64,${umlQuery.data?.svg}`;
   const imgFilter = useColorModeValue('invert(0)', 'invert(1)');
 
   const handleClick = React.useCallback(() => {
@@ -57,7 +57,7 @@ const Sol2UmlDiagram = ({ addressHash }: Props) => {
 
     const newWindow = window.open(imgUrl);
     newWindow?.document.write(image.outerHTML);
-  }, [ imgUrl ]);
+  }, [imgUrl]);
 
   if (!addressHash) {
     throw Error('Contract address is not provided', { cause: { status: 404 } as unknown as Error });
@@ -72,7 +72,7 @@ const Sol2UmlDiagram = ({ addressHash }: Props) => {
   }
 
   if (contractQuery.isLoading || umlQuery.isLoading) {
-    return <ContentLoader/>;
+    return <ContentLoader />;
   }
 
   if (!umlQuery.data.svg) {
@@ -82,11 +82,11 @@ const Sol2UmlDiagram = ({ addressHash }: Props) => {
   return (
     <Tooltip label="Click on image to zoom" placement="top">
       <chakra.img
-        src={ `data:image/svg+xml;base64,${ umlQuery.data.svg }` }
-        alt={ `Contract ${ contractQuery.data.name } UML diagram` }
-        onClick={ handleClick }
+        src={`data:image/svg+xml;base64,${umlQuery.data.svg}`}
+        alt={`Contract ${contractQuery.data.name} UML diagram`}
+        onClick={handleClick}
         cursor="pointer"
-        filter={ imgFilter }
+        filter={imgFilter}
       />
     </Tooltip>
   );

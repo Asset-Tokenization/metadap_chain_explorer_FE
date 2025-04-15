@@ -1,16 +1,16 @@
-import { IconButton, Link, Skeleton, Tooltip } from "@chakra-ui/react";
-import React from "react";
+import { IconButton, Link, Skeleton, Tooltip } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TokenInfoApplication, VerifiedAddress } from "types/api/account";
+import type { TokenInfoApplication, VerifiedAddress } from 'types/api/account';
 
-import editIcon from "icons/edit.svg";
-import dayjs from "lib/date/dayjs";
-import Icon from "ui/shared/chakra/Icon";
-import AddressEntity from "ui/shared/entities/address/AddressEntity";
-import TokenEntity from "ui/shared/entities/token/TokenEntity";
-import ListItemMobileGrid from "ui/shared/ListItemMobile/ListItemMobileGrid";
+import editIcon from 'icons/edit.svg';
+import dayjs from 'lib/date/dayjs';
+import Icon from 'ui/shared/chakra/Icon';
+import AddressEntity from 'ui/shared/entities/address/AddressEntity';
+import TokenEntity from 'ui/shared/entities/token/TokenEntity';
+import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
 
-import VerifiedAddressesStatus from "./VerifiedAddressesStatus";
+import VerifiedAddressesStatus from './VerifiedAddressesStatus';
 
 interface Props {
   item: VerifiedAddress;
@@ -20,13 +20,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const VerifiedAddressesListItem = ({
-  item,
-  application,
-  onAdd,
-  onEdit,
-  isLoading,
-}: Props) => {
+const VerifiedAddressesListItem = ({ item, application, onAdd, onEdit, isLoading }: Props) => {
   const handleAddClick = React.useCallback(() => {
     if (isLoading) {
       return;
@@ -58,17 +52,12 @@ const VerifiedAddressesListItem = ({
       icon_url: application.iconUrl,
       address: application.tokenAddress,
       name: item.metadata.tokenName,
-      symbol: "",
+      symbol: '',
     };
 
     return (
       <>
-        <TokenEntity
-          token={token}
-          noLink={application.status === "IN_PROCESS"}
-          noCopy
-          noSymbol
-        />
+        <TokenEntity token={token} noLink={application.status === 'IN_PROCESS'} noCopy noSymbol />
         <Tooltip label="Edit">
           <IconButton
             aria-label="edit"
@@ -86,9 +75,7 @@ const VerifiedAddressesListItem = ({
 
   return (
     <ListItemMobileGrid.Container>
-      <ListItemMobileGrid.Label isLoading={isLoading}>
-        Address
-      </ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>Address</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <AddressEntity
           address={{
@@ -103,9 +90,7 @@ const VerifiedAddressesListItem = ({
 
       {item.metadata.tokenName && (
         <>
-          <ListItemMobileGrid.Label isLoading={isLoading}>
-            Certificate Info
-          </ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={isLoading}>Certificate Info</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value display="flex" alignItems="center">
             {tokenInfo}
           </ListItemMobileGrid.Value>
@@ -114,9 +99,7 @@ const VerifiedAddressesListItem = ({
 
       {item.metadata.tokenName && application && (
         <>
-          <ListItemMobileGrid.Label isLoading={isLoading}>
-            Status
-          </ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={isLoading}>Status</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <Skeleton isLoaded={!isLoading} display="inline-block">
               <VerifiedAddressesStatus status={application.status} />
@@ -127,12 +110,10 @@ const VerifiedAddressesListItem = ({
 
       {item.metadata.tokenName && application && (
         <>
-          <ListItemMobileGrid.Label isLoading={isLoading}>
-            Date
-          </ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={isLoading}>Date</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <Skeleton isLoaded={!isLoading} display="inline-block">
-              {dayjs(application.updatedAt).format("MMM DD, YYYY")}
+              {dayjs(application.updatedAt).format('MMM DD, YYYY')}
             </Skeleton>
           </ListItemMobileGrid.Value>
         </>

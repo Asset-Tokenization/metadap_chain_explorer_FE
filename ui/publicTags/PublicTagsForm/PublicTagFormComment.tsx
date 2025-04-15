@@ -17,23 +17,23 @@ interface Props {
 }
 
 export default function PublicTagFormComment({ control, error, size }: Props) {
-  const renderComment = useCallback(({ field }: {field: ControllerRenderProps<Inputs, 'comment'>}) => {
-    return (
-      <FormControl variant="floating" id={ field.name } size={ size } isRequired>
-        <Textarea
-          { ...field }
-          isInvalid={ Boolean(error) }
-        />
-        <InputPlaceholder text="Specify the reason for adding tags and color preference(s)" error={ error }/>
-      </FormControl>
-    );
-  }, [ error, size ]);
+  const renderComment = useCallback(
+    ({ field }: { field: ControllerRenderProps<Inputs, 'comment'> }) => {
+      return (
+        <FormControl variant="floating" id={field.name} size={size} isRequired>
+          <Textarea {...field} isInvalid={Boolean(error)} />
+          <InputPlaceholder text="Specify the reason for adding tags and color preference(s)" error={error} />
+        </FormControl>
+      );
+    },
+    [error, size],
+  );
 
   return (
     <Controller
       name="comment"
-      control={ control }
-      render={ renderComment }
+      control={control}
+      render={renderComment}
       rules={{
         maxLength: TEXT_INPUT_MAX_LENGTH,
         required: true,

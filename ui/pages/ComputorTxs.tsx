@@ -18,23 +18,22 @@ const ComputorTxs = () => {
     resourceName: 'txs_execution_node',
     pathParams: { hash },
     options: {
-      placeholderData: generateListStub<'txs_execution_node'>(TX, 50, { next_page_params: {
-        block_number: 9005713,
-        index: 5,
-        items_count: 50,
-        filter: 'validated',
-      } }),
+      placeholderData: generateListStub<'txs_execution_node'>(TX, 50, {
+        next_page_params: {
+          block_number: 9005713,
+          index: 5,
+          items_count: 50,
+          filter: 'validated',
+        },
+      }),
     },
   });
 
   return (
     <>
-      <PageTitle title="Computor transactions" withTextAd/>
-      <AddressEntity address={{ hash }} mb={ 6 }/>
-      <TxsContent
-        query={ query }
-        showSocketInfo={ false }
-      />
+      <PageTitle title="Computor transactions" withTextAd />
+      <AddressEntity address={{ hash }} mb={6} />
+      <TxsContent query={query} showSocketInfo={false} />
     </>
   );
 };

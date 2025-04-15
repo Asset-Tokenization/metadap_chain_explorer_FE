@@ -15,7 +15,12 @@ import AddressTagTable from './AddressTagTable/AddressTagTable';
 import DeletePrivateTagModal from './DeletePrivateTagModal';
 
 const PrivateAddressTags = () => {
-  const { data: addressTagsData, isError, isPlaceholderData, refetch } = useApiQuery('private_tags_address', {
+  const {
+    data: addressTagsData,
+    isError,
+    isPlaceholderData,
+    refetch,
+  } = useApiQuery('private_tags_address', {
     queryOptions: {
       refetchOnMount: false,
       placeholderData: Array(3).fill(PRIVATE_TAG_ADDRESS),
@@ -25,57 +30,58 @@ const PrivateAddressTags = () => {
   const addressModalProps = useDisclosure();
   const deleteModalProps = useDisclosure();
 
-  const [ addressModalData, setAddressModalData ] = useState<AddressTag>();
-  const [ deleteModalData, setDeleteModalData ] = useState<AddressTag>();
+  const [addressModalData, setAddressModalData] = useState<AddressTag>();
+  const [deleteModalData, setDeleteModalData] = useState<AddressTag>();
 
-  const onEditClick = useCallback((data: AddressTag) => {
-    setAddressModalData(data);
-    addressModalProps.onOpen();
-  }, [ addressModalProps ]);
+  const onEditClick = useCallback(
+    (data: AddressTag) => {
+      setAddressModalData(data);
+      addressModalProps.onOpen();
+    },
+    [addressModalProps],
+  );
 
-  const onAddOrEditSuccess = useCallback(async() => {
+  const onAddOrEditSuccess = useCallback(async () => {
     await refetch();
-  }, [ refetch ]);
+  }, [refetch]);
 
   const onAddressModalClose = useCallback(() => {
     setAddressModalData(undefined);
     addressModalProps.onClose();
-  }, [ addressModalProps ]);
+  }, [addressModalProps]);
 
-  const onDeleteClick = useCallback((data: AddressTag) => {
-    setDeleteModalData(data);
-    deleteModalProps.onOpen();
-  }, [ deleteModalProps ]);
+  const onDeleteClick = useCallback(
+    (data: AddressTag) => {
+      setDeleteModalData(data);
+      deleteModalProps.onOpen();
+    },
+    [deleteModalProps],
+  );
 
   const onDeleteModalClose = useCallback(() => {
     setDeleteModalData(undefined);
     deleteModalProps.onClose();
-  }, [ deleteModalProps ]);
+  }, [deleteModalProps]);
 
   if (isError) {
-    return <DataFetchAlert/>;
+    return <DataFetchAlert />;
   }
 
   const list = (
     <>
       <Box display={{ base: 'block', lg: 'none' }}>
-        { addressTagsData?.map((item: AddressTag, index: number) => (
+        {addressTagsData?.map((item: AddressTag, index: number) => (
           <AddressTagListItem
-            item={ item }
-            key={ item.id + (isPlaceholderData ? index : '') }
-            onDeleteClick={ onDeleteClick }
-            onEditClick={ onEditClick }
-            isLoading={ isPlaceholderData }
+            item={item}
+            key={item.id + (isPlaceholderData ? index : '')}
+            onDeleteClick={onDeleteClick}
+            onEditClick={onEditClick}
+            isLoading={isPlaceholderData}
           />
-        )) }
+        ))}
       </Box>
       <Box display={{ base: 'none', lg: 'block' }}>
-        <AddressTagTable
-          isLoading={ isPlaceholderData }
-          data={ addressTagsData }
-          onDeleteClick={ onDeleteClick }
-          onEditClick={ onEditClick }
-        />
+        <AddressTagTable isLoading={isPlaceholderData} data={addressTagsData} onDeleteClick={onDeleteClick} onEditClick={onEditClick} />
       </Box>
     </>
   );
@@ -83,33 +89,22 @@ const PrivateAddressTags = () => {
   return (
     <>
       <AccountPageDescription>
-        Use private address tags to track any addresses of interest.
-        Private tags are saved in your account and are only visible when you are logged in.
+        Use private address tags to track any addresses of interest. Private tags are saved in your account and are only visible when you are logged in.
       </AccountPageDescription>
-      { Boolean(addressTagsData?.length) && list }
-      <Skeleton mt={ 8 } isLoaded={ !isPlaceholderData } display="inline-block">
-        <Button
-          size="lg"
-          onClick={ addressModalProps.onOpen }
-        >
-            Add address tag
+      {Boolean(addressTagsData?.length) && list}
+      <Skeleton mt={8} isLoaded={!isPlaceholderData} display="inline-block">
+        <Button size="lg" onClick={addressModalProps.onOpen}>
+          Add address tag
         </Button>
       </Skeleton>
       <AddressModal
-        { ...addressModalProps }
-        data={ addressModalData }
-        pageType={ PAGE_TYPE_DICT['/account/tag-address'] }
-        onClose={ onAddressModalClose }
-        onSuccess={ onAddOrEditSuccess }
+        {...addressModalProps}
+        data={addressModalData}
+        pageType={PAGE_TYPE_DICT['/account/tag-address']}
+        onClose={onAddressModalClose}
+        onSuccess={onAddOrEditSuccess}
       />
-      { deleteModalData && (
-        <DeletePrivateTagModal
-          { ...deleteModalProps }
-          onClose={ onDeleteModalClose }
-          data={ deleteModalData }
-          type="address"
-        />
-      ) }
+      {deleteModalData && <DeletePrivateTagModal {...deleteModalProps} onClose={onDeleteModalClose} data={deleteModalData} type="address" />}
     </>
   );
 };

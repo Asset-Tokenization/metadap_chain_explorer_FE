@@ -22,10 +22,10 @@ export default function useStats() {
     },
   });
 
-  const [ currentSection, setCurrentSection ] = useState('all');
-  const [ filterQuery, setFilterQuery ] = useState('');
-  const [ interval, setInterval ] = useState<StatsIntervalIds>('oneMonth');
-  const sectionIds = useMemo(() => data?.sections?.map(({ id }) => id), [ data ]);
+  const [currentSection, setCurrentSection] = useState('all');
+  const [filterQuery, setFilterQuery] = useState('');
+  const [interval, setInterval] = useState<StatsIntervalIds>('oneMonth');
+  const sectionIds = useMemo(() => data?.sections?.map(({ id }) => id), [data]);
 
   const debouncedFilterQuery = useDebounce(filterQuery, 500);
 
@@ -38,8 +38,9 @@ export default function useStats() {
           ...section,
           charts,
         };
-      }).filter((section) => section.charts.length > 0);
-  }, [ currentSection, data?.sections, debouncedFilterQuery ]);
+      })
+      .filter((section) => section.charts.length > 0);
+  }, [currentSection, data?.sections, debouncedFilterQuery]);
 
   const handleSectionChange = useCallback((newSection: string) => {
     setCurrentSection(newSection);
@@ -53,29 +54,32 @@ export default function useStats() {
     setFilterQuery(q);
   }, []);
 
-  return React.useMemo(() => ({
-    sections: data?.sections,
-    sectionIds,
-    isPlaceholderData,
-    isError,
-    filterQuery,
-    currentSection,
-    handleSectionChange,
-    interval,
-    handleIntervalChange,
-    handleFilterChange,
-    displayedCharts,
-  }), [
-    data,
-    sectionIds,
-    isPlaceholderData,
-    isError,
-    filterQuery,
-    currentSection,
-    handleSectionChange,
-    interval,
-    handleIntervalChange,
-    handleFilterChange,
-    displayedCharts,
-  ]);
+  return React.useMemo(
+    () => ({
+      sections: data?.sections,
+      sectionIds,
+      isPlaceholderData,
+      isError,
+      filterQuery,
+      currentSection,
+      handleSectionChange,
+      interval,
+      handleIntervalChange,
+      handleFilterChange,
+      displayedCharts,
+    }),
+    [
+      data,
+      sectionIds,
+      isPlaceholderData,
+      isError,
+      filterQuery,
+      currentSection,
+      handleSectionChange,
+      interval,
+      handleIntervalChange,
+      handleFilterChange,
+      displayedCharts,
+    ],
+  );
 }

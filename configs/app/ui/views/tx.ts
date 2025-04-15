@@ -10,10 +10,13 @@ const hiddenFields = (() => {
     return undefined;
   }
 
-  const result = TX_FIELDS_IDS.reduce((result, item) => {
-    result[item] = parsedValue.includes(item);
-    return result;
-  }, {} as Record<TxFieldsId, boolean>);
+  const result = TX_FIELDS_IDS.reduce(
+    (result, item) => {
+      result[item] = parsedValue.includes(item);
+      return result;
+    },
+    {} as Record<TxFieldsId, boolean>,
+  );
 
   return result;
 })();
@@ -25,10 +28,13 @@ const additionalFields = (() => {
     return undefined;
   }
 
-  const result = TX_ADDITIONAL_FIELDS_IDS.reduce((result, item) => {
-    result[item] = parsedValue.includes(item);
-    return result;
-  }, {} as Record<TxAdditionalFieldsId, boolean>);
+  const result = TX_ADDITIONAL_FIELDS_IDS.reduce(
+    (result, item) => {
+      result[item] = parsedValue.includes(item);
+      return result;
+    },
+    {} as Record<TxAdditionalFieldsId, boolean>,
+  );
 
   return result;
 })();

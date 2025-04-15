@@ -27,35 +27,38 @@ export default function useApiFetch() {
   const queryClient = useQueryClient();
   const { token: csrfToken } = queryClient.getQueryData<CsrfData>(getResourceKey('csrf')) || {};
 
-  return React.useCallback(<R extends ResourceName, SuccessType = unknown, ErrorType = unknown>(
-    resourceName: R,
-    { pathParams, queryParams, fetchParams }: Params<R> = {},
-  ) => {
-    const apiToken = cookies.get(cookies.NAMES.API_TOKEN);
+  return React.useCallback(
+    <R extends ResourceName, SuccessType = unknown, ErrorType = unknown>(resourceName: R, { pathParams, queryParams, fetchParams }: Params<R> = {}) => {
+      const apiToken = cookies.get(cookies.NAMES.API_TOKEN);
 
-    const resource: ApiResource = RESOURCES[resourceName];
-    const url = buildUrl(resourceName, pathParams, queryParams);
-    const withBody = isBodyAllowed(fetchParams?.method);
-    const headers = _pickBy({
-      'x-endpoint': resource.endpoint && isNeedProxy() ? resource.endpoint : undefined,
-      Authorization: resource.endpoint && resource.needAuth ? apiToken : undefined,
-      'x-csrf-token': withBody && csrfToken ? csrfToken : undefined,
-    }, Boolean) as HeadersInit;
+      const resource: ApiResource = RESOURCES[resourceName];
+      const url = buildUrl(resourceName, pathParams, queryParams);
+      const withBody = isBodyAllowed(fetchParams?.method);
+      const headers = _pickBy(
+        {
+          'x-endpoint': resource.endpoint && isNeedProxy() ? resource.endpoint : undefined,
+          Authorization: resource.endpoint && resource.needAuth ? apiToken : undefined,
+          'x-csrf-token': withBody && csrfToken ? csrfToken : undefined,
+        },
+        Boolean,
+      ) as HeadersInit;
 
-    return fetch<SuccessType, ErrorType>(
-      url,
-      {
-        // as of today, we use cookies only
-        //    for user authentication in My account
-        //    for API rate-limits (cannot use in the condition though, but we agreed with devops team that should not be an issue)
-        // change condition here if something is changed
-        credentials: config.features.account.isEnabled ? 'include' : 'same-origin',
-        headers,
-        ...fetchParams,
-      },
-      {
-        resource: resource.path,
-      },
-    );
-  }, [ fetch, csrfToken ]);
+      return fetch<SuccessType, ErrorType>(
+        url,
+        {
+          // as of today, we use cookies only
+          //    for user authentication in My account
+          //    for API rate-limits (cannot use in the condition though, but we agreed with devops team that should not be an issue)
+          // change condition here if something is changed
+          credentials: config.features.account.isEnabled ? 'include' : 'same-origin',
+          headers,
+          ...fetchParams,
+        },
+        {
+          resource: resource.path,
+        },
+      );
+    },
+    [fetch, csrfToken],
+  );
 }

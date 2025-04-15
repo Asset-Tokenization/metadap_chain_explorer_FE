@@ -24,7 +24,7 @@ type Props = {
   currentAddress?: string;
   enableTimeIncrement?: boolean;
   isLoading?: boolean;
-}
+};
 
 const TxsTable = ({
   txs,
@@ -41,56 +41,49 @@ const TxsTable = ({
 }: Props) => {
   return (
     <Table variant="simple" minWidth="950px" size="xs">
-      <TheadSticky top={ top }>
+      <TheadSticky top={top}>
         <Tr>
           <Th width="54px"></Th>
           <Th width="22%">Txn hash</Th>
           <Th width="160px">Type</Th>
           <Th width="20%">Method</Th>
-          { showBlockInfo && <Th width="18%">Block</Th> }
+          {showBlockInfo && <Th width="18%">Block</Th>}
           <Th width={{ xl: '152px', base: '86px' }}>From</Th>
           <Th width={{ xl: currentAddress ? '48px' : '36px', base: currentAddress ? '52px' : '28px' }}></Th>
           <Th width={{ xl: '152px', base: '86px' }}>To</Th>
-          { !config.UI.views.tx.hiddenFields?.value && (
+          {!config.UI.views.tx.hiddenFields?.value && (
             <Th width="20%" isNumeric>
-              <Link onClick={ sort('val') } display="flex" justifyContent="end">
-                { sorting === 'val-asc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(-90deg)"/> }
-                { sorting === 'val-desc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(90deg)"/> }
-                { `Value ${ config.chain.currency.symbol }` }
+              <Link onClick={sort('val')} display="flex" justifyContent="end">
+                {sorting === 'val-asc' && <Icon boxSize={5} as={rightArrowIcon} transform="rotate(-90deg)" />}
+                {sorting === 'val-desc' && <Icon boxSize={5} as={rightArrowIcon} transform="rotate(90deg)" />}
+                {`Value ${config.chain.currency.symbol}`}
               </Link>
             </Th>
-          ) }
-          { !config.UI.views.tx.hiddenFields?.tx_fee && (
-            <Th width="20%" isNumeric pr={ 5 }>
-              <Link onClick={ sort('fee') } display="flex" justifyContent="end">
-                { sorting === 'fee-asc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(-90deg)"/> }
-                { sorting === 'fee-desc' && <Icon boxSize={ 5 } as={ rightArrowIcon } transform="rotate(90deg)"/> }
-                { `Fee${ config.UI.views.tx.hiddenFields?.fee_currency ? '' : ` ${ config.chain.currency.symbol }` }` }
+          )}
+          {!config.UI.views.tx.hiddenFields?.tx_fee && (
+            <Th width="20%" isNumeric pr={5}>
+              <Link onClick={sort('fee')} display="flex" justifyContent="end">
+                {sorting === 'fee-asc' && <Icon boxSize={5} as={rightArrowIcon} transform="rotate(-90deg)" />}
+                {sorting === 'fee-desc' && <Icon boxSize={5} as={rightArrowIcon} transform="rotate(90deg)" />}
+                {`Fee${config.UI.views.tx.hiddenFields?.fee_currency ? '' : ` ${config.chain.currency.symbol}`}`}
               </Link>
             </Th>
-          ) }
+          )}
         </Tr>
       </TheadSticky>
       <Tbody>
-        { showSocketInfo && (
-          <SocketNewItemsNotice.Desktop
-            url={ window.location.href }
-            alert={ socketInfoAlert }
-            num={ socketInfoNum }
-            isLoading={ isLoading }
-          />
-        ) }
-        <AnimatePresence initial={ false }>
-          { txs.map((item, index) => (
+        {showSocketInfo && <SocketNewItemsNotice.Desktop url={window.location.href} alert={socketInfoAlert} num={socketInfoNum} isLoading={isLoading} />}
+        <AnimatePresence initial={false}>
+          {txs.map((item, index) => (
             <TxsTableItem
-              key={ item.hash + (isLoading ? index : '') }
-              tx={ item }
-              showBlockInfo={ showBlockInfo }
-              currentAddress={ currentAddress }
-              enableTimeIncrement={ enableTimeIncrement }
-              isLoading={ isLoading }
+              key={item.hash + (isLoading ? index : '')}
+              tx={item}
+              showBlockInfo={showBlockInfo}
+              currentAddress={currentAddress}
+              enableTimeIncrement={enableTimeIncrement}
+              isLoading={isLoading}
             />
-          )) }
+          ))}
         </AnimatePresence>
       </Tbody>
     </Table>

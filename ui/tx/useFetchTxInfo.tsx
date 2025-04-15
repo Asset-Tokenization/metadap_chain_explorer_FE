@@ -21,12 +21,12 @@ interface Params {
 
 type ReturnType = UseQueryResult<Transaction, ResourceError<{ status: number }>> & {
   socketStatus: 'close' | 'error' | undefined;
-}
+};
 
 export default function useFetchTxInfo({ onTxStatusUpdate, updateDelay }: Params | undefined = {}): ReturnType {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [ socketStatus, setSocketStatus ] = React.useState<'close' | 'error'>();
+  const [socketStatus, setSocketStatus] = React.useState<'close' | 'error'>();
   const hash = getQueryParamString(router.query.hash);
 
   const queryResult = useApiQuery<'tx', { status: number }>('tx', {
@@ -39,13 +39,13 @@ export default function useFetchTxInfo({ onTxStatusUpdate, updateDelay }: Params
   });
   const { data, isError, isLoading } = queryResult;
 
-  const handleStatusUpdateMessage: SocketMessage.TxStatusUpdate['handler'] = React.useCallback(async() => {
-    updateDelay && await delay(updateDelay);
+  const handleStatusUpdateMessage: SocketMessage.TxStatusUpdate['handler'] = React.useCallback(async () => {
+    updateDelay && (await delay(updateDelay));
     queryClient.invalidateQueries({
       queryKey: getResourceKey('tx', { pathParams: { hash } }),
     });
     onTxStatusUpdate?.();
-  }, [ onTxStatusUpdate, queryClient, hash, updateDelay ]);
+  }, [onTxStatusUpdate, queryClient, hash, updateDelay]);
 
   const handleSocketClose = React.useCallback(() => {
     setSocketStatus('close');
@@ -56,7 +56,7 @@ export default function useFetchTxInfo({ onTxStatusUpdate, updateDelay }: Params
   }, []);
 
   const channel = useSocketChannel({
-    topic: `transactions:${ hash }`,
+    topic: `transactions:${hash}`,
     onSocketClose: handleSocketClose,
     onSocketError: handleSocketError,
     isDisabled: isLoading || isError || data.status !== null,

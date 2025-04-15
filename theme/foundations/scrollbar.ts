@@ -32,7 +32,7 @@ const scrollbar = (props: StyleFunctionProps) => {
     },
     'body *': {
       scrollbarWidth: 'thin',
-      scrollbarColor: `${ getCSSVar(props.theme, 'colors', bgColor) } transparent`,
+      scrollbarColor: `${getCSSVar(props.theme, 'colors', bgColor)} transparent`,
     },
   };
 };

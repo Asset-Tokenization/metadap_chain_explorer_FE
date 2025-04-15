@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Input,
-  Textarea,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Button, FormControl, Input, Textarea, useColorModeValue } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useCallback } from 'react';
 import type { ControllerRenderProps, SubmitHandler } from 'react-hook-form';
@@ -25,18 +18,23 @@ type Props = {
   data?: CustomAbi;
   onClose: () => void;
   setAlertVisible: (isAlertVisible: boolean) => void;
-}
+};
 
 type Inputs = {
   contract_address_hash: string;
   name: string;
   abi: string;
-}
+};
 
 const NAME_MAX_LENGTH = 255;
 
 const CustomAbiForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
-  const { control, formState: { errors, isDirty }, handleSubmit, setError } = useForm<Inputs>({
+  const {
+    control,
+    formState: { errors, isDirty },
+    handleSubmit,
+    setError,
+  } = useForm<Inputs>({
     defaultValues: {
       contract_address_hash: data?.contract_address_hash || '',
       name: data?.name || '',
@@ -66,7 +64,7 @@ const CustomAbiForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
   const mutation = useMutation(customAbiKey, {
     onSuccess: (data) => {
       const response = data as unknown as CustomAbi;
-      queryClient.setQueryData([ resourceKey('custom_abi') ], (prevData: CustomAbis | undefined) => {
+      queryClient.setQueryData([resourceKey('custom_abi')], (prevData: CustomAbis | undefined) => {
         const isExisting = prevData && prevData.some((item) => item.id === response.id);
 
         if (isExisting) {
@@ -79,7 +77,7 @@ const CustomAbiForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
           });
         }
 
-        return [ response, ...(prevData || []) ];
+        return [response, ...(prevData || [])];
       });
 
       onClose();
@@ -98,86 +96,74 @@ const CustomAbiForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = useCallback((formData) => {
-    setAlertVisible(false);
-    mutation.mutate({ ...formData, id: data?.id });
-  }, [ mutation, data, setAlertVisible ]);
+  const onSubmit: SubmitHandler<Inputs> = useCallback(
+    (formData) => {
+      setAlertVisible(false);
+      mutation.mutate({ ...formData, id: data?.id });
+    },
+    [mutation, data, setAlertVisible],
+  );
 
-  const renderContractAddressInput = useCallback(({ field }: {field: ControllerRenderProps<Inputs, 'contract_address_hash'>}) => {
-    return (
-      <AddressInput<Inputs, 'contract_address_hash'>
-        field={ field }
-        error={ errors.contract_address_hash }
-        backgroundColor={ formBackgroundColor }
-        placeholder="Smart contract address (0x...)"
-      />
-    );
-  }, [ errors, formBackgroundColor ]);
-
-  const renderNameInput = useCallback(({ field }: {field: ControllerRenderProps<Inputs, 'name'>}) => {
-    return (
-      <FormControl variant="floating" id="name" isRequired backgroundColor={ formBackgroundColor }>
-        <Input
-          { ...field }
-          isInvalid={ Boolean(errors.name) }
-          maxLength={ NAME_MAX_LENGTH }
+  const renderContractAddressInput = useCallback(
+    ({ field }: { field: ControllerRenderProps<Inputs, 'contract_address_hash'> }) => {
+      return (
+        <AddressInput<Inputs, 'contract_address_hash'>
+          field={field}
+          error={errors.contract_address_hash}
+          backgroundColor={formBackgroundColor}
+          placeholder="Smart contract address (0x...)"
         />
-        <InputPlaceholder text="Project name" error={ errors.name }/>
-      </FormControl>
-    );
-  }, [ errors, formBackgroundColor ]);
+      );
+    },
+    [errors, formBackgroundColor],
+  );
 
-  const renderAbiInput = useCallback(({ field }: {field: ControllerRenderProps<Inputs, 'abi'>}) => {
-    return (
-      <FormControl variant="floating" id="abi" isRequired backgroundColor={ formBackgroundColor }>
-        <Textarea
-          { ...field }
-          size="lg"
-          minH="300px"
-          isInvalid={ Boolean(errors.abi) }
-        />
-        <InputPlaceholder text="Custom ABI [{...}] (JSON format)" error={ errors.abi }/>
-      </FormControl>
-    );
-  }, [ errors, formBackgroundColor ]);
+  const renderNameInput = useCallback(
+    ({ field }: { field: ControllerRenderProps<Inputs, 'name'> }) => {
+      return (
+        <FormControl variant="floating" id="name" isRequired backgroundColor={formBackgroundColor}>
+          <Input {...field} isInvalid={Boolean(errors.name)} maxLength={NAME_MAX_LENGTH} />
+          <InputPlaceholder text="Project name" error={errors.name} />
+        </FormControl>
+      );
+    },
+    [errors, formBackgroundColor],
+  );
+
+  const renderAbiInput = useCallback(
+    ({ field }: { field: ControllerRenderProps<Inputs, 'abi'> }) => {
+      return (
+        <FormControl variant="floating" id="abi" isRequired backgroundColor={formBackgroundColor}>
+          <Textarea {...field} size="lg" minH="300px" isInvalid={Boolean(errors.abi)} />
+          <InputPlaceholder text="Custom ABI [{...}] (JSON format)" error={errors.abi} />
+        </FormControl>
+      );
+    },
+    [errors, formBackgroundColor],
+  );
 
   return (
-    <form noValidate onSubmit={ handleSubmit(onSubmit) }>
+    <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <Box>
         <Controller
           name="contract_address_hash"
-          control={ control }
-          render={ renderContractAddressInput }
+          control={control}
+          render={renderContractAddressInput}
           rules={{
             pattern: ADDRESS_REGEXP,
             required: true,
           }}
         />
       </Box>
-      <Box marginTop={ 5 }>
-        <Controller
-          name="name"
-          control={ control }
-          render={ renderNameInput }
-          rules={{ required: true }}
-        />
+      <Box marginTop={5}>
+        <Controller name="name" control={control} render={renderNameInput} rules={{ required: true }} />
       </Box>
-      <Box marginTop={ 5 }>
-        <Controller
-          name="abi"
-          control={ control }
-          render={ renderAbiInput }
-          rules={{ required: true }}
-        />
+      <Box marginTop={5}>
+        <Controller name="abi" control={control} render={renderAbiInput} rules={{ required: true }} />
       </Box>
-      <Box marginTop={ 8 }>
-        <Button
-          size="lg"
-          type="submit"
-          isDisabled={ !isDirty }
-          isLoading={ mutation.isLoading }
-        >
-          { data ? 'Save' : 'Create custom ABI' }
+      <Box marginTop={8}>
+        <Button size="lg" type="submit" isDisabled={!isDirty} isLoading={mutation.isLoading}>
+          {data ? 'Save' : 'Create custom ABI'}
         </Button>
       </Box>
     </form>

@@ -11,11 +11,11 @@ interface IconProps {
 }
 
 const Icon = dynamic(
-  async() => {
+  async () => {
     switch (config.UI.views.address.identiconType) {
       case 'github': {
         // eslint-disable-next-line react/display-name
-        return (props: IconProps) => <IdenticonGithub size={ props.size } seed={ props.hash }/>;
+        return (props: IconProps) => <IdenticonGithub size={props.size} seed={props.hash} />;
       }
 
       case 'blockie': {
@@ -24,12 +24,7 @@ const Icon = dynamic(
         // eslint-disable-next-line react/display-name
         return (props: IconProps) => {
           const data = makeBlockie(props.hash);
-          return (
-            <Image
-              src={ data }
-              alt={ `Identicon for ${ props.hash }}` }
-            />
-          );
+          return <Image src={data} alt={`Identicon for ${props.hash}}`} />;
         };
       }
 
@@ -38,12 +33,7 @@ const Icon = dynamic(
 
         // eslint-disable-next-line react/display-name
         return (props: IconProps) => {
-          return (
-            <Jazzicon.default
-              diameter={ props.size }
-              seed={ Jazzicon.jsNumberForAddress(props.hash) }
-            />
-          );
+          return <Jazzicon.default diameter={props.size} seed={Jazzicon.jsNumberForAddress(props.hash)} />;
         };
       }
 
@@ -53,7 +43,7 @@ const Icon = dynamic(
         // eslint-disable-next-line react/display-name
         return (props: IconProps) => {
           const svg = GradientAvatar(props.hash, props.size);
-          return <div dangerouslySetInnerHTML={{ __html: svg }}/>;
+          return <div dangerouslySetInnerHTML={{ __html: svg }} />;
         };
       }
 
@@ -61,16 +51,18 @@ const Icon = dynamic(
         return () => null;
       }
     }
-  }, {
+  },
+  {
     ssr: false,
-  });
+  },
+);
 
 type Props = IconProps;
 
 const AddressIdenticon = ({ size, hash }: Props) => {
   return (
-    <Box boxSize={ `${ size }px` } borderRadius="full" overflow="hidden">
-      <Icon size={ size } hash={ hash }/>
+    <Box boxSize={`${size}px`} borderRadius="full" overflow="hidden">
+      <Icon size={size} hash={hash} />
     </Box>
   );
 };

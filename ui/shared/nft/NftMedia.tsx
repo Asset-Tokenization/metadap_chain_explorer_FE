@@ -20,8 +20,8 @@ interface Props {
 }
 
 const NftMedia = ({ url, className, isLoading, withFullscreen }: Props) => {
-  const [ isMediaLoading, setIsMediaLoading ] = React.useState(Boolean(url));
-  const [ isLoadingError, setIsLoadingError ] = React.useState(false);
+  const [isMediaLoading, setIsMediaLoading] = React.useState(Boolean(url));
+  const [isLoadingError, setIsLoadingError] = React.useState(false);
 
   const { ref, inView } = useInView({ triggerOnce: true });
 
@@ -41,7 +41,7 @@ const NftMedia = ({ url, className, isLoading, withFullscreen }: Props) => {
   const content = (() => {
     if (!url || isLoadingError) {
       const styleProps = withFullscreen ? {} : mediaStyleProps;
-      return <NftFallback { ...styleProps }/>;
+      return <NftFallback {...styleProps} />;
     }
 
     const props = {
@@ -53,11 +53,11 @@ const NftMedia = ({ url, className, isLoading, withFullscreen }: Props) => {
 
     switch (type) {
       case 'video':
-        return <NftVideo { ...props }/>;
+        return <NftVideo {...props} />;
       case 'html':
-        return <NftHtml { ...props }/>;
+        return <NftHtml {...props} />;
       case 'image':
-        return <NftImage { ...props }/>;
+        return <NftImage {...props} />;
       default:
         return null;
     }
@@ -76,11 +76,11 @@ const NftMedia = ({ url, className, isLoading, withFullscreen }: Props) => {
 
     switch (type) {
       case 'video':
-        return <NftVideoFullscreen { ...props }/>;
+        return <NftVideoFullscreen {...props} />;
       case 'html':
-        return <NftHtmlFullscreen { ...props }/>;
+        return <NftHtmlFullscreen {...props} />;
       case 'image':
-        return <NftImageFullscreen { ...props }/>;
+        return <NftImageFullscreen {...props} />;
       default:
         return null;
     }
@@ -88,9 +88,9 @@ const NftMedia = ({ url, className, isLoading, withFullscreen }: Props) => {
 
   return (
     <AspectRatio
-      ref={ ref }
-      className={ className }
-      ratio={ 1 / 1 }
+      ref={ref}
+      className={className}
+      ratio={1 / 1}
       overflow="hidden"
       borderRadius="md"
       objectFit="contain"
@@ -102,9 +102,9 @@ const NftMedia = ({ url, className, isLoading, withFullscreen }: Props) => {
       }}
     >
       <>
-        { content }
-        { modal }
-        { isMediaLoading && <Skeleton position="absolute" left={ 0 } top={ 0 } w="100%" h="100%" zIndex="1"/> }
+        {content}
+        {modal}
+        {isMediaLoading && <Skeleton position="absolute" left={0} top={0} w="100%" h="100%" zIndex="1" />}
       </>
     </AspectRatio>
   );

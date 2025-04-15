@@ -1,11 +1,13 @@
 import type { AddressFromToFilter } from 'types/api/address';
 
-export type CsvExportParams = {
-  type: 'transactions' | 'internal-transactions' | 'token-transfers';
-  filterType?: 'address';
-  filterValue?: AddressFromToFilter;
-} | {
-  type: 'logs';
-  filterType?: 'topic';
-  filterValue?: string;
-}
+export type CsvExportParams =
+  | {
+      type: 'transactions' | 'internal-transactions' | 'token-transfers';
+      filterType?: 'address';
+      filterValue?: AddressFromToFilter;
+    }
+  | {
+      type: 'logs';
+      filterType?: 'topic';
+      filterValue?: string;
+    };

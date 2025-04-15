@@ -10,11 +10,7 @@ const submitFormUrl = getEnvValue('NEXT_PUBLIC_MARKETPLACE_SUBMIT_FORM');
 const title = 'Marketplace';
 
 const config: Feature<{ configUrl: string; submitFormUrl: string }> = (() => {
-  if (
-    chain.rpcUrl &&
-    configUrl &&
-    submitFormUrl
-  ) {
+  if (chain.rpcUrl && configUrl && submitFormUrl) {
     return Object.freeze({
       title,
       isEnabled: true,

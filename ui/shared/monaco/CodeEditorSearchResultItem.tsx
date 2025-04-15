@@ -12,7 +12,6 @@ interface Props extends ArrayElement<SearchResult['matches']> {
 }
 
 const calculateStartPosition = (lineContent: string, startColumn: number) => {
-
   let start = 0;
 
   for (let index = 0; index < startColumn; index++) {
@@ -41,17 +40,15 @@ const CodeEditorSearchResultItem = ({ lineContent, filePath, onClick, startLineN
       overflow="hidden"
       textOverflow="ellipsis"
       cursor="pointer"
-      data-file-path={ filePath }
-      data-line-number={ startLineNumber }
-      onClick={ onClick }
+      data-file-path={filePath}
+      data-line-number={startLineNumber}
+      onClick={onClick}
       transitionDuration="0"
       _hover={{ bgColor: themeColors['custom.list.hoverBackground'] }}
     >
-      <span>{ lineContent.slice(start, startColumn - 1) }</span>
-      <chakra.span bgColor={ themeColors['custom.findMatchHighlightBackground'] }>
-        { lineContent.slice(startColumn - 1, endColumn - 1) }
-      </chakra.span>
-      <span>{ lineContent.slice(endColumn - 1) }</span>
+      <span>{lineContent.slice(start, startColumn - 1)}</span>
+      <chakra.span bgColor={themeColors['custom.findMatchHighlightBackground']}>{lineContent.slice(startColumn - 1, endColumn - 1)}</chakra.span>
+      <span>{lineContent.slice(endColumn - 1)}</span>
     </Box>
   );
 };

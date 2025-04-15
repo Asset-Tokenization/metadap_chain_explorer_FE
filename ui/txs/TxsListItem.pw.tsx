@@ -8,20 +8,20 @@ import TxsListItem from './TxsListItem';
 
 test.use({ viewport: devices['iPhone 13 Pro'].viewport });
 
-test('base view +@dark-mode', async({ mount }) => {
+test('base view +@dark-mode', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <TxsListItem tx={ txMock.withWatchListNames } showBlockInfo/>
+      <TxsListItem tx={txMock.withWatchListNames} showBlockInfo />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('with base address', async({ mount }) => {
+test('with base address', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <TxsListItem tx={ txMock.withWatchListNames } showBlockInfo currentAddress={ txMock.base.from.hash }/>
+      <TxsListItem tx={txMock.withWatchListNames} showBlockInfo currentAddress={txMock.base.from.hash} />
     </TestApp>,
   );
 

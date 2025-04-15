@@ -45,8 +45,8 @@ export type SmartContractDecodedConstructorArg = [
     internalType: SmartContractMethodArgType;
     name: string;
     type: SmartContractMethodArgType;
-  }
-]
+  },
+];
 
 export interface SmartContractExternalLibrary {
   address_hash: string;
@@ -107,26 +107,36 @@ export interface SmartContractQueryMethodReadSuccess {
 
 export interface SmartContractQueryMethodReadError {
   is_error: true;
-  result: {
-    code: number;
-    message: string;
-  } | {
-    error: string;
-  } | {
-    raw: string;
-  } | {
-    method_call: string;
-    method_id: string;
-    parameters: Array<{ 'name': string; 'type': string; 'value': string }>;
-  };
+  result:
+    | {
+        code: number;
+        message: string;
+      }
+    | {
+        error: string;
+      }
+    | {
+        raw: string;
+      }
+    | {
+        method_call: string;
+        method_id: string;
+        parameters: Array<{ name: string; type: string; value: string }>;
+      };
 }
 
 export type SmartContractQueryMethodRead = SmartContractQueryMethodReadSuccess | SmartContractQueryMethodReadError;
 
 // VERIFICATION
 
-export type SmartContractVerificationMethod = 'flattened-code' | 'standard-input' | 'sourcify' | 'multi-part'
-| 'vyper-code' | 'vyper-multi-part' | 'vyper-standard-input';
+export type SmartContractVerificationMethod =
+  | 'flattened-code'
+  | 'standard-input'
+  | 'sourcify'
+  | 'multi-part'
+  | 'vyper-code'
+  | 'vyper-multi-part'
+  | 'vyper-standard-input';
 
 export interface SmartContractVerificationConfigRaw {
   solidity_compiler_versions: Array<string>;
@@ -141,12 +151,14 @@ export interface SmartContractVerificationConfig extends SmartContractVerificati
   verification_options: Array<SmartContractVerificationMethod>;
 }
 
-export type SmartContractVerificationResponse = {
-  status: 'error';
-  errors: SmartContractVerificationError;
-} | {
-  status: 'success';
-}
+export type SmartContractVerificationResponse =
+  | {
+      status: 'error';
+      errors: SmartContractVerificationError;
+    }
+  | {
+      status: 'success';
+    };
 
 export interface SmartContractVerificationError {
   contract_source_code?: Array<string>;

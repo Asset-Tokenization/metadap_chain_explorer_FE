@@ -15,28 +15,22 @@ const NumberWidgetsList = () => {
   });
 
   if (isError) {
-    return <DataFetchAlert/>;
+    return <DataFetchAlert />;
   }
 
   return (
-    <Grid
-      gridTemplateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }}
-      gridGap={ 4 }
-    >
-      {
-        data?.counters?.map(({ id, title, value, units, description }, index) => {
-
-          return (
-            <NumberWidget
-              key={ id + (isPlaceholderData ? index : '') }
-              label={ title }
-              value={ `${ Number(value).toLocaleString(undefined, { maximumFractionDigits: 3, notation: 'compact' }) } ${ units ? units : '' }` }
-              isLoading={ isPlaceholderData }
-              description={ description }
-            />
-          );
-        })
-      }
+    <Grid gridTemplateColumns={{ base: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} gridGap={4}>
+      {data?.counters?.map(({ id, title, value, units, description }, index) => {
+        return (
+          <NumberWidget
+            key={id + (isPlaceholderData ? index : '')}
+            label={title}
+            value={`${Number(value).toLocaleString(undefined, { maximumFractionDigits: 3, notation: 'compact' })} ${units ? units : ''}`}
+            isLoading={isPlaceholderData}
+            description={description}
+          />
+        );
+      })}
     </Grid>
   );
 };

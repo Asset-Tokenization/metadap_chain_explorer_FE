@@ -24,28 +24,22 @@ const data = [
   tokenTransferMock.erc1155D,
 ];
 
-test('without tx info', async({ mount }) => {
+test('without tx info', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h={{ base: '134px', lg: 6 }}/>
-      <TokenTransferList
-        data={ data }
-        showTxInfo={ false }
-      />
+      <Box h={{ base: '134px', lg: 6 }} />
+      <TokenTransferList data={data} showTxInfo={false} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('with tx info', async({ mount }) => {
+test('with tx info', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h={{ base: '134px', lg: 6 }}/>
-      <TokenTransferList
-        data={ data }
-        showTxInfo={ true }
-      />
+      <Box h={{ base: '134px', lg: 6 }} />
+      <TokenTransferList data={data} showTxInfo={true} />
     </TestApp>,
   );
 

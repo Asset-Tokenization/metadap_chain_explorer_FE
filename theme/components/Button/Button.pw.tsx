@@ -15,39 +15,47 @@ import TestApp from 'playwright/TestApp';
   { variant: 'subtle' },
   { variant: 'subtle', colorScheme: 'gray', withDarkMode: true },
 ].forEach(({ variant, colorScheme, withDarkMode }) => {
-  test.describe(`variant ${ variant }${ colorScheme ? ` with ${ colorScheme } color scheme` : '' }${ withDarkMode ? ' +@dark-mode' : '' }`, () => {
-    test('base', async({ mount }) => {
+  test.describe(`variant ${variant}${colorScheme ? ` with ${colorScheme} color scheme` : ''}${withDarkMode ? ' +@dark-mode' : ''}`, () => {
+    test('base', async ({ mount }) => {
       const component = await mount(
         <TestApp>
-          <Button variant={ variant } colorScheme={ colorScheme }>Click me</Button>
+          <Button variant={variant} colorScheme={colorScheme}>
+            Click me
+          </Button>
         </TestApp>,
       );
       await expect(component.locator('button')).toHaveScreenshot();
     });
 
-    test('disabled', async({ mount }) => {
+    test('disabled', async ({ mount }) => {
       const component = await mount(
         <TestApp>
-          <Button variant={ variant } colorScheme={ colorScheme } isDisabled>Click me</Button>
+          <Button variant={variant} colorScheme={colorScheme} isDisabled>
+            Click me
+          </Button>
         </TestApp>,
       );
       await expect(component.locator('button')).toHaveScreenshot();
     });
 
-    test('hovered', async({ mount }) => {
+    test('hovered', async ({ mount }) => {
       const component = await mount(
         <TestApp>
-          <Button variant={ variant } colorScheme={ colorScheme }>Click me</Button>
+          <Button variant={variant} colorScheme={colorScheme}>
+            Click me
+          </Button>
         </TestApp>,
       );
       await component.getByText(/click/i).hover();
       await expect(component.locator('button')).toHaveScreenshot();
     });
 
-    test('active', async({ mount }) => {
+    test('active', async ({ mount }) => {
       const component = await mount(
         <TestApp>
-          <Button variant={ variant } colorScheme={ colorScheme } isActive>Click me</Button>
+          <Button variant={variant} colorScheme={colorScheme} isActive>
+            Click me
+          </Button>
         </TestApp>,
       );
       await expect(component.locator('button')).toHaveScreenshot();

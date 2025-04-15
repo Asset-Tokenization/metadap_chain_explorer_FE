@@ -8,7 +8,7 @@ import Login from 'ui/pages/Login';
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/login">
-      <Login/>
+      <Login />
     </PageNextJs>
   );
 };

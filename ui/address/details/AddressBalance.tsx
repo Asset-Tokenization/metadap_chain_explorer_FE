@@ -1,31 +1,23 @@
-import { useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import { useQueryClient } from '@tanstack/react-query';
+import React from 'react';
 
-import type { SocketMessage } from "lib/socket/types";
-import type { Address } from "types/api/address";
+import type { SocketMessage } from 'lib/socket/types';
+import type { Address } from 'types/api/address';
 
-import config from "configs/app";
-import { getResourceKey } from "lib/api/useApiQuery";
-import useSocketChannel from "lib/socket/useSocketChannel";
-import useSocketMessage from "lib/socket/useSocketMessage";
-import CurrencyValue from "ui/shared/CurrencyValue";
-import DetailsInfoItem from "ui/shared/DetailsInfoItem";
+import config from 'configs/app';
+import { getResourceKey } from 'lib/api/useApiQuery';
+import useSocketChannel from 'lib/socket/useSocketChannel';
+import useSocketMessage from 'lib/socket/useSocketMessage';
+import CurrencyValue from 'ui/shared/CurrencyValue';
+import DetailsInfoItem from 'ui/shared/DetailsInfoItem';
 
 interface Props {
-  data: Pick<
-    Address,
-    | "block_number_balance_updated_at"
-    | "coin_balance"
-    | "hash"
-    | "exchange_rate"
-  >;
+  data: Pick<Address, 'block_number_balance_updated_at' | 'coin_balance' | 'hash' | 'exchange_rate'>;
   isLoading: boolean;
 }
 
 const AddressBalance = ({ data, isLoading }: Props) => {
-  const [lastBlockNumber, setLastBlockNumber] = React.useState<number>(
-    data.block_number_balance_updated_at || 0
-  );
+  const [lastBlockNumber, setLastBlockNumber] = React.useState<number>(data.block_number_balance_updated_at || 0);
   const queryClient = useQueryClient();
 
   const updateData = React.useCallback(
@@ -35,7 +27,7 @@ const AddressBalance = ({ data, isLoading }: Props) => {
       }
 
       setLastBlockNumber(blockNumber);
-      const queryKey = getResourceKey("address", {
+      const queryKey = getResourceKey('address', {
         pathParams: { hash: data.hash },
       });
       queryClient.setQueryData(queryKey, (prevData: Address | undefined) => {
@@ -50,32 +42,22 @@ const AddressBalance = ({ data, isLoading }: Props) => {
         };
       });
     },
-    [data.hash, lastBlockNumber, queryClient]
+    [data.hash, lastBlockNumber, queryClient],
   );
 
-  const handleNewBalanceMessage: SocketMessage.AddressBalance["handler"] =
-    React.useCallback(
-      (payload) => {
-        updateData(
-          payload.balance,
-          payload.exchange_rate,
-          payload.block_number
-        );
-      },
-      [updateData]
-    );
+  const handleNewBalanceMessage: SocketMessage.AddressBalance['handler'] = React.useCallback(
+    (payload) => {
+      updateData(payload.balance, payload.exchange_rate, payload.block_number);
+    },
+    [updateData],
+  );
 
-  const handleNewCoinBalanceMessage: SocketMessage.AddressCurrentCoinBalance["handler"] =
-    React.useCallback(
-      (payload) => {
-        updateData(
-          payload.coin_balance,
-          payload.exchange_rate,
-          payload.block_number
-        );
-      },
-      [updateData]
-    );
+  const handleNewCoinBalanceMessage: SocketMessage.AddressCurrentCoinBalance['handler'] = React.useCallback(
+    (payload) => {
+      updateData(payload.coin_balance, payload.exchange_rate, payload.block_number);
+    },
+    [updateData],
+  );
 
   const channel = useSocketChannel({
     topic: `addresses:${data.hash.toLowerCase()}`,
@@ -83,12 +65,12 @@ const AddressBalance = ({ data, isLoading }: Props) => {
   });
   useSocketMessage({
     channel,
-    event: "balance",
+    event: 'balance',
     handler: handleNewBalanceMessage,
   });
   useSocketMessage({
     channel,
-    event: "current_coin_balance",
+    event: 'current_coin_balance',
     handler: handleNewCoinBalanceMessage,
   });
 
@@ -101,7 +83,7 @@ const AddressBalance = ({ data, isLoading }: Props) => {
       isLoading={isLoading}
     >
       <CurrencyValue
-        value={data.coin_balance || "0"}
+        value={data.coin_balance || '0'}
         exchangeRate={data.exchange_rate}
         decimals={String(config.chain.currency.decimals)}
         currency={config.chain.currency.symbol}

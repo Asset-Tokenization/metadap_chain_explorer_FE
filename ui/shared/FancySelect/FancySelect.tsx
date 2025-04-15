@@ -30,40 +30,38 @@ const FancySelect = (props: Props, ref: React.LegacyRef<HTMLDivElement>) => {
   const menuZIndex = useToken('zIndices', 'dropdown');
   const { colorMode } = useColorMode();
 
-  const styles = React.useMemo(() => ({
-    menuPortal: (provided: CSSObjectWithLabel) => ({ ...provided, zIndex: menuZIndex }),
-  }), [ menuZIndex ]);
+  const styles = React.useMemo(
+    () => ({
+      menuPortal: (provided: CSSObjectWithLabel) => ({ ...provided, zIndex: menuZIndex }),
+    }),
+    [menuZIndex],
+  );
 
-  const chakraStyles = React.useMemo(() => getChakraStyles(colorMode), [ colorMode ]);
+  const chakraStyles = React.useMemo(() => getChakraStyles(colorMode), [colorMode]);
 
   const SelectComponent = props.isAsync ? AsyncSelect : Select;
 
   return (
     <FormControl
       variant="floating"
-      size={ props.size || 'md' }
-      isRequired={ props.isRequired }
-      ref={ ref }
-      { ...(props.error ? { 'aria-invalid': true } : {}) }
-      { ...(props.isDisabled ? { 'aria-disabled': true } : {}) }
-      { ...(props.value ? { 'data-active': true } : {}) }
+      size={props.size || 'md'}
+      isRequired={props.isRequired}
+      ref={ref}
+      {...(props.error ? { 'aria-invalid': true } : {})}
+      {...(props.isDisabled ? { 'aria-disabled': true } : {})}
+      {...(props.value ? { 'data-active': true } : {})}
     >
       <SelectComponent
-        { ...props }
-        size={ props.size || 'md' }
-        menuPortalTarget={ window.document.body }
+        {...props}
+        size={props.size || 'md'}
+        menuPortalTarget={window.document.body}
         placeholder=""
-        styles={ styles }
-        chakraStyles={ chakraStyles }
-        isInvalid={ Boolean(props.error) }
+        styles={styles}
+        chakraStyles={chakraStyles}
+        isInvalid={Boolean(props.error)}
         useBasicStyles
       />
-      <InputPlaceholder
-        text={ typeof props.placeholder === 'string' ? props.placeholder : '' }
-        icon={ props.placeholderIcon }
-        error={ props.error }
-        isFancy
-      />
+      <InputPlaceholder text={typeof props.placeholder === 'string' ? props.placeholder : ''} icon={props.placeholderIcon} error={props.error} isFancy />
     </FormControl>
   );
 };

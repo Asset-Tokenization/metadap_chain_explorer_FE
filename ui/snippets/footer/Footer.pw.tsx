@@ -24,7 +24,7 @@ base.describe('with custom links, 4 cols', () => {
     ]) as any,
   });
 
-  test.beforeEach(async({ page, mount }) => {
+  test.beforeEach(async ({ page, mount }) => {
     await page.route(FOOTER_LINKS_URL, (route) => {
       return route.fulfill({
         body: JSON.stringify(FOOTER_LINKS),
@@ -38,26 +38,28 @@ base.describe('with custom links, 4 cols', () => {
       } as WindowProvider;
     });
 
-    await page.route(INDEXING_ALERT_API_URL, (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify({ finished_indexing: false, indexed_internal_transactions_ratio: 0.1 }),
-    }));
+    await page.route(INDEXING_ALERT_API_URL, (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify({ finished_indexing: false, indexed_internal_transactions_ratio: 0.1 }),
+      }),
+    );
 
     await mount(
       <TestApp>
-        <Footer/>
+        <Footer />
       </TestApp>,
     );
   });
 
-  test('+@mobile +@dark-mode', async({ page }) => {
+  test('+@mobile +@dark-mode', async ({ page }) => {
     await expect(page).toHaveScreenshot();
   });
 
   test.describe('screen xl', () => {
     test.use({ viewport: configs.viewport.xl });
 
-    test('', async({ page }) => {
+    test('', async ({ page }) => {
       await expect(page).toHaveScreenshot();
     });
   });
@@ -71,16 +73,16 @@ base.describe('with custom links, 2 cols', () => {
     ]) as any,
   });
 
-  test('base view +@dark-mode +@mobile', async({ mount, page }) => {
+  test('base view +@dark-mode +@mobile', async ({ mount, page }) => {
     await page.route(FOOTER_LINKS_URL, (route) => {
       return route.fulfill({
-        body: JSON.stringify([ FOOTER_LINKS[0] ]),
+        body: JSON.stringify([FOOTER_LINKS[0]]),
       });
     });
 
     await mount(
       <TestApp>
-        <Footer/>
+        <Footer />
       </TestApp>,
     );
 
@@ -89,7 +91,7 @@ base.describe('with custom links, 2 cols', () => {
 });
 
 base.describe('without custom links', () => {
-  base('base view +@dark-mode +@mobile', async({ mount, page }) => {
+  base('base view +@dark-mode +@mobile', async ({ mount, page }) => {
     await page.evaluate(() => {
       window.ethereum = {
         isMetaMask: true,
@@ -106,28 +108,30 @@ base.describe('without custom links', () => {
 
     await mount(
       <TestApp>
-        <Footer/>
+        <Footer />
       </TestApp>,
     );
 
     await expect(page).toHaveScreenshot();
   });
 
-  base('with indexing alert +@dark-mode +@mobile', async({ mount, page }) => {
+  base('with indexing alert +@dark-mode +@mobile', async ({ mount, page }) => {
     await page.evaluate(() => {
       window.ethereum = {
-        providers: [ { isMetaMask: true, _events: {} } ],
+        providers: [{ isMetaMask: true, _events: {} }],
       } as WindowProvider;
     });
 
-    await page.route(INDEXING_ALERT_API_URL, (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify({ finished_indexing: false, indexed_internal_transactions_ratio: 0.1 }),
-    }));
+    await page.route(INDEXING_ALERT_API_URL, (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify({ finished_indexing: false, indexed_internal_transactions_ratio: 0.1 }),
+      }),
+    );
 
     const component = await mount(
       <TestApp>
-        <Footer/>
+        <Footer />
       </TestApp>,
     );
 

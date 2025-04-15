@@ -32,9 +32,9 @@ const ChartGridLine = ({ type, scale, ticks, size, disableAnimation, ...props }:
     gridGroup.select('.domain').remove();
     gridGroup.selectAll('text').remove();
     gridGroup.selectAll('line').attr('stroke', strokeColor);
-  }, [ scale, ticks, size, disableAnimation, type, strokeColor ]);
+  }, [scale, ticks, size, disableAnimation, type, strokeColor]);
 
-  return <g ref={ ref } { ...props }/>;
+  return <g ref={ref} {...props} />;
 };
 
 export default React.memo(ChartGridLine);

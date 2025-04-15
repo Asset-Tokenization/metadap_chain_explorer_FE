@@ -13,20 +13,20 @@ interface Props {
 
 const ApiKeySnippet = ({ apiKey, name, isLoading }: Props) => {
   return (
-    <HStack spacing={ 2 } alignItems="start">
-      <Icon as={ keyIcon } boxSize={ 6 } color={ useColorModeValue('gray.500', 'gray.400') } isLoading={ isLoading }/>
+    <HStack spacing={2} alignItems="start">
+      <Icon as={keyIcon} boxSize={6} color={useColorModeValue('gray.500', 'gray.400')} isLoading={isLoading} />
       <Box>
         <Flex alignItems={{ base: 'flex-start', lg: 'center' }}>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" fontWeight={ 600 } mr={ 1 }>
-            <span>{ apiKey }</span>
+          <Skeleton isLoaded={!isLoading} display="inline-block" fontWeight={600} mr={1}>
+            <span>{apiKey}</span>
           </Skeleton>
-          <CopyToClipboard text={ apiKey } isLoading={ isLoading }/>
+          <CopyToClipboard text={apiKey} isLoading={isLoading} />
         </Flex>
-        { name && (
-          <Skeleton isLoaded={ !isLoading } display="inline-block" fontSize="sm" color="text_secondary" mt={ 1 }>
-            <span>{ name }</span>
+        {name && (
+          <Skeleton isLoaded={!isLoading} display="inline-block" fontSize="sm" color="text_secondary" mt={1}>
+            <span>{name}</span>
           </Skeleton>
-        ) }
+        )}
       </Box>
     </HStack>
   );

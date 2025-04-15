@@ -1,9 +1,4 @@
-import {
-  Box,
-  Flex,
-  Grid,
-  Skeleton,
-} from '@chakra-ui/react';
+import { Box, Flex, Grid, Skeleton } from '@chakra-ui/react';
 import React from 'react';
 
 import type { L2DepositsItem } from 'types/api/l2Deposits';
@@ -20,7 +15,7 @@ const feature = config.features.rollup;
 type Props = {
   item: L2DepositsItem;
   isLoading?: boolean;
-}
+};
 
 const LatestTxsItem = ({ item, isLoading }: Props) => {
   const timeAgo = dayjs(item.l1_block_timestamp).fromNow();
@@ -30,72 +25,50 @@ const LatestTxsItem = ({ item, isLoading }: Props) => {
     return null;
   }
 
-  const l1BlockLink = (
-    <BlockEntityL1
-      number={ item.l1_block_number }
-      isLoading={ isLoading }
-      fontSize="sm"
-      lineHeight={ 5 }
-      fontWeight={ 700 }
-    />
-  );
+  const l1BlockLink = <BlockEntityL1 number={item.l1_block_number} isLoading={isLoading} fontSize="sm" lineHeight={5} fontWeight={700} />;
 
-  const l1TxLink = (
-    <TxEntityL1
-      isLoading={ isLoading }
-      hash={ item.l1_tx_hash }
-      fontSize="sm"
-      lineHeight={ 5 }
-    />
-  );
+  const l1TxLink = <TxEntityL1 isLoading={isLoading} hash={item.l1_tx_hash} fontSize="sm" lineHeight={5} />;
 
-  const l2TxLink = (
-    <TxEntity
-      isLoading={ isLoading }
-      hash={ item.l2_tx_hash }
-      fontSize="sm"
-      lineHeight={ 5 }
-    />
-  );
+  const l2TxLink = <TxEntity isLoading={isLoading} hash={item.l2_tx_hash} fontSize="sm" lineHeight={5} />;
 
   const content = (() => {
     if (isMobile) {
       return (
         <>
-          <Flex justifyContent="space-between" alignItems="center" mb={ 1 }>
-            { l1BlockLink }
-            <Skeleton isLoaded={ !isLoading } color="text_secondary">
-              <span>{ timeAgo }</span>
+          <Flex justifyContent="space-between" alignItems="center" mb={1}>
+            {l1BlockLink}
+            <Skeleton isLoaded={!isLoading} color="text_secondary">
+              <span>{timeAgo}</span>
             </Skeleton>
           </Flex>
           <Grid gridTemplateColumns="56px auto">
-            <Skeleton isLoaded={ !isLoading } my="5px" w="fit-content">
+            <Skeleton isLoaded={!isLoading} my="5px" w="fit-content">
               L1 txn
             </Skeleton>
-            { l1TxLink }
-            <Skeleton isLoaded={ !isLoading } my="3px" w="fit-content">
+            {l1TxLink}
+            <Skeleton isLoaded={!isLoading} my="3px" w="fit-content">
               L2 txn
             </Skeleton>
-            { l2TxLink }
+            {l2TxLink}
           </Grid>
         </>
       );
     }
 
     return (
-      <Grid width="100%" columnGap={ 4 } rowGap={ 2 } templateColumns="max-content max-content auto" w="100%">
-        { l1BlockLink }
-        <Skeleton isLoaded={ !isLoading } w="fit-content" h="fit-content" my="5px">
+      <Grid width="100%" columnGap={4} rowGap={2} templateColumns="max-content max-content auto" w="100%">
+        {l1BlockLink}
+        <Skeleton isLoaded={!isLoading} w="fit-content" h="fit-content" my="5px">
           L1 txn
         </Skeleton>
-        { l1TxLink }
-        <Skeleton isLoaded={ !isLoading } color="text_secondary" w="fit-content" h="fit-content" my="2px">
-          <span>{ timeAgo }</span>
+        {l1TxLink}
+        <Skeleton isLoaded={!isLoading} color="text_secondary" w="fit-content" h="fit-content" my="2px">
+          <span>{timeAgo}</span>
         </Skeleton>
-        <Skeleton isLoaded={ !isLoading } w="fit-content" h="fit-content" my="2px">
+        <Skeleton isLoaded={!isLoading} w="fit-content" h="fit-content" my="2px">
           L2 txn
         </Skeleton>
-        { l2TxLink }
+        {l2TxLink}
       </Grid>
     );
   })();
@@ -105,13 +78,13 @@ const LatestTxsItem = ({ item, isLoading }: Props) => {
       width="100%"
       borderTop="1px solid"
       borderColor="divider"
-      py={ 4 }
+      py={4}
       px={{ base: 0, lg: 4 }}
       _last={{ borderBottom: '1px solid', borderColor: 'divider' }}
       fontSize="sm"
-      lineHeight={ 5 }
+      lineHeight={5}
     >
-      { content }
+      {content}
     </Box>
   );
 };

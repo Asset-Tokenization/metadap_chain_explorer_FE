@@ -29,7 +29,7 @@ function getApiUrl(): string | undefined {
     return;
   }
 
-  return `${ apiHost }/api/v1/safes/`;
+  return `${apiHost}/api/v1/safes/`;
 }
 
 const title = 'Safe address tags';

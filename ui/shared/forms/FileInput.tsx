@@ -21,22 +21,28 @@ const FileInput = <Values extends FieldValues, Names extends Path<Values>>({ chi
     if (!multiple && field.value?.length === 0 && ref.current?.value) {
       ref.current.value = '';
     }
-  }, [ field.value?.length, multiple ]);
+  }, [field.value?.length, multiple]);
 
-  const onChange = React.useCallback((files: Array<File>) => {
-    field.onChange([ ...(field.value || []), ...files ]);
-  }, [ field ]);
+  const onChange = React.useCallback(
+    (files: Array<File>) => {
+      field.onChange([...(field.value || []), ...files]);
+    },
+    [field],
+  );
 
-  const handleInputChange = React.useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const fileList = event.target.files;
-    if (!fileList) {
-      return;
-    }
+  const handleInputChange = React.useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const fileList = event.target.files;
+      if (!fileList) {
+        return;
+      }
 
-    const files = Array.from(fileList);
-    onChange(files);
-    field.onBlur();
-  }, [ onChange, field ]);
+      const files = Array.from(fileList);
+      onChange(files);
+      field.onBlur();
+    },
+    [onChange, field],
+  );
 
   const handleClick = React.useCallback(() => {
     ref.current?.click();
@@ -44,25 +50,21 @@ const FileInput = <Values extends FieldValues, Names extends Path<Values>>({ chi
 
   const handleInputBlur = React.useCallback(() => {
     field.onBlur();
-  }, [ field ]);
+  }, [field]);
 
-  const injectedProps = React.useMemo(() => ({
-    onChange,
-  }), [ onChange ]);
+  const injectedProps = React.useMemo(
+    () => ({
+      onChange,
+    }),
+    [onChange],
+  );
 
   const content = typeof children === 'function' ? children(injectedProps) : children;
 
   return (
-    <InputGroup onClick={ handleClick } onBlur={ handleInputBlur }>
-      <VisuallyHiddenInput
-        type="file"
-        onChange={ handleInputChange }
-        ref={ ref }
-        accept={ accept }
-        multiple={ multiple }
-        name={ field.name }
-      />
-      { content }
+    <InputGroup onClick={handleClick} onBlur={handleInputBlur}>
+      <VisuallyHiddenInput type="file" onChange={handleInputChange} ref={ref} accept={accept} multiple={multiple} name={field.name} />
+      {content}
     </InputGroup>
   );
 };

@@ -12,20 +12,23 @@ import ChainIndicatorChart from './ChainIndicatorChart';
 type Props = UseQueryResult<TimeChartData>;
 
 const ChainIndicatorChartContainer = ({ data, isError, isLoading }: Props) => {
-
   const content = (() => {
     if (isLoading) {
-      return <ContentLoader mt="auto"/>;
+      return <ContentLoader mt="auto" />;
     }
 
     if (isError) {
-      return <DataFetchAlert/>;
+      return <DataFetchAlert />;
     }
 
-    return <ChainIndicatorChart data={ data }/>;
+    return <ChainIndicatorChart data={data} />;
   })();
 
-  return <Flex h={{ base: '150px', lg: 'auto' }} minH="150px" alignItems="flex-start" flexGrow={ 1 }>{ content }</Flex>;
+  return (
+    <Flex h={{ base: '150px', lg: 'auto' }} minH="150px" alignItems="flex-start" flexGrow={1}>
+      {content}
+    </Flex>
+  );
 };
 
 export default React.memo(ChainIndicatorChartContainer);

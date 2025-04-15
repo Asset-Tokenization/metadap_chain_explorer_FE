@@ -19,15 +19,15 @@ const InputPlaceholder = ({ text, icon, error, className, isFancy, isInModal }: 
   }
 
   return (
-    <FormLabel
-      className={ className }
-      alignItems="center"
-      { ...(isFancy ? { 'data-fancy': true } : {}) }
-      { ...(isInModal ? { 'data-in-modal': true } : {}) }
-    >
-      { icon }
-      <chakra.span>{ text }</chakra.span>
-      { errorMessage && <chakra.span order={ 3 } whiteSpace="pre"> - { errorMessage }</chakra.span> }
+    <FormLabel className={className} alignItems="center" {...(isFancy ? { 'data-fancy': true } : {})} {...(isInModal ? { 'data-in-modal': true } : {})}>
+      {icon}
+      <chakra.span>{text}</chakra.span>
+      {errorMessage && (
+        <chakra.span order={3} whiteSpace="pre">
+          {' '}
+          - {errorMessage}
+        </chakra.span>
+      )}
     </FormLabel>
   );
 };

@@ -16,10 +16,13 @@ const hiddenViews = (() => {
     return undefined;
   }
 
-  const result = ADDRESS_VIEWS_IDS.reduce((result, item) => {
-    result[item] = parsedValue.includes(item);
-    return result;
-  }, {} as Record<AddressViewId, boolean>);
+  const result = ADDRESS_VIEWS_IDS.reduce(
+    (result, item) => {
+      result[item] = parsedValue.includes(item);
+      return result;
+    },
+    {} as Record<AddressViewId, boolean>,
+  );
 
   return result;
 })();

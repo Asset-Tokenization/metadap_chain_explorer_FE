@@ -9,23 +9,22 @@ interface Props extends TagProps {
 }
 
 const Tag = ({ isLoading, ...props }: Props, ref: React.ForwardedRef<HTMLDivElement>) => {
-
   if (props.isTruncated && typeof props.children === 'string') {
     if (!props.children) {
       return null;
     }
 
     return (
-      <Skeleton isLoaded={ !isLoading } display="inline-block" borderRadius="sm" maxW="100%">
-        <TruncatedTextTooltip label={ props.children }>
-          <ChakraTag { ...props } ref={ ref }/>
+      <Skeleton isLoaded={!isLoading} display="inline-block" borderRadius="sm" maxW="100%">
+        <TruncatedTextTooltip label={props.children}>
+          <ChakraTag {...props} ref={ref} />
         </TruncatedTextTooltip>
       </Skeleton>
     );
   }
   return (
-    <Skeleton isLoaded={ !isLoading } display="inline-block" borderRadius="sm" maxW="100%">
-      <ChakraTag { ...props } ref={ ref }/>
+    <Skeleton isLoaded={!isLoading} display="inline-block" borderRadius="sm" maxW="100%">
+      <ChakraTag {...props} ref={ref} />
     </Skeleton>
   );
 };

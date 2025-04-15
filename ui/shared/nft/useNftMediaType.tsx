@@ -10,12 +10,11 @@ import type { MediaType } from './utils';
 import { getPreliminaryMediaType } from './utils';
 
 export default function useNftMediaType(url: string | null, isEnabled: boolean) {
-
   const fetch = useFetch();
 
   const { data } = useQuery<unknown, ResourceError<unknown>, MediaType>(
-    [ 'nft-media-type', url ],
-    async() => {
+    ['nft-media-type', url],
+    async () => {
       if (!url) {
         return 'image';
       }
@@ -36,7 +35,7 @@ export default function useNftMediaType(url: string | null, isEnabled: boolean) 
         const mediaTypeResourceUrl = route({ pathname: '/node-api/media-type' as StaticRoute<'/api/media-type'>['pathname'], query: { url } });
         const response = await fetch<{ type: MediaType | undefined }, ResourceError>(mediaTypeResourceUrl, undefined, { resource: 'media-type' });
 
-        return 'type' in response ? response.type ?? 'image' : 'image';
+        return 'type' in response ? (response.type ?? 'image') : 'image';
       } catch (error) {
         return 'image';
       }
@@ -44,7 +43,8 @@ export default function useNftMediaType(url: string | null, isEnabled: boolean) 
     {
       enabled: isEnabled && Boolean(url),
       staleTime: Infinity,
-    });
+    },
+  );
 
   return data;
 }

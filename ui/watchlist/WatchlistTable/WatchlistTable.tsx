@@ -1,10 +1,4 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-} from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react';
 import React from 'react';
 
 import type { WatchlistAddress } from 'types/api/account';
@@ -30,15 +24,15 @@ const WatchlistTable = ({ data, isLoading, onDeleteClick, onEditClick }: Props) 
         </Tr>
       </Thead>
       <Tbody>
-        { data?.map((item, index) => (
+        {data?.map((item, index) => (
           <WatchlistTableItem
-            key={ item.address_hash + (isLoading ? index : '') }
-            item={ item }
-            isLoading={ isLoading }
-            onDeleteClick={ onDeleteClick }
-            onEditClick={ onEditClick }
+            key={item.address_hash + (isLoading ? index : '')}
+            item={item}
+            isLoading={isLoading}
+            onDeleteClick={onDeleteClick}
+            onEditClick={onEditClick}
           />
-        )) }
+        ))}
       </Tbody>
     </Table>
   );

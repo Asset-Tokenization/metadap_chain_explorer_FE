@@ -18,8 +18,8 @@ export const PRIVATE_TAG_TX: TransactionTag = {
 
 export const PUBLIC_TAG: PublicTag = {
   additional_comment: 'my comment',
-  addresses: [ ADDRESS_HASH ],
-  addresses_with_info: [ ADDRESS_PARAMS ],
+  addresses: [ADDRESS_HASH],
+  addresses_with_info: [ADDRESS_PARAMS],
   company: 'Blockscout',
   email: 'john.doe@example.com',
   full_name: 'name',
@@ -48,7 +48,7 @@ export const WATCH_LIST_ITEM_WITH_TOKEN_INFO: WatchlistAddress = {
       incoming: true,
       outcoming: true,
     },
-    'native': {
+    native: {
       incoming: true,
       outcoming: true,
     },
@@ -68,9 +68,9 @@ export const CUSTOM_ABI: CustomAbi = {
     {
       constant: false,
       payable: false,
-      inputs: [ { name: 'target', type: 'address' } ],
+      inputs: [{ name: 'target', type: 'address' }],
       name: 'unknownWriteMethod',
-      outputs: [ { name: 'result', type: 'address' } ],
+      outputs: [{ name: 'result', type: 'address' }],
       stateMutability: 'nonpayable',
       type: 'function',
     },

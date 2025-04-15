@@ -11,10 +11,10 @@ export interface Params<R extends ResourceName, E = unknown> extends ApiFetchPar
 
 export function getResourceKey<R extends ResourceName>(resource: R, { pathParams, queryParams }: Params<R> = {}) {
   if (pathParams || queryParams) {
-    return [ resource, { ...pathParams, ...queryParams } ];
+    return [resource, { ...pathParams, ...queryParams }];
   }
 
-  return [ resource ];
+  return [resource];
 }
 
 export default function useApiQuery<R extends ResourceName, E = unknown>(
@@ -25,10 +25,12 @@ export default function useApiQuery<R extends ResourceName, E = unknown>(
 
   return useQuery<ResourcePayload<R>, ResourceError<E>, ResourcePayload<R>>(
     getResourceKey(resource, { pathParams, queryParams }),
-    async() => {
+    async () => {
       // all errors and error typing is handled by react-query
       // so error response will never go to the data
       // that's why we are safe here to do type conversion "as Promise<ResourcePayload<R>>"
       return apiFetch(resource, { pathParams, queryParams, fetchParams }) as Promise<ResourcePayload<R>>;
-    }, queryOptions);
+    },
+    queryOptions,
+  );
 }

@@ -22,8 +22,8 @@ const ApiKeysPage: React.FC = () => {
   const deleteModalProps = useDisclosure();
   useRedirectForInvalidAuthToken();
 
-  const [ apiKeyModalData, setApiKeyModalData ] = useState<ApiKey>();
-  const [ deleteModalData, setDeleteModalData ] = useState<ApiKey>();
+  const [apiKeyModalData, setApiKeyModalData] = useState<ApiKey>();
+  const [deleteModalData, setDeleteModalData] = useState<ApiKey>();
 
   const { data, isPlaceholderData, isError } = useApiQuery('api_keys', {
     queryOptions: {
@@ -31,59 +31,62 @@ const ApiKeysPage: React.FC = () => {
     },
   });
 
-  const onEditClick = useCallback((data: ApiKey) => {
-    setApiKeyModalData(data);
-    apiKeyModalProps.onOpen();
-  }, [ apiKeyModalProps ]);
+  const onEditClick = useCallback(
+    (data: ApiKey) => {
+      setApiKeyModalData(data);
+      apiKeyModalProps.onOpen();
+    },
+    [apiKeyModalProps],
+  );
 
   const onApiKeyModalClose = useCallback(() => {
     setApiKeyModalData(undefined);
     apiKeyModalProps.onClose();
-  }, [ apiKeyModalProps ]);
+  }, [apiKeyModalProps]);
 
-  const onDeleteClick = useCallback((data: ApiKey) => {
-    setDeleteModalData(data);
-    deleteModalProps.onOpen();
-  }, [ deleteModalProps ]);
+  const onDeleteClick = useCallback(
+    (data: ApiKey) => {
+      setDeleteModalData(data);
+      deleteModalProps.onOpen();
+    },
+    [deleteModalProps],
+  );
 
   const onDeleteModalClose = useCallback(() => {
     setDeleteModalData(undefined);
     deleteModalProps.onClose();
-  }, [ deleteModalProps ]);
+  }, [deleteModalProps]);
 
   const description = (
     <AccountPageDescription>
-      Create API keys to use for your RPC and EthRPC API requests. For more information, see { space }
-      <Link href="https://docs.blockscout.com/for-users/api#api-keys" target="_blank">“How to use a Blockscout API key”</Link>.
+      Create API keys to use for your RPC and EthRPC API requests. For more information, see {space}
+      <Link href="https://docs.blockscout.com/for-users/api#api-keys" target="_blank">
+        “How to use a Blockscout API key”
+      </Link>
+      .
     </AccountPageDescription>
   );
 
   const content = (() => {
     if (isError) {
-      return <DataFetchAlert/>;
+      return <DataFetchAlert />;
     }
 
     const list = (
       <>
         <Box display={{ base: 'block', lg: 'none' }}>
-          { data?.map((item, index) => (
+          {data?.map((item, index) => (
             <ApiKeyListItem
-              key={ item.api_key + (isPlaceholderData ? index : '') }
-              item={ item }
-              isLoading={ isPlaceholderData }
-              onDeleteClick={ onDeleteClick }
-              onEditClick={ onEditClick }
+              key={item.api_key + (isPlaceholderData ? index : '')}
+              item={item}
+              isLoading={isPlaceholderData}
+              onDeleteClick={onDeleteClick}
+              onEditClick={onEditClick}
             />
-          )) }
+          ))}
         </Box>
         <Box display={{ base: 'none', lg: 'block' }}>
-          <ApiKeyTable
-            data={ data }
-            isLoading={ isPlaceholderData }
-            onDeleteClick={ onDeleteClick }
-            onEditClick={ onEditClick }
-            limit={ DATA_LIMIT }
-          />
+          <ApiKeyTable data={data} isLoading={isPlaceholderData} onDeleteClick={onDeleteClick} onEditClick={onEditClick} limit={DATA_LIMIT} />
         </Box>
       </>
     );
@@ -92,40 +95,36 @@ const ApiKeysPage: React.FC = () => {
 
     return (
       <>
-        { description }
-        { Boolean(data?.length) && list }
+        {description}
+        {Boolean(data?.length) && list}
         <Skeleton
-          marginTop={ 8 }
+          marginTop={8}
           flexDir={{ base: 'column', lg: 'row' }}
           alignItems={{ base: 'start', lg: 'center' }}
-          isLoaded={ !isPlaceholderData }
+          isLoaded={!isPlaceholderData}
           display="inline-flex"
-          columnGap={ 5 }
-          rowGap={ 5 }
+          columnGap={5}
+          rowGap={5}
         >
-          <Button
-            size="lg"
-            onClick={ apiKeyModalProps.onOpen }
-            isDisabled={ !canAdd }
-          >
-              Add API key
+          <Button size="lg" onClick={apiKeyModalProps.onOpen} isDisabled={!canAdd}>
+            Add API key
           </Button>
-          { !canAdd && (
+          {!canAdd && (
             <Text fontSize="sm" variant="secondary">
-              { `You have added the maximum number of API keys (${ DATA_LIMIT }). Contact us to request additional keys.` }
+              {`You have added the maximum number of API keys (${DATA_LIMIT}). Contact us to request additional keys.`}
             </Text>
-          ) }
+          )}
         </Skeleton>
-        <ApiKeyModal { ...apiKeyModalProps } onClose={ onApiKeyModalClose } data={ apiKeyModalData }/>
-        { deleteModalData && <DeleteApiKeyModal { ...deleteModalProps } onClose={ onDeleteModalClose } data={ deleteModalData }/> }
+        <ApiKeyModal {...apiKeyModalProps} onClose={onApiKeyModalClose} data={apiKeyModalData} />
+        {deleteModalData && <DeleteApiKeyModal {...deleteModalProps} onClose={onDeleteModalClose} data={deleteModalData} />}
       </>
     );
   })();
 
   return (
     <>
-      <PageTitle title="API keys"/>
-      { content }
+      <PageTitle title="API keys" />
+      {content}
     </>
   );
 };

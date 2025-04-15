@@ -33,14 +33,16 @@ interface Props {
 }
 
 const FileSnippet = ({ file, className, index, onRemove, isDisabled, error }: Props) => {
-  const handleRemove = React.useCallback((event: React.MouseEvent) => {
-    event.stopPropagation();
-    onRemove?.(index);
-  }, [ index, onRemove ]);
+  const handleRemove = React.useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      onRemove?.(index);
+    },
+    [index, onRemove],
+  );
 
   const handleErrorHintIconClick = React.useCallback((event: React.MouseEvent) => {
     event.stopPropagation();
-
   }, []);
 
   const fileExtension = getFileExtension(file.name);
@@ -48,60 +50,44 @@ const FileSnippet = ({ file, className, index, onRemove, isDisabled, error }: Pr
   const iconColor = useColorModeValue('gray.600', 'gray.400');
 
   return (
-    <Flex
-      maxW="300px"
-      overflow="hidden"
-      className={ className }
-      alignItems="center"
-      textAlign="left"
-    >
+    <Flex maxW="300px" overflow="hidden" className={className} alignItems="center" textAlign="left">
       <Icon
-        as={ fileIcon }
+        as={fileIcon}
         boxSize="74px"
-        color={ error ? 'error' : iconColor }
-        mr={ 2 }
+        color={error ? 'error' : iconColor}
+        mr={2}
         borderWidth="2px"
         borderRadius="md"
-        borderColor={ useColorModeValue('blackAlpha.100', 'whiteAlpha.200') }
-        p={ 3 }
+        borderColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.200')}
+        p={3}
       />
       <Box maxW="calc(100% - 58px - 24px)">
         <Flex alignItems="center">
-          <Text
-            fontWeight={ 600 }
-            overflow="hidden"
-            textOverflow="ellipsis"
-            whiteSpace="nowrap"
-            color={ error ? 'error' : 'initial' }
-          >
-            { file.name }
+          <Text fontWeight={600} overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap" color={error ? 'error' : 'initial'}>
+            {file.name}
           </Text>
-          { Boolean(error) && (
-            <Tooltip
-              label={ error }
-              placement="top"
-              maxW="320px"
-            >
-              <Box cursor="pointer" display="inherit" onClick={ handleErrorHintIconClick } ml={ 1 }>
-                <Icon as={ infoIcon } boxSize={ 5 } color="error"/>
+          {Boolean(error) && (
+            <Tooltip label={error} placement="top" maxW="320px">
+              <Box cursor="pointer" display="inherit" onClick={handleErrorHintIconClick} ml={1}>
+                <Icon as={infoIcon} boxSize={5} color="error" />
               </Box>
             </Tooltip>
-          ) }
+          )}
           <IconButton
             aria-label="remove"
-            icon={ <CrossIcon/> }
-            boxSize={ 6 }
+            icon={<CrossIcon />}
+            boxSize={6}
             variant="simple"
             display="inline-block"
-            flexShrink={ 0 }
+            flexShrink={0}
             ml="auto"
-            onClick={ handleRemove }
-            isDisabled={ isDisabled }
+            onClick={handleRemove}
+            isDisabled={isDisabled}
             alignSelf="flex-start"
           />
         </Flex>
-        <Text variant="secondary" mt={ 1 }>
-          { file.size.toLocaleString(undefined, { notation: 'compact', maximumFractionDigits: 2, unit: 'byte', unitDisplay: 'narrow', style: 'unit' }) }
+        <Text variant="secondary" mt={1}>
+          {file.size.toLocaleString(undefined, { notation: 'compact', maximumFractionDigits: 2, unit: 'byte', unitDisplay: 'narrow', style: 'unit' })}
         </Text>
       </Box>
     </Flex>

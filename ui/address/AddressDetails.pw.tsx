@@ -28,91 +28,118 @@ const hooksConfig = {
   },
 };
 
-test('contract +@mobile', async({ mount, page }) => {
-  await page.route(API_URL_ADDRESS, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(addressMock.contract),
-  }));
-  await page.route(API_URL_COUNTERS, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(countersMock.forContract),
-  }));
+test('contract +@mobile', async ({ mount, page }) => {
+  await page.route(API_URL_ADDRESS, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(addressMock.contract),
+    }),
+  );
+  await page.route(API_URL_COUNTERS, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(countersMock.forContract),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <AddressDetails addressQuery={{ data: addressMock.contract } as UseQueryResult<Address, ResourceError>}/>
+      <AddressDetails addressQuery={{ data: addressMock.contract } as UseQueryResult<Address, ResourceError>} />
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
 
-test('token', async({ mount, page }) => {
-  await page.route(API_URL_ADDRESS, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(addressMock.token),
-  }));
-  await page.route(API_URL_COUNTERS, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(countersMock.forToken),
-  }));
-  await page.route(API_URL_TOKENS_ERC20, async(route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(tokensMock.erc20List),
-  }), { times: 1 });
-  await page.route(API_URL_TOKENS_ERC721, async(route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(tokensMock.erc721List),
-  }), { times: 1 });
-  await page.route(API_URL_TOKENS_ER1155, async(route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(tokensMock.erc1155List),
-  }), { times: 1 });
+test('token', async ({ mount, page }) => {
+  await page.route(API_URL_ADDRESS, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(addressMock.token),
+    }),
+  );
+  await page.route(API_URL_COUNTERS, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(countersMock.forToken),
+    }),
+  );
+  await page.route(
+    API_URL_TOKENS_ERC20,
+    async (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify(tokensMock.erc20List),
+      }),
+    { times: 1 },
+  );
+  await page.route(
+    API_URL_TOKENS_ERC721,
+    async (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify(tokensMock.erc721List),
+      }),
+    { times: 1 },
+  );
+  await page.route(
+    API_URL_TOKENS_ER1155,
+    async (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify(tokensMock.erc1155List),
+      }),
+    { times: 1 },
+  );
 
   await page.evaluate(() => {
     window.ethereum = {
-      providers: [ { isMetaMask: true, _events: {} } ],
-    }as WindowProvider;
+      providers: [{ isMetaMask: true, _events: {} }],
+    } as WindowProvider;
   });
 
   const component = await mount(
     <TestApp>
       <MockAddressPage>
-        <AddressDetails addressQuery={{ data: addressMock.token } as UseQueryResult<Address, ResourceError>}/>
+        <AddressDetails addressQuery={{ data: addressMock.token } as UseQueryResult<Address, ResourceError>} />
       </MockAddressPage>
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
 
-test('validator +@mobile', async({ mount, page }) => {
-  await page.route(API_URL_ADDRESS, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(addressMock.validator),
-  }));
-  await page.route(API_URL_COUNTERS, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(countersMock.forValidator),
-  }));
+test('validator +@mobile', async ({ mount, page }) => {
+  await page.route(API_URL_ADDRESS, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(addressMock.validator),
+    }),
+  );
+  await page.route(API_URL_COUNTERS, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(countersMock.forValidator),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <AddressDetails addressQuery={{ data: addressMock.validator } as UseQueryResult<Address, ResourceError>}/>
+      <AddressDetails addressQuery={{ data: addressMock.validator } as UseQueryResult<Address, ResourceError>} />
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });

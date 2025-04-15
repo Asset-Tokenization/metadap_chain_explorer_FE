@@ -33,20 +33,14 @@ const PrivateTagMenuItem = ({ className, hash, onBeforeClick, type = 'address' }
     }
 
     modal.onOpen();
-  }, [ modal, onBeforeClick ]);
+  }, [modal, onBeforeClick]);
 
-  const handleAddPrivateTag = React.useCallback(async() => {
+  const handleAddPrivateTag = React.useCallback(async () => {
     await queryClient.refetchQueries({ queryKey });
     modal.onClose();
-  }, [ queryClient, queryKey, modal ]);
+  }, [queryClient, queryKey, modal]);
 
-  if (
-    queryData &&
-    (
-      ('private_tags' in queryData && queryData.private_tags?.length) ||
-      ('tx_tag' in queryData && queryData.tx_tag)
-    )
-  ) {
+  if (queryData && (('private_tags' in queryData && queryData.private_tags?.length) || ('tx_tag' in queryData && queryData.tx_tag))) {
     return null;
   }
 
@@ -60,14 +54,11 @@ const PrivateTagMenuItem = ({ className, hash, onBeforeClick, type = 'address' }
 
   return (
     <>
-      <MenuItem className={ className } onClick={ handleClick }>
-        <Icon as={ iconPrivateTags } boxSize={ 6 } mr={ 2 }/>
+      <MenuItem className={className} onClick={handleClick}>
+        <Icon as={iconPrivateTags} boxSize={6} mr={2} />
         <span>Add private tag</span>
       </MenuItem>
-      { type === 'tx' ?
-        <TransactionModal { ...modalProps } data={{ transaction_hash: hash }}/> :
-        <AddressModal { ...modalProps } data={{ address_hash: hash }}/>
-      }
+      {type === 'tx' ? <TransactionModal {...modalProps} data={{ transaction_hash: hash }} /> : <AddressModal {...modalProps} data={{ address_hash: hash }} />}
     </>
   );
 };

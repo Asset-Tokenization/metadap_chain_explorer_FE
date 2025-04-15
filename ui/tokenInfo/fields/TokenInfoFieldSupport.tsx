@@ -15,20 +15,17 @@ interface Props {
 }
 
 const TokenInfoFieldSupport = ({ control, isReadOnly }: Props) => {
-  const renderControl: ControllerProps<Fields, 'support'>['render'] = React.useCallback(({ field, fieldState, formState }) => {
-
-    return (
-      <FormControl variant="floating" id={ field.name } size={{ base: 'md', lg: 'lg' }}>
-        <Input
-          { ...field }
-          isInvalid={ Boolean(fieldState.error) }
-          isDisabled={ formState.isSubmitting || isReadOnly }
-          autoComplete="off"
-        />
-        <InputPlaceholder text="Support URL or email" error={ fieldState.error }/>
-      </FormControl>
-    );
-  }, [ isReadOnly ]);
+  const renderControl: ControllerProps<Fields, 'support'>['render'] = React.useCallback(
+    ({ field, fieldState, formState }) => {
+      return (
+        <FormControl variant="floating" id={field.name} size={{ base: 'md', lg: 'lg' }}>
+          <Input {...field} isInvalid={Boolean(fieldState.error)} isDisabled={formState.isSubmitting || isReadOnly} autoComplete="off" />
+          <InputPlaceholder text="Support URL or email" error={fieldState.error} />
+        </FormControl>
+      );
+    },
+    [isReadOnly],
+  );
 
   const validate = React.useCallback((newValue: string | undefined) => {
     const urlValidationResult = urlValidator(newValue);
@@ -41,14 +38,7 @@ const TokenInfoFieldSupport = ({ control, isReadOnly }: Props) => {
     return 'Invalid format';
   }, []);
 
-  return (
-    <Controller
-      name="support"
-      control={ control }
-      render={ renderControl }
-      rules={{ validate }}
-    />
-  );
+  return <Controller name="support" control={control} render={renderControl} rules={{ validate }} />;
 };
 
 export default React.memo(TokenInfoFieldSupport);

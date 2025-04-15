@@ -14,14 +14,14 @@ const GoogleAnalytics = () => {
 
   return (
     <>
-      <Script src={ `https://www.googletagmanager.com/gtag/js?id=${ id }` }/>
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${id}`} />
       <Script id="google-analytics">
-        { `
+        {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${ id }');
-        ` }
+          gtag('config', '${id}');
+        `}
       </Script>
     </>
   );

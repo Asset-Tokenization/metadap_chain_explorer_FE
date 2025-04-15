@@ -35,30 +35,18 @@ const AccountActionsMenu = ({ isLoading, className }: Props) => {
 
   return (
     <Menu>
-      <Skeleton isLoaded={ !isLoading } borderRadius="base" className={ className }>
-        <MenuButton
-          as={ Button }
-          size="sm"
-          variant="outline"
-          onClick={ handleButtonClick }
-        >
+      <Skeleton isLoaded={!isLoading} borderRadius="base" className={className}>
+        <MenuButton as={Button} size="sm" variant="outline" onClick={handleButtonClick}>
           <Flex alignItems="center">
             <span>More</span>
-            <Icon as={ iconArrow } transform="rotate(-90deg)" boxSize={ 5 } ml={ 1 }/>
+            <Icon as={iconArrow} transform="rotate(-90deg)" boxSize={5} ml={1} />
           </Flex>
         </MenuButton>
       </Skeleton>
       <MenuList minWidth="180px" zIndex="popover">
-        { isTokenPage && config.features.addressVerification.isEnabled &&
-          <TokenInfoMenuItem py={ 2 } px={ 4 } hash={ hash } onBeforeClick={ isAccountActionAllowed }/> }
-        <PrivateTagMenuItem
-          py={ 2 }
-          px={ 4 }
-          hash={ hash }
-          onBeforeClick={ isAccountActionAllowed }
-          type={ isTxPage ? 'tx' : 'address' }
-        />
-        { !isTxPage && <PublicTagMenuItem py={ 2 } px={ 4 } hash={ hash } onBeforeClick={ isAccountActionAllowed }/> }
+        {isTokenPage && config.features.addressVerification.isEnabled && <TokenInfoMenuItem py={2} px={4} hash={hash} onBeforeClick={isAccountActionAllowed} />}
+        <PrivateTagMenuItem py={2} px={4} hash={hash} onBeforeClick={isAccountActionAllowed} type={isTxPage ? 'tx' : 'address'} />
+        {!isTxPage && <PublicTagMenuItem py={2} px={4} hash={hash} onBeforeClick={isAccountActionAllowed} />}
       </MenuList>
     </Menu>
   );

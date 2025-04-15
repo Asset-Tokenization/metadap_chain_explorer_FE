@@ -21,52 +21,35 @@ const SearchBarSuggestAddress = ({ data, isMobile, searchTerm }: Props) => {
     />
   );
   const name = data.name && (
-    <Text
-      variant="secondary"
-      overflow="hidden"
-      whiteSpace="nowrap"
-      textOverflow="ellipsis"
-    >
-      <span dangerouslySetInnerHTML={{ __html: highlightText(data.name, searchTerm) }}/>
+    <Text variant="secondary" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
+      <span dangerouslySetInnerHTML={{ __html: highlightText(data.name, searchTerm) }} />
     </Text>
   );
-  const address = <HashStringShortenDynamic hash={ data.address } isTooltipDisabled/>;
+  const address = <HashStringShortenDynamic hash={data.address} isTooltipDisabled />;
 
   if (isMobile) {
     return (
       <>
         <Flex alignItems="center">
-          { icon }
-          <Box
-            as={ shouldHighlightHash ? 'mark' : 'span' }
-            display="block"
-            overflow="hidden"
-            whiteSpace="nowrap"
-            fontWeight={ 700 }
-          >
-            { address }
+          {icon}
+          <Box as={shouldHighlightHash ? 'mark' : 'span'} display="block" overflow="hidden" whiteSpace="nowrap" fontWeight={700}>
+            {address}
           </Box>
         </Flex>
-        { name }
+        {name}
       </>
     );
   }
 
   return (
     <Flex alignItems="center">
-      <Flex alignItems="center" w="450px" mr={ 2 }>
-        { icon }
-        <Box
-          as={ shouldHighlightHash ? 'mark' : 'span' }
-          display="block"
-          overflow="hidden"
-          whiteSpace="nowrap"
-          fontWeight={ 700 }
-        >
-          { address }
+      <Flex alignItems="center" w="450px" mr={2}>
+        {icon}
+        <Box as={shouldHighlightHash ? 'mark' : 'span'} display="block" overflow="hidden" whiteSpace="nowrap" fontWeight={700}>
+          {address}
         </Box>
       </Flex>
-      { name }
+      {name}
     </Flex>
   );
 };

@@ -14,38 +14,26 @@ const MyProfile = () => {
 
   const content = (() => {
     if (isLoading) {
-      return <ContentLoader/>;
+      return <ContentLoader />;
     }
 
     if (isError) {
-      return <DataFetchAlert/>;
+      return <DataFetchAlert />;
     }
 
     return (
-      <VStack maxW="412px" mt={ 8 } gap={ 5 } alignItems="stretch">
-        <UserAvatar size={ 64 }/>
+      <VStack maxW="412px" mt={8} gap={5} alignItems="stretch">
+        <UserAvatar size={64} />
         <FormControl variant="floating" id="name" isRequired size="lg">
-          <Input
-            required
-            disabled
-            value={ data.name || '' }
-          />
+          <Input required disabled value={data.name || ''} />
           <FormLabel>Name</FormLabel>
         </FormControl>
         <FormControl variant="floating" id="nickname" isRequired size="lg">
-          <Input
-            required
-            disabled
-            value={ data.nickname || '' }
-          />
+          <Input required disabled value={data.nickname || ''} />
           <FormLabel>Nickname</FormLabel>
         </FormControl>
         <FormControl variant="floating" id="email" isRequired size="lg">
-          <Input
-            required
-            disabled
-            value={ data.email }
-          />
+          <Input required disabled value={data.email} />
           <FormLabel>Email</FormLabel>
         </FormControl>
       </VStack>
@@ -54,8 +42,8 @@ const MyProfile = () => {
 
   return (
     <>
-      <PageTitle title="My profile"/>
-      { content }
+      <PageTitle title="My profile" />
+      {content}
     </>
   );
 };

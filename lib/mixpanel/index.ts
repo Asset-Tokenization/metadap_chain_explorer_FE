@@ -4,9 +4,4 @@ import useInit from './useInit';
 import useLogPageView from './useLogPageView';
 export * from './utils';
 
-export {
-  useInit,
-  useLogPageView,
-  logEvent,
-  getPageType,
-};
+export { useInit, useLogPageView, logEvent, getPageType };

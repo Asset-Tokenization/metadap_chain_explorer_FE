@@ -10,27 +10,33 @@ import useFetch from 'lib/hooks/useFetch';
 export default function useGetCsrfToken() {
   const nodeApiFetch = useFetch();
 
-  useQuery(getResourceKey('csrf'), async() => {
-    if (!isNeedProxy()) {
-      const url = buildUrl('csrf');
-      const apiResponse = await fetch(url, { credentials: 'include' });
-      const csrfFromHeader = apiResponse.headers.get('x-bs-account-csrf');
+  useQuery(
+    getResourceKey('csrf'),
+    async () => {
+      if (!isNeedProxy()) {
+        const url = buildUrl('csrf');
+        const apiResponse = await fetch(url, { credentials: 'include' });
+        const csrfFromHeader = apiResponse.headers.get('x-bs-account-csrf');
 
-      if (!csrfFromHeader) {
-        Sentry.captureException(new Error('Client fetch failed'), { tags: {
-          source: 'fetch',
-          'source.resource': 'csrf',
-          'status.code': 500,
-          'status.text': 'Unable to obtain csrf token from header',
-        } });
-        return;
+        if (!csrfFromHeader) {
+          Sentry.captureException(new Error('Client fetch failed'), {
+            tags: {
+              source: 'fetch',
+              'source.resource': 'csrf',
+              'status.code': 500,
+              'status.text': 'Unable to obtain csrf token from header',
+            },
+          });
+          return;
+        }
+
+        return { token: csrfFromHeader };
       }
 
-      return { token: csrfFromHeader };
-    }
-
-    return nodeApiFetch('/node-api/csrf');
-  }, {
-    enabled: Boolean(cookies.get(cookies.NAMES.API_TOKEN)),
-  });
+      return nodeApiFetch('/node-api/csrf');
+    },
+    {
+      enabled: Boolean(cookies.get(cookies.NAMES.API_TOKEN)),
+    },
+  );
 }

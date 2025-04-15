@@ -1,10 +1,4 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-} from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react';
 import React from 'react';
 
 import type { TransactionTags, TransactionTag } from 'types/api/account';
@@ -29,15 +23,15 @@ const AddressTagTable = ({ data, isLoading, onDeleteClick, onEditClick }: Props)
         </Tr>
       </Thead>
       <Tbody>
-        { data?.map((item, index) => (
+        {data?.map((item, index) => (
           <TransactionTagTableItem
-            key={ item.id + (isLoading ? index : '') }
-            item={ item }
-            isLoading={ isLoading }
-            onDeleteClick={ onDeleteClick }
-            onEditClick={ onEditClick }
+            key={item.id + (isLoading ? index : '')}
+            item={item}
+            isLoading={isLoading}
+            onDeleteClick={onDeleteClick}
+            onEditClick={onEditClick}
           />
-        )) }
+        ))}
       </Tbody>
     </Table>
   );

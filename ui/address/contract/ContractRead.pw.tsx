@@ -16,19 +16,23 @@ const hooksConfig = {
   },
 };
 
-test('base view +@mobile +@dark-mode', async({ mount, page }) => {
-  await page.route(CONTRACT_READ_METHODS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMethodsMock.read),
-  }));
-  await page.route(CONTRACT_QUERY_METHOD_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMethodsMock.readResultSuccess),
-  }));
+test('base view +@mobile +@dark-mode', async ({ mount, page }) => {
+  await page.route(CONTRACT_READ_METHODS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMethodsMock.read),
+    }),
+  );
+  await page.route(CONTRACT_QUERY_METHOD_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMethodsMock.readResultSuccess),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <ContractRead addressHash={ addressHash }/>
+      <ContractRead addressHash={addressHash} />
     </TestApp>,
     { hooksConfig },
   );

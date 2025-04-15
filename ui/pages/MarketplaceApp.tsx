@@ -19,10 +19,11 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 const feature = config.features.marketplace;
 const configUrl = feature.isEnabled ? feature.configUrl : '';
 
-const IFRAME_SANDBOX_ATTRIBUTE = 'allow-forms allow-orientation-lock ' +
-'allow-pointer-lock allow-popups-to-escape-sandbox ' +
-'allow-same-origin allow-scripts ' +
-'allow-top-navigation-by-user-activation allow-popups';
+const IFRAME_SANDBOX_ATTRIBUTE =
+  'allow-forms allow-orientation-lock ' +
+  'allow-pointer-lock allow-popups-to-escape-sandbox ' +
+  'allow-same-origin allow-scripts ' +
+  'allow-top-navigation-by-user-activation allow-popups';
 
 const IFRAME_ALLOW_ATTRIBUTE = 'clipboard-read; clipboard-write;';
 
@@ -35,8 +36,8 @@ const MarketplaceApp = () => {
   const id = getQueryParamString(router.query.id);
 
   const { isLoading, isError, error, data } = useQuery<unknown, ResourceError<unknown>, MarketplaceAppOverview>(
-    [ 'marketplace-apps', id ],
-    async() => {
+    ['marketplace-apps', id],
+    async () => {
       const result = await apiFetch<Array<MarketplaceAppOverview>, unknown>(configUrl, undefined, { resource: 'marketplace-apps' });
       if (!Array.isArray(result)) {
         throw result;
@@ -54,7 +55,7 @@ const MarketplaceApp = () => {
     },
   );
 
-  const [ isFrameLoading, setIsFrameLoading ] = useState(isLoading);
+  const [isFrameLoading, setIsFrameLoading] = useState(isLoading);
   const { colorMode } = useColorMode();
 
   const handleIframeLoad = useCallback(() => {
@@ -76,16 +77,13 @@ const MarketplaceApp = () => {
 
       ref?.current?.contentWindow?.postMessage(message, data.url);
     }
-  }, [ isFrameLoading, data, colorMode, ref ]);
+  }, [isFrameLoading, data, colorMode, ref]);
 
   useEffect(() => {
     if (data) {
-      metadata.update(
-        { pathname: '/apps/[id]', query: { id: data.id } },
-        { app_name: data.title },
-      );
+      metadata.update({ pathname: '/apps/[id]', query: { id: data.id } }, { app_name: data.title });
     }
-  }, [ data ]);
+  }, [data]);
 
   if (isError) {
     throw new Error('Unable to load app', { cause: error });
@@ -102,33 +100,28 @@ const MarketplaceApp = () => {
       label: 'Back to marketplace',
       url: appProps.referrer,
     };
-  }, [ appProps.referrer ]);
+  }, [appProps.referrer]);
 
   return (
     <>
-      { !isLoading && <PageTitle title={ data.title } backLink={ backLink }/> }
-      <Center
-        h="100vh"
-        mx={{ base: -4, lg: -12 }}
-      >
-        { (isFrameLoading) && (
-          <ContentLoader/>
-        ) }
+      {!isLoading && <PageTitle title={data.title} backLink={backLink} />}
+      <Center h="100vh" mx={{ base: -4, lg: -12 }}>
+        {isFrameLoading && <ContentLoader />}
 
-        { data && (
+        {data && (
           <Box
-            allow={ IFRAME_ALLOW_ATTRIBUTE }
-            ref={ ref }
-            sandbox={ IFRAME_SANDBOX_ATTRIBUTE }
+            allow={IFRAME_ALLOW_ATTRIBUTE}
+            ref={ref}
+            sandbox={IFRAME_SANDBOX_ATTRIBUTE}
             as="iframe"
             h="100%"
             w="100%"
-            display={ isFrameLoading ? 'none' : 'block' }
-            src={ data.url }
-            title={ data.title }
-            onLoad={ handleIframeLoad }
+            display={isFrameLoading ? 'none' : 'block'}
+            src={data.url}
+            title={data.title}
+            onLoad={handleIframeLoad}
           />
-        ) }
+        )}
       </Center>
     </>
   );

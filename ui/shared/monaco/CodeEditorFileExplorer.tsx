@@ -17,44 +17,38 @@ interface Props {
 }
 
 const CodeEditorFileExplorer = ({ data, onFileSelect, selectedFile, mainFile, isActive, setActionBarRenderer }: Props) => {
-  const [ key, setKey ] = React.useState(0);
+  const [key, setKey] = React.useState(0);
   const tree = React.useMemo(() => {
     return composeFileTree(data);
-  }, [ data ]);
+  }, [data]);
 
   const handleCollapseButtonClick = React.useCallback(() => {
     setKey((prev) => prev + 1);
   }, []);
 
   const renderActionBar = React.useCallback(() => {
-    return (
-      <CoderEditorCollapseButton onClick={ handleCollapseButtonClick } label="Collapse folders"/>
-    );
-  }, [ handleCollapseButtonClick ]);
+    return <CoderEditorCollapseButton onClick={handleCollapseButtonClick} label="Collapse folders" />;
+  }, [handleCollapseButtonClick]);
 
-  const handleFileClick = React.useCallback((event: React.MouseEvent) => {
-    const filePath = (event.currentTarget as HTMLDivElement).getAttribute('data-file-path');
-    const fileIndex = data.findIndex((item) => item.file_path === filePath);
+  const handleFileClick = React.useCallback(
+    (event: React.MouseEvent) => {
+      const filePath = (event.currentTarget as HTMLDivElement).getAttribute('data-file-path');
+      const fileIndex = data.findIndex((item) => item.file_path === filePath);
 
-    if (fileIndex > -1) {
-      onFileSelect(fileIndex);
-    }
-  }, [ data, onFileSelect ]);
+      if (fileIndex > -1) {
+        onFileSelect(fileIndex);
+      }
+    },
+    [data, onFileSelect],
+  );
 
   React.useEffect(() => {
     isActive && setActionBarRenderer(() => renderActionBar);
-  }, [ isActive, renderActionBar, setActionBarRenderer ]);
+  }, [isActive, renderActionBar, setActionBarRenderer]);
 
   return (
     <Box>
-      <CodeEditorFileTree
-        key={ key }
-        tree={ tree }
-        onItemClick={ handleFileClick }
-        isCollapsed={ key > 0 }
-        selectedFile={ selectedFile }
-        mainFile={ mainFile }
-      />
+      <CodeEditorFileTree key={key} tree={tree} onItemClick={handleFileClick} isCollapsed={key > 0} selectedFile={selectedFile} mainFile={mainFile} />
     </Box>
   );
 };

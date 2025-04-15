@@ -1,6 +1,4 @@
-import {
-  Image,
-} from '@chakra-ui/react';
+import { Image } from '@chakra-ui/react';
 import React from 'react';
 
 import NftMediaFullscreenModal from './NftMediaFullscreenModal';
@@ -13,8 +11,8 @@ interface Props {
 
 const NftImageWithFullscreen = ({ src, isOpen, onClose }: Props) => {
   return (
-    <NftMediaFullscreenModal isOpen={ isOpen } onClose={ onClose }>
-      <Image src={ src } alt="Token instance image" maxH="90vh" maxW="90vw"/>
+    <NftMediaFullscreenModal isOpen={isOpen} onClose={onClose}>
+      <Image src={src} alt="Token instance image" maxH="90vh" maxW="90vw" />
     </NftMediaFullscreenModal>
   );
 };

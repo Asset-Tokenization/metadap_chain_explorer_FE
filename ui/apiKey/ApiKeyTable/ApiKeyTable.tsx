@@ -1,10 +1,4 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-} from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react';
 import React from 'react';
 
 import type { ApiKeys, ApiKey } from 'types/api/account';
@@ -24,20 +18,20 @@ const ApiKeyTable = ({ data, isLoading, onDeleteClick, onEditClick, limit }: Pro
     <Table variant="simple" minWidth="600px">
       <Thead>
         <Tr>
-          <Th>{ `API key token (limit ${ limit } keys)` }</Th>
+          <Th>{`API key token (limit ${limit} keys)`}</Th>
           <Th width="108px"></Th>
         </Tr>
       </Thead>
       <Tbody>
-        { data?.map((item, index) => (
+        {data?.map((item, index) => (
           <ApiKeyTableItem
-            key={ item.api_key + (isLoading ? index : '') }
-            item={ item }
-            isLoading={ isLoading }
-            onDeleteClick={ onDeleteClick }
-            onEditClick={ onEditClick }
+            key={item.api_key + (isLoading ? index : '')}
+            item={item}
+            isLoading={isLoading}
+            onDeleteClick={onDeleteClick}
+            onEditClick={onEditClick}
           />
-        )) }
+        ))}
       </Tbody>
     </Table>
   );

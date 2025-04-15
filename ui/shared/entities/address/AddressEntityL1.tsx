@@ -14,17 +14,17 @@ const AddressEntityL1 = (props: AddressEntity.EntityProps) => {
     return null;
   }
 
-  const defaultHref = feature.L1BaseUrl + route({
-    pathname: '/address/[hash]',
-    query: {
-      ...props.query,
-      hash: props.address.hash,
-    },
-  });
+  const defaultHref =
+    feature.L1BaseUrl +
+    route({
+      pathname: '/address/[hash]',
+      query: {
+        ...props.query,
+        hash: props.address.hash,
+      },
+    });
 
-  return (
-    <AddressEntity.default { ...props } href={ props.href ?? defaultHref } isExternal/>
-  );
+  return <AddressEntity.default {...props} href={props.href ?? defaultHref} isExternal />;
 };
 
 export default chakra(AddressEntityL1);

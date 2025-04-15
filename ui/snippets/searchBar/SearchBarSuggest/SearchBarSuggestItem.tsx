@@ -21,7 +21,6 @@ interface Props {
 }
 
 const SearchBarSuggestItem = ({ data, isMobile, searchTerm, onClick }: Props) => {
-
   const url = (() => {
     switch (data.type) {
       case 'token': {
@@ -44,30 +43,27 @@ const SearchBarSuggestItem = ({ data, isMobile, searchTerm, onClick }: Props) =>
   const content = (() => {
     switch (data.type) {
       case 'token': {
-        return <SearchBarSuggestToken data={ data } searchTerm={ searchTerm } isMobile={ isMobile }/>;
+        return <SearchBarSuggestToken data={data} searchTerm={searchTerm} isMobile={isMobile} />;
       }
       case 'contract':
       case 'address': {
-        return <SearchBarSuggestAddress data={ data } searchTerm={ searchTerm } isMobile={ isMobile }/>;
+        return <SearchBarSuggestAddress data={data} searchTerm={searchTerm} isMobile={isMobile} />;
       }
       case 'label': {
-        return <SearchBarSuggestLabel data={ data } searchTerm={ searchTerm } isMobile={ isMobile }/>;
-
+        return <SearchBarSuggestLabel data={data} searchTerm={searchTerm} isMobile={isMobile} />;
       }
       case 'block': {
-        return <SearchBarSuggestBlock data={ data } searchTerm={ searchTerm } isMobile={ isMobile }/>;
+        return <SearchBarSuggestBlock data={data} searchTerm={searchTerm} isMobile={isMobile} />;
       }
       case 'transaction': {
-        return <SearchBarSuggestTx data={ data } searchTerm={ searchTerm } isMobile={ isMobile }/>;
+        return <SearchBarSuggestTx data={data} searchTerm={searchTerm} isMobile={isMobile} />;
       }
     }
   })();
 
   return (
-    <NextLink href={ url as NextLinkProps['href'] } passHref legacyBehavior>
-      <SearchBarSuggestItemLink onClick={ onClick }>
-        { content }
-      </SearchBarSuggestItemLink>
+    <NextLink href={url as NextLinkProps['href']} passHref legacyBehavior>
+      <SearchBarSuggestItemLink onClick={onClick}>{content}</SearchBarSuggestItemLink>
     </NextLink>
   );
 };

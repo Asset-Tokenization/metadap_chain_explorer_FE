@@ -43,7 +43,6 @@ interface Props {
 }
 
 const TokenInfoForm = ({ address, tokenName, application, onSubmit }: Props) => {
-
   const containerRef = React.useRef<HTMLFormElement>(null);
   const openEventSent = React.useRef<boolean>(false);
 
@@ -65,114 +64,108 @@ const TokenInfoForm = ({ address, tokenName, application, onSubmit }: Props) => 
       mixpanel.logEvent(mixpanel.EventTypes.VERIFY_TOKEN, { Action: 'Form opened' });
       openEventSent.current = true;
     }
-  }, [ application?.id ]);
+  }, [application?.id]);
 
-  const onFormSubmit: SubmitHandler<Fields> = React.useCallback(async(data) => {
-    try {
-      const submission = prepareRequestBody(data);
-      const isNewApplication = !application?.id || [ 'REJECTED', 'APPROVED' ].includes(application.status);
+  const onFormSubmit: SubmitHandler<Fields> = React.useCallback(
+    async (data) => {
+      try {
+        const submission = prepareRequestBody(data);
+        const isNewApplication = !application?.id || ['REJECTED', 'APPROVED'].includes(application.status);
 
-      const result = await apiFetch<'token_info_applications', TokenInfoApplication, { message: string }>('token_info_applications', {
-        pathParams: { chainId: config.chain.id, id: !isNewApplication ? application.id : undefined },
-        fetchParams: {
-          method: isNewApplication ? 'POST' : 'PUT',
-          body: { submission },
-        },
-      });
+        const result = await apiFetch<'token_info_applications', TokenInfoApplication, { message: string }>('token_info_applications', {
+          pathParams: { chainId: config.chain.id, id: !isNewApplication ? application.id : undefined },
+          fetchParams: {
+            method: isNewApplication ? 'POST' : 'PUT',
+            body: { submission },
+          },
+        });
 
-      if ('id' in result) {
-        onSubmit(result);
+        if ('id' in result) {
+          onSubmit(result);
 
-        if (!application?.id) {
-          mixpanel.logEvent(mixpanel.EventTypes.VERIFY_TOKEN, { Action: 'Submit' });
+          if (!application?.id) {
+            mixpanel.logEvent(mixpanel.EventTypes.VERIFY_TOKEN, { Action: 'Submit' });
+          }
+        } else {
+          throw result;
         }
-
-      } else {
-        throw result;
+      } catch (error) {
+        toast({
+          position: 'top-right',
+          title: 'Error',
+          description: (error as ResourceError<{ message: string }>)?.payload?.message || 'Something went wrong. Try again later.',
+          status: 'error',
+          variant: 'subtle',
+          isClosable: true,
+        });
       }
-    } catch (error) {
-      toast({
-        position: 'top-right',
-        title: 'Error',
-        description: (error as ResourceError<{ message: string }>)?.payload?.message || 'Something went wrong. Try again later.',
-        status: 'error',
-        variant: 'subtle',
-        isClosable: true,
-      });
-    }
-  }, [ apiFetch, application?.id, application?.status, onSubmit, toast ]);
+    },
+    [apiFetch, application?.id, application?.status, onSubmit, toast],
+  );
 
   useUpdateEffect(() => {
     if (formState.submitCount > 0 && !formState.isValid) {
       containerRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [ formState.isValid, formState.submitCount ]);
+  }, [formState.isValid, formState.submitCount]);
 
   if (configQuery.isError) {
-    return <DataFetchAlert/>;
+    return <DataFetchAlert />;
   }
 
   if (configQuery.isLoading) {
-    return <ContentLoader/>;
+    return <ContentLoader />;
   }
 
   const fieldProps = { control, isReadOnly: application?.status === 'IN_PROCESS' };
 
   return (
-    <form noValidate onSubmit={ handleSubmit(onFormSubmit) } autoComplete="off" ref={ containerRef }>
-      <TokenInfoFormStatusText application={ application }/>
-      <Grid mt={ 8 } gridTemplateColumns={{ base: '1fr', lg: '1fr 1fr' }} columnGap={ 5 } rowGap={ 5 }>
-
-        <TokenInfoFieldTokenName { ...fieldProps }/>
-        <TokenInfoFieldAddress { ...fieldProps }/>
-        <TokenInfoFieldRequesterName { ...fieldProps }/>
-        <TokenInfoFieldRequesterEmail { ...fieldProps }/>
+    <form noValidate onSubmit={handleSubmit(onFormSubmit)} autoComplete="off" ref={containerRef}>
+      <TokenInfoFormStatusText application={application} />
+      <Grid mt={8} gridTemplateColumns={{ base: '1fr', lg: '1fr 1fr' }} columnGap={5} rowGap={5}>
+        <TokenInfoFieldTokenName {...fieldProps} />
+        <TokenInfoFieldAddress {...fieldProps} />
+        <TokenInfoFieldRequesterName {...fieldProps} />
+        <TokenInfoFieldRequesterEmail {...fieldProps} />
 
         <TokenInfoFormSectionHeader>Project info</TokenInfoFormSectionHeader>
-        <TokenInfoFieldProjectName { ...fieldProps }/>
-        <TokenInfoFieldProjectSector { ...fieldProps } config={ configQuery.data.projectSectors }/>
-        <TokenInfoFieldProjectEmail { ...fieldProps }/>
-        <TokenInfoFieldProjectWebsite { ...fieldProps }/>
-        <TokenInfoFieldDocs { ...fieldProps }/>
-        <TokenInfoFieldSupport { ...fieldProps }/>
+        <TokenInfoFieldProjectName {...fieldProps} />
+        <TokenInfoFieldProjectSector {...fieldProps} config={configQuery.data.projectSectors} />
+        <TokenInfoFieldProjectEmail {...fieldProps} />
+        <TokenInfoFieldProjectWebsite {...fieldProps} />
+        <TokenInfoFieldDocs {...fieldProps} />
+        <TokenInfoFieldSupport {...fieldProps} />
         <GridItem colSpan={{ base: 1, lg: 2 }}>
-          <TokenInfoFieldIconUrl { ...fieldProps } trigger={ trigger }/>
+          <TokenInfoFieldIconUrl {...fieldProps} trigger={trigger} />
         </GridItem>
         <GridItem colSpan={{ base: 1, lg: 2 }}>
-          <TokenInfoFieldProjectDescription { ...fieldProps }/>
+          <TokenInfoFieldProjectDescription {...fieldProps} />
         </GridItem>
 
         <TokenInfoFormSectionHeader>Links</TokenInfoFormSectionHeader>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="github"/>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="twitter"/>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="telegram"/>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="opensea"/>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="linkedin"/>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="facebook"/>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="discord"/>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="medium"/>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="slack"/>
-        <TokenInfoFieldSocialLink { ...fieldProps } name="reddit"/>
+        <TokenInfoFieldSocialLink {...fieldProps} name="github" />
+        <TokenInfoFieldSocialLink {...fieldProps} name="twitter" />
+        <TokenInfoFieldSocialLink {...fieldProps} name="telegram" />
+        <TokenInfoFieldSocialLink {...fieldProps} name="opensea" />
+        <TokenInfoFieldSocialLink {...fieldProps} name="linkedin" />
+        <TokenInfoFieldSocialLink {...fieldProps} name="facebook" />
+        <TokenInfoFieldSocialLink {...fieldProps} name="discord" />
+        <TokenInfoFieldSocialLink {...fieldProps} name="medium" />
+        <TokenInfoFieldSocialLink {...fieldProps} name="slack" />
+        <TokenInfoFieldSocialLink {...fieldProps} name="reddit" />
 
         <TokenInfoFormSectionHeader>Price data</TokenInfoFormSectionHeader>
-        <TokenInfoFieldPriceTicker { ...fieldProps } name="ticker_coin_market_cap" label="CoinMarketCap URL"/>
-        <TokenInfoFieldPriceTicker { ...fieldProps } name="ticker_coin_gecko" label="CoinGecko URL"/>
+        <TokenInfoFieldPriceTicker {...fieldProps} name="ticker_coin_market_cap" label="CoinMarketCap URL" />
+        <TokenInfoFieldPriceTicker {...fieldProps} name="ticker_coin_gecko" label="CoinGecko URL" />
         <GridItem colSpan={{ base: 1, lg: 2 }}>
-          <TokenInfoFieldPriceTicker { ...fieldProps } name="ticker_defi_llama" label="DefiLlama URL "/>
+          <TokenInfoFieldPriceTicker {...fieldProps} name="ticker_defi_llama" label="DefiLlama URL " />
         </GridItem>
 
         <GridItem colSpan={{ base: 1, lg: 2 }}>
-          <TokenInfoFieldComment { ...fieldProps }/>
+          <TokenInfoFieldComment {...fieldProps} />
         </GridItem>
       </Grid>
-      <Button
-        type="submit"
-        size="lg"
-        mt={ 8 }
-        isLoading={ formState.isSubmitting }
-        loadingText="Send request"
-        isDisabled={ application?.status === 'IN_PROCESS' }
-      >
+      <Button type="submit" size="lg" mt={8} isLoading={formState.isSubmitting} loadingText="Send request" isDisabled={application?.status === 'IN_PROCESS'}>
         Send request
       </Button>
     </form>

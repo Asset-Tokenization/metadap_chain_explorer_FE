@@ -15,15 +15,17 @@ const hooksConfig = {
   },
 };
 
-test('base view +@mobile', async({ mount, page }) => {
-  await page.route(CONTRACT_WRITE_METHODS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMethodsMock.write),
-  }));
+test('base view +@mobile', async ({ mount, page }) => {
+  await page.route(CONTRACT_WRITE_METHODS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMethodsMock.write),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <ContractWrite addressHash={ addressHash }/>
+      <ContractWrite addressHash={addressHash} />
     </TestApp>,
     { hooksConfig },
   );

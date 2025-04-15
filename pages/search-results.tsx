@@ -12,18 +12,14 @@ const SearchResults = dynamic(() => import('ui/pages/SearchResults'), { ssr: fal
 
 const Page: NextPageWithLayout<Props> = (props: Props) => {
   return (
-    <PageNextJs pathname="/search-results" query={ props }>
-      <SearchResults/>
+    <PageNextJs pathname="/search-results" query={props}>
+      <SearchResults />
     </PageNextJs>
   );
 };
 
 Page.getLayout = function getLayout(page: React.ReactElement) {
-  return (
-    <LayoutSearchResults>
-      { page }
-    </LayoutSearchResults>
-  );
+  return <LayoutSearchResults>{page}</LayoutSearchResults>;
 };
 
 export default Page;

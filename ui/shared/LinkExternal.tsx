@@ -34,7 +34,7 @@ const LinkExternal = ({ href, children, className, isLoading, variant }: Props) 
         };
       }
 
-      default:{
+      default: {
         return commonProps;
       }
     }
@@ -43,25 +43,25 @@ const LinkExternal = ({ href, children, className, isLoading, variant }: Props) 
   if (isLoading) {
     if (variant === 'subtle') {
       return (
-        <Skeleton className={ className } { ...styleProps } bgColor="inherit">
-          { children }
-          <Box boxSize={ 4 } display="inline-block"/>
+        <Skeleton className={className} {...styleProps} bgColor="inherit">
+          {children}
+          <Box boxSize={4} display="inline-block" />
         </Skeleton>
       );
     }
 
     return (
-      <Box className={ className } { ...styleProps }>
-        { children }
-        <Skeleton boxSize={ 4 } verticalAlign="middle" display="inline-block"/>
+      <Box className={className} {...styleProps}>
+        {children}
+        <Skeleton boxSize={4} verticalAlign="middle" display="inline-block" />
       </Box>
     );
   }
 
   return (
-    <Link className={ className } { ...styleProps } target="_blank" href={ href }>
-      { children }
-      <Icon as={ arrowIcon } boxSize={ 4 } verticalAlign="middle" color="gray.400"/>
+    <Link className={className} {...styleProps} target="_blank" href={href}>
+      {children}
+      <Icon as={arrowIcon} boxSize={4} verticalAlign="middle" color="gray.400" />
     </Link>
   );
 };

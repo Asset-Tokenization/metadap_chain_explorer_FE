@@ -27,7 +27,7 @@ export function saveToRecentKeywords(value: string) {
   }
 
   const keywordsArr = getRecentSearchKeywords();
-  const result = uniq([ value, ...keywordsArr ]).slice(0, MAX_KEYWORDS_NUMBER - 1);
+  const result = uniq([value, ...keywordsArr]).slice(0, MAX_KEYWORDS_NUMBER - 1);
   window.localStorage.setItem(RECENT_KEYWORDS_LS_KEY, JSON.stringify(result));
 }
 
@@ -41,13 +41,12 @@ export function getRecentSearchKeywords(input?: string) {
     return keywordsArr;
   }
 
-  return keywordsArr.filter(kw => kw.includes(input));
+  return keywordsArr.filter((kw) => kw.includes(input));
 }
 
 export function removeRecentSearchKeyword(value: string) {
-
   const keywordsArr = getRecentSearchKeywords();
-  const result = keywordsArr.filter(kw => kw !== value);
+  const result = keywordsArr.filter((kw) => kw !== value);
   window.localStorage.setItem(RECENT_KEYWORDS_LS_KEY, JSON.stringify(result));
 }
 

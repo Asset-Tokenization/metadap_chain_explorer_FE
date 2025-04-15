@@ -6,7 +6,11 @@ interface Props {
 }
 
 const AppErrorTitle = ({ title }: Props) => {
-  return <Heading mt={ 8 } size="2xl" fontFamily="body">{ title }</Heading>;
+  return (
+    <Heading mt={8} size="2xl" fontFamily="body">
+      {title}
+    </Heading>
+  );
 };
 
 export default AppErrorTitle;

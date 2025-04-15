@@ -40,63 +40,57 @@ const Stats = () => {
   if (data) {
     !data.gas_prices && itemsCount--;
     const isOdd = Boolean(itemsCount % 2);
-    const gasLabel = hasGasTracker && data.gas_prices ? <StatsGasPrices gasPrices={ data.gas_prices }/> : null;
+    const gasLabel = hasGasTracker && data.gas_prices ? <StatsGasPrices gasPrices={data.gas_prices} /> : null;
 
     content = (
       <>
         <StatsItem
-          icon={ blockIcon }
+          icon={blockIcon}
           title="Total blocks"
-          value={ Number(data.total_blocks).toLocaleString() }
-          url={ route({ pathname: '/blocks' }) }
-          isLoading={ isPlaceholderData }
+          value={Number(data.total_blocks).toLocaleString()}
+          url={route({ pathname: '/blocks' })}
+          isLoading={isPlaceholderData}
         />
-        { hasAvgBlockTime && (
-          <StatsItem
-            icon={ clockIcon }
-            title="Average block time"
-            value={ `${ (data.average_block_time / 1000).toFixed(1) } s` }
-            isLoading={ isPlaceholderData }
-          />
-        ) }
+        {hasAvgBlockTime && (
+          <StatsItem icon={clockIcon} title="Average block time" value={`${(data.average_block_time / 1000).toFixed(1)} s`} isLoading={isPlaceholderData} />
+        )}
         <StatsItem
-          icon={ txIcon }
+          icon={txIcon}
           title="Total transactions"
-          value={ Number(data.total_transactions).toLocaleString() }
-          url={ route({ pathname: '/txs' }) }
-          isLoading={ isPlaceholderData }
+          value={Number(data.total_transactions).toLocaleString()}
+          url={route({ pathname: '/txs' })}
+          isLoading={isPlaceholderData}
         />
         <StatsItem
-          icon={ walletIcon }
+          icon={walletIcon}
           title="Wallet addresses"
-          value={ Number(data.total_addresses).toLocaleString() }
-          _last={ isOdd ? lastItemTouchStyle : undefined }
-          isLoading={ isPlaceholderData }
+          value={Number(data.total_addresses).toLocaleString()}
+          _last={isOdd ? lastItemTouchStyle : undefined}
+          isLoading={isPlaceholderData}
         />
-        { hasGasTracker && data.gas_prices && (
+        {hasGasTracker && data.gas_prices && (
           <StatsItem
-            icon={ gasIcon }
+            icon={gasIcon}
             title="Gas tracker"
-            value={ `${ Number(data.gas_prices.average).toLocaleString() } Gwei` }
-            _last={ isOdd ? lastItemTouchStyle : undefined }
-            tooltipLabel={ gasLabel }
-            isLoading={ isPlaceholderData }
+            value={`${Number(data.gas_prices.average).toLocaleString()} Gwei`}
+            _last={isOdd ? lastItemTouchStyle : undefined}
+            tooltipLabel={gasLabel}
+            isLoading={isPlaceholderData}
           />
-        ) }
+        )}
       </>
     );
   }
 
   return (
     <Grid
-      gridTemplateColumns={{ lg: `repeat(${ itemsCount }, 1fr)`, base: '1fr 1fr' }}
+      gridTemplateColumns={{ lg: `repeat(${itemsCount}, 1fr)`, base: '1fr 1fr' }}
       gridTemplateRows={{ lg: 'none', base: undefined }}
       gridGap="10px"
       marginTop="24px"
     >
-      { content }
+      {content}
     </Grid>
-
   );
 };
 

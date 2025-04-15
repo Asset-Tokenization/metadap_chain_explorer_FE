@@ -6,20 +6,14 @@ import fetchFactory from 'nextjs/utils/fetch';
 
 import appConfig from 'configs/app';
 
-const handler = async(nextReq: NextApiRequest, nextRes: NextApiResponse) => {
+const handler = async (nextReq: NextApiRequest, nextRes: NextApiResponse) => {
   if (!nextReq.url) {
     nextRes.status(500).json({ error: 'no url provided' });
     return;
   }
 
-  const url = new URL(
-    nextReq.url.replace(/^\/node-api\/proxy/, ''),
-    nextReq.headers['x-endpoint']?.toString() || appConfig.api.endpoint,
-  );
-  const apiRes = await fetchFactory(nextReq)(
-    url.toString(),
-    _pickBy(_pick(nextReq, [ 'body', 'method' ]), Boolean),
-  );
+  const url = new URL(nextReq.url.replace(/^\/node-api\/proxy/, ''), nextReq.headers['x-endpoint']?.toString() || appConfig.api.endpoint);
+  const apiRes = await fetchFactory(nextReq)(url.toString(), _pickBy(_pick(nextReq, ['body', 'method']), Boolean));
 
   // proxy some headers from API
   nextRes.setHeader('x-request-id', apiRes.headers.get('x-request-id') || '');

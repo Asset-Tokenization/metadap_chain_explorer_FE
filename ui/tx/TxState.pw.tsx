@@ -16,19 +16,23 @@ const hooksConfig = {
   },
 };
 
-test('base view +@mobile', async({ mount, page }) => {
-  await page.route(TX_INFO_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.base),
-  }));
-  await page.route(TX_STATE_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txStateMock.baseResponse),
-  }));
+test('base view +@mobile', async ({ mount, page }) => {
+  await page.route(TX_INFO_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.base),
+    }),
+  );
+  await page.route(TX_STATE_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txStateMock.baseResponse),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxState/>
+      <TxState />
     </TestApp>,
     { hooksConfig },
   );

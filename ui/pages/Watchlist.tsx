@@ -28,40 +28,46 @@ const WatchList: React.FC = () => {
   const deleteModalProps = useDisclosure();
   useRedirectForInvalidAuthToken();
 
-  const [ addressModalData, setAddressModalData ] = useState<WatchlistAddress>();
-  const [ deleteModalData, setDeleteModalData ] = useState<WatchlistAddress>();
+  const [addressModalData, setAddressModalData] = useState<WatchlistAddress>();
+  const [deleteModalData, setDeleteModalData] = useState<WatchlistAddress>();
 
-  const onEditClick = useCallback((data: WatchlistAddress) => {
-    setAddressModalData(data);
-    addressModalProps.onOpen();
-  }, [ addressModalProps ]);
+  const onEditClick = useCallback(
+    (data: WatchlistAddress) => {
+      setAddressModalData(data);
+      addressModalProps.onOpen();
+    },
+    [addressModalProps],
+  );
 
   const onAddressModalClose = useCallback(() => {
     setAddressModalData(undefined);
     addressModalProps.onClose();
-  }, [ addressModalProps ]);
+  }, [addressModalProps]);
 
-  const onAddOrEditSuccess = useCallback(async() => {
-    await queryClient.refetchQueries([ resourceKey('watchlist') ]);
+  const onAddOrEditSuccess = useCallback(async () => {
+    await queryClient.refetchQueries([resourceKey('watchlist')]);
     setAddressModalData(undefined);
     addressModalProps.onClose();
-  }, [ addressModalProps, queryClient ]);
+  }, [addressModalProps, queryClient]);
 
-  const onDeleteClick = useCallback((data: WatchlistAddress) => {
-    setDeleteModalData(data);
-    deleteModalProps.onOpen();
-  }, [ deleteModalProps ]);
+  const onDeleteClick = useCallback(
+    (data: WatchlistAddress) => {
+      setDeleteModalData(data);
+      deleteModalProps.onOpen();
+    },
+    [deleteModalProps],
+  );
 
   const onDeleteModalClose = useCallback(() => {
     setDeleteModalData(undefined);
     deleteModalProps.onClose();
-  }, [ deleteModalProps ]);
+  }, [deleteModalProps]);
 
-  const onDeleteSuccess = useCallback(async() => {
-    queryClient.setQueryData([ resourceKey('watchlist') ], (prevData: Array<WatchlistAddress> | undefined) => {
+  const onDeleteSuccess = useCallback(async () => {
+    queryClient.setQueryData([resourceKey('watchlist')], (prevData: Array<WatchlistAddress> | undefined) => {
       return prevData?.filter((item) => item.id !== deleteModalData?.id);
     });
-  }, [ deleteModalData?.id, queryClient ]);
+  }, [deleteModalData?.id, queryClient]);
 
   const description = (
     <AccountPageDescription>
@@ -70,69 +76,48 @@ const WatchList: React.FC = () => {
   );
 
   if (isError) {
-    return <DataFetchAlert/>;
+    return <DataFetchAlert />;
   }
 
   const content = (() => {
     const list = (
       <>
         <Box display={{ base: 'block', lg: 'none' }}>
-          { data?.map((item, index) => (
+          {data?.map((item, index) => (
             <WatchListItem
-              key={ item.address_hash + (isPlaceholderData ? index : '') }
-              item={ item }
-              isLoading={ isPlaceholderData }
-              onDeleteClick={ onDeleteClick }
-              onEditClick={ onEditClick }
+              key={item.address_hash + (isPlaceholderData ? index : '')}
+              item={item}
+              isLoading={isPlaceholderData}
+              onDeleteClick={onDeleteClick}
+              onEditClick={onEditClick}
             />
-          )) }
+          ))}
         </Box>
         <Box display={{ base: 'none', lg: 'block' }}>
-          <WatchlistTable
-            data={ data }
-            isLoading={ isPlaceholderData }
-            onDeleteClick={ onDeleteClick }
-            onEditClick={ onEditClick }
-          />
+          <WatchlistTable data={data} isLoading={isPlaceholderData} onDeleteClick={onDeleteClick} onEditClick={onEditClick} />
         </Box>
       </>
     );
 
     return (
       <>
-        { description }
-        { Boolean(data?.length) && list }
-        <Skeleton mt={ 8 } isLoaded={ !isPlaceholderData } display="inline-block">
-          <Button
-            size="lg"
-            onClick={ addressModalProps.onOpen }
-          >
+        {description}
+        {Boolean(data?.length) && list}
+        <Skeleton mt={8} isLoaded={!isPlaceholderData} display="inline-block">
+          <Button size="lg" onClick={addressModalProps.onOpen}>
             Add address
           </Button>
         </Skeleton>
-        <AddressModal
-          { ...addressModalProps }
-          onClose={ onAddressModalClose }
-          onSuccess={ onAddOrEditSuccess }
-          data={ addressModalData }
-          isAdd={ !addressModalData }
-        />
-        { deleteModalData && (
-          <DeleteAddressModal
-            { ...deleteModalProps }
-            onClose={ onDeleteModalClose }
-            onSuccess={ onDeleteSuccess }
-            data={ deleteModalData }
-          />
-        ) }
+        <AddressModal {...addressModalProps} onClose={onAddressModalClose} onSuccess={onAddOrEditSuccess} data={addressModalData} isAdd={!addressModalData} />
+        {deleteModalData && <DeleteAddressModal {...deleteModalProps} onClose={onDeleteModalClose} onSuccess={onDeleteSuccess} data={deleteModalData} />}
       </>
     );
   })();
 
   return (
     <>
-      <PageTitle title="Watch list"/>
-      { content }
+      <PageTitle title="Watch list" />
+      {content}
     </>
   );
 };

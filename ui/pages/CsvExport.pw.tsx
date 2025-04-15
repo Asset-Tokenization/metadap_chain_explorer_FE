@@ -16,18 +16,19 @@ const hooksConfig = {
   },
 };
 
-test.beforeEach(async({ page }) => {
-  await page.route(ADDRESS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(addressMock.withName),
-  }));
+test.beforeEach(async ({ page }) => {
+  await page.route(ADDRESS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(addressMock.withName),
+    }),
+  );
 });
 
-test('base view +@mobile +@dark-mode', async({ mount, page }) => {
-
+test('base view +@mobile +@dark-mode', async ({ mount, page }) => {
   const component = await mount(
     <TestApp>
-      <CsvExport/>
+      <CsvExport />
     </TestApp>,
     { hooksConfig },
   );
@@ -35,7 +36,7 @@ test('base view +@mobile +@dark-mode', async({ mount, page }) => {
   await page.waitForResponse('https://www.google.com/recaptcha/api2/**');
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator('.recaptcha') ],
+    mask: [page.locator('.recaptcha')],
     maskColor: configs.maskColor,
   });
 });

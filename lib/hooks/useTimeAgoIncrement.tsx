@@ -5,44 +5,45 @@ import dayjs from 'lib/date/dayjs';
 
 function getUnits(diff: number) {
   if (diff < MINUTE) {
-    return [ SECOND, MINUTE ];
+    return [SECOND, MINUTE];
   }
 
   if (diff < HOUR) {
-    return [ MINUTE, HOUR ];
+    return [MINUTE, HOUR];
   }
 
   if (diff < DAY) {
-    return [ HOUR, DAY ];
+    return [HOUR, DAY];
   }
 
-  return [ DAY, 2 * DAY ];
+  return [DAY, 2 * DAY];
 }
 
 function getUpdateParams(ts: string) {
   const timeDiff = Date.now() - new Date(ts).getTime();
-  const [ unit, higherUnit ] = getUnits(timeDiff);
+  const [unit, higherUnit] = getUnits(timeDiff);
 
   if (unit === DAY) {
     return { interval: DAY };
   }
 
-  const leftover = unit - timeDiff % unit;
+  const leftover = unit - (timeDiff % unit);
 
   return {
-    startTimeout: unit === SECOND ?
-      0 :
-      // here we assume that in current dayjs locale time difference is rounded by Math.round function
-      // so we have to update displayed value whenever time comes over the middle of the unit interval
-      // since it will be rounded to the upper bound
-      (leftover < unit / 2 ? leftover + unit / 2 : leftover - unit / 2) + SECOND,
+    startTimeout:
+      unit === SECOND
+        ? 0
+        : // here we assume that in current dayjs locale time difference is rounded by Math.round function
+          // so we have to update displayed value whenever time comes over the middle of the unit interval
+          // since it will be rounded to the upper bound
+          (leftover < unit / 2 ? leftover + unit / 2 : leftover - unit / 2) + SECOND,
     endTimeout: higherUnit - timeDiff + SECOND,
     interval: unit,
   };
 }
 
 export default function useTimeAgoIncrement(ts: string | null, isEnabled?: boolean) {
-  const [ value, setValue ] = React.useState(ts ? dayjs(ts).fromNow() : null);
+  const [value, setValue] = React.useState(ts ? dayjs(ts).fromNow() : null);
 
   React.useEffect(() => {
     if (ts !== null) {
@@ -83,7 +84,7 @@ export default function useTimeAgoIncrement(ts: string | null, isEnabled?: boole
         intervals.forEach(window.clearInterval);
       };
     }
-  }, [ isEnabled, ts ]);
+  }, [isEnabled, ts]);
 
   return value;
 }

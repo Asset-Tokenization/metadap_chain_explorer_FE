@@ -16,16 +16,12 @@ const L2Withdrawals = () => {
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
     resourceName: 'l2_withdrawals',
     options: {
-      placeholderData: generateListStub<'l2_withdrawals'>(
-        L2_WITHDRAWAL_ITEM,
-        50,
-        {
-          next_page_params: {
-            items_count: 50,
-            nonce: '',
-          },
+      placeholderData: generateListStub<'l2_withdrawals'>(L2_WITHDRAWAL_ITEM, 50, {
+        next_page_params: {
+          items_count: 50,
+          nonce: '',
         },
-      ),
+      }),
     },
   });
 
@@ -37,15 +33,13 @@ const L2Withdrawals = () => {
 
   const content = data?.items ? (
     <>
-      <Show below="lg" ssr={ false }>{ data.items.map(((item, index) => (
-        <WithdrawalsListItem
-          key={ item.l2_tx_hash + (isPlaceholderData ? index : '') }
-          item={ item }
-          isLoading={ isPlaceholderData }
-        />
-      ))) }</Show>
-      <Hide below="lg" ssr={ false }>
-        <WithdrawalsTable items={ data.items } top={ pagination.isVisible ? 80 : 0 } isLoading={ isPlaceholderData }/>
+      <Show below="lg" ssr={false}>
+        {data.items.map((item, index) => (
+          <WithdrawalsListItem key={item.l2_tx_hash + (isPlaceholderData ? index : '')} item={item} isLoading={isPlaceholderData} />
+        ))}
+      </Show>
+      <Hide below="lg" ssr={false}>
+        <WithdrawalsTable items={data.items} top={pagination.isVisible ? 80 : 0} isLoading={isPlaceholderData} />
       </Hide>
     </>
   ) : null;
@@ -56,27 +50,18 @@ const L2Withdrawals = () => {
     }
 
     return (
-      <Skeleton
-        isLoaded={ !countersQuery.isPlaceholderData }
-        display="inline-block"
-      >
-        A total of { countersQuery.data?.toLocaleString() } withdrawals found
+      <Skeleton isLoaded={!countersQuery.isPlaceholderData} display="inline-block">
+        A total of {countersQuery.data?.toLocaleString()} withdrawals found
       </Skeleton>
     );
   })();
 
-  const actionBar = <StickyPaginationWithText text={ text } pagination={ pagination }/>;
+  const actionBar = <StickyPaginationWithText text={text} pagination={pagination} />;
 
   return (
     <>
-      <PageTitle title={ `Withdrawals (L2${ nbsp }${ rightLineArrow }${ nbsp }L1)` } withTextAd/>
-      <DataListDisplay
-        isError={ isError }
-        items={ data?.items }
-        emptyText="There are no withdrawals."
-        content={ content }
-        actionBar={ actionBar }
-      />
+      <PageTitle title={`Withdrawals (L2${nbsp}${rightLineArrow}${nbsp}L1)`} withTextAd />
+      <DataListDisplay isError={isError} items={data?.items} emptyText="There are no withdrawals." content={content} actionBar={actionBar} />
     </>
   );
 };

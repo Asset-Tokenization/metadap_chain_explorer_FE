@@ -70,11 +70,11 @@ export type BlockWithdrawalsResponse = {
     index: number;
     items_count: number;
   };
-}
+};
 
 export type BlockWithdrawalsItem = {
   amount: string;
   index: number;
   receiver: AddressParam;
   validator_index: number;
-}
+};

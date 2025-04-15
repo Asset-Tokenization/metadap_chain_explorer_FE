@@ -54,15 +54,15 @@ export type SearchResultItem = SearchResultToken | SearchResultAddressOrContract
 export interface SearchResult {
   items: Array<SearchResultItem>;
   next_page_params: {
-    'address_hash': string | null;
-    'block_hash': string | null;
-    'holder_count': number | null;
-    'inserted_at': string | null;
-    'item_type': SearchResultType;
-    'items_count': number;
-    'name': string;
-    'q': string;
-    'tx_hash': string | null;
+    address_hash: string | null;
+    block_hash: string | null;
+    holder_count: number | null;
+    inserted_at: string | null;
+    item_type: SearchResultType;
+    items_count: number;
+    name: string;
+    q: string;
+    tx_hash: string | null;
   } | null;
 }
 

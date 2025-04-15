@@ -42,13 +42,16 @@ const SocketNewItemsNotice = chakra(({ children, className, url, num, alert, typ
     }
 
     if (!num) {
-      return `scanning new ${ name }s...`;
+      return `scanning new ${name}s...`;
     }
 
     return (
       <>
-        <Link href={ url }>{ num.toLocaleString() } more { name }{ num > 1 ? 's' : '' }</Link>
-        <Text whiteSpace="pre"> ha{ num > 1 ? 've' : 's' } come in</Text>
+        <Link href={url}>
+          {num.toLocaleString()} more {name}
+          {num > 1 ? 's' : ''}
+        </Link>
+        <Text whiteSpace="pre"> ha{num > 1 ? 've' : 's'} come in</Text>
       </>
     );
   })();
@@ -57,20 +60,12 @@ const SocketNewItemsNotice = chakra(({ children, className, url, num, alert, typ
   const bgColor = useColorModeValue('orange.50', transparentize('orange.200', 0.16)(theme));
 
   const content = !isLoading ? (
-    <Alert
-      className={ className }
-      status="warning"
-      px={ 4 }
-      py="6px"
-      fontWeight={ 400 }
-      fontSize="sm"
-      lineHeight={ 5 }
-      bgColor={ bgColor }
-      color={ color }
-    >
-      { alertContent }
+    <Alert className={className} status="warning" px={4} py="6px" fontWeight={400} fontSize="sm" lineHeight={5} bgColor={bgColor} color={color}>
+      {alertContent}
     </Alert>
-  ) : <Skeleton className={ className } h="33px"/>;
+  ) : (
+    <Skeleton className={className} h="33px" />
+  );
 
   return children ? children({ content }) : content;
 });
@@ -80,24 +75,25 @@ export default SocketNewItemsNotice;
 export const Desktop = ({ ...props }: Props) => {
   return (
     <SocketNewItemsNotice
-      borderRadius={ props.isLoading ? 'sm' : 0 }
-      h={ props.isLoading ? 5 : 'auto' }
-      maxW={ props.isLoading ? '215px' : undefined }
+      borderRadius={props.isLoading ? 'sm' : 0}
+      h={props.isLoading ? 5 : 'auto'}
+      maxW={props.isLoading ? '215px' : undefined}
       w="100%"
-      mx={ props.isLoading ? 4 : 0 }
-      my={ props.isLoading ? '6px' : 0 }
-      { ...props }
+      mx={props.isLoading ? 4 : 0}
+      my={props.isLoading ? '6px' : 0}
+      {...props}
     >
-      { ({ content }) => <Tr><Td colSpan={ 100 } p={ 0 }>{ content }</Td></Tr> }
+      {({ content }) => (
+        <Tr>
+          <Td colSpan={100} p={0}>
+            {content}
+          </Td>
+        </Tr>
+      )}
     </SocketNewItemsNotice>
   );
 };
 
 export const Mobile = ({ ...props }: Props) => {
-  return (
-    <SocketNewItemsNotice
-      borderBottomRadius={ 0 }
-      { ...props }
-    />
-  );
+  return <SocketNewItemsNotice borderBottomRadius={0} {...props} />;
 };

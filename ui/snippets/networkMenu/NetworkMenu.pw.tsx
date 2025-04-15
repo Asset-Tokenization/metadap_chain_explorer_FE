@@ -19,7 +19,7 @@ const extendedTest = test.extend({
 
 extendedTest.use({ viewport: { width: 1600, height: 1000 } });
 
-extendedTest('base view +@dark-mode', async({ mount, page }) => {
+extendedTest('base view +@dark-mode', async ({ mount, page }) => {
   const LOGO_URL = 'https://localhost:3000/my-logo.png';
   await page.route(LOGO_URL, (route) => {
     return route.fulfill({
@@ -36,7 +36,7 @@ extendedTest('base view +@dark-mode', async({ mount, page }) => {
 
   const component = await mount(
     <TestApp>
-      <NetworkMenu/>
+      <NetworkMenu />
     </TestApp>,
   );
 

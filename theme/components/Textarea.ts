@@ -13,7 +13,6 @@ const variantFilledInactive = defineStyle((props) => {
 
     // bgColor: mode('blackAlpha.50', 'whiteAlpha.50')(props),
     bgColor: mode('#f5f5f6', '#1a1b1b')(props),
-
   };
 });
 

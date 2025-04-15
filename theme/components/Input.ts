@@ -1,13 +1,9 @@
 import { inputAnatomy as parts } from '@chakra-ui/anatomy';
 import { Input as InputComponent } from '@chakra-ui/react';
-import {
-  createMultiStyleConfigHelpers,
-  defineStyle,
-} from '@chakra-ui/styled-system';
+import { createMultiStyleConfigHelpers, defineStyle } from '@chakra-ui/styled-system';
 import { mode } from '@chakra-ui/theme-tools';
 
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(parts.keys);
+const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(parts.keys);
 
 import getDefaultTransitionProps from '../utils/getDefaultTransitionProps';
 import getOutlinedFieldStyles from '../utils/getOutlinedFieldStyles';

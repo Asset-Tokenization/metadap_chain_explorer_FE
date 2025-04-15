@@ -8,8 +8,8 @@ export default function getFilterValue<FilterType>(filterValues: ReadonlyArray<F
     valArray.push(...val.split(','));
   }
   if (Array.isArray(val)) {
-    val.forEach(el => valArray.push(...el.split(',')));
+    val.forEach((el) => valArray.push(...el.split(',')));
   }
 
-  return valArray.filter(el => filterValues.includes(el as unknown as FilterType)) as unknown as Array<FilterType>;
+  return valArray.filter((el) => filterValues.includes(el as unknown as FilterType)) as unknown as Array<FilterType>;
 }

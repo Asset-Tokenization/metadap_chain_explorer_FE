@@ -16,8 +16,14 @@ const ContractVerificationFormRow = ({ children, className }: Props) => {
 
   return (
     <>
-      <GridItem className={ className } _notFirst={{ mt: { base: 3, lg: 0 } }}>{ firstChildren }</GridItem>
-      { isMobile && !secondChildren ? null : <GridItem fontSize="sm" className={ className } color="text_secondary">{ secondChildren }</GridItem> }
+      <GridItem className={className} _notFirst={{ mt: { base: 3, lg: 0 } }}>
+        {firstChildren}
+      </GridItem>
+      {isMobile && !secondChildren ? null : (
+        <GridItem fontSize="sm" className={className} color="text_secondary">
+          {secondChildren}
+        </GridItem>
+      )}
     </>
   );
 };

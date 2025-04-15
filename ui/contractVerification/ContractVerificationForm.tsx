@@ -44,52 +44,54 @@ const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Pro
   const apiFetch = useApiFetch();
   const toast = useToast();
 
-  const onFormSubmit: SubmitHandler<FormFields> = React.useCallback(async(data) => {
-    const body = prepareRequestBody(data);
+  const onFormSubmit: SubmitHandler<FormFields> = React.useCallback(
+    async (data) => {
+      const body = prepareRequestBody(data);
 
-    try {
-      await apiFetch('contract_verification_via', {
-        pathParams: { method: data.method.value, hash: hash.toLowerCase() },
-        fetchParams: {
-          method: 'POST',
-          body,
-        },
+      try {
+        await apiFetch('contract_verification_via', {
+          pathParams: { method: data.method.value, hash: hash.toLowerCase() },
+          fetchParams: {
+            method: 'POST',
+            body,
+          },
+        });
+      } catch (error) {
+        return;
+      }
+
+      return new Promise((resolve) => {
+        submitPromiseResolver.current = resolve;
       });
-    } catch (error) {
-      return;
-    }
+    },
+    [apiFetch, hash],
+  );
 
-    return new Promise((resolve) => {
-      submitPromiseResolver.current = resolve;
-    });
-  }, [ apiFetch, hash ]);
+  const handleNewSocketMessage: SocketMessage.ContractVerification['handler'] = React.useCallback(
+    async (payload) => {
+      if (payload.status === 'error') {
+        const errors = formatSocketErrors(payload.errors);
+        errors.filter(Boolean).forEach(([field, error]) => setError(field, error));
+        await delay(100); // have to wait a little bit, otherwise isSubmitting status will not be updated
+        submitPromiseResolver.current?.(null);
+        return;
+      }
 
-  const handleNewSocketMessage: SocketMessage.ContractVerification['handler'] = React.useCallback(async(payload) => {
-    if (payload.status === 'error') {
-      const errors = formatSocketErrors(payload.errors);
-      errors.filter(Boolean).forEach(([ field, error ]) => setError(field, error));
-      await delay(100); // have to wait a little bit, otherwise isSubmitting status will not be updated
-      submitPromiseResolver.current?.(null);
-      return;
-    }
+      toast({
+        position: 'top-right',
+        title: 'Success',
+        description: 'Contract is successfully verified.',
+        status: 'success',
+        variant: 'subtle',
+        isClosable: true,
+      });
 
-    toast({
-      position: 'top-right',
-      title: 'Success',
-      description: 'Contract is successfully verified.',
-      status: 'success',
-      variant: 'subtle',
-      isClosable: true,
-    });
+      mixpanel.logEvent(mixpanel.EventTypes.CONTRACT_VERIFICATION, { Status: 'Finished', Method: methodNameRef.current || '' }, { send_immediately: true });
 
-    mixpanel.logEvent(
-      mixpanel.EventTypes.CONTRACT_VERIFICATION,
-      { Status: 'Finished', Method: methodNameRef.current || '' },
-      { send_immediately: true },
-    );
-
-    window.location.assign(route({ pathname: '/address/[hash]', query: { hash, tab: 'contract' } }));
-  }, [ hash, setError, toast ]);
+      window.location.assign(route({ pathname: '/address/[hash]', query: { hash, tab: 'contract' } }));
+    },
+    [hash, setError, toast],
+  );
 
   const handleSocketError = React.useCallback(() => {
     if (!formState.isSubmitting) {
@@ -99,22 +101,23 @@ const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Pro
     submitPromiseResolver.current?.(null);
 
     const toastId = 'socket-error';
-    !toast.isActive(toastId) && toast({
-      id: toastId,
-      position: 'top-right',
-      title: 'Error',
-      description: 'There was an error with socket connection. Try again later.',
-      status: 'error',
-      variant: 'subtle',
-      isClosable: true,
-    });
-  // callback should not change when form is submitted
-  // otherwise it will resubscribe to channel, but we don't want that since in that case we might miss verification result message
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ toast ]);
+    !toast.isActive(toastId) &&
+      toast({
+        id: toastId,
+        position: 'top-right',
+        title: 'Error',
+        description: 'There was an error with socket connection. Try again later.',
+        status: 'error',
+        variant: 'subtle',
+        isClosable: true,
+      });
+    // callback should not change when form is submitted
+    // otherwise it will resubscribe to channel, but we don't want that since in that case we might miss verification result message
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toast]);
 
   const channel = useSocketChannel({
-    topic: `addresses:${ hash.toLowerCase() }`,
+    topic: `addresses:${hash.toLowerCase()}`,
     onSocketClose: handleSocketError,
     onSocketError: handleSocketError,
     isDisabled: false,
@@ -127,15 +130,15 @@ const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Pro
 
   const methods = React.useMemo(() => {
     return {
-      'flattened-code': <ContractVerificationFlattenSourceCode config={ config }/>,
-      'standard-input': <ContractVerificationStandardInput config={ config }/>,
-      sourcify: <ContractVerificationSourcify/>,
-      'multi-part': <ContractVerificationMultiPartFile/>,
-      'vyper-code': <ContractVerificationVyperContract config={ config }/>,
-      'vyper-multi-part': <ContractVerificationVyperMultiPartFile/>,
-      'vyper-standard-input': <ContractVerificationVyperStandardInput/>,
+      'flattened-code': <ContractVerificationFlattenSourceCode config={config} />,
+      'standard-input': <ContractVerificationStandardInput config={config} />,
+      sourcify: <ContractVerificationSourcify />,
+      'multi-part': <ContractVerificationMultiPartFile />,
+      'vyper-code': <ContractVerificationVyperContract config={config} />,
+      'vyper-multi-part': <ContractVerificationVyperMultiPartFile />,
+      'vyper-standard-input': <ContractVerificationVyperStandardInput />,
     };
-  }, [ config ]);
+  }, [config]);
   const method = watch('method');
   const content = methods[method?.value] || null;
   const methodValue = method?.value;
@@ -148,33 +151,19 @@ const ContractVerificationForm = ({ method: methodFromQuery, config, hash }: Pro
       mixpanel.logEvent(mixpanel.EventTypes.CONTRACT_VERIFICATION, { Status: 'Method selected', Method: methodName });
       methodNameRef.current = methodName;
     }
-  // !!! should run only when method is changed
-  }, [ methodValue ]);
+    // !!! should run only when method is changed
+  }, [methodValue]);
 
   return (
-    <FormProvider { ...formApi }>
-      <chakra.form
-        noValidate
-        onSubmit={ handleSubmit(onFormSubmit) }
-      >
-        <ContractVerificationFieldMethod
-          control={ control }
-          methods={ config.verification_options }
-          isDisabled={ formState.isSubmitting }
-        />
-        { content }
-        { Boolean(method) && (
-          <Button
-            variant="solid"
-            size="lg"
-            type="submit"
-            mt={ 12 }
-            isLoading={ formState.isSubmitting }
-            loadingText="Verify & publish"
-          >
+    <FormProvider {...formApi}>
+      <chakra.form noValidate onSubmit={handleSubmit(onFormSubmit)}>
+        <ContractVerificationFieldMethod control={control} methods={config.verification_options} isDisabled={formState.isSubmitting} />
+        {content}
+        {Boolean(method) && (
+          <Button variant="solid" size="lg" type="submit" mt={12} isLoading={formState.isSubmitting} loadingText="Verify & publish">
             Verify & publish
           </Button>
-        ) }
+        )}
       </chakra.form>
     </FormProvider>
   );

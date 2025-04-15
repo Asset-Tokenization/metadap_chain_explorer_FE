@@ -1,12 +1,4 @@
-import {
-  Button,
-  Box,
-  Grid,
-  GridItem,
-  Text,
-  HStack,
-  chakra,
-} from '@chakra-ui/react';
+import { Button, Box, Grid, GridItem, Text, HStack, chakra } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import type { FieldError, Path, SubmitHandler } from 'react-hook-form';
@@ -29,7 +21,7 @@ import PublicTagsFormInput from './PublicTagsFormInput';
 type Props = {
   changeToDataScreen: (success?: boolean) => void;
   data?: Partial<PublicTag>;
-}
+};
 
 export type Inputs = {
   fullName?: string;
@@ -43,7 +35,7 @@ export type Inputs = {
     address: string;
   }>;
   comment?: string;
-}
+};
 
 const placeholders = {
   fullName: 'Your name',
@@ -61,15 +53,25 @@ const PublicTagsForm = ({ changeToDataScreen, data }: Props) => {
   const apiFetch = useApiFetch();
   const inputSize = { base: 'md', lg: 'lg' };
 
-  const { control, handleSubmit, formState: { errors, isDirty }, setError } = useForm<Inputs>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isDirty },
+    setError,
+  } = useForm<Inputs>({
     defaultValues: {
       fullName: data?.full_name || '',
       email: data?.email || '',
       companyName: data?.company || '',
       companyUrl: data?.website || '',
-      tags: data?.tags?.split(';').map((tag) => tag).join('; ') || '',
-      addresses: data?.addresses?.map((address, index: number) => ({ name: `address.${ index }.address`, address })) ||
-        [ { name: 'address.0.address', address: '' } ],
+      tags:
+        data?.tags
+          ?.split(';')
+          .map((tag) => tag)
+          .join('; ') || '',
+      addresses: data?.addresses?.map((address, index: number) => ({ name: `address.${index}.address`, address })) || [
+        { name: 'address.0.address', address: '' },
+      ],
       comment: data?.additional_comment || '',
       action: data?.is_owner === undefined || data?.is_owner ? 'add' : 'report',
     },
@@ -81,11 +83,11 @@ const PublicTagsForm = ({ changeToDataScreen, data }: Props) => {
     control,
   });
 
-  const [ isAlertVisible, setAlertVisible ] = useState(false);
+  const [isAlertVisible, setAlertVisible] = useState(false);
 
-  const onAddFieldClick = useCallback(() => append({ address: '', name: '' }), [ append ]);
+  const onAddFieldClick = useCallback(() => append({ address: '', name: '' }), [append]);
 
-  const onRemoveFieldClick = useCallback((index: number) => () => remove(index), [ remove ]);
+  const onRemoveFieldClick = useCallback((index: number) => () => remove(index), [remove]);
 
   const updatePublicTag = (formData: Inputs) => {
     const body: PublicTagNew = {
@@ -95,7 +97,11 @@ const PublicTagsForm = ({ changeToDataScreen, data }: Props) => {
       website: formData.companyUrl || '',
       is_owner: formData.action === 'add',
       addresses: formData.addresses?.map(({ address }) => address) || [],
-      tags: formData.tags?.split(';').map((s) => s.trim()).join(';') || '',
+      tags:
+        formData.tags
+          ?.split(';')
+          .map((s) => s.trim())
+          .join(';') || '',
       additional_comment: formData.comment || '',
     };
 
@@ -110,10 +116,10 @@ const PublicTagsForm = ({ changeToDataScreen, data }: Props) => {
   };
 
   const mutation = useMutation(updatePublicTag, {
-    onSuccess: async(data) => {
+    onSuccess: async (data) => {
       const response = data as unknown as PublicTag;
 
-      queryClient.setQueryData([ resourceKey('public_tags') ], (prevData: PublicTags | undefined) => {
+      queryClient.setQueryData([resourceKey('public_tags')], (prevData: PublicTags | undefined) => {
         const isExisting = prevData && prevData.some((item) => item.id === response.id);
 
         if (isExisting) {
@@ -126,7 +132,7 @@ const PublicTagsForm = ({ changeToDataScreen, data }: Props) => {
           });
         }
 
-        return [ response, ...(prevData || []) ];
+        return [response, ...(prevData || [])];
       });
 
       changeToDataScreen(true);
@@ -145,100 +151,75 @@ const PublicTagsForm = ({ changeToDataScreen, data }: Props) => {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = useCallback((data) => {
-    setAlertVisible(false);
-    mutation.mutate(data);
-  }, [ mutation ]);
+  const onSubmit: SubmitHandler<Inputs> = useCallback(
+    (data) => {
+      setAlertVisible(false);
+      mutation.mutate(data);
+    },
+    [mutation],
+  );
 
   return (
-    <chakra.form
-      noValidate
-      width={{ base: 'auto', lg: `calc(100% - ${ ADDRESS_INPUT_BUTTONS_WIDTH }px)` }}
-      maxWidth="844px"
-      onSubmit={ handleSubmit(onSubmit) }
-    >
-      { isAlertVisible && <Box mb={ 4 }><FormSubmitAlert/></Box> }
-      <Text size="sm" variant="secondary" paddingBottom={ 5 }>Company info</Text>
-      <Grid templateColumns={{ base: '1fr', lg: '1fr 1fr' }} rowGap={ 4 } columnGap={ 5 }>
+    <chakra.form noValidate width={{ base: 'auto', lg: `calc(100% - ${ADDRESS_INPUT_BUTTONS_WIDTH}px)` }} maxWidth="844px" onSubmit={handleSubmit(onSubmit)}>
+      {isAlertVisible && (
+        <Box mb={4}>
+          <FormSubmitAlert />
+        </Box>
+      )}
+      <Text size="sm" variant="secondary" paddingBottom={5}>
+        Company info
+      </Text>
+      <Grid templateColumns={{ base: '1fr', lg: '1fr 1fr' }} rowGap={4} columnGap={5}>
         <GridItem>
-          <PublicTagsFormInput<Inputs>
-            fieldName="fullName"
-            control={ control }
-            label={ placeholders.fullName }
-            error={ errors.fullName }
-            required
-            size={ inputSize }
-          />
+          <PublicTagsFormInput<Inputs> fieldName="fullName" control={control} label={placeholders.fullName} error={errors.fullName} required size={inputSize} />
         </GridItem>
         <GridItem>
-          <PublicTagsFormInput<Inputs>
-            fieldName="companyName"
-            control={ control }
-            label={ placeholders.companyName }
-            error={ errors.companyName }
-            size={ inputSize }
-          />
+          <PublicTagsFormInput<Inputs> fieldName="companyName" control={control} label={placeholders.companyName} error={errors.companyName} size={inputSize} />
         </GridItem>
         <GridItem>
           <PublicTagsFormInput<Inputs>
             fieldName="email"
-            control={ control }
-            label={ placeholders.email }
-            pattern={ EMAIL_REGEXP }
-            error={ errors.email }
+            control={control}
+            label={placeholders.email}
+            pattern={EMAIL_REGEXP}
+            error={errors.email}
             required
-            size={ inputSize }
+            size={inputSize}
           />
         </GridItem>
         <GridItem>
-          <PublicTagsFormInput<Inputs>
-            fieldName="companyUrl"
-            control={ control }
-            label={ placeholders.companyUrl }
-            error={ errors?.companyUrl }
-            size={ inputSize }
-          />
+          <PublicTagsFormInput<Inputs> fieldName="companyUrl" control={control} label={placeholders.companyUrl} error={errors?.companyUrl} size={inputSize} />
         </GridItem>
       </Grid>
       <Box marginTop={{ base: 5, lg: 8 }} marginBottom={{ base: 5, lg: 8 }}>
-        <PublicTagFormAction control={ control }/>
+        <PublicTagFormAction control={control} />
       </Box>
-      <Text size="sm" variant="secondary" marginBottom={ 5 }>Public tags (2 tags maximum, please use &quot;;&quot; as a divider)</Text>
-      <Box marginBottom={ 4 }>
-        <PublicTagsFormInput<Inputs>
-          fieldName="tags"
-          control={ control }
-          label={ placeholders.tags }
-          error={ errors.tags }
-          required
-          size={ inputSize }
-        />
+      <Text size="sm" variant="secondary" marginBottom={5}>
+        Public tags (2 tags maximum, please use &quot;;&quot; as a divider)
+      </Text>
+      <Box marginBottom={4}>
+        <PublicTagsFormInput<Inputs> fieldName="tags" control={control} label={placeholders.tags} error={errors.tags} required size={inputSize} />
       </Box>
-      { fields.map((field, index) => {
+      {fields.map((field, index) => {
         return (
-          <Box position="relative" key={ field.id } marginBottom={ 4 }>
+          <Box position="relative" key={field.id} marginBottom={4}>
             <PublicTagFormAddressInput
-              control={ control }
-              error={ errors?.addresses?.[index]?.address as FieldError }
-              index={ index }
-              fieldsLength={ fields.length }
-              onAddFieldClick={ onAddFieldClick }
-              onRemoveFieldClick={ onRemoveFieldClick }
-              size={ inputSize }
+              control={control}
+              error={errors?.addresses?.[index]?.address as FieldError}
+              index={index}
+              fieldsLength={fields.length}
+              onAddFieldClick={onAddFieldClick}
+              onRemoveFieldClick={onRemoveFieldClick}
+              size={inputSize}
             />
           </Box>
         );
-      }) }
-      <Box marginBottom={ 8 }>
-        <PublicTagFormComment control={ control } error={ errors.comment } size={ inputSize }/>
+      })}
+      <Box marginBottom={8}>
+        <PublicTagFormComment control={control} error={errors.comment} size={inputSize} />
       </Box>
-      <HStack spacing={ 6 }>
-        <Button
-          size="lg"
-          type="submit"
-          isDisabled={ !isDirty }
-          isLoading={ mutation.isLoading }
-        >
+      <HStack spacing={6}>
+        <Button size="lg" type="submit" isDisabled={!isDirty} isLoading={mutation.isLoading}>
           Send request
         </Button>
       </HStack>

@@ -38,53 +38,58 @@ const ContractRead = ({ addressHash, isProxy, isCustomAbi }: Props) => {
     },
   });
 
-  const handleMethodFormSubmit = React.useCallback(async(item: SmartContractReadMethod, args: Array<string | Array<unknown>>) => {
-    return apiFetch<'contract_method_query', SmartContractQueryMethodRead>('contract_method_query', {
-      pathParams: { hash: addressHash },
-      queryParams: {
-        is_custom_abi: isCustomAbi ? 'true' : 'false',
-      },
-      fetchParams: {
-        method: 'POST',
-        body: {
-          args,
-          method_id: item.method_id,
-          contract_type: isProxy ? 'proxy' : 'regular',
-          from: userAddress,
+  const handleMethodFormSubmit = React.useCallback(
+    async (item: SmartContractReadMethod, args: Array<string | Array<unknown>>) => {
+      return apiFetch<'contract_method_query', SmartContractQueryMethodRead>('contract_method_query', {
+        pathParams: { hash: addressHash },
+        queryParams: {
+          is_custom_abi: isCustomAbi ? 'true' : 'false',
         },
-      },
-    });
-  }, [ addressHash, apiFetch, isCustomAbi, isProxy, userAddress ]);
+        fetchParams: {
+          method: 'POST',
+          body: {
+            args,
+            method_id: item.method_id,
+            contract_type: isProxy ? 'proxy' : 'regular',
+            from: userAddress,
+          },
+        },
+      });
+    },
+    [addressHash, apiFetch, isCustomAbi, isProxy, userAddress],
+  );
 
-  const renderItemContent = React.useCallback((item: SmartContractReadMethod, index: number, id: number) => {
-    if (item.error) {
-      return <Alert status="error" fontSize="sm" wordBreak="break-word">{ item.error }</Alert>;
-    }
+  const renderItemContent = React.useCallback(
+    (item: SmartContractReadMethod, index: number, id: number) => {
+      if (item.error) {
+        return (
+          <Alert status="error" fontSize="sm" wordBreak="break-word">
+            {item.error}
+          </Alert>
+        );
+      }
 
-    if (item.outputs.some(({ value }) => value !== undefined && value !== null)) {
-      return (
-        <Flex flexDir="column" rowGap={ 1 }>
-          { item.outputs.map((output, index) => <ContractMethodConstant key={ index } data={ output }/>) }
-        </Flex>
-      );
-    }
+      if (item.outputs.some(({ value }) => value !== undefined && value !== null)) {
+        return (
+          <Flex flexDir="column" rowGap={1}>
+            {item.outputs.map((output, index) => (
+              <ContractMethodConstant key={index} data={output} />
+            ))}
+          </Flex>
+        );
+      }
 
-    return (
-      <ContractMethodCallable
-        key={ id + '_' + index }
-        data={ item }
-        onSubmit={ handleMethodFormSubmit }
-        resultComponent={ ContractReadResult }
-      />
-    );
-  }, [ handleMethodFormSubmit ]);
+      return <ContractMethodCallable key={id + '_' + index} data={item} onSubmit={handleMethodFormSubmit} resultComponent={ContractReadResult} />;
+    },
+    [handleMethodFormSubmit],
+  );
 
   if (isError) {
-    return <DataFetchAlert/>;
+    return <DataFetchAlert />;
   }
 
   if (isLoading) {
-    return <ContentLoader/>;
+    return <ContentLoader />;
   }
 
   if (data.length === 0 && !isProxy) {
@@ -93,10 +98,10 @@ const ContractRead = ({ addressHash, isProxy, isCustomAbi }: Props) => {
 
   return (
     <>
-      { isCustomAbi && <ContractCustomAbiAlert/> }
-      <ContractConnectWallet/>
-      { isProxy && <ContractImplementationAddress hash={ addressHash }/> }
-      <ContractMethodsAccordion data={ data } addressHash={ addressHash } renderItemContent={ renderItemContent }/>
+      {isCustomAbi && <ContractCustomAbiAlert />}
+      <ContractConnectWallet />
+      {isProxy && <ContractImplementationAddress hash={addressHash} />}
+      <ContractMethodsAccordion data={data} addressHash={addressHash} renderItemContent={renderItemContent} />
     </>
   );
 };

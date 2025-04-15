@@ -15,8 +15,8 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ],
-    plugins: [ new TsconfigPathsPlugin({ configFile: './tsconfig.json' }) ],
+    extensions: ['.tsx', '.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
   },
   output: {
     filename: 'index.js',

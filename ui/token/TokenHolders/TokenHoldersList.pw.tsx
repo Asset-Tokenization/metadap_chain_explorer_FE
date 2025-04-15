@@ -9,20 +9,20 @@ import TokenHoldersList from './TokenHoldersList';
 
 test.use({ viewport: devices['iPhone 13 Pro'].viewport });
 
-test('base view without IDs', async({ mount }) => {
+test('base view without IDs', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <TokenHoldersList data={ tokenHoldersERC20.items } token={ tokenInfo }/>
+      <TokenHoldersList data={tokenHoldersERC20.items} token={tokenInfo} />
     </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test('base view with IDs', async({ mount }) => {
+test('base view with IDs', async ({ mount }) => {
   const component = await mount(
     <TestApp>
-      <TokenHoldersList data={ tokenHoldersERC1155.items } token={ tokenInfoERC1155a }/>
+      <TokenHoldersList data={tokenHoldersERC1155.items} token={tokenInfoERC1155a} />
     </TestApp>,
   );
 

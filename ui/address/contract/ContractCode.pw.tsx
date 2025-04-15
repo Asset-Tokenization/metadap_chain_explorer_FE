@@ -26,29 +26,35 @@ const test = base.extend<socketServer.SocketServerFixture>({
 // test cases which use socket cannot run in parallel since the socket server always run on the same port
 test.describe.configure({ mode: 'serial' });
 
-test('full view +@mobile +@dark-mode', async({ mount, page }) => {
+test('full view +@mobile +@dark-mode', async ({ mount, page }) => {
   await page.route('https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/**', (route) => route.abort());
-  await page.route(CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.withChangedByteCode),
-  }));
+  await page.route(CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.withChangedByteCode),
+    }),
+  );
 
   const ADDRESS_API_URL = buildApiUrl('address', { hash: addressHash });
-  await page.route(ADDRESS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(addressMock.contract),
-  }));
+  await page.route(ADDRESS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(addressMock.contract),
+    }),
+  );
 
   const PROXY_CONTRACT_API_URL = buildApiUrl('contract', { hash: addressMock.contract.implementation_address as string });
-  await page.route(PROXY_CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.withChangedByteCode),
-  }));
+  await page.route(PROXY_CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.withChangedByteCode),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
       <MockAddressPage>
-        <ContractCode addressHash={ addressHash } noSocket/>
+        <ContractCode addressHash={addressHash} noSocket />
       </MockAddressPage>
     </TestApp>,
     { hooksConfig },
@@ -57,16 +63,18 @@ test('full view +@mobile +@dark-mode', async({ mount, page }) => {
   await expect(component).toHaveScreenshot();
 });
 
-test('verified with changed byte code socket', async({ mount, page, createSocket }) => {
-  await page.route(CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.verified),
-  }));
+test('verified with changed byte code socket', async ({ mount, page, createSocket }) => {
+  await page.route(CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.verified),
+    }),
+  );
   await page.route('https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/**', (route) => route.abort());
 
   const component = await mount(
     <TestApp withSocket>
-      <ContractCode addressHash={ addressHash }/>
+      <ContractCode addressHash={addressHash} />
     </TestApp>,
     { hooksConfig },
   );
@@ -78,16 +86,18 @@ test('verified with changed byte code socket', async({ mount, page, createSocket
   await expect(component).toHaveScreenshot();
 });
 
-test('verified with multiple sources', async({ mount, page }) => {
-  await page.route(CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.withMultiplePaths),
-  }));
+test('verified with multiple sources', async ({ mount, page }) => {
+  await page.route(CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.withMultiplePaths),
+    }),
+  );
   await page.route('https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/**', (route) => route.abort());
 
   await mount(
     <TestApp>
-      <ContractCode addressHash={ addressHash } noSocket/>
+      <ContractCode addressHash={addressHash} noSocket />
     </TestApp>,
     { hooksConfig },
   );
@@ -99,16 +109,18 @@ test('verified with multiple sources', async({ mount, page }) => {
   await expect(section).toHaveScreenshot();
 });
 
-test('verified via sourcify', async({ mount, page }) => {
-  await page.route(CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.verifiedViaSourcify),
-  }));
+test('verified via sourcify', async ({ mount, page }) => {
+  await page.route(CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.verifiedViaSourcify),
+    }),
+  );
   await page.route('https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/**', (route) => route.abort());
 
   await mount(
     <TestApp>
-      <ContractCode addressHash={ addressHash } noSocket/>
+      <ContractCode addressHash={addressHash} noSocket />
     </TestApp>,
     { hooksConfig },
   );
@@ -116,16 +128,18 @@ test('verified via sourcify', async({ mount, page }) => {
   await expect(page).toHaveScreenshot({ clip: { x: 0, y: 0, width: 1200, height: 110 } });
 });
 
-test('verified via eth bytecode db', async({ mount, page }) => {
-  await page.route(CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.verifiedViaEthBytecodeDb),
-  }));
+test('verified via eth bytecode db', async ({ mount, page }) => {
+  await page.route(CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.verifiedViaEthBytecodeDb),
+    }),
+  );
   await page.route('https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/**', (route) => route.abort());
 
   await mount(
     <TestApp>
-      <ContractCode addressHash={ addressHash } noSocket/>
+      <ContractCode addressHash={addressHash} noSocket />
     </TestApp>,
     { hooksConfig },
   );
@@ -133,16 +147,18 @@ test('verified via eth bytecode db', async({ mount, page }) => {
   await expect(page).toHaveScreenshot({ clip: { x: 0, y: 0, width: 1200, height: 110 } });
 });
 
-test('self destructed', async({ mount, page }) => {
-  await page.route(CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.selfDestructed),
-  }));
+test('self destructed', async ({ mount, page }) => {
+  await page.route(CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.selfDestructed),
+    }),
+  );
   await page.route('https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/**', (route) => route.abort());
 
   await mount(
     <TestApp>
-      <ContractCode addressHash={ addressHash } noSocket/>
+      <ContractCode addressHash={addressHash} noSocket />
     </TestApp>,
     { hooksConfig },
   );
@@ -151,16 +167,18 @@ test('self destructed', async({ mount, page }) => {
   await expect(section).toHaveScreenshot();
 });
 
-test('with twin address alert +@mobile', async({ mount, page }) => {
-  await page.route(CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.withTwinAddress),
-  }));
+test('with twin address alert +@mobile', async ({ mount, page }) => {
+  await page.route(CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.withTwinAddress),
+    }),
+  );
   await page.route('https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/**', (route) => route.abort());
 
   const component = await mount(
     <TestApp>
-      <ContractCode addressHash={ addressHash } noSocket/>
+      <ContractCode addressHash={addressHash} noSocket />
     </TestApp>,
     { hooksConfig },
   );
@@ -168,16 +186,18 @@ test('with twin address alert +@mobile', async({ mount, page }) => {
   await expect(component.getByRole('alert')).toHaveScreenshot();
 });
 
-test('with proxy address alert +@mobile', async({ mount, page }) => {
-  await page.route(CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.withProxyAddress),
-  }));
+test('with proxy address alert +@mobile', async ({ mount, page }) => {
+  await page.route(CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.withProxyAddress),
+    }),
+  );
   await page.route('https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/**', (route) => route.abort());
 
   const component = await mount(
     <TestApp>
-      <ContractCode addressHash={ addressHash } noSocket/>
+      <ContractCode addressHash={addressHash} noSocket />
     </TestApp>,
     { hooksConfig },
   );
@@ -185,16 +205,18 @@ test('with proxy address alert +@mobile', async({ mount, page }) => {
   await expect(component.getByRole('alert')).toHaveScreenshot();
 });
 
-test('non verified', async({ mount, page }) => {
-  await page.route(CONTRACT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(contractMock.nonVerified),
-  }));
+test('non verified', async ({ mount, page }) => {
+  await page.route(CONTRACT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(contractMock.nonVerified),
+    }),
+  );
   await page.route('https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/**', (route) => route.abort());
 
   const component = await mount(
     <TestApp>
-      <ContractCode addressHash={ addressHash } noSocket/>
+      <ContractCode addressHash={addressHash} noSocket />
     </TestApp>,
     { hooksConfig },
   );

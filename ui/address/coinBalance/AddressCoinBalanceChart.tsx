@@ -14,21 +14,18 @@ const AddressCoinBalanceChart = ({ addressHash }: Props) => {
     pathParams: { hash: addressHash },
   });
 
-  const items = React.useMemo(() => data?.map(({ date, value }) => ({
-    date: new Date(date),
-    value: BigNumber(value).div(10 ** config.chain.currency.decimals).toNumber(),
-  })), [ data ]);
-
-  return (
-    <ChartWidget
-      isError={ isError }
-      title="Balances"
-      items={ items }
-      isLoading={ isLoading }
-      h="300px"
-      units={ config.chain.currency.symbol }
-    />
+  const items = React.useMemo(
+    () =>
+      data?.map(({ date, value }) => ({
+        date: new Date(date),
+        value: BigNumber(value)
+          .div(10 ** config.chain.currency.decimals)
+          .toNumber(),
+      })),
+    [data],
   );
+
+  return <ChartWidget isError={isError} title="Balances" items={items} isLoading={isLoading} h="300px" units={config.chain.currency.symbol} />;
 };
 
 export default React.memo(AddressCoinBalanceChart);

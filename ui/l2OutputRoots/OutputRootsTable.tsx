@@ -11,12 +11,12 @@ type Props = {
   items: Array<L2OutputRootsItem>;
   top: number;
   isLoading?: boolean;
-}
+};
 
 const OutputRootsTable = ({ items, top, isLoading }: Props) => {
   return (
     <Table variant="simple" size="sm" minW="900px">
-      <Thead top={ top }>
+      <Thead top={top}>
         <Tr>
           <Th width="140px">L2 output index</Th>
           <Th width="20%">Age</Th>
@@ -26,9 +26,9 @@ const OutputRootsTable = ({ items, top, isLoading }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        { items.map((item, index) => (
-          <OutputRootsTableItem key={ item.l2_output_index + (Number(isLoading ? index : '') ? String(index) : '') } item={ item } isLoading={ isLoading }/>
-        )) }
+        {items.map((item, index) => (
+          <OutputRootsTableItem key={item.l2_output_index + (Number(isLoading ? index : '') ? String(index) : '')} item={item} isLoading={isLoading} />
+        ))}
       </Tbody>
     </Table>
   );

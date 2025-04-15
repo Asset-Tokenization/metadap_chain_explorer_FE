@@ -23,9 +23,11 @@ export default function useContractAbi({ addressHash, isProxy, isCustomAbi }: Pa
     },
   });
 
-  const addressInfo = queryClient.getQueryData<Address>(getResourceKey('address', {
-    pathParams: { hash: addressHash },
-  }));
+  const addressInfo = queryClient.getQueryData<Address>(
+    getResourceKey('address', {
+      pathParams: { hash: addressHash },
+    }),
+  );
 
   const { data: proxyInfo } = useApiQuery('contract', {
     pathParams: { hash: addressInfo?.implementation_address || '' },
@@ -54,5 +56,5 @@ export default function useContractAbi({ addressHash, isProxy, isCustomAbi }: Pa
     }
 
     return contractInfo?.abi ?? undefined;
-  }, [ contractInfo?.abi, customInfo, isCustomAbi, isProxy, proxyInfo?.abi ]);
+  }, [contractInfo?.abi, customInfo, isCustomAbi, isProxy, proxyInfo?.abi]);
 }

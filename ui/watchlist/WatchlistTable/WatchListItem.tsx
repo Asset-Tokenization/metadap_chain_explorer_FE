@@ -20,15 +20,15 @@ interface Props {
 }
 
 const WatchListItem = ({ item, isLoading, onEditClick, onDeleteClick }: Props) => {
-  const [ notificationEnabled, setNotificationEnabled ] = useState(item.notification_methods.email);
-  const [ switchDisabled, setSwitchDisabled ] = useState(false);
+  const [notificationEnabled, setNotificationEnabled] = useState(item.notification_methods.email);
+  const [switchDisabled, setSwitchDisabled] = useState(false);
   const onItemEditClick = useCallback(() => {
     return onEditClick(item);
-  }, [ item, onEditClick ]);
+  }, [item, onEditClick]);
 
   const onItemDeleteClick = useCallback(() => {
     return onDeleteClick(item);
-  }, [ item, onDeleteClick ]);
+  }, [item, onDeleteClick]);
 
   const errorToast = useToast();
   const apiFetch = useApiFetch();
@@ -43,70 +43,82 @@ const WatchListItem = ({ item, isLoading, onEditClick, onDeleteClick }: Props) =
       isClosable: true,
       icon: null,
     });
-  }, [ errorToast ]);
+  }, [errorToast]);
 
   const notificationToast = useToast();
-  const showNotificationToast = useCallback((isOn: boolean) => {
-    notificationToast({
-      position: 'top-right',
-      description: isOn ? 'Email notification is ON' : 'Email notification is OFF',
-      colorScheme: 'green',
-      status: 'success',
-      variant: 'subtle',
-      title: 'Success',
-      isClosable: true,
-      icon: null,
-    });
-  }, [ notificationToast ]);
+  const showNotificationToast = useCallback(
+    (isOn: boolean) => {
+      notificationToast({
+        position: 'top-right',
+        description: isOn ? 'Email notification is ON' : 'Email notification is OFF',
+        colorScheme: 'green',
+        status: 'success',
+        variant: 'subtle',
+        title: 'Success',
+        isClosable: true,
+        icon: null,
+      });
+    },
+    [notificationToast],
+  );
 
-  const { mutate } = useMutation(() => {
-    setSwitchDisabled(true);
-    const body = { ...item, notification_methods: { email: !notificationEnabled } };
-    setNotificationEnabled(prevState => !prevState);
-    return apiFetch('watchlist', {
-      pathParams: { id: item.id },
-      fetchParams: { method: 'PUT', body },
-    });
-  }, {
-    onError: () => {
-      showErrorToast();
-      setNotificationEnabled(prevState => !prevState);
-      setSwitchDisabled(false);
+  const { mutate } = useMutation(
+    () => {
+      setSwitchDisabled(true);
+      const body = { ...item, notification_methods: { email: !notificationEnabled } };
+      setNotificationEnabled((prevState) => !prevState);
+      return apiFetch('watchlist', {
+        pathParams: { id: item.id },
+        fetchParams: { method: 'PUT', body },
+      });
     },
-    onSuccess: () => {
-      setSwitchDisabled(false);
-      showNotificationToast(!notificationEnabled);
+    {
+      onError: () => {
+        showErrorToast();
+        setNotificationEnabled((prevState) => !prevState);
+        setSwitchDisabled(false);
+      },
+      onSuccess: () => {
+        setSwitchDisabled(false);
+        showNotificationToast(!notificationEnabled);
+      },
     },
-  });
+  );
 
   const onSwitch = useCallback(() => {
     return mutate();
-  }, [ mutate ]);
+  }, [mutate]);
 
   return (
     <ListItemMobile>
       <Box maxW="100%">
-        <WatchListAddressItem item={ item } isLoading={ isLoading }/>
-        <HStack spacing={ 3 } mt={ 6 }>
-          <Text fontSize="sm" fontWeight={ 500 }>Private tag</Text>
-          <Tag isLoading={ isLoading } isTruncated>{ item.name }</Tag>
+        <WatchListAddressItem item={item} isLoading={isLoading} />
+        <HStack spacing={3} mt={6}>
+          <Text fontSize="sm" fontWeight={500}>
+            Private tag
+          </Text>
+          <Tag isLoading={isLoading} isTruncated>
+            {item.name}
+          </Tag>
         </HStack>
       </Box>
-      <Flex alignItems="center" justifyContent="space-between" mt={ 6 } w="100%">
-        <HStack spacing={ 3 }>
-          <Text fontSize="sm" fontWeight={ 500 }>Email notification</Text>
-          <Skeleton isLoaded={ !isLoading } display="inline-block">
+      <Flex alignItems="center" justifyContent="space-between" mt={6} w="100%">
+        <HStack spacing={3}>
+          <Text fontSize="sm" fontWeight={500}>
+            Email notification
+          </Text>
+          <Skeleton isLoaded={!isLoading} display="inline-block">
             <Switch
               colorScheme="blue"
               size="md"
-              isChecked={ notificationEnabled }
-              onChange={ onSwitch }
+              isChecked={notificationEnabled}
+              onChange={onSwitch}
               aria-label="Email notification"
-              isDisabled={ switchDisabled }
+              isDisabled={switchDisabled}
             />
           </Skeleton>
         </HStack>
-        <TableItemActionButtons onDeleteClick={ onItemDeleteClick } onEditClick={ onItemEditClick } isLoading={ isLoading }/>
+        <TableItemActionButtons onDeleteClick={onItemDeleteClick} onEditClick={onItemEditClick} isLoading={isLoading} />
       </Flex>
     </ListItemMobile>
   );

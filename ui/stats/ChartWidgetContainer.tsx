@@ -15,7 +15,7 @@ type Props = {
   interval: StatsIntervalIds;
   onLoadingError: () => void;
   isPlaceholderData: boolean;
-}
+};
 
 function formatDate(date: Date) {
   return date.toISOString().substring(0, 10);
@@ -39,27 +39,21 @@ const ChartWidgetContainer = ({ id, title, description, interval, onLoadingError
     },
   });
 
-  const items = useMemo(() => data?.chart?.map((item) => {
-    return { date: new Date(item.date), value: Number(item.value) };
-  }), [ data ]);
+  const items = useMemo(
+    () =>
+      data?.chart?.map((item) => {
+        return { date: new Date(item.date), value: Number(item.value) };
+      }),
+    [data],
+  );
 
   useEffect(() => {
     if (isError) {
       onLoadingError();
     }
-  }, [ isError, onLoadingError ]);
+  }, [isError, onLoadingError]);
 
-  return (
-    <ChartWidget
-      isError={ isError }
-      items={ items }
-      title={ title }
-      units={ units }
-      description={ description }
-      isLoading={ isLoading }
-      minH="230px"
-    />
-  );
+  return <ChartWidget isError={isError} items={items} title={title} units={units} description={description} isLoading={isLoading} minH="230px" />;
 };
 
 export default ChartWidgetContainer;

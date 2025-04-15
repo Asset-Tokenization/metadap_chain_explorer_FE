@@ -22,7 +22,7 @@ import 'lib/setLocale';
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
-}
+};
 
 const ERROR_SCREEN_STYLES: ChakraProps = {
   h: '100vh',
@@ -37,30 +37,24 @@ const ERROR_SCREEN_STYLES: ChakraProps = {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-
   const queryClient = useQueryClientConfig();
 
   const handleError = React.useCallback((error: Error) => {
     Sentry.captureException(error);
   }, []);
 
-  const getLayout = Component.getLayout ?? ((page) => <Layout>{ page }</Layout>);
+  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
 
   return (
-    <ChakraProvider theme={ theme } cookies={ pageProps.cookies }>
-      <AppErrorBoundary
-        { ...ERROR_SCREEN_STYLES }
-        onError={ handleError }
-      >
-        <AppContextProvider pageProps={ pageProps }>
-          <QueryClientProvider client={ queryClient }>
+    <ChakraProvider theme={theme} cookies={pageProps.cookies}>
+      <AppErrorBoundary {...ERROR_SCREEN_STYLES} onError={handleError}>
+        <AppContextProvider pageProps={pageProps}>
+          <QueryClientProvider client={queryClient}>
             <ScrollDirectionProvider>
-              <SocketProvider url={ `${ config.api.socket }${ config.api.basePath }/socket/v2` }>
-                { getLayout(<Component { ...pageProps }/>) }
-              </SocketProvider>
+              <SocketProvider url={`${config.api.socket}${config.api.basePath}/socket/v2`}>{getLayout(<Component {...pageProps} />)}</SocketProvider>
             </ScrollDirectionProvider>
-            <ReactQueryDevtools/>
-            <GoogleAnalytics/>
+            <ReactQueryDevtools />
+            <GoogleAnalytics />
           </QueryClientProvider>
         </AppContextProvider>
       </AppErrorBoundary>

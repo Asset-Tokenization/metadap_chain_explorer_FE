@@ -12,18 +12,14 @@ const LayoutHome = ({ children }: Props) => {
   return (
     <Layout.Container>
       <Layout.MainArea>
-        <Layout.SideBar/>
-        <Layout.MainColumn
-          paddingTop={{ base: '88px', lg: 9 }}
-        >
-          <HeaderAlert/>
-          <Header isHomePage/>
-          <AppErrorBoundary>
-            { children }
-          </AppErrorBoundary>
+        <Layout.SideBar />
+        <Layout.MainColumn paddingTop={{ base: '88px', lg: 9 }}>
+          <HeaderAlert />
+          <Header isHomePage />
+          <AppErrorBoundary>{children}</AppErrorBoundary>
         </Layout.MainColumn>
       </Layout.MainArea>
-      <Layout.Footer/>
+      <Layout.Footer />
     </Layout.Container>
   );
 };

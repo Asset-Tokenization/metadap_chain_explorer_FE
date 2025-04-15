@@ -9,7 +9,7 @@ const PrivateTags = dynamic(() => import('ui/pages/PrivateTags'), { ssr: false }
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/account/tag-address">
-      <PrivateTags/>
+      <PrivateTags />
     </PageNextJs>
   );
 };

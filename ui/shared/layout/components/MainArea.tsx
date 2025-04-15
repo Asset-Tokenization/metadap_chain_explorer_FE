@@ -8,7 +8,7 @@ interface Props {
 const MainArea = ({ children }: Props) => {
   return (
     <Flex w="100%" minH="100vh" alignItems="stretch">
-      { children }
+      {children}
     </Flex>
   );
 };

@@ -23,7 +23,7 @@ const ContractWriteResultDumb = ({ result, onSettle, txInfo }: Props) => {
     if (txInfo.status !== 'loading') {
       onSettle();
     }
-  }, [ onSettle, txInfo.status ]);
+  }, [onSettle, txInfo.status]);
 
   if (!result) {
     return null;
@@ -31,16 +31,14 @@ const ContractWriteResultDumb = ({ result, onSettle, txInfo }: Props) => {
 
   const isErrorResult = 'message' in result;
 
-  const txLink = txHash ? (
-    <LinkInternal href={ route({ pathname: '/tx/[hash]', query: { hash: txHash } }) }>View transaction details</LinkInternal>
-  ) : null;
+  const txLink = txHash ? <LinkInternal href={route({ pathname: '/tx/[hash]', query: { hash: txHash } })}>View transaction details</LinkInternal> : null;
 
   const content = (() => {
     if (isErrorResult) {
       return (
         <>
           <span>Error: </span>
-          <span>{ result.message }</span>
+          <span>{result.message}</span>
         </>
       );
     }
@@ -50,7 +48,7 @@ const ContractWriteResultDumb = ({ result, onSettle, txInfo }: Props) => {
         return (
           <>
             <span>Transaction has been confirmed. </span>
-            { txLink }
+            {txLink}
           </>
         );
       }
@@ -58,10 +56,10 @@ const ContractWriteResultDumb = ({ result, onSettle, txInfo }: Props) => {
       case 'loading': {
         return (
           <>
-            <Spinner size="sm" mr={ 3 }/>
+            <Spinner size="sm" mr={3} />
             <chakra.span verticalAlign="text-bottom">
-              { 'Waiting for transaction\'s confirmation. ' }
-              { txLink }
+              {"Waiting for transaction's confirmation. "}
+              {txLink}
             </chakra.span>
           </>
         );
@@ -71,8 +69,8 @@ const ContractWriteResultDumb = ({ result, onSettle, txInfo }: Props) => {
         return (
           <>
             <span>Error: </span>
-            <span>{ txInfo.error ? txInfo.error.message : 'Something went wrong' } </span>
-            { txLink }
+            <span>{txInfo.error ? txInfo.error.message : 'Something went wrong'} </span>
+            {txLink}
           </>
         );
       }
@@ -82,14 +80,14 @@ const ContractWriteResultDumb = ({ result, onSettle, txInfo }: Props) => {
   return (
     <Box
       fontSize="sm"
-      pl={ 3 }
-      mt={ 3 }
+      pl={3}
+      mt={3}
       alignItems="center"
       whiteSpace="pre-wrap"
       wordBreak="break-all"
-      color={ txInfo.status === 'error' || isErrorResult ? 'error' : undefined }
+      color={txInfo.status === 'error' || isErrorResult ? 'error' : undefined}
     >
-      { content }
+      {content}
     </Box>
   );
 };

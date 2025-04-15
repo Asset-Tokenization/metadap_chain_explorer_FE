@@ -37,11 +37,11 @@ export interface ContainerBaseProps extends Pick<EntityBaseProps, 'className'> {
 const Container = chakra(({ className, children }: ContainerBaseProps) => {
   return (
     <Flex
-      className={ className }
+      className={className}
       alignItems="center"
-      minWidth={ 0 } // for content truncation - https://css-tricks.com/flexbox-truncated-text/
+      minWidth={0} // for content truncation - https://css-tricks.com/flexbox-truncated-text/
     >
-      { children }
+      {children}
     </Flex>
   );
 });
@@ -58,19 +58,18 @@ const Link = chakra(({ isLoading, children, isExternal, onClick, href, noLink }:
   };
 
   if (noLink) {
-    return <Skeleton isLoaded={ !isLoading } { ...styles }>{ children }</Skeleton>;
+    return (
+      <Skeleton isLoaded={!isLoading} {...styles}>
+        {children}
+      </Skeleton>
+    );
   }
 
   const Component = isExternal ? LinkExternal : LinkInternal;
 
   return (
-    <Component
-      { ...styles }
-      href={ href }
-      isLoading={ isLoading }
-      onClick={ onClick }
-    >
-      { children }
+    <Component {...styles} href={href} isLoading={isLoading} onClick={onClick}>
+      {children}
     </Component>
   );
 });
@@ -90,13 +89,8 @@ const Icon = ({ isLoading, iconSize, noIcon, asProp, color, borderRadius }: Icon
 
   const styles = getIconProps(iconSize);
   return (
-    <Box mr={ 2 } color={ color ?? defaultColor }>
-      <IconBase
-        as={ asProp }
-        boxSize={ styles.boxSize }
-        isLoading={ isLoading }
-        borderRadius={ borderRadius ?? 'base' }
-      />
+    <Box mr={2} color={color ?? defaultColor}>
+      <IconBase as={asProp} boxSize={styles.boxSize} isLoading={isLoading} borderRadius={borderRadius ?? 'base'} />
     </Box>
   );
 };
@@ -107,37 +101,20 @@ export interface ContentBaseProps extends Pick<EntityBaseProps, 'className' | 'i
 }
 
 const Content = chakra(({ className, isLoading, asProp, text, truncation = 'dynamic', tailLength }: ContentBaseProps) => {
-
   const children = (() => {
     switch (truncation) {
       case 'constant':
-        return (
-          <HashStringShorten
-            hash={ text }
-            as={ asProp }
-          />
-        );
+        return <HashStringShorten hash={text} as={asProp} />;
       case 'dynamic':
-        return (
-          <HashStringShortenDynamic
-            hash={ text }
-            as={ asProp }
-            tailLength={ tailLength }
-          />
-        );
+        return <HashStringShortenDynamic hash={text} as={asProp} tailLength={tailLength} />;
       case 'none':
-        return <chakra.span as={ asProp }>{ text }</chakra.span>;
+        return <chakra.span as={asProp}>{text}</chakra.span>;
     }
   })();
 
   return (
-    <Skeleton
-      className={ className }
-      isLoaded={ !isLoading }
-      overflow="hidden"
-      whiteSpace="nowrap"
-    >
-      { children }
+    <Skeleton className={className} isLoaded={!isLoading} overflow="hidden" whiteSpace="nowrap">
+      {children}
     </Skeleton>
   );
 });
@@ -149,13 +126,7 @@ const Copy = (props: CopyBaseProps) => {
     return null;
   }
 
-  return <CopyToClipboard { ...props }/>;
+  return <CopyToClipboard {...props} />;
 };
 
-export {
-  Container,
-  Link,
-  Icon,
-  Copy,
-  Content,
-};
+export { Container, Link, Icon, Copy, Content };

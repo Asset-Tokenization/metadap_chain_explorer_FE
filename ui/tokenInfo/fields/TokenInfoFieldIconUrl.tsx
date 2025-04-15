@@ -18,10 +18,9 @@ interface Props {
 }
 
 const TokenInfoFieldIconUrl = ({ control, isReadOnly, trigger }: Props) => {
-
   const validatePreview = React.useCallback(() => {
     return imageLoadError.current ? 'Unable to load image' : true;
-  }, [ ]);
+  }, []);
 
   const { field, formState, fieldState } = useController({
     name: 'icon_url',
@@ -32,43 +31,43 @@ const TokenInfoFieldIconUrl = ({ control, isReadOnly, trigger }: Props) => {
     },
   });
 
-  const [ valueForPreview, setValueForPreview ] = React.useState<string>(field.value);
+  const [valueForPreview, setValueForPreview] = React.useState<string>(field.value);
   const imageLoadError = React.useRef(false);
 
   const handleImageLoadSuccess = React.useCallback(() => {
     imageLoadError.current = false;
     trigger('icon_url');
-  }, [ trigger ]);
+  }, [trigger]);
 
   const handleImageLoadError = React.useCallback(() => {
     imageLoadError.current = true;
     trigger('icon_url');
-  }, [ trigger ]);
+  }, [trigger]);
 
   const handleBlur = React.useCallback(() => {
     field.onBlur();
     const isValidUrl = validateUrl(field.value);
     isValidUrl === true && setValueForPreview(field.value);
-  }, [ field ]);
+  }, [field]);
 
   return (
-    <Flex columnGap={ 5 }>
-      <FormControl variant="floating" id={ field.name } size={{ base: 'md', lg: 'lg' }} isRequired>
+    <Flex columnGap={5}>
+      <FormControl variant="floating" id={field.name} size={{ base: 'md', lg: 'lg' }} isRequired>
         <Input
-          { ...field }
-          onBlur={ handleBlur }
-          isInvalid={ Boolean(fieldState.error) }
-          isDisabled={ formState.isSubmitting || isReadOnly }
+          {...field}
+          onBlur={handleBlur}
+          isInvalid={Boolean(fieldState.error)}
+          isDisabled={formState.isSubmitting || isReadOnly}
           autoComplete="off"
           required
         />
-        <InputPlaceholder text={ `Link to icon URL, link to download a SVG or 48${ times }48 PNG icon logo` } error={ fieldState.error }/>
+        <InputPlaceholder text={`Link to icon URL, link to download a SVG or 48${times}48 PNG icon logo`} error={fieldState.error} />
       </FormControl>
       <TokenInfoIconPreview
-        url={ fieldState.error?.type === 'url' ? undefined : valueForPreview }
-        onLoad={ handleImageLoadSuccess }
-        onError={ !isReadOnly ? handleImageLoadError : undefined }
-        isInvalid={ fieldState.error?.type === 'preview' }
+        url={fieldState.error?.type === 'url' ? undefined : valueForPreview}
+        onLoad={handleImageLoadSuccess}
+        onError={!isReadOnly ? handleImageLoadError : undefined}
+        isInvalid={fieldState.error?.type === 'preview'}
       />
     </Flex>
   );

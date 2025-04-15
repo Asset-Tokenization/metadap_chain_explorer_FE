@@ -1,7 +1,4 @@
-import {
-  chakra,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { chakra, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 
 import NftMediaFullscreenModal from './NftMediaFullscreenModal';
@@ -19,16 +16,9 @@ const NftVideoWithFullscreen = ({ src, onLoad, onError }: Props) => {
 
   return (
     <>
-      <NftVideo src={ src } onLoad={ onLoad } onError={ onError } onClick={ onOpen }/>
-      <NftMediaFullscreenModal isOpen={ isOpen } onClose={ onClose }>
-        <chakra.video
-          { ...videoPlayProps }
-          src={ src }
-          onCanPlayThrough={ onLoad }
-          onError={ onError }
-          maxH="90vh"
-          maxW="90vw"
-        />
+      <NftVideo src={src} onLoad={onLoad} onError={onError} onClick={onOpen} />
+      <NftMediaFullscreenModal isOpen={isOpen} onClose={onClose}>
+        <chakra.video {...videoPlayProps} src={src} onCanPlayThrough={onLoad} onError={onError} maxH="90vh" maxW="90vw" />
       </NftMediaFullscreenModal>
     </>
   );

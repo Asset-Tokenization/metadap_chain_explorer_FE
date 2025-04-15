@@ -25,7 +25,7 @@ const AdbutlerBanner = ({ className }: { className?: string }) => {
       }
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore:
-      let plc = window[`plc${ feature.adButler.config.mobile.id }`] || 0;
+      let plc = window[`plc${feature.adButler.config.mobile.id}`] || 0;
       const adButlerConfig = isMobile ? feature.adButler.config.mobile : feature.adButler.config.desktop;
       const banner = document.getElementById('ad-banner');
       if (banner) {
@@ -33,22 +33,25 @@ const AdbutlerBanner = ({ className }: { className?: string }) => {
       }
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore:
-      window.AdButler.ads.push({ handler: function(opt) {
-        window.AdButler.register(
-          ADBUTLER_ACCOUNT,
-          adButlerConfig.id,
-          [ adButlerConfig.width, adButlerConfig.height ],
-          `placement_${ adButlerConfig.id }_` + opt.place,
-          opt,
-        );
-      }, opt: { place: plc++, keywords: abkw, domain: 'servedbyadbutler.com', click: 'CLICK_MACRO_PLACEHOLDER' } });
+      window.AdButler.ads.push({
+        handler: function (opt) {
+          window.AdButler.register(
+            ADBUTLER_ACCOUNT,
+            adButlerConfig.id,
+            [adButlerConfig.width, adButlerConfig.height],
+            `placement_${adButlerConfig.id}_` + opt.place,
+            opt,
+          );
+        },
+        opt: { place: plc++, keywords: abkw, domain: 'servedbyadbutler.com', click: 'CLICK_MACRO_PLACEHOLDER' },
+      });
     }
-  }, [ router, isMobile ]);
+  }, [router, isMobile]);
 
   return (
-    <Flex className={ className } id="adBanner" h={{ base: '100px', lg: '90px' }}>
-      <Script id="ad-butler-1">{ connectAdbutler }</Script>
-      <Script id="ad-butler-2">{ placeAd }</Script>
+    <Flex className={className} id="adBanner" h={{ base: '100px', lg: '90px' }}>
+      <Script id="ad-butler-1">{connectAdbutler}</Script>
+      <Script id="ad-butler-2">{placeAd}</Script>
       <div id="ad-banner"></div>
     </Flex>
   );

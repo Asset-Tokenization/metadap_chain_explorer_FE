@@ -11,25 +11,25 @@ interface Props {
 const ListItemMobile = ({ children, className, isAnimated }: Props) => {
   return (
     <Flex
-      as={ motion.div }
-      initial={ isAnimated ? { opacity: 0, scale: 0.97 } : { opacity: 1, scale: 1 } }
+      as={motion.div}
+      initial={isAnimated ? { opacity: 0, scale: 0.97 } : { opacity: 1, scale: 1 }}
       animate={{ opacity: 1, scale: 1 }}
       transitionDuration="normal"
       transitionTimingFunction="linear"
-      rowGap={ 6 }
+      rowGap={6}
       alignItems="flex-start"
       flexDirection="column"
-      paddingY={ 6 }
+      paddingY={6}
       borderColor="divider"
       borderTopWidth="1px"
       _last={{
         borderBottomWidth: '1px',
       }}
-      className={ className }
+      className={className}
       fontSize="16px"
       lineHeight="20px"
     >
-      { children }
+      {children}
     </Flex>
   );
 };

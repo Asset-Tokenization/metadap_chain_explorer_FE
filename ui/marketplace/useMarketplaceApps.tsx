@@ -17,38 +17,36 @@ function isAppNameMatches(q: string, app: MarketplaceAppOverview) {
 }
 
 function isAppCategoryMatches(category: string, app: MarketplaceAppOverview, favoriteApps: Array<string>) {
-  return category === MarketplaceCategory.ALL ||
-      (category === MarketplaceCategory.FAVORITES && favoriteApps.includes(app.id)) ||
-      app.categories.includes(category);
+  return (
+    category === MarketplaceCategory.ALL || (category === MarketplaceCategory.FAVORITES && favoriteApps.includes(app.id)) || app.categories.includes(category)
+  );
 }
 
 export default function useMarketplaceApps(filter: string, selectedCategoryId: string = MarketplaceCategory.ALL, favoriteApps: Array<string> = []) {
   const apiFetch = useApiFetch();
   const { isPlaceholderData, isError, error, data } = useQuery<unknown, ResourceError<unknown>, Array<MarketplaceAppOverview>>(
-    [ 'marketplace-apps' ],
-    async() => apiFetch(configUrl, undefined, { resource: 'marketplace-apps' }),
+    ['marketplace-apps'],
+    async () => apiFetch(configUrl, undefined, { resource: 'marketplace-apps' }),
     {
       select: (data) => (data as Array<MarketplaceAppOverview>).sort((a, b) => a.title.localeCompare(b.title)),
       placeholderData: feature.isEnabled ? Array(9).fill(MARKETPLACE_APP) : undefined,
       staleTime: Infinity,
       enabled: feature.isEnabled,
-    });
+    },
+  );
 
   const displayedApps = React.useMemo(() => {
-    return data?.filter(app => isAppNameMatches(filter, app) && isAppCategoryMatches(selectedCategoryId, app, favoriteApps)) || [];
-  }, [ selectedCategoryId, data, filter, favoriteApps ]);
+    return data?.filter((app) => isAppNameMatches(filter, app) && isAppCategoryMatches(selectedCategoryId, app, favoriteApps)) || [];
+  }, [selectedCategoryId, data, filter, favoriteApps]);
 
-  return React.useMemo(() => ({
-    data,
-    displayedApps,
-    error,
-    isError,
-    isPlaceholderData,
-  }), [
-    data,
-    displayedApps,
-    error,
-    isError,
-    isPlaceholderData,
-  ]);
+  return React.useMemo(
+    () => ({
+      data,
+      displayedApps,
+      error,
+      isError,
+      isPlaceholderData,
+    }),
+    [data, displayedApps, error, isError, isPlaceholderData],
+  );
 }

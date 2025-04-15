@@ -1,12 +1,8 @@
 import { popoverAnatomy as parts } from '@chakra-ui/anatomy';
-import {
-  createMultiStyleConfigHelpers,
-  defineStyle,
-} from '@chakra-ui/styled-system';
+import { createMultiStyleConfigHelpers, defineStyle } from '@chakra-ui/styled-system';
 import { cssVar, mode } from '@chakra-ui/theme-tools';
 
-const { defineMultiStyleConfig, definePartsStyle } =
-  createMultiStyleConfigHelpers(parts.keys);
+const { defineMultiStyleConfig, definePartsStyle } = createMultiStyleConfigHelpers(parts.keys);
 
 const $popperBg = cssVar('popper-bg');
 
@@ -22,10 +18,10 @@ const baseStyleContent = defineStyle((props) => {
   const shadowColor = mode('blackAlpha.200', 'whiteAlpha.300')(props);
 
   return {
-    [$popperBg.variable]: `colors.${ bg }`,
+    [$popperBg.variable]: `colors.${bg}`,
     bg: $popperBg.reference,
     [$arrowBg.variable]: $popperBg.reference,
-    [$arrowShadowColor.variable]: `colors.${ shadowColor }`,
+    [$arrowShadowColor.variable]: `colors.${shadowColor}`,
     _dark: {
       [$popperBg.variable]: `colors.gray.900`,
       [$arrowShadowColor.variable]: `colors.whiteAlpha.300`,

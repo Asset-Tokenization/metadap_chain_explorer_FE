@@ -18,7 +18,7 @@ const ChartLine = ({ xScale, yScale, data, animation, ...props }: Props) => {
     const totalLength = ref.current?.getTotalLength() || 0;
     d3.select(ref.current)
       .attr('opacity', 1)
-      .attr('stroke-dasharray', `${ totalLength },${ totalLength }`)
+      .attr('stroke-dasharray', `${totalLength},${totalLength}`)
       .attr('stroke-dashoffset', totalLength)
       .transition()
       .duration(750)
@@ -27,11 +27,7 @@ const ChartLine = ({ xScale, yScale, data, animation, ...props }: Props) => {
   }, []);
 
   const animateFadeIn = React.useCallback(() => {
-    d3.select(ref.current)
-      .transition()
-      .duration(750)
-      .ease(d3.easeLinear)
-      .attr('opacity', 1);
+    d3.select(ref.current).transition().duration(750).ease(d3.easeLinear).attr('opacity', 1);
   }, []);
 
   const noneAnimation = React.useCallback(() => {
@@ -46,35 +42,23 @@ const ChartLine = ({ xScale, yScale, data, animation, ...props }: Props) => {
     };
     const animationFn = ANIMATIONS[animation];
     window.setTimeout(animationFn, 100);
-  }, [ animateLeft, animateFadeIn, noneAnimation, animation ]);
+  }, [animateLeft, animateFadeIn, noneAnimation, animation]);
 
   // Recalculate line length if scale has changed
   React.useEffect(() => {
     if (animation === 'left') {
       const totalLength = ref.current?.getTotalLength();
-      d3.select(ref.current).attr(
-        'stroke-dasharray',
-        `${ totalLength },${ totalLength }`,
-      );
+      d3.select(ref.current).attr('stroke-dasharray', `${totalLength},${totalLength}`);
     }
-  }, [ xScale, yScale, animation ]);
+  }, [xScale, yScale, animation]);
 
-  const line = d3.line<TimeChartItem>()
+  const line = d3
+    .line<TimeChartItem>()
     .x((d) => xScale(d.date))
     .y((d) => yScale(d.value))
     .curve(d3.curveMonotoneX);
 
-  return (
-    <path
-      ref={ ref }
-      d={ line(data) || undefined }
-      strokeWidth={ 1 }
-      strokeLinecap="round"
-      fill="none"
-      opacity={ 0 }
-      { ...props }
-    />
-  );
+  return <path ref={ref} d={line(data) || undefined} strokeWidth={1} strokeLinecap="round" fill="none" opacity={0} {...props} />;
 };
 
 export default React.memo(ChartLine);

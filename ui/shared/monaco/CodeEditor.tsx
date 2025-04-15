@@ -44,13 +44,13 @@ interface Props {
 }
 
 const CodeEditor = ({ data, remappings, libraries, language, mainFile }: Props) => {
-  const [ instance, setInstance ] = React.useState<Monaco | undefined>();
-  const [ editor, setEditor ] = React.useState<monaco.editor.IStandaloneCodeEditor | undefined>();
-  const [ index, setIndex ] = React.useState(0);
-  const [ tabs, setTabs ] = React.useState([ data[index].file_path ]);
-  const [ isMetaPressed, setIsMetaPressed ] = React.useState(false);
+  const [instance, setInstance] = React.useState<Monaco | undefined>();
+  const [editor, setEditor] = React.useState<monaco.editor.IStandaloneCodeEditor | undefined>();
+  const [index, setIndex] = React.useState(0);
+  const [tabs, setTabs] = React.useState([data[index].file_path]);
+  const [isMetaPressed, setIsMetaPressed] = React.useState(false);
 
-  const [ containerRect, containerNodeRef ] = useClientRect<HTMLDivElement>();
+  const [containerRect, containerNodeRef] = useClientRect<HTMLDivElement>();
 
   const { colorMode } = useColorMode();
   const borderRadius = useToken('radii', 'md');
@@ -63,7 +63,7 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile }: Props) 
 
   React.useEffect(() => {
     instance?.editor.setTheme(colorMode === 'light' ? 'blockscout-light' : 'blockscout-dark');
-  }, [ colorMode, instance?.editor ]);
+  }, [colorMode, instance?.editor]);
 
   const handleEditorDidMount = React.useCallback((editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
     setInstance(monaco);
@@ -75,27 +75,25 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile }: Props) 
 
     const loadedModels = monaco.editor.getModels();
     const loadedModelsPaths = loadedModels.map((model) => model.uri.path);
-    const newModels = data.slice(1)
+    const newModels = data
+      .slice(1)
       .filter((file) => !loadedModelsPaths.includes(file.file_path))
       .map((file) => monaco.editor.createModel(file.source_code, editorLanguage, monaco.Uri.parse(file.file_path)));
 
     if (language === 'solidity') {
-      loadedModels.concat(newModels)
-        .forEach((models) => {
-          addFileImportDecorations(models);
-          libraries?.length && addExternalLibraryWarningDecoration(models, libraries);
-        });
+      loadedModels.concat(newModels).forEach((models) => {
+        addFileImportDecorations(models);
+        libraries?.length && addExternalLibraryWarningDecoration(models, libraries);
+      });
     }
 
     editor.addAction({
       id: 'close-tab',
       label: 'Close current tab',
-      keybindings: [
-        monaco.KeyMod.Alt | monaco.KeyCode.KeyW,
-      ],
+      keybindings: [monaco.KeyMod.Alt | monaco.KeyCode.KeyW],
       contextMenuGroupId: 'navigation',
       contextMenuOrder: 1.7,
-      run: function(editor) {
+      run: function (editor) {
         const model = editor.getModel();
         const path = model?.uri.path;
         if (path) {
@@ -103,71 +101,79 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile }: Props) 
         }
       },
     });
-  // componentDidMount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ ]);
+    // componentDidMount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const handleSelectFile = React.useCallback((index: number, lineNumber?: number) => {
-    setIndex(index);
-    setTabs((prev) => prev.some((item) => item === data[index].file_path) ? prev : ([ ...prev, data[index].file_path ]));
-    if (lineNumber !== undefined && !Object.is(lineNumber, NaN)) {
-      window.setTimeout(() => {
-        editor?.revealLineInCenter(lineNumber);
-      }, 0);
-    }
-    editor?.focus();
-  }, [ data, editor ]);
-
-  const handleTabSelect = React.useCallback((path: string) => {
-    const index = data.findIndex((item) => item.file_path === path);
-    if (index > -1) {
+  const handleSelectFile = React.useCallback(
+    (index: number, lineNumber?: number) => {
       setIndex(index);
-    }
-  }, [ data ]);
+      setTabs((prev) => (prev.some((item) => item === data[index].file_path) ? prev : [...prev, data[index].file_path]));
+      if (lineNumber !== undefined && !Object.is(lineNumber, NaN)) {
+        window.setTimeout(() => {
+          editor?.revealLineInCenter(lineNumber);
+        }, 0);
+      }
+      editor?.focus();
+    },
+    [data, editor],
+  );
 
-  const handleTabClose = React.useCallback((path: string, _isActive?: boolean) => {
-    setTabs((prev) => {
-      if (prev.length > 1) {
-        const tabIndex = prev.findIndex((item) => item === path);
-        const isActive = _isActive !== undefined ? _isActive : data[index].file_path === path;
+  const handleTabSelect = React.useCallback(
+    (path: string) => {
+      const index = data.findIndex((item) => item.file_path === path);
+      if (index > -1) {
+        setIndex(index);
+      }
+    },
+    [data],
+  );
 
-        if (isActive) {
-          const nextActiveIndex = data.findIndex((item) => item.file_path === prev[(tabIndex === 0 ? 1 : tabIndex - 1)]);
-          setIndex(nextActiveIndex);
+  const handleTabClose = React.useCallback(
+    (path: string, _isActive?: boolean) => {
+      setTabs((prev) => {
+        if (prev.length > 1) {
+          const tabIndex = prev.findIndex((item) => item === path);
+          const isActive = _isActive !== undefined ? _isActive : data[index].file_path === path;
+
+          if (isActive) {
+            const nextActiveIndex = data.findIndex((item) => item.file_path === prev[tabIndex === 0 ? 1 : tabIndex - 1]);
+            setIndex(nextActiveIndex);
+          }
+
+          return prev.filter((item) => item !== path);
         }
 
-        return prev.filter((item) => item !== path);
+        return prev;
+      });
+    },
+    [data, index],
+  );
+
+  const handleClick = React.useCallback(
+    (event: React.MouseEvent) => {
+      if (!isMetaPressed && !isMobile) {
+        return;
       }
 
-      return prev;
-    });
-  }, [ data, index ]);
+      const target = event.target as HTMLSpanElement;
+      const isImportLink = target.classList.contains('import-link');
+      if (isImportLink) {
+        const path = [target.previousElementSibling as HTMLSpanElement, target, target.nextElementSibling as HTMLSpanElement]
+          .filter((element) => element?.classList.contains('import-link'))
+          .map((element: HTMLSpanElement) => element.innerText)
+          .join('');
 
-  const handleClick = React.useCallback((event: React.MouseEvent) => {
-    if (!isMetaPressed && !isMobile) {
-      return;
-    }
-
-    const target = event.target as HTMLSpanElement;
-    const isImportLink = target.classList.contains('import-link');
-    if (isImportLink) {
-      const path = [
-        target.previousElementSibling as HTMLSpanElement,
-        target,
-        target.nextElementSibling as HTMLSpanElement,
-      ]
-        .filter((element) => element?.classList.contains('import-link'))
-        .map((element: HTMLSpanElement) => element.innerText)
-        .join('');
-
-      const fullPath = getFullPathOfImportedFile(data[index].file_path, path, remappings);
-      const fileIndex = data.findIndex((file) => file.file_path === fullPath);
-      if (fileIndex > -1) {
-        event.stopPropagation();
-        handleSelectFile(fileIndex);
+        const fullPath = getFullPathOfImportedFile(data[index].file_path, path, remappings);
+        const fileIndex = data.findIndex((file) => file.file_path === fullPath);
+        if (fileIndex > -1) {
+          event.stopPropagation();
+          handleSelectFile(fileIndex);
+        }
       }
-    }
-  }, [ data, handleSelectFile, index, isMetaPressed, isMobile, remappings ]);
+    },
+    [data, handleSelectFile, index, isMetaPressed, isMobile, remappings],
+  );
 
   const handleKeyDown = React.useCallback((event: React.KeyboardEvent) => {
     isMetaKey(event) && setIsMetaPressed(true);
@@ -177,35 +183,38 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile }: Props) 
     setIsMetaPressed(false);
   }, []);
 
-  const containerSx: SystemStyleObject = React.useMemo(() => ({
-    '.editor-container': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: `${ editorWidth }px`,
-      height: '100%',
-    },
-    '.monaco-editor': {
-      'border-bottom-left-radius': borderRadius,
-    },
-    '.monaco-editor .overflow-guard': {
-      'border-bottom-left-radius': borderRadius,
-    },
-    '.highlight': {
-      backgroundColor: themeColors['custom.findMatchHighlightBackground'],
-    },
-    '&&.meta-pressed .import-link:hover, &&.meta-pressed .import-link:hover + .import-link': {
-      color: themeColors['custom.fileLink.hoverForeground'],
-      textDecoration: 'underline',
-      cursor: 'pointer',
-    },
-    '.risk-warning-primary': {
-      backgroundColor: themeColors['custom.riskWarning.primaryBackground'],
-    },
-    '.risk-warning': {
-      backgroundColor: themeColors['custom.riskWarning.background'],
-    },
-  }), [ editorWidth, themeColors, borderRadius ]);
+  const containerSx: SystemStyleObject = React.useMemo(
+    () => ({
+      '.editor-container': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: `${editorWidth}px`,
+        height: '100%',
+      },
+      '.monaco-editor': {
+        'border-bottom-left-radius': borderRadius,
+      },
+      '.monaco-editor .overflow-guard': {
+        'border-bottom-left-radius': borderRadius,
+      },
+      '.highlight': {
+        backgroundColor: themeColors['custom.findMatchHighlightBackground'],
+      },
+      '&&.meta-pressed .import-link:hover, &&.meta-pressed .import-link:hover + .import-link': {
+        color: themeColors['custom.fileLink.hoverForeground'],
+        textDecoration: 'underline',
+        cursor: 'pointer',
+      },
+      '.risk-warning-primary': {
+        backgroundColor: themeColors['custom.riskWarning.primaryBackground'],
+      },
+      '.risk-warning': {
+        backgroundColor: themeColors['custom.riskWarning.background'],
+      },
+    }),
+    [editorWidth, themeColors, borderRadius],
+  );
 
   if (data.length === 1) {
     const sx = {
@@ -219,14 +228,14 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile }: Props) 
     };
 
     return (
-      <Box height={ `${ EDITOR_HEIGHT }px` } sx={ sx }>
+      <Box height={`${EDITOR_HEIGHT}px`} sx={sx}>
         <MonacoEditor
-          language={ editorLanguage }
-          path={ data[index].file_path }
-          defaultValue={ data[index].source_code }
-          options={ EDITOR_OPTIONS }
-          onMount={ handleEditorDidMount }
-          loading={ <CodeEditorLoading borderRadius="md"/> }
+          language={editorLanguage}
+          path={data[index].file_path}
+          defaultValue={data[index].source_code}
+          options={EDITOR_OPTIONS}
+          onMount={handleEditorDidMount}
+          loading={<CodeEditorLoading borderRadius="md" />}
         />
       </Box>
     );
@@ -234,45 +243,39 @@ const CodeEditor = ({ data, remappings, libraries, language, mainFile }: Props) 
 
   return (
     <Flex
-      className={ isMetaPressed ? 'meta-pressed' : undefined }
+      className={isMetaPressed ? 'meta-pressed' : undefined}
       width="100%"
-      height={ `${ EDITOR_HEIGHT + TABS_HEIGHT + BREADCRUMBS_HEIGHT }px` }
+      height={`${EDITOR_HEIGHT + TABS_HEIGHT + BREADCRUMBS_HEIGHT}px`}
       position="relative"
-      ref={ containerNodeRef }
-      sx={ containerSx }
+      ref={containerNodeRef}
+      sx={containerSx}
       overflow={{ base: 'hidden', lg: 'visible' }}
       borderRadius="md"
-      onClick={ handleClick }
-      onKeyDown={ handleKeyDown }
-      onKeyUp={ handleKeyUp }
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
     >
-      <Box flexGrow={ 1 }>
-        <CodeEditorTabs
-          tabs={ tabs }
-          activeTab={ data[index].file_path }
-          mainFile={ mainFile }
-          onTabSelect={ handleTabSelect }
-          onTabClose={ handleTabClose }
-        />
-        <CodeEditorBreadcrumbs path={ data[index].file_path }/>
+      <Box flexGrow={1}>
+        <CodeEditorTabs tabs={tabs} activeTab={data[index].file_path} mainFile={mainFile} onTabSelect={handleTabSelect} onTabClose={handleTabClose} />
+        <CodeEditorBreadcrumbs path={data[index].file_path} />
         <MonacoEditor
           className="editor-container"
-          height={ `${ EDITOR_HEIGHT }px` }
-          language={ editorLanguage }
-          path={ data[index].file_path }
-          defaultValue={ data[index].source_code }
-          options={ EDITOR_OPTIONS }
-          onMount={ handleEditorDidMount }
-          loading={ <CodeEditorLoading borderBottomLeftRadius="md"/> }
+          height={`${EDITOR_HEIGHT}px`}
+          language={editorLanguage}
+          path={data[index].file_path}
+          defaultValue={data[index].source_code}
+          options={EDITOR_OPTIONS}
+          onMount={handleEditorDidMount}
+          loading={<CodeEditorLoading borderBottomLeftRadius="md" />}
         />
       </Box>
       <CodeEditorSideBar
-        data={ data }
-        onFileSelect={ handleSelectFile }
-        monaco={ instance }
-        editor={ editor }
-        selectedFile={ data[index].file_path }
-        mainFile={ mainFile }
+        data={data}
+        onFileSelect={handleSelectFile}
+        monaco={instance}
+        editor={editor}
+        selectedFile={data[index].file_path}
+        mainFile={mainFile}
       />
     </Flex>
   );

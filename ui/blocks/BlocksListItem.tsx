@@ -36,81 +36,78 @@ const BlocksListItem = ({ data, isLoading, enableTimeIncrement }: Props) => {
   const separatorColor = useColorModeValue('gray.200', 'gray.700');
 
   return (
-    <ListItemMobile rowGap={ 3 } key={ String(data.height) } isAnimated>
+    <ListItemMobile rowGap={3} key={String(data.height)} isAnimated>
       <Flex justifyContent="space-between" w="100%">
-        <Flex columnGap={ 2 } alignItems="center">
-          <BlockEntity
-            isLoading={ isLoading }
-            number={ data.height }
-            hash={ data.type === 'reorg' ? data.hash : undefined }
-            noIcon
-            fontWeight={ 600 }
-          />
+        <Flex columnGap={2} alignItems="center">
+          <BlockEntity isLoading={isLoading} number={data.height} hash={data.type === 'reorg' ? data.hash : undefined} noIcon fontWeight={600} />
         </Flex>
-        <BlockTimestamp ts={ data.timestamp } isEnabled={ enableTimeIncrement } isLoading={ isLoading }/>
+        <BlockTimestamp ts={data.timestamp} isEnabled={enableTimeIncrement} isLoading={isLoading} />
       </Flex>
-      <Flex columnGap={ 2 }>
-        <Text fontWeight={ 500 }>Size</Text>
-        <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary">
-          <span>{ data.size.toLocaleString() } bytes</span>
+      <Flex columnGap={2}>
+        <Text fontWeight={500}>Size</Text>
+        <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary">
+          <span>{data.size.toLocaleString()} bytes</span>
         </Skeleton>
       </Flex>
-      <Flex columnGap={ 2 } w="100%">
-        <Text fontWeight={ 500 }>{ capitalize(getNetworkValidatorTitle()) }</Text>
-        <AddressEntity
-          address={ data.miner }
-          isLoading={ isLoading }
-        />
+      <Flex columnGap={2} w="100%">
+        <Text fontWeight={500}>{capitalize(getNetworkValidatorTitle())}</Text>
+        <AddressEntity address={data.miner} isLoading={isLoading} />
       </Flex>
-      <Flex columnGap={ 2 }>
-        <Text fontWeight={ 500 }>Txn</Text>
-        { data.tx_count > 0 ? (
-          <Skeleton isLoaded={ !isLoading } display="inline-block">
-            <LinkInternal href={ route({ pathname: '/block/[height_or_hash]', query: { height_or_hash: String(data.height), tab: 'txs' } }) }>
-              { data.tx_count }
+      <Flex columnGap={2}>
+        <Text fontWeight={500}>Txn</Text>
+        {data.tx_count > 0 ? (
+          <Skeleton isLoaded={!isLoading} display="inline-block">
+            <LinkInternal href={route({ pathname: '/block/[height_or_hash]', query: { height_or_hash: String(data.height), tab: 'txs' } })}>
+              {data.tx_count}
             </LinkInternal>
           </Skeleton>
-        ) :
-          <Text variant="secondary">{ data.tx_count }</Text>
-        }
+        ) : (
+          <Text variant="secondary">{data.tx_count}</Text>
+        )}
       </Flex>
       <Box>
-        <Text fontWeight={ 500 }>Gas used</Text>
-        <Flex mt={ 2 }>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary" mr={ 4 }>
-            <span>{ BigNumber(data.gas_used || 0).toFormat() }</span>
+        <Text fontWeight={500}>Gas used</Text>
+        <Flex mt={2}>
+          <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary" mr={4}>
+            <span>{BigNumber(data.gas_used || 0).toFormat()}</span>
           </Skeleton>
-          <Utilization colorScheme="gray" value={ BigNumber(data.gas_used || 0).div(BigNumber(data.gas_limit)).toNumber() } isLoading={ isLoading }/>
-          { data.gas_target_percentage && (
+          <Utilization
+            colorScheme="gray"
+            value={BigNumber(data.gas_used || 0)
+              .div(BigNumber(data.gas_limit))
+              .toNumber()}
+            isLoading={isLoading}
+          />
+          {data.gas_target_percentage && (
             <>
-              <TextSeparator color={ separatorColor } mx={ 1 }/>
-              <GasUsedToTargetRatio value={ data.gas_target_percentage } isLoading={ isLoading }/>
+              <TextSeparator color={separatorColor} mx={1} />
+              <GasUsedToTargetRatio value={data.gas_target_percentage} isLoading={isLoading} />
             </>
-          ) }
+          )}
         </Flex>
       </Box>
-      { !config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.total_reward && (
-        <Flex columnGap={ 2 }>
-          <Text fontWeight={ 500 }>Reward { config.chain.currency.symbol }</Text>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary">
-            <span>{ totalReward.toFixed() }</span>
+      {!config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.total_reward && (
+        <Flex columnGap={2}>
+          <Text fontWeight={500}>Reward {config.chain.currency.symbol}</Text>
+          <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary">
+            <span>{totalReward.toFixed()}</span>
           </Skeleton>
         </Flex>
-      ) }
-      { !config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.burnt_fees && (
+      )}
+      {!config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.burnt_fees && (
         <Box>
-          <Text fontWeight={ 500 }>Burnt fees</Text>
-          <Flex columnGap={ 4 } mt={ 2 }>
+          <Text fontWeight={500}>Burnt fees</Text>
+          <Flex columnGap={4} mt={2}>
             <Flex>
-              <Icon as={ flameIcon } boxSize={ 5 } color="gray.500" isLoading={ isLoading }/>
-              <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary" ml={ 2 }>
-                <span>{ burntFees.div(WEI).toFixed() }</span>
+              <Icon as={flameIcon} boxSize={5} color="gray.500" isLoading={isLoading} />
+              <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary" ml={2}>
+                <span>{burntFees.div(WEI).toFixed()}</span>
               </Skeleton>
             </Flex>
-            <Utilization ml={ 4 } value={ burntFees.div(txFees).toNumber() } isLoading={ isLoading }/>
+            <Utilization ml={4} value={burntFees.div(txFees).toNumber()} isLoading={isLoading} />
           </Flex>
         </Box>
-      ) }
+      )}
     </ListItemMobile>
   );
 };

@@ -11,29 +11,20 @@ interface Props {
 const CUT_LENGTH = 2;
 
 const TxAllowedPeekers = ({ items }: Props) => {
-  const [ isExpanded, expand ] = useBoolean(false);
+  const [isExpanded, expand] = useBoolean(false);
 
   return (
-    <DetailsInfoItem
-      title="Allowed peekers"
-      hint="Smart contracts allowed to interact with confidential data"
-    >
-      <Flex flexDir="column" rowGap={ 3 } w="100%">
-        { items
-          .slice(0, isExpanded ? undefined : CUT_LENGTH)
-          .map((item) => <AddressEntity key={ item } address={{ hash: item, is_contract: true }}/>) }
+    <DetailsInfoItem title="Allowed peekers" hint="Smart contracts allowed to interact with confidential data">
+      <Flex flexDir="column" rowGap={3} w="100%">
+        {items.slice(0, isExpanded ? undefined : CUT_LENGTH).map((item) => (
+          <AddressEntity key={item} address={{ hash: item, is_contract: true }} />
+        ))}
       </Flex>
-      { items.length > CUT_LENGTH && (
-        <Link
-          display="inline-block"
-          fontSize="sm"
-          textDecorationLine="underline"
-          textDecorationStyle="dashed"
-          onClick={ expand.toggle }
-        >
-          { isExpanded ? 'Hide' : 'Show all' }
+      {items.length > CUT_LENGTH && (
+        <Link display="inline-block" fontSize="sm" textDecorationLine="underline" textDecorationStyle="dashed" onClick={expand.toggle}>
+          {isExpanded ? 'Hide' : 'Show all'}
         </Link>
-      ) }
+      )}
     </DetailsInfoItem>
   );
 };

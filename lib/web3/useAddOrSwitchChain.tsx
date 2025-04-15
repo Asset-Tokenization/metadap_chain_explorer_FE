@@ -8,7 +8,7 @@ import useProvider from './useProvider';
 export default function useAddOrSwitchChain() {
   const { wallet, provider } = useProvider();
 
-  return React.useCallback(async() => {
+  return React.useCallback(async () => {
     if (!wallet || !provider) {
       return;
     }
@@ -18,26 +18,27 @@ export default function useAddOrSwitchChain() {
     try {
       return await provider.request({
         method: 'wallet_switchEthereumChain',
-        params: [ { chainId: hexadecimalChainId } ],
+        params: [{ chainId: hexadecimalChainId }],
       });
     } catch (error) {
-
       const errorObj = getErrorObj(error);
       const code = errorObj && 'code' in errorObj ? errorObj.code : undefined;
 
       // This error code indicates that the chain has not been added to Wallet.
       if (code === 4902) {
-        const params = [ {
-          chainId: hexadecimalChainId,
-          chainName: config.chain.name,
-          nativeCurrency: {
-            name: config.chain.currency.name,
-            symbol: config.chain.currency.symbol,
-            decimals: config.chain.currency.decimals,
+        const params = [
+          {
+            chainId: hexadecimalChainId,
+            chainName: config.chain.name,
+            nativeCurrency: {
+              name: config.chain.currency.name,
+              symbol: config.chain.currency.symbol,
+              decimals: config.chain.currency.decimals,
+            },
+            rpcUrls: [config.chain.rpcUrl],
+            blockExplorerUrls: [config.app.baseUrl],
           },
-          rpcUrls: [ config.chain.rpcUrl ],
-          blockExplorerUrls: [ config.app.baseUrl ],
-        } ] as never;
+        ] as never;
         // in wagmi types for wallet_addEthereumChain method is not provided
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
@@ -49,5 +50,5 @@ export default function useAddOrSwitchChain() {
 
       throw error;
     }
-  }, [ provider, wallet ]);
+  }, [provider, wallet]);
 }

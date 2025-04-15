@@ -5,12 +5,26 @@ import type { Fee } from './fee';
 import type { TokenTransfer } from './tokenTransfer';
 import type { TxAction } from './txAction';
 
-export type TransactionRevertReason = {
-  raw: string;
-} | DecodedInput;
+export type TransactionRevertReason =
+  | {
+      raw: string;
+    }
+  | DecodedInput;
 
-type WrappedTransactionFields = 'decoded_input' | 'fee' | 'gas_limit' | 'gas_price' | 'hash' | 'max_fee_per_gas' |
-'max_priority_fee_per_gas' | 'method' | 'nonce' | 'raw_input' | 'to' | 'type' | 'value';
+type WrappedTransactionFields =
+  | 'decoded_input'
+  | 'fee'
+  | 'gas_limit'
+  | 'gas_price'
+  | 'hash'
+  | 'max_fee_per_gas'
+  | 'max_priority_fee_per_gas'
+  | 'method'
+  | 'nonce'
+  | 'raw_input'
+  | 'to'
+  | 'type'
+  | 'value';
 
 export type Transaction = {
   to: AddressParam | null;
@@ -55,7 +69,7 @@ export type Transaction = {
   execution_node?: AddressParam | null;
   allowed_peekers?: Array<string>;
   wrapped?: Pick<Transaction, WrappedTransactionFields>;
-}
+};
 
 export type TransactionsResponse = TransactionsResponseValidated | TransactionsResponsePending;
 
@@ -87,12 +101,13 @@ export interface TransactionsResponseWatchlist {
   } | null;
 }
 
-export type TransactionType = 'rootstock_remasc' |
-'rootstock_bridge' |
-'token_transfer' |
-'contract_creation' |
-'contract_call' |
-'token_creation' |
-'coin_transfer'
+export type TransactionType =
+  | 'rootstock_remasc'
+  | 'rootstock_bridge'
+  | 'token_transfer'
+  | 'contract_creation'
+  | 'contract_call'
+  | 'token_creation'
+  | 'coin_transfer';
 
 export type TxsResponse = TransactionsResponseValidated | TransactionsResponsePending | BlockTransactionsResponse;

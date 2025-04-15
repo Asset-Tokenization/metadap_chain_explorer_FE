@@ -22,7 +22,7 @@ export function middleware(req: NextRequest) {
   const end = Date.now();
   const res = NextResponse.next();
   res.headers.append('Content-Security-Policy', cspPolicy);
-  res.headers.append('Server-Timing', `middleware;dur=${ end - start }`);
+  res.headers.append('Server-Timing', `middleware;dur=${end - start}`);
   // eslint-disable-next-line no-restricted-properties
   res.headers.append('Docker-ID', process.env.HOSTNAME || '');
 
@@ -33,7 +33,7 @@ export function middleware(req: NextRequest) {
  * Configure which routes should pass through the Middleware.
  */
 export const config = {
-  matcher: [ '/', '/:notunderscore((?!_next).+)' ],
+  matcher: ['/', '/:notunderscore((?!_next).+)'],
   // matcher: [
   //   '/((?!.*\\.|api\\/|node-api\\/).*)', // exclude all static + api + node-api routes
   // ],

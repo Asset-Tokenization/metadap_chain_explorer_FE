@@ -11,7 +11,7 @@ import useConfigSentry from 'lib/sentry/useConfigSentry';
 
 type Props = Route & {
   children: React.ReactNode;
-}
+};
 
 const PageNextJs = (props: Props) => {
   const { title, description, opengraph } = metadata.generate(props);
@@ -26,18 +26,18 @@ const PageNextJs = (props: Props) => {
   return (
     <>
       <Head>
-        <title>{ title }</title>
-        <meta name="description" content={ description }/>
+        <title>{title}</title>
+        <meta name="description" content={description} />
 
-        { /* OG TAGS */ }
-        <meta property="og:title" content={ opengraph.title }/>
-        { opengraph.description && <meta property="og:description" content={ opengraph.description }/> }
-        <meta property="og:image" content={ opengraph.imageUrl }/>
-        <meta name="twitter:card" content="summary_large_image"/>
-        <meta property="twitter:image" content={ opengraph.imageUrl }/>
-        <meta property="og:type" content="website"/>
+        {/* OG TAGS */}
+        <meta property="og:title" content={opengraph.title} />
+        {opengraph.description && <meta property="og:description" content={opengraph.description} />}
+        <meta property="og:image" content={opengraph.imageUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:image" content={opengraph.imageUrl} />
+        <meta property="og:type" content="website" />
       </Head>
-      { props.children }
+      {props.children}
     </>
   );
 };

@@ -15,18 +15,15 @@ interface Props {
 
 const UnverifiedEmail = ({ email }: Props) => {
   const apiFetch = useApiFetch();
-  const [ isLoading, setIsLoading ] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const toast = useToast();
 
-  const handleButtonClick = React.useCallback(async() => {
+  const handleButtonClick = React.useCallback(async () => {
     const toastId = 'resend-email-error';
 
     setIsLoading(true);
 
-    mixpanel.logEvent(
-      mixpanel.EventTypes.ACCOUNT_ACCESS,
-      { Action: 'Verification email resent' },
-    );
+    mixpanel.logEvent(mixpanel.EventTypes.ACCOUNT_ACCESS, { Action: 'Verification email resent' });
 
     try {
       await apiFetch('email_resend');
@@ -58,40 +55,36 @@ const UnverifiedEmail = ({ email }: Props) => {
         }
 
         const timeUntilNextResend = dayjs().add(payload.seconds_before_next_resend, 'seconds').fromNow();
-        return `Email resend is available ${ timeUntilNextResend }.`;
+        return `Email resend is available ${timeUntilNextResend}.`;
       })();
 
-      !toast.isActive(toastId) && toast({
-        id: toastId,
-        position: 'top-right',
-        title: 'Error',
-        description: message || 'Something went wrong. Try again later.',
-        status: 'error',
-        variant: 'subtle',
-        isClosable: true,
-      });
+      !toast.isActive(toastId) &&
+        toast({
+          id: toastId,
+          position: 'top-right',
+          title: 'Error',
+          description: message || 'Something went wrong. Try again later.',
+          status: 'error',
+          variant: 'subtle',
+          isClosable: true,
+        });
     }
 
     setIsLoading(false);
-  }, [ apiFetch, toast ]);
+  }, [apiFetch, toast]);
 
   return (
     <Box>
-      <Icon as={ iconEmailSent } width="180px" height="auto" mt="52px"/>
-      <Heading mt={ 6 } size="2xl">Verify your email address</Heading>
-      <Text variant="secondary" mt={ 3 }>
+      <Icon as={iconEmailSent} width="180px" height="auto" mt="52px" />
+      <Heading mt={6} size="2xl">
+        Verify your email address
+      </Heading>
+      <Text variant="secondary" mt={3}>
         <span>Please confirm your email address to use the My Account feature. A confirmation email was sent to </span>
-        <span>{ email || 'your email address' }</span>
-        <span> on signup. { `Didn't receive?` }</span>
+        <span>{email || 'your email address'}</span>
+        <span> on signup. {`Didn't receive?`}</span>
       </Text>
-      <Button
-        mt={ 8 }
-        size="lg"
-        variant="outline"
-        isLoading={ isLoading }
-        loadingText="Resending..."
-        onClick={ handleButtonClick }
-      >
+      <Button mt={8} size="lg" variant="outline" isLoading={isLoading} loadingText="Resending..." onClick={handleButtonClick}>
         Resend verification email
       </Button>
     </Box>

@@ -6,11 +6,7 @@ import config from 'configs/app';
 
 import { KEY_WORDS } from '../utils';
 
-const MAIN_DOMAINS = [
-  `*.${ config.app.host }`,
-  config.app.host,
-  getFeaturePayload(config.features.sol2uml)?.api.endpoint,
-].filter(Boolean);
+const MAIN_DOMAINS = [`*.${config.app.host}`, config.app.host, getFeaturePayload(config.features.sol2uml)?.api.endpoint].filter(Boolean);
 
 export function app(): CspDev.DirectiveDescriptor {
   return {
@@ -53,7 +49,7 @@ export function app(): CspDev.DirectiveDescriptor {
       config.app.isDev ? KEY_WORDS.UNSAFE_EVAL : '',
 
       // hash of ColorModeScript
-      '\'sha256-e7MRMmTzLsLQvIy1iizO1lXf7VWYoQ6ysj5fuUzvRwE=\'',
+      "'sha256-e7MRMmTzLsLQvIy1iizO1lXf7VWYoQ6ysj5fuUzvRwE='",
     ],
 
     'style-src': [
@@ -92,34 +88,26 @@ export function app(): CspDev.DirectiveDescriptor {
       '*', // see comment for img-src directive
     ],
 
-    'font-src': [
-      KEY_WORDS.DATA,
-    ],
+    'font-src': [KEY_WORDS.DATA],
 
-    'object-src': [
-      KEY_WORDS.NONE,
-    ],
+    'object-src': [KEY_WORDS.NONE],
 
-    'base-uri': [
-      KEY_WORDS.NONE,
-    ],
+    'base-uri': [KEY_WORDS.NONE],
 
     'frame-src': [
       // could be a marketplace app or NFT media (html-page)
       '*',
     ],
 
-    ...((() => {
+    ...(() => {
       const sentryFeature = config.features.sentry;
       if (!sentryFeature.isEnabled || !sentryFeature.cspReportUrl || config.app.isDev) {
         return {};
       }
 
       return {
-        'report-uri': [
-          sentryFeature.cspReportUrl,
-        ],
+        'report-uri': [sentryFeature.cspReportUrl],
       };
-    })()),
+    })(),
   };
 }

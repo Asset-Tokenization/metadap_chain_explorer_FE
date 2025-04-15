@@ -13,7 +13,7 @@ type Props = {
   onClose: () => void;
   data: AddressTag | TransactionTag;
   type: 'address' | 'transaction';
-}
+};
 
 const DeletePrivateTagModal: React.FC<Props> = ({ isOpen, onClose, data, type }) => {
   const tag = data.name;
@@ -28,35 +28,30 @@ const DeletePrivateTagModal: React.FC<Props> = ({ isOpen, onClose, data, type })
       pathParams: { id: data.id },
       fetchParams: { method: 'DELETE' },
     });
-  }, [ type, apiFetch, data.id ]);
+  }, [type, apiFetch, data.id]);
 
-  const onSuccess = useCallback(async() => {
+  const onSuccess = useCallback(async () => {
     if (type === 'address') {
-      queryClient.setQueryData([ resourceKey('private_tags_address') ], (prevData: AddressTags | undefined) => {
+      queryClient.setQueryData([resourceKey('private_tags_address')], (prevData: AddressTags | undefined) => {
         return prevData?.filter((item: AddressTag) => item.id !== id);
       });
     } else {
-      queryClient.setQueryData([ resourceKey('private_tags_tx') ], (prevData: TransactionTags | undefined) => {
+      queryClient.setQueryData([resourceKey('private_tags_tx')], (prevData: TransactionTags | undefined) => {
         return prevData?.filter((item: TransactionTag) => item.id !== id);
       });
     }
-  }, [ type, id, queryClient ]);
+  }, [type, id, queryClient]);
 
   const renderText = useCallback(() => {
     return (
-      <Text>Tag<Text fontWeight="700" as="span">{ ` "${ tag || 'tag' }" ` }</Text>will be deleted</Text>
+      <Text>
+        Tag<Text fontWeight="700" as="span">{` "${tag || 'tag'}" `}</Text>will be deleted
+      </Text>
     );
-  }, [ tag ]);
+  }, [tag]);
 
   return (
-    <DeleteModal
-      isOpen={ isOpen }
-      onClose={ onClose }
-      title="Removal of private tag"
-      renderContent={ renderText }
-      mutationFn={ mutationFn }
-      onSuccess={ onSuccess }
-    />
+    <DeleteModal isOpen={isOpen} onClose={onClose} title="Removal of private tag" renderContent={renderText} mutationFn={mutationFn} onSuccess={onSuccess} />
   );
 };
 

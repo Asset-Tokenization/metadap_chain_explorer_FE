@@ -14,7 +14,7 @@ import ContractVerificationFormRow from '../ContractVerificationFormRow';
 const SOURCIFY_ERROR_REGEXP = /\(([^()]*)\)/;
 
 const ContractVerificationFieldContractIndex = () => {
-  const [ options, setOptions ] = React.useState<Array<Option>>([]);
+  const [options, setOptions] = React.useState<Array<Option>>([]);
   const { formState, control, watch } = useFormContext<FormFields>();
   const isMobile = useIsMobile();
 
@@ -34,28 +34,31 @@ const ContractVerificationFieldContractIndex = () => {
 
     const newOptions = parsedMethods.map((option, index) => ({ label: option, value: String(index + 1) }));
     setOptions(newOptions);
-  }, [ sourcesError ]);
+  }, [sourcesError]);
 
   useUpdateEffect(() => {
     setOptions([]);
-  }, [ sources ]);
+  }, [sources]);
 
-  const renderControl = React.useCallback(({ field }: {field: ControllerRenderProps<FormFields, 'contract_index'>}) => {
-    const error = 'contract_index' in formState.errors ? formState.errors.contract_index : undefined;
+  const renderControl = React.useCallback(
+    ({ field }: { field: ControllerRenderProps<FormFields, 'contract_index'> }) => {
+      const error = 'contract_index' in formState.errors ? formState.errors.contract_index : undefined;
 
-    return (
-      <FancySelect
-        { ...field }
-        options={ options }
-        size={ isMobile ? 'md' : 'lg' }
-        placeholder="Contract name"
-        isDisabled={ formState.isSubmitting }
-        error={ error }
-        isRequired
-        isAsync={ false }
-      />
-    );
-  }, [ formState.errors, formState.isSubmitting, isMobile, options ]);
+      return (
+        <FancySelect
+          {...field}
+          options={options}
+          size={isMobile ? 'md' : 'lg'}
+          placeholder="Contract name"
+          isDisabled={formState.isSubmitting}
+          error={error}
+          isRequired
+          isAsync={false}
+        />
+      );
+    },
+    [formState.errors, formState.isSubmitting, isMobile, options],
+  );
 
   if (options.length === 0) {
     return null;
@@ -63,12 +66,7 @@ const ContractVerificationFieldContractIndex = () => {
 
   return (
     <ContractVerificationFormRow>
-      <Controller
-        name="contract_index"
-        control={ control }
-        render={ renderControl }
-        rules={{ required: true }}
-      />
+      <Controller name="contract_index" control={control} render={renderControl} rules={{ required: true }} />
     </ContractVerificationFormRow>
   );
 };

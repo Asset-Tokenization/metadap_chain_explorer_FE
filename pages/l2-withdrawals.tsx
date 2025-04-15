@@ -9,7 +9,7 @@ const L2Withdrawals = dynamic(() => import('ui/pages/L2Withdrawals'), { ssr: fal
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/l2-withdrawals">
-      <L2Withdrawals/>
+      <L2Withdrawals />
     </PageNextJs>
   );
 };

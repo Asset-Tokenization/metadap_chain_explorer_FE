@@ -25,7 +25,7 @@ type Props = {
   filterValue?: AddressFromToFilter;
   enableTimeIncrement?: boolean;
   top?: number;
-}
+};
 
 const TxsContent = ({
   filter,
@@ -44,41 +44,36 @@ const TxsContent = ({
 
   const content = data?.items ? (
     <>
-      <Show below="lg" ssr={ false }>
+      <Show below="lg" ssr={false}>
         <Box>
-          { showSocketInfo && (
-            <SocketNewItemsNotice.Mobile
-              url={ window.location.href }
-              num={ socketInfoNum }
-              alert={ socketInfoAlert }
-              isLoading={ isPlaceholderData }
-            />
-          ) }
-          { data.items.map((tx, index) => (
+          {showSocketInfo && (
+            <SocketNewItemsNotice.Mobile url={window.location.href} num={socketInfoNum} alert={socketInfoAlert} isLoading={isPlaceholderData} />
+          )}
+          {data.items.map((tx, index) => (
             <TxsListItem
-              key={ tx.hash + (isPlaceholderData ? index : '') }
-              tx={ tx }
-              showBlockInfo={ showBlockInfo }
-              currentAddress={ currentAddress }
-              enableTimeIncrement={ enableTimeIncrement }
-              isLoading={ isPlaceholderData }
+              key={tx.hash + (isPlaceholderData ? index : '')}
+              tx={tx}
+              showBlockInfo={showBlockInfo}
+              currentAddress={currentAddress}
+              enableTimeIncrement={enableTimeIncrement}
+              isLoading={isPlaceholderData}
             />
-          )) }
+          ))}
         </Box>
       </Show>
-      <Hide below="lg" ssr={ false }>
+      <Hide below="lg" ssr={false}>
         <TxsTable
-          txs={ data.items }
-          sort={ setSortByField }
-          sorting={ sorting }
-          showBlockInfo={ showBlockInfo }
-          showSocketInfo={ showSocketInfo }
-          socketInfoAlert={ socketInfoAlert }
-          socketInfoNum={ socketInfoNum }
-          top={ top || query.pagination.isVisible ? 80 : 0 }
-          currentAddress={ currentAddress }
-          enableTimeIncrement={ enableTimeIncrement }
-          isLoading={ isPlaceholderData }
+          txs={data.items}
+          sort={setSortByField}
+          sorting={sorting}
+          showBlockInfo={showBlockInfo}
+          showSocketInfo={showSocketInfo}
+          socketInfoAlert={socketInfoAlert}
+          socketInfoNum={socketInfoNum}
+          top={top || query.pagination.isVisible ? 80 : 0}
+          currentAddress={currentAddress}
+          enableTimeIncrement={enableTimeIncrement}
+          isLoading={isPlaceholderData}
         />
       </Hide>
     </>
@@ -86,32 +81,25 @@ const TxsContent = ({
 
   const actionBar = isMobile ? (
     <TxsHeaderMobile
-      mt={ -6 }
-      sorting={ sorting }
-      setSorting={ setSortByValue }
-      paginationProps={ query.pagination }
-      showPagination={ query.pagination.isVisible }
-      filterComponent={ filter }
-      linkSlot={ currentAddress ? (
-        <AddressCsvExportLink
-          address={ currentAddress }
-          params={{ type: 'transactions', filterType: 'address', filterValue }}
-          isLoading={ query.pagination.isLoading }
-        />
-      ) : null
+      mt={-6}
+      sorting={sorting}
+      setSorting={setSortByValue}
+      paginationProps={query.pagination}
+      showPagination={query.pagination.isVisible}
+      filterComponent={filter}
+      linkSlot={
+        currentAddress ? (
+          <AddressCsvExportLink
+            address={currentAddress}
+            params={{ type: 'transactions', filterType: 'address', filterValue }}
+            isLoading={query.pagination.isLoading}
+          />
+        ) : null
       }
     />
   ) : null;
 
-  return (
-    <DataListDisplay
-      isError={ isError }
-      items={ data?.items }
-      emptyText="There are no transactions."
-      content={ content }
-      actionBar={ actionBar }
-    />
-  );
+  return <DataListDisplay isError={isError} items={data?.items} emptyText="There are no transactions." content={content} actionBar={actionBar} />;
 };
 
 export default TxsContent;

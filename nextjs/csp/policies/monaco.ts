@@ -13,11 +13,7 @@ export function monaco(): CspDev.DirectiveDescriptor {
       'https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/min/vs/basic-languages/elixir/elixir.js',
       'https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/min/vs/base/worker/workerMain.js',
     ],
-    'style-src': [
-      'https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/min/vs/editor/editor.main.css',
-    ],
-    'font-src': [
-      'https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/min/vs/base/browser/ui/codicons/codicon/codicon.ttf',
-    ],
+    'style-src': ['https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/min/vs/editor/editor.main.css'],
+    'font-src': ['https://cdn.jsdelivr.net/npm/monaco-editor@0.33.0/min/vs/base/browser/ui/codicons/codicon/codicon.ttf'],
   };
 }

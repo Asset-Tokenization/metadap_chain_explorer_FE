@@ -10,13 +10,15 @@ import useGradualIncrement from 'lib/hooks/useGradualIncrement';
 import useToast from 'lib/hooks/useToast';
 import PageTitle from 'ui/shared/Page/PageTitle';
 
-{ /* will be deleted when we fix login in preview CI stands */ }
+{
+  /* will be deleted when we fix login in preview CI stands */
+}
 const Login = () => {
   const toast = useToast();
-  const [ num, setNum ] = useGradualIncrement(0);
+  const [num, setNum] = useGradualIncrement(0);
 
-  const [ isFormVisible, setFormVisibility ] = React.useState(false);
-  const [ token, setToken ] = React.useState('');
+  const [isFormVisible, setFormVisibility] = React.useState(false);
+  const [token, setToken] = React.useState('');
 
   React.useEffect(() => {
     const token = cookies.get(cookies.NAMES.API_TOKEN);
@@ -50,42 +52,47 @@ const Login = () => {
         setFormVisibility(false);
       },
     });
-  }, [ toast, token ]);
+  }, [toast, token]);
 
   const handleNumIncrement = React.useCallback(() => {
     for (let index = 0; index < 5; index++) {
       setNum(5);
     }
-  }, [ setNum ]);
+  }, [setNum]);
 
   return (
-    <VStack gap={ 4 } alignItems="flex-start" maxW="1000px">
-      <PageTitle title="Login page 😂"/>
-      { isFormVisible && (
+    <VStack gap={4} alignItems="flex-start" maxW="1000px">
+      <PageTitle title="Login page 😂" />
+      {isFormVisible && (
         <>
           <Alert status="error" flexDirection="column" alignItems="flex-start">
-            <AlertTitle fontSize="md">
-                !!! Temporary solution for authentication on localhost !!!
-            </AlertTitle>
-            <AlertDescription mt={ 3 }>
-                    To Sign in go to production instance first, sign in there, copy obtained API token from cookie
-              <Code ml={ 1 }>{ cookies.NAMES.API_TOKEN }</Code> and paste it in the form below. After submitting the form you should be successfully
-                    authenticated in current environment
+            <AlertTitle fontSize="md">!!! Temporary solution for authentication on localhost !!!</AlertTitle>
+            <AlertDescription mt={3}>
+              To Sign in go to production instance first, sign in there, copy obtained API token from cookie
+              <Code ml={1}>{cookies.NAMES.API_TOKEN}</Code> and paste it in the form below. After submitting the form you should be successfully authenticated
+              in current environment
             </AlertDescription>
           </Alert>
-          <Textarea value={ token } onChange={ handleTokenChange } placeholder="API token"/>
-          <Button onClick={ handleSetTokenClick }>Set cookie</Button>
+          <Textarea value={token} onChange={handleTokenChange} placeholder="API token" />
+          <Button onClick={handleSetTokenClick}>Set cookie</Button>
         </>
-      ) }
-      <Button colorScheme="red" onClick={ checkSentry }>Check Sentry</Button>
-      <Button colorScheme="teal" onClick={ checkMixpanel }>Check Mixpanel</Button>
-      <Flex columnGap={ 2 } alignItems="center">
-        <Box w="50px" textAlign="center">{ num }</Box>
-        <Button onClick={ handleNumIncrement } size="sm">add</Button>
+      )}
+      <Button colorScheme="red" onClick={checkSentry}>
+        Check Sentry
+      </Button>
+      <Button colorScheme="teal" onClick={checkMixpanel}>
+        Check Mixpanel
+      </Button>
+      <Flex columnGap={2} alignItems="center">
+        <Box w="50px" textAlign="center">
+          {num}
+        </Box>
+        <Button onClick={handleNumIncrement} size="sm">
+          add
+        </Button>
       </Flex>
     </VStack>
   );
-
 };
 
 export default Login;

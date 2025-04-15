@@ -13,28 +13,19 @@ interface Props {
 }
 
 const TokenInfoFieldProjectName = ({ control, isReadOnly }: Props) => {
-  const renderControl: ControllerProps<Fields, 'project_name'>['render'] = React.useCallback(({ field, fieldState, formState }) => {
-
-    return (
-      <FormControl variant="floating" id={ field.name } size={{ base: 'md', lg: 'lg' }}>
-        <Input
-          { ...field }
-          isInvalid={ Boolean(fieldState.error) }
-          isDisabled={ formState.isSubmitting || isReadOnly }
-          autoComplete="off"
-        />
-        <InputPlaceholder text="Project name" error={ fieldState.error }/>
-      </FormControl>
-    );
-  }, [ isReadOnly ]);
-
-  return (
-    <Controller
-      name="project_name"
-      control={ control }
-      render={ renderControl }
-    />
+  const renderControl: ControllerProps<Fields, 'project_name'>['render'] = React.useCallback(
+    ({ field, fieldState, formState }) => {
+      return (
+        <FormControl variant="floating" id={field.name} size={{ base: 'md', lg: 'lg' }}>
+          <Input {...field} isInvalid={Boolean(fieldState.error)} isDisabled={formState.isSubmitting || isReadOnly} autoComplete="off" />
+          <InputPlaceholder text="Project name" error={fieldState.error} />
+        </FormControl>
+      );
+    },
+    [isReadOnly],
   );
+
+  return <Controller name="project_name" control={control} render={renderControl} />;
 };
 
 export default React.memo(TokenInfoFieldProjectName);

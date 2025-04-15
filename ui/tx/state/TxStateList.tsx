@@ -13,7 +13,9 @@ interface Props {
 const TxStateList = ({ data, isLoading }: Props) => {
   return (
     <Box>
-      { data.map((item, index) => <TxStateListItem key={ index } data={ item } isLoading={ isLoading }/>) }
+      {data.map((item, index) => (
+        <TxStateListItem key={index} data={item} isLoading={isLoading} />
+      ))}
     </Box>
   );
 };

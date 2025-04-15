@@ -17,19 +17,23 @@ const hooksConfig = {
   },
 };
 
-test('base view +@mobile', async({ mount, page }) => {
-  await page.route(API_URL_TX, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.base),
-  }));
-  await page.route(API_URL_TX_INTERNALS, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(internalTxsMock.baseResponse),
-  }));
+test('base view +@mobile', async ({ mount, page }) => {
+  await page.route(API_URL_TX, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.base),
+    }),
+  );
+  await page.route(API_URL_TX_INTERNALS, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(internalTxsMock.baseResponse),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxInternals/>
+      <TxInternals />
     </TestApp>,
     { hooksConfig },
   );

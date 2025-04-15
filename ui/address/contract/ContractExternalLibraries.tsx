@@ -33,8 +33,8 @@ interface Props {
 
 const Item = (data: SmartContractExternalLibrary) => {
   return (
-    <Flex flexDir="column" py={ 2 } w="100%" rowGap={ 1 }>
-      <Box>{ data.name }</Box>
+    <Flex flexDir="column" py={2} w="100%" rowGap={1}>
+      <Box>{data.name}</Box>
       <AddressEntity
         address={{ hash: data.address_hash, is_contract: true, implementation_name: null }}
         query={{ tab: 'contract' }}
@@ -56,34 +56,34 @@ const ContractExternalLibraries = ({ className, data }: Props) => {
 
   const button = (
     <Button
-      className={ className }
+      className={className}
       size="sm"
       variant="outline"
       colorScheme="gray"
-      onClick={ onToggle }
-      fontWeight={ 600 }
-      px={ 2 }
+      onClick={onToggle}
+      fontWeight={600}
+      px={2}
       aria-label="View external libraries"
     >
-      <span>{ data.length } { data.length > 1 ? 'Libraries' : 'Library' } </span>
-      <Icon as={ iconWarning } boxSize={ 5 } color="orange.400" ml="2px"/>
-      <Icon as={ arrowIcon } transform={ isOpen ? 'rotate(90deg)' : 'rotate(-90deg)' } transitionDuration="faster" boxSize={ 5 } ml={ 2 }/>
+      <span>
+        {data.length} {data.length > 1 ? 'Libraries' : 'Library'}{' '}
+      </span>
+      <Icon as={iconWarning} boxSize={5} color="orange.400" ml="2px" />
+      <Icon as={arrowIcon} transform={isOpen ? 'rotate(90deg)' : 'rotate(-90deg)'} transitionDuration="faster" boxSize={5} ml={2} />
     </Button>
   );
 
   const content = (
     <>
-      <Heading size="sm">External libraries ({ data.length })</Heading>
-      <Alert status="warning" mt={ 4 }>
-        The linked library{ apos }s source code may not be the real one.
-        Check the source code at the library address (if any) if you want to be sure in case if there is any library linked
+      <Heading size="sm">External libraries ({data.length})</Heading>
+      <Alert status="warning" mt={4}>
+        The linked library{apos}s source code may not be the real one. Check the source code at the library address (if any) if you want to be sure in case if
+        there is any library linked
       </Alert>
-      <VStack
-        divider={ <StackDivider borderColor="divider"/> }
-        spacing={ 2 }
-        mt={ 4 }
-      >
-        { data.map((item) => <Item key={ item.address_hash } { ...item }/>) }
+      <VStack divider={<StackDivider borderColor="divider" />} spacing={2} mt={4}>
+        {data.map((item) => (
+          <Item key={item.address_hash} {...item} />
+        ))}
       </VStack>
     </>
   );
@@ -91,11 +91,11 @@ const ContractExternalLibraries = ({ className, data }: Props) => {
   if (isMobile) {
     return (
       <>
-        { button }
-        <Modal isOpen={ isOpen } onClose={ onClose } size="full">
-          <ModalContent paddingTop={ 4 }>
-            <ModalCloseButton/>
-            { content }
+        {button}
+        <Modal isOpen={isOpen} onClose={onClose} size="full">
+          <ModalContent paddingTop={4}>
+            <ModalCloseButton />
+            {content}
           </ModalContent>
         </Modal>
       </>
@@ -103,14 +103,10 @@ const ContractExternalLibraries = ({ className, data }: Props) => {
   }
 
   return (
-    <Popover isOpen={ isOpen } onClose={ onClose } placement="bottom-start" isLazy>
-      <PopoverTrigger>
-        { button }
-      </PopoverTrigger>
+    <Popover isOpen={isOpen} onClose={onClose} placement="bottom-start" isLazy>
+      <PopoverTrigger>{button}</PopoverTrigger>
       <PopoverContent w="400px">
-        <PopoverBody >
-          { content }
-        </PopoverBody>
+        <PopoverBody>{content}</PopoverBody>
       </PopoverContent>
     </Popover>
   );

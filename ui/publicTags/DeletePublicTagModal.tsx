@@ -14,11 +14,10 @@ type Props = {
   onClose: () => void;
   data: PublicTag;
   onDeleteSuccess: () => void;
-}
+};
 
 const DeletePublicTagModal: React.FC<Props> = ({ isOpen, onClose, data, onDeleteSuccess }) => {
-
-  const [ reason, setReason ] = useState<string>('');
+  const [reason, setReason] = useState<string>('');
 
   const tags = data.tags.split(';');
 
@@ -32,14 +31,14 @@ const DeletePublicTagModal: React.FC<Props> = ({ isOpen, onClose, data, onDelete
       pathParams: { id: String(data.id) },
       fetchParams: { method: 'DELETE', body },
     });
-  }, [ data.id, apiFetch, reason ]);
+  }, [data.id, apiFetch, reason]);
 
-  const onSuccess = useCallback(async() => {
+  const onSuccess = useCallback(async () => {
     onDeleteSuccess();
-    queryClient.setQueryData([ resourceKey('public_tags') ], (prevData: PublicTags | undefined) => {
+    queryClient.setQueryData([resourceKey('public_tags')], (prevData: PublicTags | undefined) => {
       return prevData?.filter((item) => item.id !== data.id);
     });
-  }, [ queryClient, data, onDeleteSuccess ]);
+  }, [queryClient, data, onDeleteSuccess]);
 
   const onFieldChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
     setReason(event.currentTarget.value);
@@ -50,8 +49,10 @@ const DeletePublicTagModal: React.FC<Props> = ({ isOpen, onClose, data, onDelete
     if (tags.length === 1) {
       text = (
         <>
-          <Text display="inline" as="span">Public tag</Text>
-          <Text fontWeight="700" whiteSpace="pre" as="span">{ ` "${ tags[0] }" ` }</Text>
+          <Text display="inline" as="span">
+            Public tag
+          </Text>
+          <Text fontWeight="700" whiteSpace="pre" as="span">{` "${tags[0]}" `}</Text>
           <Text as="span">will be removed.</Text>
         </>
       );
@@ -60,48 +61,44 @@ const DeletePublicTagModal: React.FC<Props> = ({ isOpen, onClose, data, onDelete
       const tagsText: Array<JSX.Element | string> = [];
       tags.forEach((tag, index) => {
         if (index < tags.length - 2) {
-          tagsText.push(<Text fontWeight="700" whiteSpace="pre" as="span">{ ` "${ tag }"` }</Text>);
+          tagsText.push(<Text fontWeight="700" whiteSpace="pre" as="span">{` "${tag}"`}</Text>);
           tagsText.push(',');
         }
         if (index === tags.length - 2) {
-          tagsText.push(<Text fontWeight="700" whiteSpace="pre" as="span">{ ` "${ tag }" ` }</Text>);
+          tagsText.push(<Text fontWeight="700" whiteSpace="pre" as="span">{` "${tag}" `}</Text>);
           tagsText.push('and');
         }
         if (index === tags.length - 1) {
-          tagsText.push(<Text fontWeight="700" whiteSpace="pre" as="span">{ ` "${ tag }" ` }</Text>);
+          tagsText.push(<Text fontWeight="700" whiteSpace="pre" as="span">{` "${tag}" `}</Text>);
         }
       });
       text = (
         <>
-          <Text as="span">Public tags</Text>{ tagsText }<Text as="span">will be removed.</Text>
+          <Text as="span">Public tags</Text>
+          {tagsText}
+          <Text as="span">will be removed.</Text>
         </>
       );
     }
     return (
       <>
-        <Box marginBottom={ 8 }>
-          { text }
-        </Box>
-        <FormControl variant="floating" id="tag-delete" backgroundColor={ formBackgroundColor }>
-          <Textarea
-            size="lg"
-            value={ reason }
-            onChange={ onFieldChange }
-          />
+        <Box marginBottom={8}>{text}</Box>
+        <FormControl variant="floating" id="tag-delete" backgroundColor={formBackgroundColor}>
+          <Textarea size="lg" value={reason} onChange={onFieldChange} />
           <FormLabel>Why do you want to remove tags?</FormLabel>
         </FormControl>
       </>
     );
-  }, [ tags, reason, onFieldChange, formBackgroundColor ]);
+  }, [tags, reason, onFieldChange, formBackgroundColor]);
 
   return (
     <DeleteModal
-      isOpen={ isOpen }
-      onClose={ onClose }
+      isOpen={isOpen}
+      onClose={onClose}
       title="Request to remove a public tag"
-      renderContent={ renderContent }
-      mutationFn={ deleteApiKey }
-      onSuccess={ onSuccess }
+      renderContent={renderContent}
+      mutationFn={deleteApiKey}
+      onSuccess={onSuccess}
     />
   );
 };

@@ -268,7 +268,7 @@ function addFilesToFormData(body: FormData, files: Array<File> | undefined, fiel
 
   for (let index = 0; index < files.length; index++) {
     const file = files[index];
-    body.set(`${ fieldName }[${ index }]`, file, file.name);
+    body.set(`${fieldName}[${index}]`, file, file.name);
   }
 }
 
@@ -282,12 +282,12 @@ const API_ERROR_TO_FORM_FIELD: Record<keyof SmartContractVerificationError, Fiel
 };
 
 export function formatSocketErrors(errors: SmartContractVerificationError): Array<[FieldPath<FormFields>, ErrorOption] | undefined> {
-  return Object.entries(errors).map(([ key, value ]) => {
+  return Object.entries(errors).map(([key, value]) => {
     const _key = key as keyof SmartContractVerificationError;
     if (!API_ERROR_TO_FORM_FIELD[_key]) {
       return;
     }
 
-    return [ API_ERROR_TO_FORM_FIELD[_key], { message: value.join(',') } ];
+    return [API_ERROR_TO_FORM_FIELD[_key], { message: value.join(',') }];
   });
 }

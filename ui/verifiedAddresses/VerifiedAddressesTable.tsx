@@ -1,9 +1,9 @@
-import { Table, Tbody, Th, Thead, Tr } from "@chakra-ui/react";
-import React from "react";
+import { Table, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TokenInfoApplication, VerifiedAddress } from "types/api/account";
+import type { TokenInfoApplication, VerifiedAddress } from 'types/api/account';
 
-import VerifiedAddressesTableItem from "./VerifiedAddressesTableItem";
+import VerifiedAddressesTableItem from './VerifiedAddressesTableItem';
 
 interface Props {
   data: Array<VerifiedAddress>;
@@ -13,13 +13,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const VerifiedAddressesTable = ({
-  data,
-  applications,
-  onItemEdit,
-  onItemAdd,
-  isLoading,
-}: Props) => {
+const VerifiedAddressesTable = ({ data, applications, onItemEdit, onItemAdd, isLoading }: Props) => {
   return (
     <Table variant="simple">
       <Thead>
@@ -36,13 +30,9 @@ const VerifiedAddressesTable = ({
       <Tbody>
         {data.map((item, index) => (
           <VerifiedAddressesTableItem
-            key={item.contractAddress + (isLoading ? index : "")}
+            key={item.contractAddress + (isLoading ? index : '')}
             item={item}
-            application={applications?.find(
-              ({ tokenAddress }) =>
-                tokenAddress.toLowerCase() ===
-                item.contractAddress.toLowerCase()
-            )}
+            application={applications?.find(({ tokenAddress }) => tokenAddress.toLowerCase() === item.contractAddress.toLowerCase())}
             onAdd={onItemAdd}
             onEdit={onItemEdit}
             isLoading={isLoading}

@@ -8,7 +8,6 @@ const walletConnectProjectId = getEnvValue('NEXT_PUBLIC_WALLET_CONNECT_PROJECT_I
 const title = 'Blockchain interaction (writing to contract, etc.)';
 
 const config: Feature<{ walletConnect: { projectId: string } }> = (() => {
-
   if (
     // all chain parameters are required for wagmi provider
     // @wagmi/chains/dist/index.d.ts

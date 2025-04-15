@@ -18,11 +18,11 @@ const TokenSelectMobile = ({ data, isLoading }: Props) => {
 
   return (
     <>
-      <TokenSelectButton isOpen={ isOpen } onClick={ onToggle } data={ result.data } isLoading={ isLoading }/>
-      <Modal isOpen={ isOpen } onClose={ onClose } size="full">
+      <TokenSelectButton isOpen={isOpen} onClick={onToggle} data={result.data} isLoading={isLoading} />
+      <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalContent>
-          <ModalCloseButton/>
-          <TokenSelectMenu { ...result }/>
+          <ModalCloseButton />
+          <TokenSelectMenu {...result} />
         </ModalContent>
       </Modal>
     </>

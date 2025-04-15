@@ -25,20 +25,8 @@ const formConfig: SmartContractVerificationConfig = {
     'v0.8.17-nightly.2022.8.24+commit.22a0c46e',
     'v0.8.16-nightly.2022.7.6+commit.b6f11b33',
   ],
-  solidity_evm_versions: [
-    'default',
-    'london',
-    'berlin',
-  ],
-  verification_options: [
-    'flattened-code',
-    'standard-input',
-    'sourcify',
-    'multi-part',
-    'vyper-code',
-    'vyper-multi-part',
-    'vyper-standard-input',
-  ],
+  solidity_evm_versions: ['default', 'london', 'berlin'],
+  verification_options: ['flattened-code', 'standard-input', 'sourcify', 'multi-part', 'vyper-code', 'vyper-multi-part', 'vyper-standard-input'],
   vyper_compiler_versions: [
     'v0.3.7+commit.6020b8bb',
     'v0.3.1+commit.0463ea4c',
@@ -48,18 +36,13 @@ const formConfig: SmartContractVerificationConfig = {
     'v0.2.2+commit.337c2ef',
     'v0.1.0-beta.17+commit.0671b7b',
   ],
-  vyper_evm_versions: [
-    'byzantium',
-    'constantinople',
-    'petersburg',
-    'istanbul',
-  ],
+  vyper_evm_versions: ['byzantium', 'constantinople', 'petersburg', 'istanbul'],
 };
 
-test('flatten source code method +@dark-mode +@mobile', async({ mount, page }) => {
+test('flatten source code method +@dark-mode +@mobile', async ({ mount, page }) => {
   const component = await mount(
     <TestApp>
-      <ContractVerificationForm config={ formConfig } hash={ hash }/>
+      <ContractVerificationForm config={formConfig} hash={hash} />
     </TestApp>,
     { hooksConfig },
   );
@@ -73,10 +56,10 @@ test('flatten source code method +@dark-mode +@mobile', async({ mount, page }) =
   await expect(component).toHaveScreenshot();
 });
 
-test('standard input json method', async({ mount, page }) => {
+test('standard input json method', async ({ mount, page }) => {
   const component = await mount(
     <TestApp>
-      <ContractVerificationForm config={ formConfig } hash={ hash }/>
+      <ContractVerificationForm config={formConfig} hash={hash} />
     </TestApp>,
     { hooksConfig },
   );
@@ -94,10 +77,10 @@ test.describe('sourcify', () => {
   });
   testWithSocket.describe.configure({ mode: 'serial', timeout: 20_000 });
 
-  testWithSocket('with multiple contracts', async({ mount, page, createSocket }) => {
+  testWithSocket('with multiple contracts', async ({ mount, page, createSocket }) => {
     const component = await mount(
       <TestApp withSocket>
-        <ContractVerificationForm config={ formConfig } hash={ hash }/>
+        <ContractVerificationForm config={formConfig} hash={hash} />
       </TestApp>,
       { hooksConfig },
     );
@@ -107,16 +90,14 @@ test.describe('sourcify', () => {
     await page.getByRole('button', { name: /sourcify/i }).click();
 
     await page.getByText(/drop files/i).click();
-    await page.locator('input[name="sources"]').setInputFiles([
-      './playwright/mocks/file_mock_1.json',
-      './playwright/mocks/file_mock_2.json',
-      './playwright/mocks/file_mock_with_very_long_name.json',
-    ]);
+    await page
+      .locator('input[name="sources"]')
+      .setInputFiles(['./playwright/mocks/file_mock_1.json', './playwright/mocks/file_mock_2.json', './playwright/mocks/file_mock_with_very_long_name.json']);
 
     await expect(component).toHaveScreenshot();
 
     const socket = await createSocket();
-    const channel = await socketServer.joinChannel(socket, `addresses:${ hash.toLowerCase() }`);
+    const channel = await socketServer.joinChannel(socket, `addresses:${hash.toLowerCase()}`);
 
     await page.getByRole('button', { name: /verify/i }).click();
 
@@ -124,7 +105,9 @@ test.describe('sourcify', () => {
       status: 'error',
       errors: {
         // eslint-disable-next-line max-len
-        files: [ 'Detected 5 contracts (ERC20, IERC20, IERC20Metadata, Context, MockERC20), but can only verify 1 at a time. Please choose a main contract and click Verify again.' ],
+        files: [
+          'Detected 5 contracts (ERC20, IERC20, IERC20Metadata, Context, MockERC20), but can only verify 1 at a time. Please choose a main contract and click Verify again.',
+        ],
       },
     });
 
@@ -138,10 +121,10 @@ test.describe('sourcify', () => {
   });
 });
 
-test('multi-part files method', async({ mount, page }) => {
+test('multi-part files method', async ({ mount, page }) => {
   const component = await mount(
     <TestApp>
-      <ContractVerificationForm config={ formConfig } hash={ hash }/>
+      <ContractVerificationForm config={formConfig} hash={hash} />
     </TestApp>,
     { hooksConfig },
   );
@@ -153,10 +136,10 @@ test('multi-part files method', async({ mount, page }) => {
   await expect(component).toHaveScreenshot();
 });
 
-test('vyper contract method', async({ mount, page }) => {
+test('vyper contract method', async ({ mount, page }) => {
   const component = await mount(
     <TestApp>
-      <ContractVerificationForm config={ formConfig } hash={ hash }/>
+      <ContractVerificationForm config={formConfig} hash={hash} />
     </TestApp>,
     { hooksConfig },
   );
@@ -168,10 +151,10 @@ test('vyper contract method', async({ mount, page }) => {
   await expect(component).toHaveScreenshot();
 });
 
-test('vyper multi-part method', async({ mount, page }) => {
+test('vyper multi-part method', async ({ mount, page }) => {
   const component = await mount(
     <TestApp>
-      <ContractVerificationForm config={ formConfig } hash={ hash }/>
+      <ContractVerificationForm config={formConfig} hash={hash} />
     </TestApp>,
     { hooksConfig },
   );
@@ -183,10 +166,10 @@ test('vyper multi-part method', async({ mount, page }) => {
   await expect(component).toHaveScreenshot();
 });
 
-test('vyper vyper-standard-input method', async({ mount, page }) => {
+test('vyper vyper-standard-input method', async ({ mount, page }) => {
   const component = await mount(
     <TestApp>
-      <ContractVerificationForm config={ formConfig } hash={ hash }/>
+      <ContractVerificationForm config={formConfig} hash={hash} />
     </TestApp>,
     { hooksConfig },
   );

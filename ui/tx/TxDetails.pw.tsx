@@ -16,15 +16,17 @@ const hooksConfig = {
   },
 };
 
-test('between addresses +@mobile +@dark-mode', async({ mount, page }) => {
-  await page.route(API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.base),
-  }));
+test('between addresses +@mobile +@dark-mode', async ({ mount, page }) => {
+  await page.route(API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.base),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxDetails/>
+      <TxDetails />
     </TestApp>,
     { hooksConfig },
   );
@@ -32,96 +34,106 @@ test('between addresses +@mobile +@dark-mode', async({ mount, page }) => {
   await page.getByText('View details').click();
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
 
-test('creating contact', async({ mount, page }) => {
-  await page.route(API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.withContractCreation),
-  }));
+test('creating contact', async ({ mount, page }) => {
+  await page.route(API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.withContractCreation),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxDetails/>
+      <TxDetails />
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
 
-test('with token transfer +@mobile', async({ mount, page }) => {
-  await page.route(API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.withTokenTransfer),
-  }));
+test('with token transfer +@mobile', async ({ mount, page }) => {
+  await page.route(API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.withTokenTransfer),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxDetails/>
+      <TxDetails />
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
 
-test('with decoded revert reason', async({ mount, page }) => {
-  await page.route(API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.withDecodedRevertReason),
-  }));
+test('with decoded revert reason', async ({ mount, page }) => {
+  await page.route(API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.withDecodedRevertReason),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxDetails/>
+      <TxDetails />
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
 
-test('with decoded raw reason', async({ mount, page }) => {
-  await page.route(API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.withRawRevertReason),
-  }));
+test('with decoded raw reason', async ({ mount, page }) => {
+  await page.route(API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.withRawRevertReason),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxDetails/>
+      <TxDetails />
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
 
-test('pending', async({ mount, page }) => {
-  await page.route(API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.pending),
-  }));
+test('pending', async ({ mount, page }) => {
+  await page.route(API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.pending),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxDetails/>
+      <TxDetails />
     </TestApp>,
     { hooksConfig },
   );
@@ -129,26 +141,28 @@ test('pending', async({ mount, page }) => {
   await page.getByText('View details').click();
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
 
-test('with actions uniswap +@mobile +@dark-mode', async({ mount, page }) => {
-  await page.route(API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.withActionsUniswap),
-  }));
+test('with actions uniswap +@mobile +@dark-mode', async ({ mount, page }) => {
+  await page.route(API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.withActionsUniswap),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxDetails/>
+      <TxDetails />
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
@@ -158,21 +172,23 @@ const l2Test = test.extend({
   context: contextWithEnvs(configs.featureEnvs.rollup) as any,
 });
 
-l2Test('l2', async({ mount, page }) => {
-  await page.route(API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.l2tx),
-  }));
+l2Test('l2', async ({ mount, page }) => {
+  await page.route(API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.l2tx),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxDetails/>
+      <TxDetails />
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });
@@ -184,21 +200,23 @@ const mainnetTest = test.extend({
   ]) as any,
 });
 
-mainnetTest('without testnet warning', async({ mount, page }) => {
-  await page.route(API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(txMock.l2tx),
-  }));
+mainnetTest('without testnet warning', async ({ mount, page }) => {
+  await page.route(API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(txMock.l2tx),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <TxDetails/>
+      <TxDetails />
     </TestApp>,
     { hooksConfig },
   );
 
   await expect(component).toHaveScreenshot({
-    mask: [ page.locator(configs.adsBannerSelector) ],
+    mask: [page.locator(configs.adsBannerSelector)],
     maskColor: configs.maskColor,
   });
 });

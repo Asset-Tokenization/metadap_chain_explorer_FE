@@ -25,11 +25,11 @@ const TxLogs = () => {
   });
 
   if (!txInfo.isLoading && !txInfo.isPlaceholderData && !txInfo.isError && !txInfo.data.status) {
-    return txInfo.socketStatus ? <TxSocketAlert status={ txInfo.socketStatus }/> : <TxPendingAlert/>;
+    return txInfo.socketStatus ? <TxSocketAlert status={txInfo.socketStatus} /> : <TxPendingAlert />;
   }
 
   if (isError || txInfo.isError) {
-    return <DataFetchAlert/>;
+    return <DataFetchAlert />;
   }
 
   if (!data?.items.length) {
@@ -38,12 +38,12 @@ const TxLogs = () => {
 
   return (
     <Box>
-      { pagination.isVisible && (
-        <ActionBar mt={ -6 }>
-          <Pagination ml="auto" { ...pagination }/>
+      {pagination.isVisible && (
+        <ActionBar mt={-6}>
+          <Pagination ml="auto" {...pagination} />
         </ActionBar>
-      ) }
-      { data?.items.map((item, index) => <LogItem key={ index } { ...item } type="transaction" isLoading={ isPlaceholderData }/>) }
+      )}
+      {data?.items.map((item, index) => <LogItem key={index} {...item} type="transaction" isLoading={isPlaceholderData} />)}
     </Box>
   );
 };

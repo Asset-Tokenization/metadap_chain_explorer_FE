@@ -19,8 +19,5 @@ const defaultOptions: UseToastOptions & { toastComponent?: React.FC<ToastProps> 
 export default function useToastModified() {
   const { theme } = useChakra();
 
-  return React.useMemo(
-    () => createToastFn(theme.direction, defaultOptions),
-    [ theme.direction ],
-  );
+  return React.useMemo(() => createToastFn(theme.direction, defaultOptions), [theme.direction]);
 }

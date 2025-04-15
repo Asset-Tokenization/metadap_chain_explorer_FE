@@ -9,8 +9,8 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import RoutedTabs from 'ui/shared/Tabs/RoutedTabs';
 
 const TABS: Array<RoutedTab> = [
-  { id: 'address', title: 'Address', component: <PrivateAddressTags/> },
-  { id: 'tx', title: 'Transaction', component: <PrivateTransactionTags/> },
+  { id: 'address', title: 'Address', component: <PrivateAddressTags /> },
+  { id: 'tx', title: 'Transaction', component: <PrivateTransactionTags /> },
 ];
 
 const PrivateTags = () => {
@@ -18,8 +18,8 @@ const PrivateTags = () => {
 
   return (
     <>
-      <PageTitle title="Private tags"/>
-      <RoutedTabs tabs={ TABS }/>
+      <PageTitle title="Private tags" />
+      <RoutedTabs tabs={TABS} />
     </>
   );
 };

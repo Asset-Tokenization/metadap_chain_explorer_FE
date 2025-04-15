@@ -7,11 +7,11 @@ import TestApp from 'playwright/TestApp';
 test.use({ viewport: { width: 500, height: 300 } });
 
 test.describe('floating label size md +@dark-mode', () => {
-  test('empty', async({ mount }) => {
+  test('empty', async ({ mount }) => {
     const component = await mount(
       <TestApp>
         <FormControl variant="floating" id="name" isRequired size="md">
-          <Input required value=""/>
+          <Input required value="" />
           <FormLabel>Smart contract / Address (0x...)</FormLabel>
         </FormControl>
       </TestApp>,
@@ -23,11 +23,11 @@ test.describe('floating label size md +@dark-mode', () => {
     await expect(component).toHaveScreenshot();
   });
 
-  test('empty error', async({ mount }) => {
+  test('empty error', async ({ mount }) => {
     const component = await mount(
       <TestApp>
         <FormControl variant="floating" id="name" isRequired size="md">
-          <Input required value="" isInvalid/>
+          <Input required value="" isInvalid />
           <FormLabel>Smart contract / Address (0x...)</FormLabel>
         </FormControl>
       </TestApp>,
@@ -39,11 +39,11 @@ test.describe('floating label size md +@dark-mode', () => {
     await expect(component).toHaveScreenshot();
   });
 
-  test('filled', async({ mount }) => {
+  test('filled', async ({ mount }) => {
     const component = await mount(
       <TestApp>
         <FormControl variant="floating" id="name" isRequired size="md">
-          <Input required value="foo"/>
+          <Input required value="foo" />
           <FormLabel>Smart contract / Address (0x...)</FormLabel>
         </FormControl>
       </TestApp>,
@@ -52,11 +52,11 @@ test.describe('floating label size md +@dark-mode', () => {
     await expect(component).toHaveScreenshot();
   });
 
-  test('filled disabled', async({ mount }) => {
+  test('filled disabled', async ({ mount }) => {
     const component = await mount(
       <TestApp>
         <FormControl variant="floating" id="name" isRequired size="md">
-          <Input required value="foo" isDisabled/>
+          <Input required value="foo" isDisabled />
           <FormLabel>Smart contract / Address (0x...)</FormLabel>
         </FormControl>
       </TestApp>,
@@ -65,11 +65,11 @@ test.describe('floating label size md +@dark-mode', () => {
     await expect(component).toHaveScreenshot();
   });
 
-  test('filled error', async({ mount }) => {
+  test('filled error', async ({ mount }) => {
     const component = await mount(
       <TestApp>
         <FormControl variant="floating" id="name" isRequired size="md">
-          <Input required value="foo" isInvalid/>
+          <Input required value="foo" isInvalid />
           <FormLabel>Smart contract / Address (0x...)</FormLabel>
         </FormControl>
       </TestApp>,
@@ -80,11 +80,11 @@ test.describe('floating label size md +@dark-mode', () => {
 });
 
 test.describe('floating label size lg +@dark-mode', () => {
-  test('empty', async({ mount }) => {
+  test('empty', async ({ mount }) => {
     const component = await mount(
       <TestApp>
         <FormControl variant="floating" id="name" isRequired size="lg">
-          <Input required value=""/>
+          <Input required value="" />
           <FormLabel>Smart contract / Address (0x...)</FormLabel>
         </FormControl>
       </TestApp>,
@@ -96,11 +96,11 @@ test.describe('floating label size lg +@dark-mode', () => {
     await expect(component).toHaveScreenshot();
   });
 
-  test('filled', async({ mount }) => {
+  test('filled', async ({ mount }) => {
     const component = await mount(
       <TestApp>
         <FormControl variant="floating" id="name" isRequired size="lg">
-          <Input required value="foo"/>
+          <Input required value="foo" />
           <FormLabel>Smart contract / Address (0x...)</FormLabel>
         </FormControl>
       </TestApp>,

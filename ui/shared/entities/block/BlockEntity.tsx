@@ -15,11 +15,8 @@ const Link = chakra((props: LinkProps) => {
   const defaultHref = route({ pathname: '/block/[height_or_hash]', query: { height_or_hash: heightOrHash } });
 
   return (
-    <EntityBase.Link
-      { ...props }
-      href={ props.href ?? defaultHref }
-    >
-      { props.children }
+    <EntityBase.Link {...props} href={props.href ?? defaultHref}>
+      {props.children}
     </EntityBase.Link>
   );
 });
@@ -29,24 +26,13 @@ type IconProps = Omit<EntityBase.IconBaseProps, 'asProp'> & {
 };
 
 const Icon = (props: IconProps) => {
-  return (
-    <EntityBase.Icon
-      { ...props }
-      asProp={ props.asProp ?? blockIcon }
-    />
-  );
+  return <EntityBase.Icon {...props} asProp={props.asProp ?? blockIcon} />;
 };
 
 type ContentProps = Omit<EntityBase.ContentBaseProps, 'text'> & Pick<EntityProps, 'number'>;
 
 const Content = chakra((props: ContentProps) => {
-  return (
-    <EntityBase.Content
-      { ...props }
-      text={ String(props.number) }
-      tailLength={ props.tailLength ?? 2 }
-    />
-  );
+  return <EntityBase.Content {...props} text={String(props.number)} tailLength={props.tailLength ?? 2} />;
 });
 
 const Container = EntityBase.Container;
@@ -57,14 +43,14 @@ export interface EntityProps extends EntityBase.EntityBaseProps {
 }
 
 const BlockEntity = (props: EntityProps) => {
-  const linkProps = _omit(props, [ 'className' ]);
-  const partsProps = _omit(props, [ 'className', 'onClick' ]);
+  const linkProps = _omit(props, ['className']);
+  const partsProps = _omit(props, ['className', 'onClick']);
 
   return (
-    <Container className={ props.className }>
-      <Icon { ...partsProps }/>
-      <Link { ...linkProps }>
-        <Content { ...partsProps }/>
+    <Container className={props.className}>
+      <Icon {...partsProps} />
+      <Link {...linkProps}>
+        <Content {...partsProps} />
       </Link>
     </Container>
   );
@@ -72,9 +58,4 @@ const BlockEntity = (props: EntityProps) => {
 
 export default React.memo(chakra(BlockEntity));
 
-export {
-  Container,
-  Link,
-  Icon,
-  Content,
-};
+export { Container, Link, Icon, Content };

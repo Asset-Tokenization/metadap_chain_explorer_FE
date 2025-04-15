@@ -175,14 +175,7 @@ export const sendERC20Token = {
 };
 
 export const baseResponse = {
-  items: [
-    mintToken,
-    receiveMintedToken,
-    sendCoin,
-    receiveCoin,
-    transfer1155Token,
-    sendERC20Token,
-  ],
+  items: [mintToken, receiveMintedToken, sendCoin, receiveCoin, transfer1155Token, sendERC20Token],
   next_page_params: {
     items_count: 50,
     state_changes: null,

@@ -16,16 +16,18 @@ const hooksConfig = {
   },
 };
 
-test('base view +@mobile', async({ mount, page }) => {
-  await page.route(API_URL_TX_INTERNALS, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(internalTxsMock.baseResponse),
-  }));
+test('base view +@mobile', async ({ mount, page }) => {
+  await page.route(API_URL_TX_INTERNALS, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(internalTxsMock.baseResponse),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <Box h={{ base: '134px', lg: 6 }}/>
-      <AddressInternalTxs/>
+      <Box h={{ base: '134px', lg: 6 }} />
+      <AddressInternalTxs />
     </TestApp>,
     { hooksConfig },
   );

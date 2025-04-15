@@ -10,7 +10,7 @@ const useUpdateEffect: typeof React.useEffect = (effect, deps) => {
     if (!isFirstMount) {
       return effect();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };
 

@@ -1,17 +1,8 @@
 export type MediaType = 'image' | 'video' | 'html';
 
-const IMAGE_EXTENSIONS = [
-  '.jpg', 'jpeg',
-  '.png',
-  '.gif',
-  '.svg',
-];
+const IMAGE_EXTENSIONS = ['.jpg', 'jpeg', '.png', '.gif', '.svg'];
 
-const VIDEO_EXTENSIONS = [
-  '.mp4',
-  '.webm',
-  '.ogg',
-];
+const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.ogg'];
 
 export function getPreliminaryMediaType(url: string): MediaType | undefined {
   if (IMAGE_EXTENSIONS.some((ext) => url.endsWith(ext))) {

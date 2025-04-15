@@ -1,9 +1,4 @@
-import {
-  HStack,
-  Box,
-  Flex,
-  Skeleton,
-} from '@chakra-ui/react';
+import { HStack, Box, Flex, Skeleton } from '@chakra-ui/react';
 import React from 'react';
 
 import type { Transaction } from 'types/api/transaction';
@@ -29,7 +24,7 @@ type Props = {
   currentAddress?: string;
   enableTimeIncrement?: boolean;
   isLoading?: boolean;
-}
+};
 
 const TAG_WIDTH = 48;
 const ARROW_WIDTH = 24;
@@ -43,97 +38,90 @@ const TxsListItem = ({ tx, isLoading, showBlockInfo, currentAddress, enableTimeI
   const timeAgo = useTimeAgoIncrement(tx.timestamp, enableTimeIncrement);
 
   return (
-    <ListItemMobile display="block" width="100%" isAnimated key={ tx.hash }>
-      <Flex justifyContent="space-between" mt={ 4 }>
+    <ListItemMobile display="block" width="100%" isAnimated key={tx.hash}>
+      <Flex justifyContent="space-between" mt={4}>
         <HStack flexWrap="wrap">
-          <TxType types={ tx.tx_types } isLoading={ isLoading }/>
-          <TxStatus status={ tx.status } errorText={ tx.status === 'error' ? tx.result : undefined } isLoading={ isLoading }/>
-          <TxWatchListTags tx={ tx } isLoading={ isLoading }/>
+          <TxType types={tx.tx_types} isLoading={isLoading} />
+          <TxStatus status={tx.status} errorText={tx.status === 'error' ? tx.result : undefined} isLoading={isLoading} />
+          <TxWatchListTags tx={tx} isLoading={isLoading} />
         </HStack>
-        <TxAdditionalInfo tx={ tx } isMobile isLoading={ isLoading }/>
+        <TxAdditionalInfo tx={tx} isMobile isLoading={isLoading} />
       </Flex>
-      <Flex justifyContent="space-between" lineHeight="24px" mt={ 3 } alignItems="center">
-        <TxEntity
-          isLoading={ isLoading }
-          hash={ tx.hash }
-          truncation="constant"
-          fontWeight="700"
-        />
-        { tx.timestamp && (
-          <Skeleton isLoaded={ !isLoading } color="text_secondary" fontWeight="400" fontSize="sm">
-            <span>{ timeAgo }</span>
+      <Flex justifyContent="space-between" lineHeight="24px" mt={3} alignItems="center">
+        <TxEntity isLoading={isLoading} hash={tx.hash} truncation="constant" fontWeight="700" />
+        {tx.timestamp && (
+          <Skeleton isLoaded={!isLoading} color="text_secondary" fontWeight="400" fontSize="sm">
+            <span>{timeAgo}</span>
           </Skeleton>
-        ) }
+        )}
       </Flex>
-      { tx.method && (
-        <Flex mt={ 3 }>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" whiteSpace="pre">Method </Skeleton>
-          <Skeleton
-            isLoaded={ !isLoading }
-            color="text_secondary"
-            overflow="hidden"
-            whiteSpace="nowrap"
-            textOverflow="ellipsis"
-          >
-            <span>{ tx.method }</span>
+      {tx.method && (
+        <Flex mt={3}>
+          <Skeleton isLoaded={!isLoading} display="inline-block" whiteSpace="pre">
+            Method{' '}
+          </Skeleton>
+          <Skeleton isLoaded={!isLoading} color="text_secondary" overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis">
+            <span>{tx.method}</span>
           </Skeleton>
         </Flex>
-      ) }
-      { showBlockInfo && tx.block !== null && (
-        <Flex mt={ 2 }>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" whiteSpace="pre">Block </Skeleton>
-          <BlockEntity
-            isLoading={ isLoading }
-            number={ tx.block }
-            noIcon
-          />
+      )}
+      {showBlockInfo && tx.block !== null && (
+        <Flex mt={2}>
+          <Skeleton isLoaded={!isLoading} display="inline-block" whiteSpace="pre">
+            Block{' '}
+          </Skeleton>
+          <BlockEntity isLoading={isLoading} number={tx.block} noIcon />
         </Flex>
-      ) }
-      <Flex alignItems="center" height={ 6 } mt={ 6 }>
+      )}
+      <Flex alignItems="center" height={6} mt={6}>
         <AddressEntity
-          address={ tx.from }
-          isLoading={ isLoading }
-          noLink={ isOut }
-          noCopy={ isOut }
-          w={ `calc((100% - ${ currentAddress ? TAG_WIDTH + 16 : ARROW_WIDTH + 8 }px)/2)` }
+          address={tx.from}
+          isLoading={isLoading}
+          noLink={isOut}
+          noCopy={isOut}
+          w={`calc((100% - ${currentAddress ? TAG_WIDTH + 16 : ARROW_WIDTH + 8}px)/2)`}
           fontWeight="500"
         />
-        { (isIn || isOut) ?
-          <InOutTag isIn={ isIn } isOut={ isOut } width="48px" mx={ 2 } isLoading={ isLoading }/> : (
-            <Box mx={ 2 }>
-              <Icon
-                as={ rightArrowIcon }
-                boxSize={ 6 }
-                color="gray.500"
-                isLoading={ isLoading }
-              />
-            </Box>
-          ) }
-        { dataTo ? (
+        {isIn || isOut ? (
+          <InOutTag isIn={isIn} isOut={isOut} width="48px" mx={2} isLoading={isLoading} />
+        ) : (
+          <Box mx={2}>
+            <Icon as={rightArrowIcon} boxSize={6} color="gray.500" isLoading={isLoading} />
+          </Box>
+        )}
+        {dataTo ? (
           <AddressEntity
-            address={ dataTo }
-            isLoading={ isLoading }
-            noLink={ isIn }
-            noCopy={ isIn }
-            w={ `calc((100% - ${ currentAddress ? TAG_WIDTH + 16 : ARROW_WIDTH + 8 }px)/2)` }
+            address={dataTo}
+            isLoading={isLoading}
+            noLink={isIn}
+            noCopy={isIn}
+            w={`calc((100% - ${currentAddress ? TAG_WIDTH + 16 : ARROW_WIDTH + 8}px)/2)`}
             fontWeight="500"
           />
-        ) : '-' }
+        ) : (
+          '-'
+        )}
       </Flex>
-      { !config.UI.views.tx.hiddenFields?.value && (
-        <Box mt={ 2 }>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" whiteSpace="pre">Value { config.chain.currency.symbol } </Skeleton>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" variant="text_secondary">{ getValueWithUnit(tx.value).toFormat() }</Skeleton>
-        </Box>
-      ) }
-      { !config.UI.views.tx.hiddenFields?.tx_fee && (
-        <Box mt={ 2 } mb={ 3 }>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" whiteSpace="pre">
-            Fee{ config.UI.views.tx.hiddenFields?.fee_currency ? ' ' : ` ${ config.chain.currency.symbol } ` }
+      {!config.UI.views.tx.hiddenFields?.value && (
+        <Box mt={2}>
+          <Skeleton isLoaded={!isLoading} display="inline-block" whiteSpace="pre">
+            Value {config.chain.currency.symbol}{' '}
           </Skeleton>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" variant="text_secondary">{ getValueWithUnit(tx.fee.value).toFormat() }</Skeleton>
+          <Skeleton isLoaded={!isLoading} display="inline-block" variant="text_secondary">
+            {getValueWithUnit(tx.value).toFormat()}
+          </Skeleton>
         </Box>
-      ) }
+      )}
+      {!config.UI.views.tx.hiddenFields?.tx_fee && (
+        <Box mt={2} mb={3}>
+          <Skeleton isLoaded={!isLoading} display="inline-block" whiteSpace="pre">
+            Fee{config.UI.views.tx.hiddenFields?.fee_currency ? ' ' : ` ${config.chain.currency.symbol} `}
+          </Skeleton>
+          <Skeleton isLoaded={!isLoading} display="inline-block" variant="text_secondary">
+            {getValueWithUnit(tx.fee.value).toFormat()}
+          </Skeleton>
+        </Box>
+      )}
     </ListItemMobile>
   );
 };

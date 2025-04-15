@@ -8,25 +8,25 @@ type Props = {
   isActive: boolean;
   className?: string;
   isLoading?: boolean;
-}
+};
 
 const SortButton = ({ onClick, isActive, className, isLoading }: Props) => {
   if (isLoading) {
-    return <Skeleton className={ className } w="36px" h="32px" borderRadius="base"/>;
+    return <Skeleton className={className} w="36px" h="32px" borderRadius="base" />;
   }
 
   return (
     <IconButton
-      icon={ <Icon as={ upDownArrow } boxSize={ 5 }/> }
+      icon={<Icon as={upDownArrow} boxSize={5} />}
       aria-label="sort"
       size="sm"
       variant="outline"
       colorScheme="gray-dark"
       minWidth="36px"
-      onClick={ onClick }
-      isActive={ isActive }
+      onClick={onClick}
+      isActive={isActive}
       display="flex"
-      className={ className }
+      className={className}
     />
   );
 };

@@ -21,25 +21,20 @@ type Props = {
   interval: StatsIntervalIds;
   onIntervalChange: (newInterval: StatsIntervalIds) => void;
   onFilterInputChange: (q: string) => void;
-}
+};
 
-const StatsFilters = ({
-  sections,
-  currentSection,
-  onSectionChange,
-  interval,
-  onIntervalChange,
-  onFilterInputChange,
-}: Props) => {
-
-  const sectionsList = [ {
-    id: 'all',
-    title: 'All',
-  }, ... (sections || []) ];
+const StatsFilters = ({ sections, currentSection, onSectionChange, interval, onIntervalChange, onFilterInputChange }: Props) => {
+  const sectionsList = [
+    {
+      id: 'all',
+      title: 'All',
+    },
+    ...(sections || []),
+  ];
 
   return (
     <Grid
-      gap={ 2 }
+      gap={2}
       templateAreas={{
         base: `"section interval"
                 "input input"`,
@@ -47,35 +42,16 @@ const StatsFilters = ({
       }}
       gridTemplateColumns={{ base: 'repeat(2, minmax(0, 1fr))', lg: 'auto auto 1fr' }}
     >
-      <GridItem
-        w={{ base: '100%', lg: 'auto' }}
-        area="section"
-      >
-        <StatsDropdownMenu
-          items={ sectionsList }
-          selectedId={ currentSection }
-          onSelect={ onSectionChange }
-        />
+      <GridItem w={{ base: '100%', lg: 'auto' }} area="section">
+        <StatsDropdownMenu items={sectionsList} selectedId={currentSection} onSelect={onSectionChange} />
       </GridItem>
 
-      <GridItem
-        w={{ base: '100%', lg: 'auto' }}
-        area="interval"
-      >
-        <StatsDropdownMenu
-          items={ intervalList }
-          selectedId={ interval }
-          onSelect={ onIntervalChange }
-        />
+      <GridItem w={{ base: '100%', lg: 'auto' }} area="interval">
+        <StatsDropdownMenu items={intervalList} selectedId={interval} onSelect={onIntervalChange} />
       </GridItem>
 
-      <GridItem
-        w="100%"
-        area="input"
-      >
-        <FilterInput
-          onChange={ onFilterInputChange }
-          placeholder="Find chart, metric..."/>
+      <GridItem w="100%" area="input">
+        <FilterInput onChange={onFilterInputChange} placeholder="Find chart, metric..." />
       </GridItem>
     </Grid>
   );

@@ -24,18 +24,20 @@ type Props = {
   addressHash?: string;
   // prop for pw tests only
   noSocket?: boolean;
-}
+};
 
 const InfoItem = chakra(({ label, value, className, isLoading }: { label: string; value: string; className?: string; isLoading: boolean }) => (
-  <GridItem display="flex" columnGap={ 6 } wordBreak="break-all" className={ className } alignItems="baseline">
-    <Skeleton isLoaded={ !isLoading } w="170px" flexShrink={ 0 } fontWeight={ 500 }>{ label }</Skeleton>
-    <Skeleton isLoaded={ !isLoading }>{ value }</Skeleton>
+  <GridItem display="flex" columnGap={6} wordBreak="break-all" className={className} alignItems="baseline">
+    <Skeleton isLoaded={!isLoading} w="170px" flexShrink={0} fontWeight={500}>
+      {label}
+    </Skeleton>
+    <Skeleton isLoaded={!isLoading}>{value}</Skeleton>
   </GridItem>
 ));
 
 const ContractCode = ({ addressHash, noSocket }: Props) => {
-  const [ isQueryEnabled, setIsQueryEnabled ] = React.useState(false);
-  const [ isChangedBytecodeSocket, setIsChangedBytecodeSocket ] = React.useState<boolean>();
+  const [isQueryEnabled, setIsQueryEnabled] = React.useState(false);
+  const [isChangedBytecodeSocket, setIsChangedBytecodeSocket] = React.useState<boolean>();
 
   const queryClient = useQueryClient();
   const refetchQueries = queryClient.refetchQueries;
@@ -52,7 +54,7 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
 
   const handleChangedBytecodeMessage: SocketMessage.AddressChangedBytecode['handler'] = React.useCallback(() => {
     setIsChangedBytecodeSocket(true);
-  }, [ ]);
+  }, []);
 
   const handleContractWasVerifiedMessage: SocketMessage.SmartContractWasVerified['handler'] = React.useCallback(() => {
     refetchQueries({
@@ -61,12 +63,12 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
     refetchQueries({
       queryKey: getResourceKey('contract', { pathParams: { hash: addressHash } }),
     });
-  }, [ addressHash, refetchQueries ]);
+  }, [addressHash, refetchQueries]);
 
   const enableQuery = React.useCallback(() => setIsQueryEnabled(true), []);
 
   const channel = useSocketChannel({
-    topic: `addresses:${ addressHash?.toLowerCase() }`,
+    topic: `addresses:${addressHash?.toLowerCase()}`,
     isDisabled: !addressHash,
     onJoin: enableQuery,
     onSocketError: enableQuery,
@@ -83,20 +85,16 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
   });
 
   if (isError) {
-    return <DataFetchAlert/>;
+    return <DataFetchAlert />;
   }
 
   const canBeVerified = !data?.is_self_destructed && (!data?.is_verified || data.is_partially_verified);
 
-  const verificationButton = isPlaceholderData ? <Skeleton w="130px" h={ 8 } mr={ 3 } ml="auto" borderRadius="base"/> : (
-    <Button
-      size="sm"
-      ml="auto"
-      mr={ 3 }
-      as="a"
-      href={ route({ pathname: '/address/[hash]/contract-verification', query: { hash: addressHash || '' } }) }
-    >
-        Verify & publish
+  const verificationButton = isPlaceholderData ? (
+    <Skeleton w="130px" h={8} mr={3} ml="auto" borderRadius="base" />
+  ) : (
+    <Button size="sm" ml="auto" mr={3} as="a" href={route({ pathname: '/address/[hash]/contract-verification', query: { hash: addressHash || '' } })}>
+      Verify & publish
     </Button>
   );
 
@@ -105,29 +103,24 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
       return data?.constructor_args;
     }
 
-    const decoded = data.decoded_constructor_args
-      .map(([ value, { name, type } ], index) => {
-        const valueEl = type === 'address' ? (
-          <AddressEntity
-            address={{ hash: value }}
-            noIcon
-            display="inline-flex"
-            maxW="100%"
-          />
-        ) : <span>{ value }</span>;
-        return (
-          <Box key={ index }>
-            <span>Arg [{ index }] { name || '' } ({ type }): </span>
-            { valueEl }
-          </Box>
-        );
-      });
+    const decoded = data.decoded_constructor_args.map(([value, { name, type }], index) => {
+      const valueEl = type === 'address' ? <AddressEntity address={{ hash: value }} noIcon display="inline-flex" maxW="100%" /> : <span>{value}</span>;
+      return (
+        <Box key={index}>
+          <span>
+            Arg [{index}] {name || ''} ({type}):{' '}
+          </span>
+          {valueEl}
+        </Box>
+      );
+    });
 
     return (
       <>
-        <span>{ data.constructor_args }</span>
-        <br/><br/>
-        { decoded }
+        <span>{data.constructor_args}</span>
+        <br />
+        <br />
+        {decoded}
       </>
     );
   })();
@@ -136,11 +129,8 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
     if (data?.is_verified_via_eth_bytecode_db) {
       return (
         <Alert status="warning" whiteSpace="pre-wrap" flexWrap="wrap">
-          <span>This contract has been { data.is_partially_verified ? 'partially ' : '' }verified using </span>
-          <LinkExternal
-            href="https://docs.blockscout.com/about/features/ethereum-bytecode-database-microservice"
-            fontSize="md"
-          >
+          <span>This contract has been {data.is_partially_verified ? 'partially ' : ''}verified using </span>
+          <LinkExternal href="https://docs.blockscout.com/about/features/ethereum-bytecode-database-microservice" fontSize="md">
             Blockscout Bytecode Database
           </LinkExternal>
         </Alert>
@@ -150,8 +140,12 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
     if (data?.is_verified_via_sourcify) {
       return (
         <Alert status="warning" whiteSpace="pre-wrap" flexWrap="wrap">
-          <span>This contract has been { data.is_partially_verified ? 'partially ' : '' }verified via Sourcify. </span>
-          { data.sourcify_repo_url && <LinkExternal href={ data.sourcify_repo_url } fontSize="md">View contract in Sourcify repository</LinkExternal> }
+          <span>This contract has been {data.is_partially_verified ? 'partially ' : ''}verified via Sourcify. </span>
+          {data.sourcify_repo_url && (
+            <LinkExternal href={data.sourcify_repo_url} fontSize="md">
+              View contract in Sourcify repository
+            </LinkExternal>
+          )}
         </Alert>
       );
     }
@@ -161,19 +155,19 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
 
   return (
     <>
-      <Flex flexDir="column" rowGap={ 2 } mb={ 6 } _empty={{ display: 'none' }}>
-        { data?.is_verified && (
-          <Skeleton isLoaded={ !isPlaceholderData }>
-            <Alert status="success">Contract Source Code Verified ({ data.is_partially_verified ? 'Partial' : 'Exact' } Match)</Alert>
+      <Flex flexDir="column" rowGap={2} mb={6} _empty={{ display: 'none' }}>
+        {data?.is_verified && (
+          <Skeleton isLoaded={!isPlaceholderData}>
+            <Alert status="success">Contract Source Code Verified ({data.is_partially_verified ? 'Partial' : 'Exact'} Match)</Alert>
           </Skeleton>
-        ) }
-        { verificationAlert }
-        { (data?.is_changed_bytecode || isChangedBytecodeSocket) && (
+        )}
+        {verificationAlert}
+        {(data?.is_changed_bytecode || isChangedBytecodeSocket) && (
           <Alert status="warning">
             Warning! Contract bytecode has been changed and does not match the verified one. Therefore, interaction with this smart contract may be risky.
           </Alert>
-        ) }
-        { !data?.is_verified && data?.verified_twin_address_hash && !data?.minimal_proxy_address_hash && (
+        )}
+        {!data?.is_verified && data?.verified_twin_address_hash && !data?.minimal_proxy_address_hash && (
           <Alert status="warning" whiteSpace="pre-wrap" flexWrap="wrap">
             <span>Contract is not verified. However, we found a verified contract with the same bytecode in Blockscout DB </span>
             <AddressEntity
@@ -182,14 +176,14 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
               fontSize="sm"
               fontWeight="500"
             />
-            <chakra.span mt={ 1 }>All functions displayed below are from ABI of that contract. In order to verify current contract, proceed with </chakra.span>
-            <LinkInternal href={ route({ pathname: '/address/[hash]/contract-verification', query: { hash: addressHash || '' } }) }>
+            <chakra.span mt={1}>All functions displayed below are from ABI of that contract. In order to verify current contract, proceed with </chakra.span>
+            <LinkInternal href={route({ pathname: '/address/[hash]/contract-verification', query: { hash: addressHash || '' } })}>
               Verify & Publish
             </LinkInternal>
             <span> page</span>
           </Alert>
-        ) }
-        { data?.minimal_proxy_address_hash && (
+        )}
+        {data?.minimal_proxy_address_hash && (
           <Alert status="warning" flexWrap="wrap" whiteSpace="pre-wrap">
             <span>Minimal Proxy Contract for </span>
             <AddressEntity
@@ -205,76 +199,63 @@ const ContractCode = ({ addressHash, noSocket }: Props) => {
               <span> - minimal bytecode implementation that delegates all calls to a known address</span>
             </Box>
           </Alert>
-        ) }
+        )}
       </Flex>
-      { data?.is_verified && (
-        <Grid templateColumns={{ base: '1fr', lg: '1fr 1fr' }} rowGap={ 4 } columnGap={ 6 } mb={ 8 }>
-          { data.name && <InfoItem label="Contract name" value={ data.name } isLoading={ isPlaceholderData }/> }
-          { data.compiler_version && <InfoItem label="Compiler version" value={ data.compiler_version } isLoading={ isPlaceholderData }/> }
-          { data.evm_version && <InfoItem label="EVM version" value={ data.evm_version } textTransform="capitalize" isLoading={ isPlaceholderData }/> }
-          { typeof data.optimization_enabled === 'boolean' &&
-            <InfoItem label="Optimization enabled" value={ data.optimization_enabled ? 'true' : 'false' } isLoading={ isPlaceholderData }/> }
-          { data.optimization_runs && <InfoItem label="Optimization runs" value={ String(data.optimization_runs) } isLoading={ isPlaceholderData }/> }
-          { data.verified_at &&
-            <InfoItem label="Verified at" value={ dayjs(data.verified_at).format('llll') } wordBreak="break-word" isLoading={ isPlaceholderData }/> }
-          { data.file_path && <InfoItem label="Contract file path" value={ data.file_path } wordBreak="break-word" isLoading={ isPlaceholderData }/> }
+      {data?.is_verified && (
+        <Grid templateColumns={{ base: '1fr', lg: '1fr 1fr' }} rowGap={4} columnGap={6} mb={8}>
+          {data.name && <InfoItem label="Contract name" value={data.name} isLoading={isPlaceholderData} />}
+          {data.compiler_version && <InfoItem label="Compiler version" value={data.compiler_version} isLoading={isPlaceholderData} />}
+          {data.evm_version && <InfoItem label="EVM version" value={data.evm_version} textTransform="capitalize" isLoading={isPlaceholderData} />}
+          {typeof data.optimization_enabled === 'boolean' && (
+            <InfoItem label="Optimization enabled" value={data.optimization_enabled ? 'true' : 'false'} isLoading={isPlaceholderData} />
+          )}
+          {data.optimization_runs && <InfoItem label="Optimization runs" value={String(data.optimization_runs)} isLoading={isPlaceholderData} />}
+          {data.verified_at && (
+            <InfoItem label="Verified at" value={dayjs(data.verified_at).format('llll')} wordBreak="break-word" isLoading={isPlaceholderData} />
+          )}
+          {data.file_path && <InfoItem label="Contract file path" value={data.file_path} wordBreak="break-word" isLoading={isPlaceholderData} />}
         </Grid>
-      ) }
-      <Flex flexDir="column" rowGap={ 6 }>
-        { constructorArgs && (
+      )}
+      <Flex flexDir="column" rowGap={6}>
+        {constructorArgs && <RawDataSnippet data={constructorArgs} title="Constructor Arguments" textareaMaxHeight="200px" isLoading={isPlaceholderData} />}
+        {data?.source_code && <ContractSourceCode address={addressHash} implementationAddress={addressInfo?.implementation_address ?? undefined} />}
+        {data?.compiler_settings ? (
           <RawDataSnippet
-            data={ constructorArgs }
-            title="Constructor Arguments"
-            textareaMaxHeight="200px"
-            isLoading={ isPlaceholderData }
-          />
-        ) }
-        { data?.source_code && (
-          <ContractSourceCode
-            address={ addressHash }
-            implementationAddress={ addressInfo?.implementation_address ?? undefined }
-          />
-        ) }
-        { data?.compiler_settings ? (
-          <RawDataSnippet
-            data={ JSON.stringify(data.compiler_settings, undefined, 4) }
+            data={JSON.stringify(data.compiler_settings, undefined, 4)}
             title="Compiler Settings"
             textareaMaxHeight="200px"
-            isLoading={ isPlaceholderData }
+            isLoading={isPlaceholderData}
           />
-        ) : null }
-        { data?.abi && (
+        ) : null}
+        {data?.abi && (
+          <RawDataSnippet data={JSON.stringify(data.abi, undefined, 4)} title="Contract ABI" textareaMaxHeight="200px" isLoading={isPlaceholderData} />
+        )}
+        {data?.creation_bytecode && (
           <RawDataSnippet
-            data={ JSON.stringify(data.abi, undefined, 4) }
-            title="Contract ABI"
-            textareaMaxHeight="200px"
-            isLoading={ isPlaceholderData }
-          />
-        ) }
-        { data?.creation_bytecode && (
-          <RawDataSnippet
-            data={ data.creation_bytecode }
+            data={data.creation_bytecode}
             title="Contract creation code"
-            rightSlot={ canBeVerified ? verificationButton : null }
-            beforeSlot={ data.is_self_destructed ? (
-              <Alert status="info" whiteSpace="pre-wrap" mb={ 3 }>
-                Contracts that self destruct in their constructors have no contract code published and cannot be verified.
-                Displaying the init data provided of the creating transaction.
-              </Alert>
-            ) : null }
+            rightSlot={canBeVerified ? verificationButton : null}
+            beforeSlot={
+              data.is_self_destructed ? (
+                <Alert status="info" whiteSpace="pre-wrap" mb={3}>
+                  Contracts that self destruct in their constructors have no contract code published and cannot be verified. Displaying the init data provided
+                  of the creating transaction.
+                </Alert>
+              ) : null
+            }
             textareaMaxHeight="200px"
-            isLoading={ isPlaceholderData }
+            isLoading={isPlaceholderData}
           />
-        ) }
-        { data?.deployed_bytecode && (
+        )}
+        {data?.deployed_bytecode && (
           <RawDataSnippet
-            data={ data.deployed_bytecode }
+            data={data.deployed_bytecode}
             title="Deployed ByteCode"
-            rightSlot={ !data?.creation_bytecode && canBeVerified ? verificationButton : null }
+            rightSlot={!data?.creation_bytecode && canBeVerified ? verificationButton : null}
             textareaMaxHeight="200px"
-            isLoading={ isPlaceholderData }
+            isLoading={isPlaceholderData}
           />
-        ) }
+        )}
       </Flex>
     </>
   );

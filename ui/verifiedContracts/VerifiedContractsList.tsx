@@ -8,13 +8,9 @@ import VerifiedContractsListItem from './VerifiedContractsListItem';
 const VerifiedContractsList = ({ data, isLoading }: { data: Array<VerifiedContract>; isLoading: boolean }) => {
   return (
     <Box>
-      { data.map((item, index) => (
-        <VerifiedContractsListItem
-          key={ item.address.hash + (isLoading ? index : '') }
-          data={ item }
-          isLoading={ isLoading }
-        />
-      )) }
+      {data.map((item, index) => (
+        <VerifiedContractsListItem key={item.address.hash + (isLoading ? index : '')} data={item} isLoading={isLoading} />
+      ))}
     </Box>
   );
 };

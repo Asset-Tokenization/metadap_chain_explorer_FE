@@ -11,26 +11,21 @@ interface Props {
 }
 
 export default function PublicTagFormAction({ control, isDisabled }: Props) {
-  const renderRadioGroup = useCallback(({ field }: {field: ControllerRenderProps<Inputs, 'action'>}) => {
-    return (
-      <RadioGroup defaultValue="add" colorScheme="blue" { ...field }>
-        <Stack spacing={ 5 }>
-          <Radio value="add">
-            I want to add tags for my project
-          </Radio>
-          <Radio value="report" isDisabled={ isDisabled }>
-            I want to report an incorrect public tag
-          </Radio>
-        </Stack>
-      </RadioGroup>
-    );
-  }, [ isDisabled ]);
-
-  return (
-    <Controller
-      name="action"
-      control={ control }
-      render={ renderRadioGroup }
-    />
+  const renderRadioGroup = useCallback(
+    ({ field }: { field: ControllerRenderProps<Inputs, 'action'> }) => {
+      return (
+        <RadioGroup defaultValue="add" colorScheme="blue" {...field}>
+          <Stack spacing={5}>
+            <Radio value="add">I want to add tags for my project</Radio>
+            <Radio value="report" isDisabled={isDisabled}>
+              I want to report an incorrect public tag
+            </Radio>
+          </Stack>
+        </RadioGroup>
+      );
+    },
+    [isDisabled],
   );
+
+  return <Controller name="action" control={control} render={renderRadioGroup} />;
 }

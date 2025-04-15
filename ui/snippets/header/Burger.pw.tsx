@@ -29,7 +29,7 @@ const test = base.extend({
   ]) as any,
 });
 
-test('base view', async({ mount, page }) => {
+test('base view', async ({ mount, page }) => {
   await page.route(FEATURED_NETWORKS_URL, (route) => {
     return route.fulfill({
       body: FEATURED_NETWORKS_MOCK,
@@ -44,7 +44,7 @@ test('base view', async({ mount, page }) => {
 
   const component = await mount(
     <TestApp>
-      <Burger/>
+      <Burger />
     </TestApp>,
     { hooksConfig },
   );
@@ -59,7 +59,7 @@ test('base view', async({ mount, page }) => {
 test.describe('dark mode', () => {
   test.use({ colorScheme: 'dark' });
 
-  test('base view', async({ mount, page }) => {
+  test('base view', async ({ mount, page }) => {
     await page.route(FEATURED_NETWORKS_URL, (route) => {
       return route.fulfill({
         body: FEATURED_NETWORKS_MOCK,
@@ -74,7 +74,7 @@ test.describe('dark mode', () => {
 
     const component = await mount(
       <TestApp>
-        <Burger/>
+        <Burger />
       </TestApp>,
       { hooksConfig },
     );
@@ -87,10 +87,10 @@ test.describe('dark mode', () => {
   });
 });
 
-test('submenu', async({ mount, page }) => {
+test('submenu', async ({ mount, page }) => {
   const component = await mount(
     <TestApp>
-      <Burger/>
+      <Burger />
     </TestApp>,
     { hooksConfig },
   );
@@ -102,10 +102,8 @@ test('submenu', async({ mount, page }) => {
 
 test.describe('auth', () => {
   const extendedTest = base.extend({
-    context: async({ browser }, use) => {
-      const context = await createContextWithEnvs(browser, [
-        { name: 'NEXT_PUBLIC_FEATURED_NETWORKS', value: FEATURED_NETWORKS_URL },
-      ]);
+    context: async ({ browser }, use) => {
+      const context = await createContextWithEnvs(browser, [{ name: 'NEXT_PUBLIC_FEATURED_NETWORKS', value: FEATURED_NETWORKS_URL }]);
       authFixture(context);
       use(context);
     },
@@ -113,10 +111,10 @@ test.describe('auth', () => {
 
   extendedTest.use({ viewport: { width: devices['iPhone 13 Pro'].viewport.width, height: 800 } });
 
-  extendedTest('base view', async({ mount, page }) => {
+  extendedTest('base view', async ({ mount, page }) => {
     const component = await mount(
       <TestApp>
-        <Burger/>
+        <Burger />
       </TestApp>,
       { hooksConfig },
     );

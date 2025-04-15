@@ -12,7 +12,6 @@ interface Props {
 }
 
 const CsvExportFormReCaptcha = ({ formApi }: Props) => {
-
   const ref = React.useRef<ReCaptcha>(null);
 
   React.useEffect(() => {
@@ -27,41 +26,36 @@ const CsvExportFormReCaptcha = ({ formApi }: Props) => {
   React.useEffect(() => {
     ref.current?.reset();
     formApi.trigger('reCaptcha');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ formApi.formState.submitCount ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formApi.formState.submitCount]);
 
-  const handleReCaptchaChange = React.useCallback((token: string | null) => {
-    if (token) {
-      formApi.clearErrors('reCaptcha');
-      formApi.setValue('reCaptcha', token, { shouldValidate: true });
-    }
-  }, [ formApi ]);
+  const handleReCaptchaChange = React.useCallback(
+    (token: string | null) => {
+      if (token) {
+        formApi.clearErrors('reCaptcha');
+        formApi.setValue('reCaptcha', token, { shouldValidate: true });
+      }
+    },
+    [formApi],
+  );
 
   const handleReCaptchaExpire = React.useCallback(() => {
     formApi.resetField('reCaptcha');
     formApi.setError('reCaptcha', { type: 'required' });
-  }, [ formApi ]);
+  }, [formApi]);
 
   const feature = config.features.csvExport;
 
   if (!feature.isEnabled) {
     return (
       <Alert status="error">
-        CSV export is not available at the moment since reCaptcha is not configured for this application.
-        Please contact the service maintainer to make necessary changes in the service configuration.
+        CSV export is not available at the moment since reCaptcha is not configured for this application. Please contact the service maintainer to make
+        necessary changes in the service configuration.
       </Alert>
     );
   }
 
-  return (
-    <ReCaptcha
-      className="recaptcha"
-      ref={ ref }
-      sitekey={ feature.reCaptcha.siteKey }
-      onChange={ handleReCaptchaChange }
-      onExpired={ handleReCaptchaExpire }
-    />
-  );
+  return <ReCaptcha className="recaptcha" ref={ref} sitekey={feature.reCaptcha.siteKey} onChange={handleReCaptchaChange} onExpired={handleReCaptchaExpire} />;
 };
 
 export default CsvExportFormReCaptcha;

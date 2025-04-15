@@ -15,7 +15,7 @@ interface Props {
 
 export function ScrollDirectionProvider({ children }: Props) {
   const prevScrollPosition = React.useRef(isBrowser() ? window.pageYOffset : 0);
-  const [ scrollDirection, setDirection ] = React.useState<Directions | null>(null);
+  const [scrollDirection, setDirection] = React.useState<Directions | null>(null);
 
   const handleScroll = React.useCallback(() => {
     const currentScrollPosition = clamp(window.pageYOffset, 0, window.document.body.scrollHeight - window.innerHeight);
@@ -28,7 +28,7 @@ export function ScrollDirectionProvider({ children }: Props) {
     }
 
     prevScrollPosition.current = currentScrollPosition;
-  }, [ ]);
+  }, []);
 
   React.useEffect(() => {
     const throttledHandleScroll = throttle(handleScroll, 300);
@@ -42,11 +42,7 @@ export function ScrollDirectionProvider({ children }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <ScrollDirectionContext.Provider value={ scrollDirection }>
-      { children }
-    </ScrollDirectionContext.Provider>
-  );
+  return <ScrollDirectionContext.Provider value={scrollDirection}>{children}</ScrollDirectionContext.Provider>;
 }
 
 export function useScrollDirection() {

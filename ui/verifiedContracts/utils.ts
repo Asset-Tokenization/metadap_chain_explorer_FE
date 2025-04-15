@@ -5,7 +5,7 @@ import { default as getNextSortValueShared } from 'ui/shared/sort/getNextSortVal
 import type { Option } from 'ui/shared/sort/Sort';
 
 export type SortField = 'balance' | 'txs';
-export type Sort = `${ SortField }-asc` | `${ SortField }-desc`;
+export type Sort = `${SortField}-asc` | `${SortField}-desc`;
 
 export const SORT_OPTIONS: Array<Option<Sort>> = [
   { title: 'Default', id: undefined },
@@ -16,8 +16,8 @@ export const SORT_OPTIONS: Array<Option<Sort>> = [
 ];
 
 const SORT_SEQUENCE: Record<SortField, Array<Sort | undefined>> = {
-  balance: [ 'balance-desc', 'balance-asc', undefined ],
-  txs: [ 'txs-desc', 'txs-asc', undefined ],
+  balance: ['balance-desc', 'balance-asc', undefined],
+  txs: ['txs-desc', 'txs-asc', undefined],
 };
 
 export const getNextSortValue = (getNextSortValueShared<SortField, Sort>).bind(undefined, SORT_SEQUENCE);

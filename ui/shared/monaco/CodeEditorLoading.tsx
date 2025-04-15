@@ -13,8 +13,8 @@ const CodeEditorLoading = ({ className }: Props) => {
   const themeColors = useThemeColors();
 
   return (
-    <Center bgColor={ themeColors['editor.background'] } w="100%" h="100%" overflow="hidden" className={ className }>
-      <ContentLoader/>
+    <Center bgColor={themeColors['editor.background']} w="100%" h="100%" overflow="hidden" className={className}>
+      <ContentLoader />
     </Center>
   );
 };

@@ -11,27 +11,27 @@ interface ContainerProps {
 const Container = chakra(({ isAnimated, children, className }: ContainerProps) => {
   return (
     <Grid
-      as={ motion.div }
+      as={motion.div}
       w="100%"
-      initial={ isAnimated ? { opacity: 0, scale: 0.97 } : { opacity: 1, scale: 1 } }
+      initial={isAnimated ? { opacity: 0, scale: 0.97 } : { opacity: 1, scale: 1 }}
       animate={{ opacity: 1, scale: 1 }}
       transitionDuration="normal"
       transitionTimingFunction="linear"
-      rowGap={ 2 }
-      columnGap={ 2 }
+      rowGap={2}
+      columnGap={2}
       gridTemplateColumns="86px auto"
       alignItems="start"
-      paddingY={ 4 }
+      paddingY={4}
       borderColor="divider"
       borderTopWidth="1px"
       _last={{
         borderBottomWidth: '1px',
       }}
-      className={ className }
+      className={className}
       fontSize="sm"
       lineHeight="20px"
     >
-      { children }
+      {children}
     </Grid>
   );
 });
@@ -44,14 +44,8 @@ interface LabelProps {
 
 const Label = chakra(({ children, className, isLoading }: LabelProps) => {
   return (
-    <Skeleton
-      className={ className }
-      isLoaded={ !isLoading }
-      fontWeight={ 500 }
-      my="5px"
-      justifySelf="start"
-    >
-      { children }
+    <Skeleton className={className} isLoaded={!isLoading} fontWeight={500} my="5px" justifySelf="start">
+      {children}
     </Skeleton>
   );
 });
@@ -63,13 +57,8 @@ interface ValueProps {
 
 const Value = chakra(({ children, className }: ValueProps) => {
   return (
-    <GridItem
-      className={ className }
-      py="5px"
-      color="text_secondary"
-      overflow="hidden"
-    >
-      { children }
+    <GridItem className={className} py="5px" color="text_secondary" overflow="hidden">
+      {children}
     </GridItem>
   );
 });

@@ -19,29 +19,25 @@ const TokenInfoFieldProjectSector = ({ control, isReadOnly, config }: Props) => 
 
   const options = React.useMemo(() => {
     return config.map((option) => ({ label: option, value: option }));
-  }, [ config ]);
+  }, [config]);
 
-  const renderControl: ControllerProps<Fields, 'project_sector'>['render'] = React.useCallback(({ field, fieldState, formState }) => {
-
-    return (
-      <FancySelect
-        { ...field }
-        options={ options }
-        size={ isMobile ? 'md' : 'lg' }
-        placeholder="Project industry"
-        isDisabled={ formState.isSubmitting || isReadOnly }
-        error={ fieldState.error }
-      />
-    );
-  }, [ isReadOnly, options, isMobile ]);
-
-  return (
-    <Controller
-      name="project_sector"
-      control={ control }
-      render={ renderControl }
-    />
+  const renderControl: ControllerProps<Fields, 'project_sector'>['render'] = React.useCallback(
+    ({ field, fieldState, formState }) => {
+      return (
+        <FancySelect
+          {...field}
+          options={options}
+          size={isMobile ? 'md' : 'lg'}
+          placeholder="Project industry"
+          isDisabled={formState.isSubmitting || isReadOnly}
+          error={fieldState.error}
+        />
+      );
+    },
+    [isReadOnly, options, isMobile],
   );
+
+  return <Controller name="project_sector" control={control} render={renderControl} />;
 };
 
 export default React.memo(TokenInfoFieldProjectSector);

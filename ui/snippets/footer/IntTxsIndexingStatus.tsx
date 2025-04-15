@@ -12,7 +12,6 @@ import useSocketChannel from 'lib/socket/useSocketChannel';
 import useSocketMessage from 'lib/socket/useSocketMessage';
 
 const IntTxsIndexingStatus = () => {
-
   const { data, isError, isLoading } = useApiQuery('homepage_indexing_status');
 
   const bgColor = useColorModeValue('blackAlpha.100', 'whiteAlpha.100');
@@ -20,16 +19,18 @@ const IntTxsIndexingStatus = () => {
 
   const queryClient = useQueryClient();
 
-  const handleInternalTxsIndexStatus: SocketMessage.InternalTxsIndexStatus['handler'] = React.useCallback((payload) => {
-    queryClient.setQueryData(getResourceKey('homepage_indexing_status'), (prevData: IndexingStatus | undefined) => {
+  const handleInternalTxsIndexStatus: SocketMessage.InternalTxsIndexStatus['handler'] = React.useCallback(
+    (payload) => {
+      queryClient.setQueryData(getResourceKey('homepage_indexing_status'), (prevData: IndexingStatus | undefined) => {
+        const newData = prevData ? { ...prevData } : ({} as IndexingStatus);
+        newData.finished_indexing = payload.finished;
+        newData.indexed_internal_transactions_ratio = payload.ratio;
 
-      const newData = prevData ? { ...prevData } : {} as IndexingStatus;
-      newData.finished_indexing = payload.finished;
-      newData.indexed_internal_transactions_ratio = payload.ratio;
-
-      return newData;
-    });
-  }, [ queryClient ]);
+        return newData;
+      });
+    },
+    [queryClient],
+  );
 
   const internalTxsIndexingChannel = useSocketChannel({
     topic: 'blocks:indexing_internal_transactions',
@@ -51,47 +52,30 @@ const IntTxsIndexingStatus = () => {
   }
 
   const hint = (
-    <Text fontSize="xs" color={ hintTextcolor }>
-      { data.indexed_internal_transactions_ratio &&
-        `${ Math.floor(Number(data.indexed_internal_transactions_ratio) * 100) }% Blocks With Internal Transactions Indexed${ nbsp }${ ndash } ` }
-      We{ apos }re indexing this chain right now. Some of the counts may be inaccurate.
+    <Text fontSize="xs" color={hintTextcolor}>
+      {data.indexed_internal_transactions_ratio &&
+        `${Math.floor(Number(data.indexed_internal_transactions_ratio) * 100)}% Blocks With Internal Transactions Indexed${nbsp}${ndash} `}
+      We{apos}re indexing this chain right now. Some of the counts may be inaccurate.
     </Text>
   );
 
   const trigger = (
-    <Flex
-      px={ 2 }
-      py={ 1 }
-      bg={ bgColor }
-      borderRadius="base"
-      alignItems="center"
-      justifyContent="center"
-      color="green.400"
-      _hover={{ color: 'blue.400' }}
-    >
-      <IconButton
-        colorScheme="none"
-        aria-label="hint"
-        icon={ <Icon as={ infoIcon } boxSize={ 5 }/> }
-        boxSize={ 6 }
-        variant="simple"
-      />
-      { data.indexed_internal_transactions_ratio && (
-        <Text fontWeight={ 600 } fontSize="xs" color="inherit">
-          { Math.floor(Number(data.indexed_internal_transactions_ratio) * 100) + '%' }
+    <Flex px={2} py={1} bg={bgColor} borderRadius="base" alignItems="center" justifyContent="center" color="green.400" _hover={{ color: 'blue.400' }}>
+      <IconButton colorScheme="none" aria-label="hint" icon={<Icon as={infoIcon} boxSize={5} />} boxSize={6} variant="simple" />
+      {data.indexed_internal_transactions_ratio && (
+        <Text fontWeight={600} fontSize="xs" color="inherit">
+          {Math.floor(Number(data.indexed_internal_transactions_ratio) * 100) + '%'}
         </Text>
-      ) }
+      )}
     </Flex>
   );
 
   return (
     <Popover placement="bottom-start" isLazy trigger="hover">
-      <PopoverTrigger>
-        { trigger }
-      </PopoverTrigger>
+      <PopoverTrigger>{trigger}</PopoverTrigger>
       <PopoverContent maxH="450px" overflowY="hidden" w="240px">
-        <PopoverBody p={ 4 } bgColor={ bgColor } boxShadow="2xl">
-          { hint }
+        <PopoverBody p={4} bgColor={bgColor} boxShadow="2xl">
+          {hint}
         </PopoverBody>
       </PopoverContent>
     </Popover>

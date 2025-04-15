@@ -8,13 +8,9 @@ import AddressAddToWallet from 'ui/shared/address/AddressAddToWallet';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TokenEntityWithAddressFilter from 'ui/shared/entities/token/TokenEntityWithAddressFilter';
 
-type Props = AddressTokenBalance & { isLoading: boolean};
+type Props = AddressTokenBalance & { isLoading: boolean };
 
-const ERC721TokensTableItem = ({
-  token,
-  value,
-  isLoading,
-}: Props) => {
+const ERC721TokensTableItem = ({ token, value, isLoading }: Props) => {
   const router = useRouter();
 
   const hash = router.query.hash?.toString() || '';
@@ -22,28 +18,17 @@ const ERC721TokensTableItem = ({
   return (
     <Tr>
       <Td verticalAlign="middle">
-        <TokenEntityWithAddressFilter
-          token={ token }
-          addressHash={ hash }
-          isLoading={ isLoading }
-          noCopy
-          jointSymbol
-          fontWeight="700"
-        />
+        <TokenEntityWithAddressFilter token={token} addressHash={hash} isLoading={isLoading} noCopy jointSymbol fontWeight="700" />
       </Td>
       <Td verticalAlign="middle">
         <Flex alignItems="center" width="150px" justifyContent="space-between">
-          <AddressEntity
-            address={{ hash: token.address }}
-            isLoading={ isLoading }
-            noIcon
-          />
-          <AddressAddToWallet token={ token } ml={ 4 } isLoading={ isLoading }/>
+          <AddressEntity address={{ hash: token.address }} isLoading={isLoading} noIcon />
+          <AddressAddToWallet token={token} ml={4} isLoading={isLoading} />
         </Flex>
       </Td>
       <Td isNumeric verticalAlign="middle">
-        <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { value }
+        <Skeleton isLoaded={!isLoading} display="inline-block">
+          {value}
         </Skeleton>
       </Td>
     </Tr>

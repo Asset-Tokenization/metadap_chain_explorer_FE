@@ -14,28 +14,19 @@ interface Props {
 }
 
 const TokenInfoFieldDocs = ({ control, isReadOnly }: Props) => {
-  const renderControl: ControllerProps<Fields, 'docs'>['render'] = React.useCallback(({ field, fieldState, formState }) => {
-    return (
-      <FormControl variant="floating" id={ field.name } size={{ base: 'md', lg: 'lg' }}>
-        <Input
-          { ...field }
-          isInvalid={ Boolean(fieldState.error) }
-          isDisabled={ formState.isSubmitting || isReadOnly }
-          autoComplete="off"
-        />
-        <InputPlaceholder text="Docs" error={ fieldState.error }/>
-      </FormControl>
-    );
-  }, [ isReadOnly ]);
-
-  return (
-    <Controller
-      name="docs"
-      control={ control }
-      render={ renderControl }
-      rules={{ validate: validator }}
-    />
+  const renderControl: ControllerProps<Fields, 'docs'>['render'] = React.useCallback(
+    ({ field, fieldState, formState }) => {
+      return (
+        <FormControl variant="floating" id={field.name} size={{ base: 'md', lg: 'lg' }}>
+          <Input {...field} isInvalid={Boolean(fieldState.error)} isDisabled={formState.isSubmitting || isReadOnly} autoComplete="off" />
+          <InputPlaceholder text="Docs" error={fieldState.error} />
+        </FormControl>
+      );
+    },
+    [isReadOnly],
   );
+
+  return <Controller name="docs" control={control} render={renderControl} rules={{ validate: validator }} />;
 };
 
 export default React.memo(TokenInfoFieldDocs);

@@ -7,10 +7,10 @@ import NftMedia from './NftMedia';
 
 test.describe('no url', () => {
   test.use({ viewport: { width: 250, height: 250 } });
-  test('preview +@dark-mode', async({ mount }) => {
+  test('preview +@dark-mode', async ({ mount }) => {
     const component = await mount(
       <TestApp>
-        <NftMedia url={ null }/>
+        <NftMedia url={null} />
       </TestApp>,
     );
 
@@ -23,7 +23,7 @@ test.describe('image', () => {
 
   const MEDIA_URL = 'https://localhost:3000/my-image.jpg';
 
-  test.beforeEach(async({ page }) => {
+  test.beforeEach(async ({ page }) => {
     await page.route(MEDIA_URL, (route) => {
       return route.fulfill({
         status: 200,
@@ -32,10 +32,10 @@ test.describe('image', () => {
     });
   });
 
-  test('preview +@dark-mode', async({ mount }) => {
+  test('preview +@dark-mode', async ({ mount }) => {
     const component = await mount(
       <TestApp>
-        <NftMedia url={ MEDIA_URL }/>
+        <NftMedia url={MEDIA_URL} />
       </TestApp>,
     );
 
@@ -43,7 +43,7 @@ test.describe('image', () => {
   });
 });
 
-test('image preview hover', async({ mount, page }) => {
+test('image preview hover', async ({ mount, page }) => {
   const MEDIA_URL = 'https://localhost:3000/my-image.jpg';
 
   await page.route(MEDIA_URL, (route) => {
@@ -55,7 +55,7 @@ test('image preview hover', async({ mount, page }) => {
 
   const component = await mount(
     <TestApp>
-      <NftMedia url={ MEDIA_URL } w="250px"/>
+      <NftMedia url={MEDIA_URL} w="250px" />
     </TestApp>,
   );
 
@@ -64,7 +64,7 @@ test('image preview hover', async({ mount, page }) => {
   await expect(page).toHaveScreenshot({ clip: { x: 0, y: 0, width: 250, height: 250 } });
 });
 
-test('image fullscreen +@dark-mode +@mobile', async({ mount, page }) => {
+test('image fullscreen +@dark-mode +@mobile', async ({ mount, page }) => {
   const MEDIA_URL = 'https://localhost:3000/my-image.jpg';
 
   await page.route(MEDIA_URL, (route) => {
@@ -75,7 +75,7 @@ test('image fullscreen +@dark-mode +@mobile', async({ mount, page }) => {
   });
   const component = await mount(
     <TestApp>
-      <NftMedia url={ MEDIA_URL } withFullscreen w="250px"/>
+      <NftMedia url={MEDIA_URL} withFullscreen w="250px" />
     </TestApp>,
   );
 
@@ -88,26 +88,27 @@ test.describe('page', () => {
   test.use({ viewport: { width: 250, height: 250 } });
 
   const MEDIA_URL = 'https://localhost:3000/page.html';
-  const MEDIA_TYPE_API_URL = `/node-api/media-type?url=${ encodeURIComponent(MEDIA_URL) }`;
+  const MEDIA_TYPE_API_URL = `/node-api/media-type?url=${encodeURIComponent(MEDIA_URL)}`;
 
-  test.beforeEach(async({ page }) => {
-
+  test.beforeEach(async ({ page }) => {
     await page.route(MEDIA_URL, (route) => {
       return route.fulfill({
         status: 200,
         path: './playwright/mocks/page.html',
       });
     });
-    await page.route(MEDIA_TYPE_API_URL, (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify({ type: 'html' }),
-    }));
+    await page.route(MEDIA_TYPE_API_URL, (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify({ type: 'html' }),
+      }),
+    );
   });
 
-  test('preview +@dark-mode', async({ mount }) => {
+  test('preview +@dark-mode', async ({ mount }) => {
     const component = await mount(
       <TestApp>
-        <NftMedia url={ MEDIA_URL }/>
+        <NftMedia url={MEDIA_URL} />
       </TestApp>,
     );
 

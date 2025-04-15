@@ -12,8 +12,8 @@ const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/apps">
       <>
-        <PageTitle title="Marketplace"/>
-        <Marketplace/>
+        <PageTitle title="Marketplace" />
+        <Marketplace />
       </>
     </PageNextJs>
   );

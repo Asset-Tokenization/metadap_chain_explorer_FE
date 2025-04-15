@@ -9,7 +9,7 @@ import Pagination from './Pagination';
 
 test.use({ viewport: { width: 250, height: 50 } });
 
-test('default view', async({ mount }) => {
+test('default view', async ({ mount }) => {
   const props: PaginationParams = {
     page: 2,
     isVisible: true,
@@ -23,7 +23,7 @@ test('default view', async({ mount }) => {
   };
   const component = await mount(
     <TestApp>
-      <Pagination { ...props } w="fit-content"/>
+      <Pagination {...props} w="fit-content" />
     </TestApp>,
   );
 

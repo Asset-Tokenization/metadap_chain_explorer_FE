@@ -11,14 +11,15 @@ export default function getFullPathOfImportedFile(baseFilePath: string, imported
     if (compilerRemappings && compilerRemappings.length > 0) {
       const remappings = formatCompilerRemappings(compilerRemappings);
 
-      const { prefix, target } = remappings.find(({ context, prefix }) => {
-        if (context) {
-          const contextPart = '/' + stripLeadingSlash(stripTrailingSlash(context));
-          return baseFilePath.startsWith(contextPart + '/') && importedFilePath.startsWith(prefix);
-        }
+      const { prefix, target } =
+        remappings.find(({ context, prefix }) => {
+          if (context) {
+            const contextPart = '/' + stripLeadingSlash(stripTrailingSlash(context));
+            return baseFilePath.startsWith(contextPart + '/') && importedFilePath.startsWith(prefix);
+          }
 
-        return importedFilePath.startsWith(prefix);
-      }) || {};
+          return importedFilePath.startsWith(prefix);
+        }) || {};
 
       if (prefix && target) {
         result = importedFilePath.replace(prefix, target);
@@ -68,7 +69,7 @@ function formatCompilerRemappings(remappings: Array<string>): Array<Remapping> {
   return remappings.map((item) => {
     const chunks = item.split(':');
 
-    const [ prefix, target ] = chunks[chunks.length - 1].split('=');
+    const [prefix, target] = chunks[chunks.length - 1].split('=');
     return {
       context: chunks.length > 1 ? chunks[0] : undefined,
       prefix,

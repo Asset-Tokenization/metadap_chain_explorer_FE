@@ -7,7 +7,7 @@ interface Props {
 
 const AdminSupportText = ({ className }: Props) => {
   return (
-    <Box className={ className }>
+    <Box className={className}>
       <span>Need help? Contact admin team at </span>
       <Link href="mailto:help@blockscout.com">help@blockscout.com</Link>
       <span> for assistance!</span>

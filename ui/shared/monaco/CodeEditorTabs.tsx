@@ -17,27 +17,22 @@ const CodeEditorTabs = ({ tabs, activeTab, mainFile, onTabSelect, onTabClose }: 
 
   const tabsPathChunks = React.useMemo(() => {
     return tabs.map((tab) => tab.split('/'));
-  }, [ tabs ]);
+  }, [tabs]);
 
   return (
-    <Flex
-      borderTopLeftRadius="md"
-      overflow="hidden"
-      bgColor={ themeColors['sideBar.background'] }
-      flexWrap="wrap"
-    >
-      { tabs.map((tab) => (
+    <Flex borderTopLeftRadius="md" overflow="hidden" bgColor={themeColors['sideBar.background']} flexWrap="wrap">
+      {tabs.map((tab) => (
         <CodeEditorTab
-          key={ tab }
-          path={ tab }
-          isActive={ activeTab === tab }
-          isMainFile={ mainFile === tab }
-          onClick={ onTabSelect }
-          onClose={ onTabClose }
-          isCloseDisabled={ tabs.length === 1 }
-          tabsPathChunks={ tabsPathChunks }
+          key={tab}
+          path={tab}
+          isActive={activeTab === tab}
+          isMainFile={mainFile === tab}
+          onClick={onTabSelect}
+          onClose={onTabClose}
+          isCloseDisabled={tabs.length === 1}
+          tabsPathChunks={tabsPathChunks}
         />
-      )) }
+      ))}
     </Flex>
   );
 };

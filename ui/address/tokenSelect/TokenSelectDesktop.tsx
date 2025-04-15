@@ -20,13 +20,13 @@ const TokenSelectDesktop = ({ data, isLoading }: Props) => {
   const result = useTokenSelect(data);
 
   return (
-    <Popover isOpen={ isOpen } onClose={ onClose } placement="bottom-start" isLazy>
+    <Popover isOpen={isOpen} onClose={onClose} placement="bottom-start" isLazy>
       <PopoverTrigger>
-        <TokenSelectButton isOpen={ isOpen } onClick={ onToggle } data={ result.data } isLoading={ isLoading }/>
+        <TokenSelectButton isOpen={isOpen} onClick={onToggle} data={result.data} isLoading={isLoading} />
       </PopoverTrigger>
       <PopoverContent w="355px" maxH="450px" overflowY="scroll">
-        <PopoverBody px={ 4 } py={ 6 } bgColor={ bgColor } boxShadow="2xl" >
-          <TokenSelectMenu { ...result }/>
+        <PopoverBody px={4} py={6} bgColor={bgColor} boxShadow="2xl">
+          <TokenSelectMenu {...result} />
         </PopoverBody>
       </PopoverContent>
     </Popover>

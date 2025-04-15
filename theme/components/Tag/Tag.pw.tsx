@@ -4,11 +4,11 @@ import React from 'react';
 
 import TestApp from 'playwright/TestApp';
 
-[ 'blue', 'gray', 'orange', 'green', 'purple', 'cyan', 'teal' ].forEach((colorScheme) => {
-  test(`${ colorScheme } color scheme +@dark-mode`, async({ mount }) => {
+['blue', 'gray', 'orange', 'green', 'purple', 'cyan', 'teal'].forEach((colorScheme) => {
+  test(`${colorScheme} color scheme +@dark-mode`, async ({ mount }) => {
     const component = await mount(
       <TestApp>
-        <Tag colorScheme={ colorScheme }>content</Tag>
+        <Tag colorScheme={colorScheme}>content</Tag>
       </TestApp>,
     );
 
@@ -16,7 +16,7 @@ import TestApp from 'playwright/TestApp';
   });
 });
 
-test('with long text', async({ mount }) => {
+test('with long text', async ({ mount }) => {
   const component = await mount(
     <TestApp>
       <Box w="100px">

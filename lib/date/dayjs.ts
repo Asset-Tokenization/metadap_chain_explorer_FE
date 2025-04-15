@@ -37,7 +37,7 @@ dayjs.extend(minMax);
 
 dayjs.updateLocale('en', {
   formats: {
-    llll: `MMM DD YYYY HH:mm:ss A (Z${ nbsp }UTC)`,
+    llll: `MMM DD YYYY HH:mm:ss A (Z${nbsp}UTC)`,
   },
   relativeTime: {
     s: '1s',

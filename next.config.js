@@ -7,11 +7,7 @@ const redirects = require('./nextjs/redirects');
 const rewrites = require('./nextjs/rewrites');
 
 const moduleExports = {
-  transpilePackages: [
-    'react-syntax-highlighter',
-    'swagger-client',
-    'swagger-ui-react',
-  ],
+  transpilePackages: ['react-syntax-highlighter', 'swagger-client', 'swagger-ui-react'],
   reactStrictMode: true,
   webpack(config, { webpack }) {
     config.plugins.push(
@@ -20,12 +16,10 @@ const moduleExports = {
         __SENTRY_TRACING__: false,
       }),
     );
-    config.module.rules.push(
-      {
-        test: /\.svg$/,
-        use: [ '@svgr/webpack' ],
-      },
-    );
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
     config.resolve.fallback = { fs: false, net: false, tls: false };
 
     return config;

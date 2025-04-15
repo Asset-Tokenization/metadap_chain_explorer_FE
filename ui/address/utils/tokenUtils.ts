@@ -8,8 +8,8 @@ import sumBnReducer from 'lib/bigint/sumBnReducer';
 import { ZERO } from 'lib/consts';
 
 export type TokenEnhancedData = AddressTokenBalance & {
-  usd?: BigNumber ;
-}
+  usd?: BigNumber;
+};
 
 export type Sort = 'desc' | 'asc';
 
@@ -22,7 +22,7 @@ export interface TokenSelectDataItem {
 
 type TokenGroup = [string, TokenSelectDataItem];
 
-const TOKEN_GROUPS_ORDER: Array<TokenType> = [ 'ERC-20', 'ERC-721', 'ERC-1155' ];
+const TOKEN_GROUPS_ORDER: Array<TokenType> = ['ERC-20', 'ERC-721', 'ERC-1155'];
 
 export const sortTokenGroups = (groupA: TokenGroup, groupB: TokenGroup) => {
   return TOKEN_GROUPS_ORDER.indexOf(groupA[0] as TokenType) > TOKEN_GROUPS_ORDER.indexOf(groupB[0] as TokenType) ? 1 : -1;
@@ -66,13 +66,15 @@ export const sortingFns = {
   'ERC-1155': sortErc1155Tokens,
 };
 
-export const filterTokens = (searchTerm: string) => ({ token }: AddressTokenBalance) => {
-  if (!token.name) {
-    return !searchTerm ? true : token.address.toLowerCase().includes(searchTerm);
-  }
+export const filterTokens =
+  (searchTerm: string) =>
+  ({ token }: AddressTokenBalance) => {
+    if (!token.name) {
+      return !searchTerm ? true : token.address.toLowerCase().includes(searchTerm);
+    }
 
-  return token.name?.toLowerCase().includes(searchTerm);
-};
+    return token.name?.toLowerCase().includes(searchTerm);
+  };
 
 export const calculateUsdValue = (data: AddressTokenBalance): TokenEnhancedData => {
   if (data.token.type !== 'ERC-20') {
@@ -87,7 +89,9 @@ export const calculateUsdValue = (data: AddressTokenBalance): TokenEnhancedData 
   const decimals = Number(data.token.decimals || '18');
   return {
     ...data,
-    usd: BigNumber(data.value).div(BigNumber(10 ** decimals)).multipliedBy(BigNumber(exchangeRate)),
+    usd: BigNumber(data.value)
+      .div(BigNumber(10 ** decimals))
+      .multipliedBy(BigNumber(exchangeRate)),
   };
 };
 
@@ -105,4 +109,4 @@ export const getTokensTotalInfo = (data: TokenSelectData) => {
   return { usd, num, isOverflow };
 };
 
-const usdValueReducer = (result: BigNumber, item: TokenEnhancedData) => !item.usd ? result : result.plus(BigNumber(item.usd));
+const usdValueReducer = (result: BigNumber, item: TokenEnhancedData) => (!item.usd ? result : result.plus(BigNumber(item.usd)));

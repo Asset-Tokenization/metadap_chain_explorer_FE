@@ -5,7 +5,7 @@ export type L2OutputRootsItem = {
   l2_block_number: number;
   l2_output_index: number;
   output_root: string;
-}
+};
 
 export type L2OutputRootsResponse = {
   items: Array<L2OutputRootsItem>;
@@ -13,4 +13,4 @@ export type L2OutputRootsResponse = {
     index: number;
     items_count: number;
   };
-}
+};

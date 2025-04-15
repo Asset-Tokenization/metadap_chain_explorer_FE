@@ -17,11 +17,13 @@ const addresses: AddressesResponse = {
       ...addressMocks.withName,
       tx_count: '1',
       coin_balance: '12345678901234567890000',
-    }, {
+    },
+    {
       ...addressMocks.token,
       tx_count: '109123890123',
       coin_balance: '22222345678901234567890000',
-    }, {
+    },
+    {
       ...addressMocks.withoutName,
       tx_count: '11',
       coin_balance: '1000000000000000000',
@@ -31,19 +33,23 @@ const addresses: AddressesResponse = {
   next_page_params: null,
 };
 
-test('base view +@mobile +@dark-mode', async({ mount, page }) => {
-  await page.route(ADDRESSES_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(addresses),
-  }));
-  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) => route.fulfill({
-    status: 200,
-    body: '',
-  }));
+test('base view +@mobile +@dark-mode', async ({ mount, page }) => {
+  await page.route(ADDRESSES_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(addresses),
+    }),
+  );
+  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) =>
+    route.fulfill({
+      status: 200,
+      body: '',
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <Accounts/>
+      <Accounts />
     </TestApp>,
   );
 

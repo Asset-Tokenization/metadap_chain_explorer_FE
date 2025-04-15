@@ -16,31 +16,20 @@ const TokenNftMarketplaces = ({ hash, id, isLoading }: Props) => {
   }
 
   return (
-    <DetailsInfoItem
-      title="Marketplaces"
-      hint="Marketplaces trading this NFT"
-      alignSelf="center"
-      isLoading={ isLoading }
-    >
-      <Skeleton isLoaded={ !isLoading } display="flex" columnGap={ 3 } flexWrap="wrap">
-        { config.UI.views.nft.marketplaces.map((item) => {
-
+    <DetailsInfoItem title="Marketplaces" hint="Marketplaces trading this NFT" alignSelf="center" isLoading={isLoading}>
+      <Skeleton isLoaded={!isLoading} display="flex" columnGap={3} flexWrap="wrap">
+        {config.UI.views.nft.marketplaces.map((item) => {
           const hrefTemplate = id ? item.instance_url : item.collection_url;
           const href = hrefTemplate.replace('{id}', id || '').replace('{hash}', hash || '');
 
           return (
-            <Tooltip label={ `View on ${ item.name }` } key={ item.name }>
-              <Link href={ href } target="_blank">
-                <Image
-                  src={ item.logo_url }
-                  alt={ `${ item.name } marketplace logo` }
-                  boxSize={ 5 }
-                  borderRadius="full"
-                />
+            <Tooltip label={`View on ${item.name}`} key={item.name}>
+              <Link href={href} target="_blank">
+                <Image src={item.logo_url} alt={`${item.name} marketplace logo`} boxSize={5} borderRadius="full" />
               </Link>
             </Tooltip>
           );
-        }) }
+        })}
       </Skeleton>
     </DetailsInfoItem>
   );

@@ -29,11 +29,13 @@ const test = base.extend<socketServer.SocketServerFixture>({
 // test cases which use socket cannot run in parallel since the socket server always run on the same port
 test.describe.configure({ mode: 'serial' });
 
-test.beforeEach(async({ page }) => {
-  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(textAdMock.duck),
-  }));
+test.beforeEach(async ({ page }) => {
+  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(textAdMock.duck),
+    }),
+  );
   await page.route(textAdMock.duck.ad.thumbnail, (route) => {
     return route.fulfill({
       status: 200,
@@ -42,19 +44,23 @@ test.beforeEach(async({ page }) => {
   });
 });
 
-test('base view +@dark-mode', async({ mount, page }) => {
-  await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(blockMock.baseListResponse),
-  }));
-  await page.route(STATS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(statsMock.base),
-  }));
+test('base view +@dark-mode', async ({ mount, page }) => {
+  await page.route(BLOCKS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(blockMock.baseListResponse),
+    }),
+  );
+  await page.route(STATS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(statsMock.base),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <Blocks/>
+      <Blocks />
     </TestApp>,
     { hooksConfig },
   );
@@ -68,19 +74,23 @@ const hiddenFieldsTest = test.extend({
   context: contextWithEnvs(configs.viewsEnvs.block.hiddenFields) as any,
 });
 
-hiddenFieldsTest('hidden fields', async({ mount, page }) => {
-  await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(blockMock.baseListResponse),
-  }));
-  await page.route(STATS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(statsMock.base),
-  }));
+hiddenFieldsTest('hidden fields', async ({ mount, page }) => {
+  await page.route(BLOCKS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(blockMock.baseListResponse),
+    }),
+  );
+  await page.route(STATS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(statsMock.base),
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <Blocks/>
+      <Blocks />
     </TestApp>,
     { hooksConfig },
   );
@@ -92,19 +102,23 @@ hiddenFieldsTest('hidden fields', async({ mount, page }) => {
 test.describe('mobile', () => {
   test.use({ viewport: devices['iPhone 13 Pro'].viewport });
 
-  test(' base view', async({ mount, page }) => {
-    await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify(blockMock.baseListResponse),
-    }));
-    await page.route(STATS_API_URL, (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify(statsMock.base),
-    }));
+  test(' base view', async ({ mount, page }) => {
+    await page.route(BLOCKS_API_URL, (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify(blockMock.baseListResponse),
+      }),
+    );
+    await page.route(STATS_API_URL, (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify(statsMock.base),
+      }),
+    );
 
     const component = await mount(
       <TestApp>
-        <Blocks/>
+        <Blocks />
       </TestApp>,
       { hooksConfig },
     );
@@ -118,19 +132,23 @@ test.describe('mobile', () => {
     context: contextWithEnvs(configs.viewsEnvs.block.hiddenFields) as any,
   });
 
-  hiddenFieldsTest('hidden fields', async({ mount, page }) => {
-    await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify(blockMock.baseListResponse),
-    }));
-    await page.route(STATS_API_URL, (route) => route.fulfill({
-      status: 200,
-      body: JSON.stringify(statsMock.base),
-    }));
+  hiddenFieldsTest('hidden fields', async ({ mount, page }) => {
+    await page.route(BLOCKS_API_URL, (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify(blockMock.baseListResponse),
+      }),
+    );
+    await page.route(STATS_API_URL, (route) =>
+      route.fulfill({
+        status: 200,
+        body: JSON.stringify(statsMock.base),
+      }),
+    );
 
     const component = await mount(
       <TestApp>
-        <Blocks/>
+        <Blocks />
       </TestApp>,
       { hooksConfig },
     );
@@ -140,15 +158,17 @@ test.describe('mobile', () => {
   });
 });
 
-test('new item from socket', async({ mount, page, createSocket }) => {
-  await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(blockMock.baseListResponse),
-  }));
+test('new item from socket', async ({ mount, page, createSocket }) => {
+  await page.route(BLOCKS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(blockMock.baseListResponse),
+    }),
+  );
 
   const component = await mount(
     <TestApp withSocket>
-      <Blocks/>
+      <Blocks />
     </TestApp>,
     { hooksConfig },
   );
@@ -167,15 +187,17 @@ test('new item from socket', async({ mount, page, createSocket }) => {
   await expect(component).toHaveScreenshot();
 });
 
-test('socket error', async({ mount, page, createSocket }) => {
-  await page.route(BLOCKS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(blockMock.baseListResponse),
-  }));
+test('socket error', async ({ mount, page, createSocket }) => {
+  await page.route(BLOCKS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(blockMock.baseListResponse),
+    }),
+  );
 
   const component = await mount(
     <TestApp withSocket>
-      <Blocks/>
+      <Blocks />
     </TestApp>,
     { hooksConfig },
   );

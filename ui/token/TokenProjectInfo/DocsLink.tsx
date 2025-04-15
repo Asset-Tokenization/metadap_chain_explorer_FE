@@ -9,14 +9,8 @@ interface Props {
 
 const DocsLink = ({ href }: Props) => {
   return (
-    <Link
-      href={ href }
-      target="_blank"
-      display="inline-flex"
-      alignItems="center"
-      columnGap={ 1 }
-    >
-      <Icon as={ iconDocs } boxSize={ 6 } color="text_secondary"/>
+    <Link href={href} target="_blank" display="inline-flex" alignItems="center" columnGap={1}>
+      <Icon as={iconDocs} boxSize={6} color="text_secondary" />
       <span>Documentation</span>
     </Link>
   );

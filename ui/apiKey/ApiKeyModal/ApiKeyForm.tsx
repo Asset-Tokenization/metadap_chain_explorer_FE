@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, useColorModeValue } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useCallback } from 'react';
 import type { SubmitHandler, ControllerRenderProps } from 'react-hook-form';
@@ -23,17 +16,22 @@ type Props = {
   data?: ApiKey;
   onClose: () => void;
   setAlertVisible: (isAlertVisible: boolean) => void;
-}
+};
 
 type Inputs = {
   token: string;
   name: string;
-}
+};
 
 const NAME_MAX_LENGTH = 255;
 
 const ApiKeyForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
-  const { control, handleSubmit, formState: { errors, isDirty }, setError } = useForm<Inputs>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isDirty },
+    setError,
+  } = useForm<Inputs>({
     mode: 'onTouched',
     defaultValues: {
       token: data?.api_key || '',
@@ -58,10 +56,10 @@ const ApiKeyForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
   };
 
   const mutation = useMutation(updateApiKey, {
-    onSuccess: async(data) => {
+    onSuccess: async (data) => {
       const response = data as unknown as ApiKey;
 
-      queryClient.setQueryData([ resourceKey('api_keys') ], (prevData: ApiKeys | undefined) => {
+      queryClient.setQueryData([resourceKey('api_keys')], (prevData: ApiKeys | undefined) => {
         const isExisting = prevData && prevData.some((item) => item.api_key === response.api_key);
 
         if (isExisting) {
@@ -74,7 +72,7 @@ const ApiKeyForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
           });
         }
 
-        return [ response, ...(prevData || []) ];
+        return [response, ...(prevData || [])];
       });
 
       onClose();
@@ -91,66 +89,56 @@ const ApiKeyForm: React.FC<Props> = ({ data, onClose, setAlertVisible }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = useCallback((data) => {
-    setAlertVisible(false);
-    mutation.mutate(data);
-  }, [ mutation, setAlertVisible ]);
+  const onSubmit: SubmitHandler<Inputs> = useCallback(
+    (data) => {
+      setAlertVisible(false);
+      mutation.mutate(data);
+    },
+    [mutation, setAlertVisible],
+  );
 
-  const renderTokenInput = useCallback(({ field }: {field: ControllerRenderProps<Inputs, 'token'>}) => {
+  const renderTokenInput = useCallback(({ field }: { field: ControllerRenderProps<Inputs, 'token'> }) => {
     return (
       <FormControl variant="floating" id="address">
-        <Input
-          { ...field }
-          isDisabled={ true }
-        />
+        <Input {...field} isDisabled={true} />
         <FormLabel data-in-modal="true">Auto-generated API key token</FormLabel>
       </FormControl>
     );
   }, []);
 
-  const renderNameInput = useCallback(({ field }: {field: ControllerRenderProps<Inputs, 'name'>}) => {
-    return (
-      <FormControl variant="floating" id="name" isRequired backgroundColor={ formBackgroundColor }>
-        <Input
-          { ...field }
-          isInvalid={ Boolean(errors.name) }
-          maxLength={ NAME_MAX_LENGTH }
-        />
-        <InputPlaceholder text="Application name for API key (e.g Web3 project)" error={ errors.name }/>
-      </FormControl>
-    );
-  }, [ errors, formBackgroundColor ]);
+  const renderNameInput = useCallback(
+    ({ field }: { field: ControllerRenderProps<Inputs, 'name'> }) => {
+      return (
+        <FormControl variant="floating" id="name" isRequired backgroundColor={formBackgroundColor}>
+          <Input {...field} isInvalid={Boolean(errors.name)} maxLength={NAME_MAX_LENGTH} />
+          <InputPlaceholder text="Application name for API key (e.g Web3 project)" error={errors.name} />
+        </FormControl>
+      );
+    },
+    [errors, formBackgroundColor],
+  );
 
   return (
-    <form noValidate onSubmit={ handleSubmit(onSubmit) }>
-      { data && (
-        <Box marginBottom={ 5 }>
-          <Controller
-            name="token"
-            control={ control }
-            render={ renderTokenInput }
-          />
+    <form noValidate onSubmit={handleSubmit(onSubmit)}>
+      {data && (
+        <Box marginBottom={5}>
+          <Controller name="token" control={control} render={renderTokenInput} />
         </Box>
-      ) }
-      <Box marginBottom={ 8 }>
+      )}
+      <Box marginBottom={8}>
         <Controller
           name="name"
-          control={ control }
+          control={control}
           rules={{
             maxLength: NAME_MAX_LENGTH,
             required: true,
           }}
-          render={ renderNameInput }
+          render={renderNameInput}
         />
       </Box>
-      <Box marginTop={ 8 }>
-        <Button
-          size="lg"
-          type="submit"
-          isDisabled={ !isDirty }
-          isLoading={ mutation.isLoading }
-        >
-          { data ? 'Save' : 'Generate API key' }
+      <Box marginTop={8}>
+        <Button size="lg" type="submit" isDisabled={!isDirty} isLoading={mutation.isLoading}>
+          {data ? 'Save' : 'Generate API key'}
         </Button>
       </Box>
     </form>

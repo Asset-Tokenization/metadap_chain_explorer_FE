@@ -20,13 +20,7 @@ const Icon = (props: IconProps) => {
     return null;
   }
 
-  return (
-    <EntityBase.Icon
-      { ...props }
-      iconSize={ props.iconSize ?? 'lg' }
-      asProp={ props.asProp ?? nftPlaceholder }
-    />
-  );
+  return <EntityBase.Icon {...props} iconSize={props.iconSize ?? 'lg'} asProp={props.asProp ?? nftPlaceholder} />;
 };
 
 type LinkProps = EntityBase.LinkBaseProps & Pick<EntityProps, 'hash' | 'id'>;
@@ -35,11 +29,8 @@ const Link = chakra((props: LinkProps) => {
   const defaultHref = route({ pathname: '/token/[hash]/instance/[id]', query: { hash: props.hash, id: props.id } });
 
   return (
-    <EntityBase.Link
-      { ...props }
-      href={ props.href ?? defaultHref }
-    >
-      { props.children }
+    <EntityBase.Link {...props} href={props.href ?? defaultHref}>
+      {props.children}
     </EntityBase.Link>
   );
 });
@@ -47,12 +38,7 @@ const Link = chakra((props: LinkProps) => {
 type ContentProps = Omit<EntityBase.ContentBaseProps, 'text'> & Pick<EntityProps, 'id'>;
 
 const Content = chakra((props: ContentProps) => {
-  return (
-    <TruncatedValue
-      isLoading={ props.isLoading }
-      value={ props.id }
-    />
-  );
+  return <TruncatedValue isLoading={props.isLoading} value={props.id} />;
 });
 
 export interface EntityProps extends EntityBase.EntityBaseProps {
@@ -61,14 +47,14 @@ export interface EntityProps extends EntityBase.EntityBaseProps {
 }
 
 const NftEntity = (props: EntityProps) => {
-  const linkProps = _omit(props, [ 'className' ]);
-  const partsProps = _omit(props, [ 'className', 'onClick' ]);
+  const linkProps = _omit(props, ['className']);
+  const partsProps = _omit(props, ['className', 'onClick']);
 
   return (
-    <Container className={ props.className } w="100%">
-      <Icon { ...partsProps }/>
-      <Link { ...linkProps }>
-        <Content { ...partsProps }/>
+    <Container className={props.className} w="100%">
+      <Icon {...partsProps} />
+      <Link {...linkProps}>
+        <Content {...partsProps} />
       </Link>
     </Container>
   );
@@ -76,9 +62,4 @@ const NftEntity = (props: EntityProps) => {
 
 export default React.memo(chakra(NftEntity));
 
-export {
-  Container,
-  Link,
-  Icon,
-  Content,
-};
+export { Container, Link, Icon, Content };

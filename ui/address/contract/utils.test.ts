@@ -13,9 +13,7 @@ describe('function prepareAbi()', () => {
     },
     {
       anonymous: false,
-      inputs: [
-        { indexed: false, internalType: 'uint256[]', name: 'indices', type: 'uint256[]' },
-      ],
+      inputs: [{ indexed: false, internalType: 'uint256[]', name: 'indices', type: 'uint256[]' }],
       name: 'CompleteDirectDepositBatch',
       type: 'event' as const,
     },
@@ -25,9 +23,7 @@ describe('function prepareAbi()', () => {
         { internalType: 'string', name: '_zkAddress', type: 'string' },
       ],
       name: 'directNativeDeposit',
-      outputs: [
-        { internalType: 'uint256', name: '', type: 'uint256' },
-      ],
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'payable' as const,
       type: 'function' as const,
     },
@@ -39,9 +35,7 @@ describe('function prepareAbi()', () => {
       { internalType: 'string' as const, name: '_zkAddress', type: 'string' as const },
     ],
     name: 'directNativeDeposit',
-    outputs: [
-      { internalType: 'uint256' as const, name: '', type: 'uint256' as const },
-    ],
+    outputs: [{ internalType: 'uint256' as const, name: '', type: 'uint256' as const }],
     stateMutability: 'payable' as const,
     type: 'function' as const,
     constant: false,
@@ -54,25 +48,26 @@ describe('function prepareAbi()', () => {
   });
 
   it('if there are two or more methods with the same name, filters out those which inputs are not matched', () => {
-    const abi = prepareAbi([
-      ...commonAbi,
-      {
-        inputs: [
-          { internalType: 'address', name: '_fallbackUser', type: 'address' },
-          { internalType: 'bytes', name: '_rawZkAddress', type: 'bytes' },
-        ],
-        name: 'directNativeDeposit',
-        outputs: [
-          { internalType: 'uint256', name: '', type: 'uint256' },
-        ],
-        stateMutability: 'payable',
-        type: 'function',
-      },
-    ], method);
+    const abi = prepareAbi(
+      [
+        ...commonAbi,
+        {
+          inputs: [
+            { internalType: 'address', name: '_fallbackUser', type: 'address' },
+            { internalType: 'bytes', name: '_rawZkAddress', type: 'bytes' },
+          ],
+          name: 'directNativeDeposit',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'payable',
+          type: 'function',
+        },
+      ],
+      method,
+    );
 
     expect(abi).toHaveLength(commonAbi.length);
 
-    const item = abi.find((item) => 'name' in item ? item.name === method.name : false);
+    const item = abi.find((item) => ('name' in item ? item.name === method.name : false));
     expect(item).toEqual(commonAbi[2]);
   });
 });

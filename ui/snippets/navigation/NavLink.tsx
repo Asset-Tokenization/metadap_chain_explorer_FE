@@ -19,7 +19,7 @@ type Props = {
   px?: string | number;
   className?: string;
   onClick?: () => void;
-}
+};
 
 const NavLink = ({ item, isCollapsed, px, className, onClick }: Props) => {
   const isMobile = useIsMobile();
@@ -34,42 +34,42 @@ const NavLink = ({ item, isCollapsed, px, className, onClick }: Props) => {
 
   const content = (
     <Link
-      href={ href }
-      target={ isInternalLink ? '_self' : '_blank' }
-      { ...styleProps.itemProps }
+      href={href}
+      target={isInternalLink ? '_self' : '_blank'}
+      {...styleProps.itemProps}
       w={{ base: '100%', lg: isExpanded ? '100%' : '60px', xl: isCollapsed ? '60px' : '100%' }}
       display="flex"
-      px={ px || { base: 3, lg: isExpanded ? 3 : '15px', xl: isCollapsed ? '15px' : 3 } }
-      aria-label={ `${ item.text } link` }
+      px={px || { base: 3, lg: isExpanded ? 3 : '15px', xl: isCollapsed ? '15px' : 3 }}
+      aria-label={`${item.text} link`}
       whiteSpace="nowrap"
-      onClick={ onClick }
+      onClick={onClick}
     >
       <Tooltip
-        label={ item.text }
-        hasArrow={ false }
-        isDisabled={ isMobile || isCollapsed === false || (isCollapsed === undefined && isXLScreen) }
+        label={item.text}
+        hasArrow={false}
+        isDisabled={isMobile || isCollapsed === false || (isCollapsed === undefined && isXLScreen)}
         placement="right"
         variant="nav"
-        gutter={ 20 }
-        color={ isInternalLink && item.isActive ? colors.text.active : colors.text.hover }
+        gutter={20}
+        color={isInternalLink && item.isActive ? colors.text.active : colors.text.hover}
       >
-        <HStack spacing={ 3 } overflow="hidden">
-          <NavLinkIcon item={ item }/>
-          <Text { ...styleProps.textProps }>
-            { item.text }
-          </Text>
+        <HStack spacing={3} overflow="hidden">
+          <NavLinkIcon item={item} />
+          <Text {...styleProps.textProps}>{item.text}</Text>
         </HStack>
       </Tooltip>
     </Link>
   );
 
   return (
-    <Box as="li" listStyleType="none" w="100%" className={ className }>
-      { isInternalLink ? (
-        <NextLink href={ item.nextRoute } passHref legacyBehavior>
-          { content }
+    <Box as="li" listStyleType="none" w="100%" className={className}>
+      {isInternalLink ? (
+        <NextLink href={item.nextRoute} passHref legacyBehavior>
+          {content}
         </NextLink>
-      ) : content }
+      ) : (
+        content
+      )}
     </Box>
   );
 };

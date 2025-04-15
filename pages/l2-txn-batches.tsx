@@ -9,7 +9,7 @@ const L2TxnBatches = dynamic(() => import('ui/pages/L2TxnBatches'), { ssr: false
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/l2-txn-batches">
-      <L2TxnBatches/>
+      <L2TxnBatches />
     </PageNextJs>
   );
 };

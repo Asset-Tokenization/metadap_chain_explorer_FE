@@ -5,7 +5,7 @@ export const router = {
   push: jest.fn(() => Promise.resolve()),
 };
 
-export const useRouter = jest.fn<unknown, Array<Partial<NextRouter>>>(() => (router));
+export const useRouter = jest.fn<unknown, Array<Partial<NextRouter>>>(() => router);
 
 export const mockUseRouter = (params?: Partial<NextRouter>) => {
   return {

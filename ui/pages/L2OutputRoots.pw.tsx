@@ -17,30 +17,36 @@ const test = base.extend({
 const OUTPUT_ROOTS_API_URL = buildApiUrl('l2_output_roots');
 const OUTPUT_ROOTS_COUNT_API_URL = buildApiUrl('l2_output_roots_count');
 
-test('base view +@mobile', async({ mount, page }) => {
+test('base view +@mobile', async ({ mount, page }) => {
   // test on mobile is flaky
   // my assumption is there is not enough time to calculate hashes truncation so component is unstable
   // so I raised the test timeout to check if it helps
   test.slow();
 
-  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) => route.fulfill({
-    status: 200,
-    body: '',
-  }));
+  await page.route('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', (route) =>
+    route.fulfill({
+      status: 200,
+      body: '',
+    }),
+  );
 
-  await page.route(OUTPUT_ROOTS_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: JSON.stringify(outputRootsData),
-  }));
+  await page.route(OUTPUT_ROOTS_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: JSON.stringify(outputRootsData),
+    }),
+  );
 
-  await page.route(OUTPUT_ROOTS_COUNT_API_URL, (route) => route.fulfill({
-    status: 200,
-    body: '9927',
-  }));
+  await page.route(OUTPUT_ROOTS_COUNT_API_URL, (route) =>
+    route.fulfill({
+      status: 200,
+      body: '9927',
+    }),
+  );
 
   const component = await mount(
     <TestApp>
-      <OutputRoots/>
+      <OutputRoots />
     </TestApp>,
   );
 

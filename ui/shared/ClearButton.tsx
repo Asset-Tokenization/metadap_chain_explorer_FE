@@ -15,15 +15,15 @@ const ClearButton = ({ onClick, isDisabled, className }: Props) => {
 
   return (
     <IconButton
-      isDisabled={ isDisabled }
-      className={ className }
+      isDisabled={isDisabled}
+      className={className}
       colorScheme="none"
       aria-label="Clear input"
       title="Clear input"
-      boxSize={ 6 }
-      icon={ <Icon as={ errorIcon } boxSize={ 3 } color={ iconColor } focusable={ false } _hover={{ color: iconColorHover }}/> }
+      boxSize={6}
+      icon={<Icon as={errorIcon} boxSize={3} color={iconColor} focusable={false} _hover={{ color: iconColorHover }} />}
       size="sm"
-      onClick={ onClick }
+      onClick={onClick}
     />
   );
 };

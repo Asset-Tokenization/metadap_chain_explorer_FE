@@ -1,9 +1,4 @@
-import {
-  Tr,
-  Td,
-  Switch,
-  Skeleton,
-} from '@chakra-ui/react';
+import { Tr, Td, Switch, Skeleton } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 
@@ -24,15 +19,15 @@ interface Props {
 }
 
 const WatchlistTableItem = ({ item, isLoading, onEditClick, onDeleteClick }: Props) => {
-  const [ notificationEnabled, setNotificationEnabled ] = useState(item.notification_methods.email);
-  const [ switchDisabled, setSwitchDisabled ] = useState(false);
+  const [notificationEnabled, setNotificationEnabled] = useState(item.notification_methods.email);
+  const [switchDisabled, setSwitchDisabled] = useState(false);
   const onItemEditClick = useCallback(() => {
     return onEditClick(item);
-  }, [ item, onEditClick ]);
+  }, [item, onEditClick]);
 
   const onItemDeleteClick = useCallback(() => {
     return onDeleteClick(item);
-  }, [ item, onDeleteClick ]);
+  }, [item, onDeleteClick]);
 
   const errorToast = useToast();
   const apiFetch = useApiFetch();
@@ -47,66 +42,76 @@ const WatchlistTableItem = ({ item, isLoading, onEditClick, onDeleteClick }: Pro
       isClosable: true,
       icon: null,
     });
-  }, [ errorToast ]);
+  }, [errorToast]);
 
   const notificationToast = useToast();
-  const showNotificationToast = useCallback((isOn: boolean) => {
-    notificationToast({
-      position: 'top-right',
-      description: isOn ? 'Email notification is ON' : 'Email notification is OFF',
-      colorScheme: 'green',
-      status: 'success',
-      variant: 'subtle',
-      title: 'Success',
-      isClosable: true,
-      icon: null,
-    });
-  }, [ notificationToast ]);
+  const showNotificationToast = useCallback(
+    (isOn: boolean) => {
+      notificationToast({
+        position: 'top-right',
+        description: isOn ? 'Email notification is ON' : 'Email notification is OFF',
+        colorScheme: 'green',
+        status: 'success',
+        variant: 'subtle',
+        title: 'Success',
+        isClosable: true,
+        icon: null,
+      });
+    },
+    [notificationToast],
+  );
 
-  const { mutate } = useMutation(() => {
-    setSwitchDisabled(true);
-    const body = { ...item, notification_methods: { email: !notificationEnabled } };
-    setNotificationEnabled(prevState => !prevState);
-    return apiFetch('watchlist', {
-      pathParams: { id: item.id },
-      fetchParams: { method: 'PUT', body },
-    });
-  }, {
-    onError: () => {
-      showErrorToast();
-      setNotificationEnabled(prevState => !prevState);
-      setSwitchDisabled(false);
+  const { mutate } = useMutation(
+    () => {
+      setSwitchDisabled(true);
+      const body = { ...item, notification_methods: { email: !notificationEnabled } };
+      setNotificationEnabled((prevState) => !prevState);
+      return apiFetch('watchlist', {
+        pathParams: { id: item.id },
+        fetchParams: { method: 'PUT', body },
+      });
     },
-    onSuccess: () => {
-      setSwitchDisabled(false);
-      showNotificationToast(!notificationEnabled);
+    {
+      onError: () => {
+        showErrorToast();
+        setNotificationEnabled((prevState) => !prevState);
+        setSwitchDisabled(false);
+      },
+      onSuccess: () => {
+        setSwitchDisabled(false);
+        showNotificationToast(!notificationEnabled);
+      },
     },
-  });
+  );
 
   const onSwitch = useCallback(() => {
     return mutate();
-  }, [ mutate ]);
+  }, [mutate]);
 
   return (
-    <Tr alignItems="top" key={ item.address_hash }>
-      <Td><WatchListAddressItem item={ item } isLoading={ isLoading }/></Td>
+    <Tr alignItems="top" key={item.address_hash}>
       <Td>
-        <Tag isLoading={ isLoading } isTruncated>{ item.name }</Tag>
+        <WatchListAddressItem item={item} isLoading={isLoading} />
       </Td>
       <Td>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">
+        <Tag isLoading={isLoading} isTruncated>
+          {item.name}
+        </Tag>
+      </Td>
+      <Td>
+        <Skeleton isLoaded={!isLoading} display="inline-block">
           <Switch
             colorScheme="blue"
             size="md"
-            isChecked={ notificationEnabled }
-            onChange={ onSwitch }
-            isDisabled={ switchDisabled }
+            isChecked={notificationEnabled}
+            onChange={onSwitch}
+            isDisabled={switchDisabled}
             aria-label="Email notification"
           />
         </Skeleton>
       </Td>
       <Td>
-        <TableItemActionButtons onDeleteClick={ onItemDeleteClick } onEditClick={ onItemEditClick } isLoading={ isLoading }/>
+        <TableItemActionButtons onDeleteClick={onItemDeleteClick} onEditClick={onItemEditClick} isLoading={isLoading} />
       </Td>
     </Tr>
   );

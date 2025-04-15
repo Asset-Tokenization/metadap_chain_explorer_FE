@@ -10,10 +10,13 @@ const blockHiddenFields = (() => {
     return undefined;
   }
 
-  const result = BLOCK_FIELDS_IDS.reduce((result, item) => {
-    result[item] = parsedValue.includes(item);
-    return result;
-  }, {} as Record<BlockFieldId, boolean>);
+  const result = BLOCK_FIELDS_IDS.reduce(
+    (result, item) => {
+      result[item] = parsedValue.includes(item);
+      return result;
+    },
+    {} as Record<BlockFieldId, boolean>,
+  );
 
   return result;
 })();

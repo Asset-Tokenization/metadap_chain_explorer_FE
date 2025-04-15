@@ -9,15 +9,15 @@ interface Props {
 const MainColumn = ({ children, className }: Props) => {
   return (
     <Flex
-      className={ className }
+      className={className}
       flexDir="column"
-      flexGrow={ 1 }
+      flexGrow={1}
       w={{ base: '100%', lg: 'auto' }}
       paddingX={{ base: 4, lg: 12 }}
       paddingTop={{ base: '138px', lg: 9 }}
-      paddingBottom={ 10 }
+      paddingBottom={10}
     >
-      { children }
+      {children}
     </Flex>
   );
 };

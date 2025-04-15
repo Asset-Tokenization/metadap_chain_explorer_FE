@@ -17,48 +17,39 @@ const Burger = () => {
 
   const handleNetworkMenuButtonClick = React.useCallback(() => {
     networkMenu.onToggle();
-  }, [ networkMenu ]);
+  }, [networkMenu]);
 
-  const handleNetworkLogoClick = React.useCallback((event: React.SyntheticEvent) => {
-    networkMenu.isOpen && event.preventDefault();
-    networkMenu.onClose();
-  }, [ networkMenu ]);
+  const handleNetworkLogoClick = React.useCallback(
+    (event: React.SyntheticEvent) => {
+      networkMenu.isOpen && event.preventDefault();
+      networkMenu.onClose();
+    },
+    [networkMenu],
+  );
 
   return (
     <>
-      <Box padding={ 2 } onClick={ onOpen }>
-        <Icon
-          as={ burgerIcon }
-          boxSize={ 6 }
-          display="block"
-          color={ iconColor }
-          aria-label="Menu button"
-        />
+      <Box padding={2} onClick={onOpen}>
+        <Icon as={burgerIcon} boxSize={6} display="block" color={iconColor} aria-label="Menu button" />
       </Box>
-      <Drawer
-        isOpen={ isOpen }
-        placement="left"
-        onClose={ onClose }
-        autoFocus={ false }
-      >
-        <DrawerOverlay/>
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose} autoFocus={false}>
+        <DrawerOverlay />
         <DrawerContent maxWidth="260px">
-          <DrawerBody p={ 6 } display="flex" flexDirection="column">
-            { config.chain.isTestnet && <Icon as={ testnetIcon } h="14px" w="auto" color="red.400" alignSelf="flex-start"/> }
+          <DrawerBody p={6} display="flex" flexDirection="column">
+            {config.chain.isTestnet && <Icon as={testnetIcon} h="14px" w="auto" color="red.400" alignSelf="flex-start" />}
             <Flex alignItems="center" justifyContent="space-between">
-              <NetworkLogo onClick={ handleNetworkLogoClick }/>
-              { config.UI.sidebar.featuredNetworks ? (
-                <NetworkMenuButton
-                  isMobile
-                  isActive={ networkMenu.isOpen }
-                  onClick={ handleNetworkMenuButtonClick }
-                />
-              ) : <Box boxSize={ 9 }/> }
+              <NetworkLogo onClick={handleNetworkLogoClick} />
+              {config.UI.sidebar.featuredNetworks ? (
+                <NetworkMenuButton isMobile isActive={networkMenu.isOpen} onClick={handleNetworkMenuButtonClick} />
+              ) : (
+                <Box boxSize={9} />
+              )}
             </Flex>
-            { networkMenu.isOpen ?
-              <NetworkMenuContentMobile tabs={ networkMenu.availableTabs } items={ networkMenu.data }/> :
-              <NavigationMobile onNavLinkClick={ onClose }/>
-            }
+            {networkMenu.isOpen ? (
+              <NetworkMenuContentMobile tabs={networkMenu.availableTabs} items={networkMenu.data} />
+            ) : (
+              <NavigationMobile onNavLinkClick={onClose} />
+            )}
           </DrawerBody>
         </DrawerContent>
       </Drawer>
