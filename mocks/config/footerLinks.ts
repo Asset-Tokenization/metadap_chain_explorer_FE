@@ -1,76 +1,75 @@
-import type { CustomLinksGroup } from 'types/footerLinks';
+import type { CustomLinksGroup } from "types/footerLinks";
 
 export const FOOTER_LINKS: Array<CustomLinksGroup> = [
   {
-    title: 'Company',
+    title: "Company",
     links: [
       {
-        text: 'Advertise',
-        url: 'https://coinzilla.com/',
+        text: "Advertise",
+        url: "https://coinzilla.com/",
       },
       {
-        text: 'Staking',
-        url: '',
+        text: "Staking",
+        url: "",
       },
       {
-        text: 'Contact us',
-        url: '',
+        text: "Contact us",
+        url: "",
       },
       {
-        text: 'Brand assets',
-        url: '',
+        text: "Brand assets",
+        url: "",
       },
       {
-        text: 'Term of service',
-        url: '',
+        text: "Term of service",
+        url: "",
       },
     ],
   },
   {
-    title: 'Community',
+    title: "Community",
     links: [
       {
-        text: 'API docs',
-        url: '',
+        text: "API docs",
+        url: "",
       },
       {
-        text: 'Knowledge base',
-        url: '',
+        text: "Knowledge base",
+        url: "",
       },
       {
-        text: 'Network status',
-        url: '',
+        text: "Network status",
+        url: "",
       },
       {
-        text: 'Learn Alphabet',
-        url: '',
+        text: "Learn Alphabet",
+        url: "",
       },
     ],
   },
   {
-    title: 'Product',
+    title: "Product",
     links: [
       {
-        text: 'Stake Alphabet',
-        url: '',
+        text: "Stake Alphabet",
+        url: "",
       },
       {
-        text: 'Build token',
-        url: '',
+        text: "Build certificate",
+        url: "",
       },
       {
-        text: 'Build DAPPS',
-        url: '',
+        text: "Build DAPPS",
+        url: "",
       },
       {
-        text: 'NFT marketplace',
-        url: '',
+        text: "NFT marketplace",
+        url: "",
       },
       {
-        text: 'Become validator',
-        url: '',
+        text: "Become validator",
+        url: "",
       },
-
     ],
   },
 ];

@@ -1,7 +1,15 @@
-import { CheckboxGroup, Checkbox, Text, Flex, Link, useCheckboxGroup, chakra } from '@chakra-ui/react';
-import React from 'react';
+import {
+  CheckboxGroup,
+  Checkbox,
+  Text,
+  Flex,
+  Link,
+  useCheckboxGroup,
+  chakra,
+} from "@chakra-ui/react";
+import React from "react";
 
-import config from 'configs/app';
+import config from "configs/app";
 
 const feature = config.features.bridgedTokens;
 
@@ -19,12 +27,15 @@ const TokensBridgedChainsFilter = ({ onChange, defaultValue }: Props) => {
     }
     setValue([]);
     onChange([]);
-  }, [ onChange, setValue, value ]);
+  }, [onChange, setValue, value]);
 
-  const handleChange = React.useCallback((nextValue: Array<string>) => {
-    setValue(nextValue);
-    onChange(nextValue);
-  }, [ onChange, setValue ]);
+  const handleChange = React.useCallback(
+    (nextValue: Array<string>) => {
+      setValue(nextValue);
+      onChange(nextValue);
+    },
+    [onChange, setValue]
+  );
 
   if (!feature.isEnabled) {
     return null;
@@ -33,24 +44,26 @@ const TokensBridgedChainsFilter = ({ onChange, defaultValue }: Props) => {
   return (
     <>
       <Flex justifyContent="space-between" fontSize="sm">
-        <Text fontWeight={ 600 } variant="secondary">Show bridged tokens from</Text>
+        <Text fontWeight={600} variant="secondary">
+          Show bridged certificates from
+        </Text>
         <Link
-          onClick={ handleReset }
-          color={ value.length > 0 ? 'link' : 'text_secondary' }
+          onClick={handleReset}
+          color={value.length > 0 ? "link" : "text_secondary"}
           _hover={{
-            color: value.length > 0 ? 'link_hovered' : 'text_secondary',
+            color: value.length > 0 ? "link_hovered" : "text_secondary",
           }}
         >
           Reset
         </Link>
       </Flex>
-      <CheckboxGroup size="lg" onChange={ handleChange } value={ value }>
-        { feature.chains.map(({ title, id, short_title: shortTitle }) => (
-          <Checkbox key={ id } value={ id } fontSize="md" whiteSpace="pre-wrap">
-            <span>{ title }</span>
-            <chakra.span color="text_secondary"> ({ shortTitle })</chakra.span>
+      <CheckboxGroup size="lg" onChange={handleChange} value={value}>
+        {feature.chains.map(({ title, id, short_title: shortTitle }) => (
+          <Checkbox key={id} value={id} fontSize="md" whiteSpace="pre-wrap">
+            <span>{title}</span>
+            <chakra.span color="text_secondary"> ({shortTitle})</chakra.span>
           </Checkbox>
-        )) }
+        ))}
       </CheckboxGroup>
     </>
   );

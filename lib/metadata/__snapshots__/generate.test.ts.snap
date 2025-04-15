@@ -18,9 +18,9 @@ exports[`generates correct metadata for: dynamic route with API data 1`] = `
   "opengraph": {
     "description": "",
     "imageUrl": "",
-    "title": "Blockscout USDT token details | Blockscout",
+    "title": "Blockscout USDT certificate details | Blockscout",
   },
-  "title": "Blockscout USDT token details | Blockscout",
+  "title": "Blockscout USDT certificate details | Blockscout",
 }
 `;
 

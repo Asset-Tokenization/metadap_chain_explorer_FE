@@ -1,11 +1,11 @@
-import { Skeleton } from '@chakra-ui/react';
-import React from 'react';
+import { Skeleton } from "@chakra-ui/react";
+import React from "react";
 
-import { route } from 'nextjs-routes';
+import { route } from "nextjs-routes";
 
-import useApiQuery from 'lib/api/useApiQuery';
-import DetailsInfoItem from 'ui/shared/DetailsInfoItem';
-import LinkInternal from 'ui/shared/LinkInternal';
+import useApiQuery from "lib/api/useApiQuery";
+import DetailsInfoItem from "ui/shared/DetailsInfoItem";
+import LinkInternal from "ui/shared/LinkInternal";
 
 interface Props {
   hash: string;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const TokenInstanceTransfersCount = ({ hash, id, onClick }: Props) => {
-  const transfersCountQuery = useApiQuery('token_instance_transfers_count', {
+  const transfersCountQuery = useApiQuery("token_instance_transfers_count", {
     pathParams: { hash, id },
     queryOptions: {
       enabled: Boolean(hash && id),
@@ -32,22 +32,31 @@ const TokenInstanceTransfersCount = ({ hash, id, onClick }: Props) => {
     return null;
   }
 
-  const url = transfersCountQuery.data.transfers_count > 0 ?
-    route({ pathname: '/token/[hash]/instance/[id]', query: { hash, id, tab: 'token_transfers' } }) :
-    undefined;
+  const url =
+    transfersCountQuery.data.transfers_count > 0
+      ? route({
+          pathname: "/token/[hash]/instance/[id]",
+          query: { hash, id, tab: "token_transfers" },
+        })
+      : undefined;
 
   return (
     <DetailsInfoItem
       title="Transfers"
-      hint="Number of transfer for the token instance"
-      isLoading={ transfersCountQuery.isPlaceholderData }
+      hint="Number of transfer for the certificate instance"
+      isLoading={transfersCountQuery.isPlaceholderData}
     >
-      <Skeleton isLoaded={ !transfersCountQuery.isPlaceholderData } display="inline-block">
+      <Skeleton
+        isLoaded={!transfersCountQuery.isPlaceholderData}
+        display="inline-block"
+      >
         <LinkInternal
-          href={ url }
-          onClick={ transfersCountQuery.data.transfers_count > 0 ? onClick : undefined }
+          href={url}
+          onClick={
+            transfersCountQuery.data.transfers_count > 0 ? onClick : undefined
+          }
         >
-          { transfersCountQuery.data.transfers_count.toLocaleString() }
+          {transfersCountQuery.data.transfers_count.toLocaleString()}
         </LinkInternal>
       </Skeleton>
     </DetailsInfoItem>
