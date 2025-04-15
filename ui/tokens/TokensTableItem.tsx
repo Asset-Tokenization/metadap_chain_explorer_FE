@@ -35,6 +35,19 @@ const TokensTableItem = ({ token, page, index, isLoading }: Props) => {
     is_verified: false,
   };
 
+  const getTypeText = (assetType: string) => {
+    switch (assetType) {
+      case "ERC-20":
+        return "MRC-20";
+      case "ERC-721":
+        return "MRC-721";
+      case "ERC-1155":
+        return "MRC-1155";
+      default:
+        return assetType;
+    }
+  };
+
   return (
     <Tr>
       <Td>
@@ -49,7 +62,7 @@ const TokensTableItem = ({ token, page, index, isLoading }: Props) => {
               <AddressAddToWallet token={token} isLoading={isLoading} iconSize={5} />
             </Flex>
             <Flex columnGap={1}>
-              <Tag isLoading={isLoading}>{type}</Tag>
+              <Tag isLoading={isLoading}>{getTypeText(type)}</Tag>
               {bridgedChainTag && <Tag isLoading={isLoading}>{bridgedChainTag}</Tag>}
             </Flex>
           </Flex>
