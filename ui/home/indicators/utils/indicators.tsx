@@ -45,7 +45,7 @@ const nativeTokenData = {
 
 const coinPriceIndicator: TChainIndicator<'homepage_chart_market'> = {
   id: 'coin_price',
-  title: `${config.chain.governanceToken.symbol || config.chain.currency.symbol} price`,
+  title: `${config.chain.governanceToken.symbol || config.chain.currency.symbol} Credit`,
   value: (stats) =>
     '$' +
     Number(stats.coin_price).toLocaleString(undefined, {
