@@ -64,7 +64,7 @@ const coinPriceIndicator: TChainIndicator<'homepage_chart_market'> = {
             value: Number(item.closing_price),
           }))
           .sort(sortByDateDesc),
-        name: `${config.chain.governanceToken.symbol || config.chain.currency.symbol} price`,
+        name: `${config.chain.governanceToken.symbol || config.chain.currency.symbol} Credit`,
         valueFormatter: (x: number) =>
           '$' +
           x.toLocaleString(undefined, {
